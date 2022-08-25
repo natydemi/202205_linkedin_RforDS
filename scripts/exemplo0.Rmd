@@ -1,0 +1,21 @@
+---
+title: "Arquivo de Exemplo"
+output: html_document
+date: '2022-05-30'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Seções
+
+## Subseções
+
+textos aqui:
+
+```{r}
+summary(cars)
+```
+
+.
