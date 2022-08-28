@@ -57,13 +57,14 @@
   # ou seja a saída de uma função, seja o input, a entrada, da função seguinte. 
   # Deste modo passamos a ter uma alternativa à leitura default do R, em que 
   # a sequência de operações lógicas são aplicadas de dentro para fora, isto é:
-    # funçãoN(...(função2(função1(dados))))
+    # funçãoN(...(função2(função1(dados, args1), args2)...)argsN)
+
   # para a aplicação de operações em sequência, ou seja:
     # dados %>% 
-    #   função1() %>% 
-    #   função2() %>% 
+    #   função1(args1) %>% 
+    #   função2(args2) %>% 
     #   ...
-    #   funçãoN()
+    #   funçãoN(argsN)
 
 
   #Para trabalhar com o pipe, precisamos carregar um das bibliotecas que  
