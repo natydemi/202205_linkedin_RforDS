@@ -12,7 +12,7 @@
   # https://www.tidyverse.org/ 
 
 
-# o que são dados tidy?  -----
+# O que são dados tidy?  -----
     
   # A filosofia tidy, trata-se de uma forma de vincular a estrutura de um  
   # conjunto de dados (seu layout físico) com sua semântica (seu significado).  
@@ -107,7 +107,7 @@
     # https://www.curso-r.com/blog/2018-07-03-tutorial-pipe/
 
 
-# Quais as bibliotecas do tidyverse? -----
+# Quais bibliotecas que compõem o tidyverse? -----
   
   #O tidyverse trata-se de uma coleção de bibliotecas, sendo assim, ao instalar
   # esta biblioteca você estará também instalando uma série de outros
@@ -124,12 +124,15 @@
       ?haven
   
   #Contudo ao carregar o meta-pacote tidyverse, você observará na mensagem que 
-  # apenas algumas das bibliotecas são carregadas:
+  # apenas algumas das bibliotecas são carregadas, as bibliotecas core:
   
     library(tidyverse)
       
   #Isto porque as demais bibliotecas, apesar de instaladas, só serão carregadas
-  # caso você o faça manualmente. 
+  # caso você o faça manualmente, no caso, as `non-core packages`. Para ter 
+  # uma visão geral dos pacotes, podemos consultar: 
+      
+      tidyverse::tidyverse_sitrep()
   
   #Para aprender mais sobre o universo do tidyverse, existem muitas referências 
   # e materiais interessantes disponíveis na página oficial do pacote:
@@ -137,7 +140,52 @@
 
 
                
-# ----- Dialetos para Manipulação de Dados no R -----
+# tidyverse e o Ciclo de Análise da Ciência de Dados -----
+  # As bibliotecas que compõem o tidyverse podem ser organizadas ao redor das  
+  # etapas que compõem o Ciclo de Análises da Ciência de Dados, proposto por
+  # Hadley em seu livro `R for Data Science`: 
+      #https://r4ds.had.co.nz/explore-intro.html
+  # No caso, temos as ações: ler, arrumar, um ciclo de transformar, visualizar e 
+  # modelar, com suas possíveis repetições cabíveis, e, por fim, comunicar.
+      
+  # Note que aspectos como deploy e manutenção de modelos não estão sendo 
+  # considerados neste flow. Isto porque, apesar da incontextável importância, 
+  # tais fases tendem a priorizar aspectos como integrações com sistemas, 
+  # performance, e questões tangentes. Enquanto que para o ciclo pontuado acima, 
+  # temos o entendimento e a modelagem do problema como meta principal.
+      
+  #Voltando ao tidyverse, temos a implementação deste ciclo de ações por meio
+  # da coleção de pacotes do tidyverse:
+      # readr: leitura dos dados
+      # tibble: opções para tratar estruturas de dados tidy
+      # tidyr: reformulação de layout dos dados
+      # dplyr: manipulação de dados
+      # ggplot2: criação de gráficos
+      # purrr: programação funcional
+      # forcats: operações com variáveis categoricas
+      # stringr: operações com strings
+      
+  #Adicionalmente, temos que algumas bibliotecas, apesar de não serem carregadas 
+  # juntamente com os pacotes listados acima, são instaladas, estando 
+  # à disposição para uso:
+        
+      # readxl: leitura e escrita de arquivos .xls e .xlsx
+      # haven: leitura e escrita de arquivos SPSS, Stata, e SAS
+      # lubridate: operações para trabalhar com datas
+      # broom: resume informações de modelagem de forma estruturada
+      # knitr: relatórios dinâmicos
+      
+  # Lembrando que para utilizar as funções de tais bibliotecas é necessário 
+  # carregar o pacote individualmente. Ou, alternativamente, chamando a função 
+  # de interesse especificamente, por meio de comandos como: 
+      
+      #readxl::readxl_example() 
+      #ou 
+      #lubridate::date()    
+      
+
+      
+# ----- (avançado) Dialetos para Manipulação de Dados no R -----
   
   # Existem três importantes opções de sintaxes para manipulação de dados no R:
   
@@ -167,7 +215,7 @@
   
       
     
-# ----- Comparação entre sintaxes -----
+# Comparando as sintaxes: Rbase, tidyverse e data.table -----
   
   # A partir daqui serão listados alguns dos comandos mais usuais relacionados
   # a manipulação de dados, considerando a ordem:
@@ -326,7 +374,6 @@
   
   
   
-# ----- Extras -----
 # Pivotagem (de colunas para linhas) -----
   #reshape(), pivot_longer() e	melt()
 
@@ -336,7 +383,7 @@
 # Unindo tabelas -----
   #merge(), left_join() e DT1[ DT2, on = ...]
   
-# ----- Referências -----   
+# Referências: -----   
   
 # comparação entre os dialetos -----
   # https://github.com/mayer79/data_preparation_r

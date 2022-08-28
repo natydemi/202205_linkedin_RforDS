@@ -297,7 +297,7 @@
        mtcars <- mtcars
        
        
-# ::::: spoiler: funções para análise descritiva -----
+# ::::: Hands-on: funções para análise descritiva -----
        
   #Vamos agora passar por algumas aplicações de funções estatísticas
   # built-in do R, considerando os dados mtcars
@@ -358,8 +358,8 @@
     plot(fit)
         
 
-# Recursos mais avançados: ----- 
-# > Estruturas de controle -----
+# ----- (avançado) Recursos de Programação  ----- 
+# Estruturas de controle -----
   #Estruturas de controle são blocos de programação, baseados em  
   # parâmetros pré-definidos, que definem a direção a seguir. 
   #O R possui todas as estruturas usualmente existentes em linguagens de 
@@ -447,7 +447,7 @@
   # particular, e pula para a próxima. 
 
 
-# > Criando suas próprias funções -----
+# Criando suas próprias funções -----
   #Estes recursos vão te permitir garantir que, independente do arsenal 
   # que o R possua em termos de bibliotecas e funções, você possa implementar 
   # as suas próprias funções. 
@@ -501,7 +501,7 @@
   # especificar o nome do script, acompanhado do nome do diretório em que o  
   # script se encontra caso o script não se encontre no mesmo diretório.
 
-# > Ambientes -----        
+# Ambientes -----        
   #Funções possuem os seus próprios ambientes, também denominados `environments`, 
   # ou seja, sua própria coleção de objetos (funções, variáveis, etc). 
   # Assim os cálculos realizados dentro de uma função não alteram e não são  
