@@ -22,12 +22,8 @@
 
 # Um tour pela IDE Rstudio  -----
 
-  #O RStudio possui uma série de recursos que otimizam a análise de dados, como: 
-    # Realce de código, auto-complete de código e indentação inteligente
-    # Execução de código R diretamente do editor de código-fonte
-    # Acesso fácil e integrado a definição das funções.
-
-  # Sendo a própria interface, a principal vantagem, visto os seus paines:
+  #O RStudio possui uma série de recursos que otimizam a análise de dados, 
+  # sendo a própria interface, a principal vantagem, visto os seus paines:
 
     #*Console - painel onde os comandos são executados interativamente, 
     # permitindo opções como autocompletar e consultas por meio da tecla ‘Tab’, 
@@ -35,10 +31,11 @@
 
     #*Source - onde são abertos os scripts do R, ou seja, onde você irá 
     # escrever o código - sendo necessário enviá-lo manualmente para o Console,
-    # sempre que desejado. Para abrir um script podemos utilizar o 
-    # point-and-click ‘File > New File > R Script’ ou pelo atalho Ctrl+Shift+N
+    # isto é, para execução, quando desejado. Para abrir um script podemos  
+    # utilizar o point-and-click ‘File > New File > R Script’ 
+    # ou por meio do atalho Ctrl+Shift+N
 
-    #*Environment - listagem dos objetos definidos ao longo da sessão;
+    #*Environment - lista dos objetos carregados e/ou criados ao longo da sessão
 
     #*History - consulta do histórico de comandos
 
@@ -50,25 +47,25 @@
 
     #*Help - menu de ajuda e visualização das documentações consultadas
 
-    #*Viewer - visualização dos relatórios e aplicativos gerados
+    #*Viewer - visualização dos relatórios e aplicativos criados
 
-    #*Connections - permite fazer a conexão com diferentes bancos de dados 
+    #*Connections - ferramentas para conexão com diferentes bancos de dados 
 
-    #*Tutorial - aprendizado (versões mais recentes do RStudio)
+    #*Tutorial - tutoriais de aprendizado -- disponível apenas em versões mais 
+    # recentes da IDE RStudio
+
 
     #Todos os painéis possuem uma série de funcionalidades próprias, 
     # sendo interessante que, conforme avance na sua utilização do R, volte a 
-    # explorar tais opções, como os recursos oferecidos para trabalhar com git 
-    # ou conexão com bancos de dados.
+    # explorar tais opções, como as abas Git e Jobs.
 
-    #A mesma premissa vale para a barra de ferramentas do RStudio, 
-    # onde é possível encontrar desde recursos de codificação, 
-    # como recursos de busca e substituição, desenvolvimento de pacotes, ou até  
-    # Debug de código. 
+    #A mesma dica de investigação vale para a barra de ferramentas do RStudio, 
+    # onde é possível encontrar desde recursos de codificação, como busca e 
+    # substituição, desenvolvimento de pacotes, ou Debug de código. 
 
-    #DICA: Um recurso interessante do RStudio é personalização da interface: 
+    #DICA: Um recurso interessante do RStudio é a personalização da interface: 
     # acesse na barra superior a opção  `Tools > Global Options’, dentre
-    #  as alternativas, recomendo a sessão `Appearance` e `Pane Layout`.
+    # as alternativas, recomendo a sessão `Appearance` e `Pane Layout`.
 
 
 
@@ -81,7 +78,7 @@
   #ATALHO: selecione as linhas que você quer comentar e `ctrl + shift + c`
   
   #DICA: um recurso interessante do RStudio são as seções, ou sections.
-  # para conhecer digite: crtl + shift + R, e teste você mesmo! Você 
+  # Para conhecer digite: crtl + shift + R, e teste você mesmo! Você 
   # pode acessar tais seções na parte superior direita do script, 
   # ou na parte inferior esquerda.
 
@@ -282,22 +279,28 @@
        #retorno de funções cujos valores são indefinidos.
        NULL
        
-       #Visto a relevância de tais objetos, estes não podem ser reescritos. Diferentemente de outras constantes
+       #Visto a relevância de tais objetos, estes não podem ser reescritos. 
+       #Diferentemente de outras constantes
        NA <- 0
        
        pi
        pi <- 0
        pi
 
+   #Um tipo de objeto particularmente importante para quem trabalha com dados, 
+   # são as base de dados, vamos tomar como exemplo uma das bases default do R
+       mtcars
+       
+       #para que esta base apareça como um objeto na aba "Environment" 
+       # podemos considerar:
+       
+       mtcars <- mtcars
        
        
 # ::::: spoiler: funções para análise descritiva -----
        
   #Vamos agora passar por algumas aplicações de funções estatísticas
   # built-in do R, considerando os dados mtcars
-       
-  #base para exemplo
-    mtcars
        
     #LEMBRETE: para mais informações sobre a base, acesse ?mtcars
         
@@ -465,7 +468,7 @@
   #}
 
     #ex. 1
-      mean_nath <- function(vetor){
+      funcao_mean <- function(vetor){
         output <- sum(vetor)/length(vetor)
         return(output)
       }
@@ -529,7 +532,6 @@
 
 # ::::: Hands-on -----
   #No RStudio Learn Primers: #https://rstudio.cloud/learn/primers 
-  # faça os exercícios propostos na aba `Write Functions`,
-  # priorizando a seção `Function Basics`, `Control Flow` e `Loops`.
+  # você encontrará diversos exercícios desde `Write Functions` até XXX.
 
 

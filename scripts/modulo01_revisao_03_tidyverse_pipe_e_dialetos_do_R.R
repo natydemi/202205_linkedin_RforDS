@@ -3,35 +3,36 @@
 
 # ----- O tidyverse? -----
 
-  # O tidyverse é um conjunto de bibliotecas que compartilham a mesma filosofia, 
-  # design e gramática, sempre tendo o conceito de "dados tidy" como pilar.
-  # Garantindo ferramentas para diferentes momentos da Ciência de Dados.
+  # O tidyverse é um conjunto de bibliotecas que compartilham a mesma gramática,
+  # design e filosofia, no caso, o conceito de "dados tidy". 
+  # De modo a garantir recursos para as mais diferentes tarefas que envolvem 
+  # o Ciclo de Ciência de Dados.
 
-  # Referência
+  # Referência:
   # https://www.tidyverse.org/ 
 
 
 # o que são dados tidy?  -----
     
-  # A filosofia tidy, trata-se de uma forma de vincular a estrutura de um conjunto 
-  # de dados (seu layout físico) com sua semântica (seu significado).Para tal temos 
-  # que, independente da origem, características, problemas e layout dos dados, 
-  # estes precisam ser organizados garantindo que:
+  # A filosofia tidy, trata-se de uma forma de vincular a estrutura de um  
+  # conjunto de dados (seu layout físico) com sua semântica (seu significado).  
+  # Para tal temos que, independente da origem, características, problemas e 
+  # layout dos dados, estes precisam ser organizados garantindo que:
     
-    # cada variável tenha a sua própria coluna;
-    # cada observação tenha a sua própria linha; e
-    # cada valor tenha a sua própria célula.
+    # cada variável/informação tenha a sua própria coluna;
+    # cada observação/unidade de análise tenha a sua própria linha; e
+    # que cada valor tenha a sua própria célula.
     
-  # Apesar da simplicidade das premissas, nem sempre é tão trivial garantir tal 
-  # estrutura. Algo que o ecossistema de pacotes do tidyverse não apenas facilitam a 
-  # obtenção, por meio de uma série de recursos, mas também garantem a sua manutenção 
-  # por meio de todo um ecossistema de análise. E qualquer dado que não esteja
-  # de acordo com este sistema, será entendido como "messy data" (dados bagunçados)
-  
-  # Para tangibilizar melhor a importância deste conceito, Hadley Wickham, em 
-  # seu artigo http://vita.had.co.nz/papers/tidy-data.pdf lista cinco dos 
-  # problemas mais comuns ao se trabalhar com dados `não tidy`, ou seja, com "messy data":
+  # Apesar da simplicidade das premissas, respeitá-las permite um grande ganho 
+  # em termos de produtividade de análise. Contudo, nem sempre é trivial obter  
+  # esta estrutura. Ponto este que o próprio ecossistema de pacotes do tidyverse   
+  # nos auxilia, oferecendo uma série de recursos para a obtenção e manutenção 
+  # de uma estrutura tidy. 
 
+  # E para tangibilizar um pouco melhor estas ideias, seguem a lista de cinco 
+  # problemas comuns encontramos em dados que não seguem os princípios tidy,
+  # os ditos "messy-tidy" (dados bagunçados):
+  
     # 1. O cabeçalho (primeira linha da tabela) contém valores, e não o nome das variáveis;
     # 2. Diversas variáveis estão armazenadas na mesma coluna;
     # 3. Variáveis são armazenadas tanto em linhas, quanto em colunas;
@@ -39,49 +40,80 @@
     # 5. Uma única unidade observacional está armazenada em diferentes tabelas.
 
   
-  #Referências:
+  # Para um maior aprofundamento no tema, recomendo a leitura do artigo
+  # escrito pelo Hadley Wickham, idealizador do conceito tidy e de tantos 
+  # outros conceitos e ferramentas importantes da comunidade R: 
+  # http://vita.had.co.nz/papers/tidy-data.pdf
+
+  #Algumas referências mais:
     # https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html
     #https://escoladedados.org/tutoriais/tidy-data-dados-arrumados-e-5-problemas-comuns/
 
 
-# O que é um tibble? (vs. data.frame)  -----
+# O que é o operador pipe? (%>%)  -----
   
-  # A estrutura default do R mais próxima e usual para se trabalhar com dados 
-  # tidy seriam os data.frames, porém as bibliotecas do ecossistema tidyverse 
-  # trabalham com uma estrutura equivalente, porém mais moderna, chamada 
-    #tbl_df ou tibble.
-  # Tal estrutura é originalmente disponibilizada a partir da biblioteca 
-  # com o mesmo nome, tibble, um dos pacotes default do tidyverse. 
-  
-    (teste_DF <- data.frame(x = letters, y = LETTERS))
+  #O pipe trata-se de uma função com uma sintaxe um pouco diferente, no caso, 
+  # o simbolo: %>%. Que oermite o encadeamento de funções, de modo que o output, 
+  # ou seja a saída de uma função, seja o input, a entrada, da função seguinte. 
+  # Deste modo passamos a ter uma alternativa à leitura default do R, em que 
+  # a sequência de operações lógicas são aplicadas de dentro para fora, isto é:
+    # funçãoN(...(função2(função1(dados))))
+  # para a aplicação de operações em sequência, ou seja:
+    # dados %>% 
+    #   função1() %>% 
+    #   função2() %>% 
+    #   ...
+    #   funçãoN()
 
-    #vs.
-    
-    library(tibble)
-    (teste_T <- tibble(x = letters, y = LETTERS))
-  
-  # Note que a visualização que temos ao trabalhar com os dados no formato tibble  
-  # é não apenas mais concisa (em relação a quantidade de linhas) mas também mais
-  # descritiva que a visualização original, como o tipo de cada coluna. 
-  # Adicionalmente, questões como performance e consistência também apresentam 
-  # melhorias em comparação aos data.frames.  
 
-  # Ref.: https://tibble.tidyverse.org/
+  #Para trabalhar com o pipe, precisamos carregar um das bibliotecas que  
+  # possuam esta função, no caso, o pipe foi originalmente introduzido no R 
+  # por meio da biblioteca `magrittr`:
+
+  #exemplo 1
+  library(magrittr)
+  "olá, tudo bem" %>% print()
+
+  
+  #exemplo 2, comparando resultados,
+  
+  x <- 1:5
+  
+  # sem o pipe, isto é, seguindo a leitura default do R, de dentro para fora:
+    floor(sqrt(sum(x)))
+
+  # com o pipe, ou seja, a partir de uma leitura sequencial:
+    x %>% 
+      sum %>% 
+      sqrt %>% 
+      floor
     
+  #Assim, para além do claro ganho em termos de leitura, passamos a ter uma
+  # análise mais modular, sendo possível alterar, remover ou inserir funções  
+  # de maneira muito mais simples:
+    
+    x %>% 
+      #sum %>% 
+      sqrt %>% 
+      floor %>% 
+      log
+
+  # O pipe ganhou tamanha importância no R, que passou a ser contemplado por 
+  # diversos pacotes, inclusive, o tidyverse. De modo que juntamente com o 
+  # conceito de `dados tidy`, forma um dos pilares do universo tidyverse:
   
-  
-# O que é o operador pipe?  -----
+    # Ref.:
     # https://www.curso-r.com/blog/2018-07-03-tutorial-pipe/
 
 
-# As bibliotecas do tidyverse -----
+# Quais as bibliotecas do tidyverse? -----
   
   #O tidyverse trata-se de uma coleção de bibliotecas, sendo assim, ao instalar
   # esta biblioteca você estará também instalando uma série de outros
   # pacotes, como: lubridate para trabalhar com datas, ou ainda readxl, httr, e
   # xml2 para importar tipos específicos de dados. 
   
-    #Para conhecer as bibliotecas instaladas junto ao tidyvser:
+    #Para conhecer as bibliotecas instaladas junto ao tidyverse:
   
       install.packages("tidyverse")
       tidyverse::tidyverse_packages()
@@ -91,15 +123,17 @@
       ?haven
   
   #Contudo ao carregar o meta-pacote tidyverse, você observará na mensagem que 
-  # segue apenas algumas das bibliotecas são carregadas:
+  # apenas algumas das bibliotecas são carregadas:
   
     library(tidyverse)
+      
+  #Isto porque as demais bibliotecas, apesar de instaladas, só serão carregadas
+  # caso você o faça manualmente. 
   
   #Para aprender mais sobre o universo do tidyverse, existem muitas referências 
-  # e materiais interessantes disponíveis na página oficial:
+  # e materiais interessantes disponíveis na página oficial do pacote:
   # https://www.tidyverse.org/ 
 
-   
 
                
 # ----- Dialetos para Manipulação de Dados no R -----
@@ -130,13 +164,19 @@
       ?data.table::datatable-intro	
       ??data.table
   
-  
       
-# Comparação entre sintaxes -----
+    
+# ----- Comparação entre sintaxes -----
   
-  # Neste script seguiremos a ordem: Rbase, tidyverse e data.table 
-  # Importante comentar que mesmo dentro de cada uma destas sintaxes
-  # existem outras maneiras 
+  # A partir daqui serão listados alguns dos comandos mais usuais relacionados
+  # a manipulação de dados, considerando a ordem:
+      # 1. Rbase
+      # 2. tidyverse 
+      # 3. data.table
+  # Importante comentar que mesmo dentro de cada uma destas sintaxes existem
+  # outras maneiras de executar a mesma ação e obter o mesmo resultado. 
+  # O objetivo aqui não é listar todas as alternativas existentes, mas sim
+  # dar visibilidade das principais diferenças.
       
 # Lendo arquivos .csv -----
   #read.csv, read_csv e fread
@@ -160,8 +200,38 @@
   #DICA: note que ao colocar parenteses ao redor do comando de atribuição, 
   # além da atribuição em si (criação do objeto), temos também o retorno
   # do objeto criado.
+
+    
+# O que é um tibble? (vs. data.frame)  -----
   
+  # A estrutura default do R mais usual para análise de dados, e para dados 
+  # tidy de maneira geral. São os `data.frames`, porém as bibliotecas do 
+  # ecossistema tidyverse consideram uma estrutura alternativa, que apesar de
+  # na prática ser bastante equivalente, trata-se de uma versão mais moderna, 
+  # chamada tibble, ou, por vezes, identificada como tbl_df.
+
+  # Tal estrutura é originalmente disponibilizada a partir da biblioteca 
+  # com o mesmo nome, tibble, um dos pacotes default do tidyverse. 
+
+  # Vamos agora comparar a diferença entre as duas estruturas:
   
+    (teste_DF <- data.frame(x = letters, y = LETTERS))
+
+    #vs.
+    
+    library(tibble)
+    (teste_T <- tibble(x = letters, y = LETTERS))
+  
+  # Note que a visualização que temos com o tibble não apenas mais concisa 
+  # (em relação a quantidade de linhas) mas também mais descritiva que a 
+  # visualização original, adicionando a informação do tipo de cada coluna. 
+  # Adicionalmente, questões como performance e consistência também apresentam 
+  # melhorias em comparação aos data.frames.
+  
+
+  # Ref.: https://tibble.tidyverse.org/
+    
+
   
 # Selecionando colunas (por nome) -----
   #[ , ...], select()	e [ , .(...) , ]
@@ -267,26 +337,24 @@
   
 # ----- Referências -----   
   
-  # comparação entre os dialetos -----
-    # https://github.com/mayer79/data_preparation_r
-  
-  # data.table + tidyverse (dplyr) -----
-    #Existe um pacote chamado dtplyr que fornece um backend data.table para
-    # o pacote tidyverse -- mais especificamente para o pacote dplyr do tidyverse.  
-    # Com este pacote podemos escrever um código dplyr e este é automaticamente 
-    # traduzido para o código data.table. Garantindo os ganhos de legibilidade 
-    # do dplyr, com a superioridade de performance do data.table. 
-    #Para mais informações consulte: https://dtplyr.tidyverse.org/
-  
-  # disclaimer sobre as opções apresentadas -----
-    # Como dito inicialmente, esta lista não contempla todas as diferentes 
-    # maneiras de escrever cada uma das ações acima, particularmente no caso
-    # do Rbase, em que, me parece, que existem dezenas de maneiras de aplicar
-    # uma mesma ação.A proposta aqui é apenas compartilhar uma visão inicial
-    # sobre as diferenças.
-  
-  # Por que seguireos com o tidyverse? -----
-    # Tanto pela legibilidade dos códigos quanto pela comunidade madura, e hoje,
-    # a maior do R. De modo que independente da introdução que será feita aqui,
-    # você terá à disposição uma série de conteúdos gratuitos e acessíveis 
-    # para poder seguir evoluindo na linguagem R :)
+# comparação entre os dialetos -----
+  # https://github.com/mayer79/data_preparation_r
+
+# data.table + tidyverse (dplyr) -----
+  #Existe um pacote chamado dtplyr que fornece um backend data.table para
+  # o pacote tidyverse -- mais especificamente para o pacote dplyr do tidyverse.  
+  # Com este pacote podemos escrever um código dplyr e este é automaticamente 
+  # traduzido para o código data.table. Garantindo os ganhos de legibilidade 
+  # do dplyr, com a superioridade de performance do data.table. 
+  #Para mais informações consulte: https://dtplyr.tidyverse.org/
+
+# disclaimer sobre as opções apresentadas -----
+  # Como dito inicialmente, esta lista não contempla todas as diferentes 
+  # maneiras de escrever cada uma das ações acima. A proposta aqui se limita
+  # a compartilhar uma visão inicial sobre cada uma das sintaxes.
+
+# Por que seguiremos com o tidyverse? -----
+  # Tanto pela legibilidade dos códigos quanto pela comunidade madura, e hoje,
+  # a maior do R. De modo que independente da introdução que será feita aqui,
+  # você terá à disposição uma série de conteúdos gratuitos e acessíveis 
+  # para poder seguir evoluindo na linguagem R :)
