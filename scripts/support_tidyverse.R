@@ -1,4 +1,18 @@
 
+
+  #dataset
+  (titanic <- titanic::titanic_train)
+  
+  #note como na versão tibble o output é mais clean
+  tibble(titanic)
+  #mas a função que transforma em tibble existe em vários pacotes,
+  #inclusive essa mudança pode ser feita de outras formas, p.e.:
+  titanic <- as_tibble(titanic)
+  # se não tivessemos carregado a biblioteca do tidyverse, ou o dplyr,
+  # a função precisaria ser chamada da seguinte forma:
+  titanic <- dplyr::as_tibble(titanic)
+  
+
 # ::::: practice: Rbase vs. tidyverse (base titanic) -----
 
     install.packages("titanic")
@@ -146,33 +160,5 @@
             geom_histogram()
    
 
-# ::::: hands-on: manuseando dados (tidyverse - dplyr) -----
-    #No RStudio Learn Primers: #https://rstudio.cloud/learn/primers 
-    # faça os exercícios propostos na aba `Work with Data`,
-    # priorizando a seção `Derive Information with dplyr`
-    # https://rstudio.cloud/learn/primers/2.3
-                
-# ::::: hands-on: cheatsheet (dplyr) -----
-   #replicar os exemplos da cheatsheet do dplyr
-   #https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf
-   
-   
-# ::::: Refs -----
-    #comparação de sintaxe: Rbase vs. tidyverse vs. data.table
-        # https://github.com/mayer79/data_preparation_r
-                  
-    #link cheatsheets no site da rstudio: 
-    #note que ao fim da página você encontrará algumas cheatsheets em português
-        # https://rstudio.com/resources/cheatsheets/
 
-    #livros
-        #(inglês)
-        # R for Data Science, by by Garrett Grolemund, Hadley Wickham:
-        # https://r4ds.had.co.nz/ 
-           
-        #(português)
-        # Curso-R ~ material em português
-        # https://livro.curso-r.com/
-       
-    
                
