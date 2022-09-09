@@ -145,21 +145,25 @@
   # etapas que compõem o Ciclo de Análises da Ciência de Dados, proposto por
   # Hadley em seu livro `R for Data Science`: 
       #https://r4ds.had.co.nz/explore-intro.html
-  # No caso, temos as ações: ler, arrumar, um ciclo de transformar, visualizar e 
-  # modelar, com suas possíveis repetições cabíveis, e, por fim, comunicar.
+  # No caso, temos as ações: ler e arrumar os dados, isto é, deixá-lo em uma
+  # estrutura tidy, e então entramos em um circuito de transformar, visualizar 
+  # e modelar os dados, considerando a quantidade de repetições necessárias,  
+  # e, por fim, o ato de comunicar os resultados obtidos.
       
   # Note que aspectos como deploy e manutenção de modelos não estão sendo 
   # considerados neste flow. Isto porque, apesar da incontextável importância, 
-  # tais fases tendem a priorizar aspectos como integrações com sistemas, 
-  # performance, e questões tangentes. Enquanto que para o ciclo pontuado acima, 
-  # temos o entendimento e a modelagem do problema como meta principal.
+  # tais fases tendem a priorizar outros aspectos como: performance, 
+  # monitoramento, códigos gerenciáveis, infra, integrações com sistemas, enfim,
+  # habilidades que não necessariamente garantem uma boa análise de dados. 
+  # Enquanto que para o ciclo pontuado acima, temos o entendimento do dado, 
+  # bem como a modelagem do problema como o principal objetivo.
       
   #Voltando ao tidyverse, temos a implementação deste ciclo de ações por meio
   # da coleção de pacotes do tidyverse:
       # readr: leitura dos dados
       # tibble: opções para tratar estruturas de dados tidy
       # tidyr: reformulação de layout dos dados
-      # dplyr: manipulação de dados
+      # dplyr: manipulação/transformação de dados
       # ggplot2: criação de gráficos
       # purrr: programação funcional
       # forcats: operações com variáveis categoricas
@@ -183,7 +187,10 @@
       #ou 
       #lubridate::date()    
       
-
+  #Observação: você pode ter sentido falta de pacotes relacionados a etapa de
+  # modelagem, e existem algumas razões para isso, mas vou focar em uma: 
+  # existe um pacote chamado tidymodels que super resolve isso, falaremos 
+  # dele mais a frente no curso :)
       
 # ----- (avançado) Dialetos para Manipulação de Dados no R -----
   
