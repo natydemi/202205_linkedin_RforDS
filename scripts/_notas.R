@@ -1,3 +1,9 @@
+### TASKS
+
+# Modulo 01
+- tem umas coisas, mas vc tem que fazer os outros!!! Sai daqui!!!!!!
+  
+# Modulo 02
 
 # # ::::: hands-on: exportação de base de dados -----
 

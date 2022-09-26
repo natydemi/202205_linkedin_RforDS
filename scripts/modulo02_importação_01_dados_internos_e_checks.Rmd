@@ -1,0 +1,85 @@
+---
+title: "Dados Pré existentes e Verificações Iniciais"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
+```
+
+# Bibliotecas
+
+```{r}
+library(tidyverse)
+```
+
+
+# Dados pré existentes no R
+
+No R temos acesso a diversas bases de dados, para consultá-las podemos utilizar a função `data()`. E para cada biblioteca carregada, teremos uma atualização na lista de dados:
+
+```{r}
+data()
+```
+
+Estas bases de dados são diretamente acessíveis, por exemplo :
+```{r}
+AirPassengers
+```
+
+
+Mas para que os dados constem na janela de Environment, precisamos carregá-las de outra maneira, como `data("AirPassengers") ` ou :
+
+```{r}
+AirPassengers <- AirPassengers
+```
+
+
+## Pacotes com datasets
+
+- bases de dados usualmente encontradas na contexto de ciência de dados, traduzidas 
+  - dados::
+- bla bla bla
+  - pacman::
+- bla bla bla
+  - charlatan::
+- API do IBGE
+  - sidrar::
+
+
+Para explorar mais opções de dataset existentes em bibliotecas do R, recomendo o aplicavo Shiny: [Find R data that you need](https://marija-stanojcic.shinyapps.io/R_datasets/). Que permite que seja feita a pesquisa de bases de dados a partir da especificação de informações como número máximo de observações desejadas, a presença de determinados tipo de variáveis, ou alguma palavra chave relacionada. 
+
+
+## Sites com datasets
+
+Algumas opções de sites em que você poderá procurar por bases organizar segundo diferentes temáticas:
+
+- https://corgis-edu.github.io/corgis/ 
+- https://www.kaggle.com/datasets 
+- https://data.world/databeats 
+- https://cetic.br/pt/ 
+- https://www.gapminder.org/data/
+
+
+
+# Verificações iniciais
+
+Uma vez que tenhamos a base de dados é importante que o objeto seja examinado. Vamos fazer alguns destes checks iniciais considerando dados sobre os filmes da pixar, que podemos consultar por meio do pacote `pixarfilms` ou na sua versão traduzida por meio do pacote `dados`:
+
+```{r}
+pixar_filmes <- dados::pixar_filmes
+pixar_filmes
+```
+
+Podemos ver os dados por meio de funções como `View(pixar_filmes)`, `head(pixar_filmes)` ou `str(pixar_filmes)`. Mas neste curso utilizaremos com frequência a função `glimpse()`, onde podemos verificar o número de linhas e de colunas do dataset desejado, além de informações sobre cada coluna, no caso, os nomes, tipos, e primeiras observações.  
+
+```{r}
+pixar_filmes %>% glimpse()
+```
+
+Aqui temos um primeiro contato com um dos conceitos mais importantes para iniciar uma análise de dados: o entendimento dos tipos de dados. Podemos verificar se a coluna se trata do tipo: character, ou seja palavras, double, isto é números, data, entre outros Como uma prévia da importancia deste conceito, note que com a função `summary()` temos calculos diferentes a depender do tipo da variável, mas voltaremos neste ponto mais a frente. 
+
+```{r}
+pixar_filmes %>% summary()
+```
+
