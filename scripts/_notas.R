@@ -1,9 +1,28 @@
 ### TASKS
 
-# Modulo 01
+# Modulo 01 - descritivo: importação / exploração
 - tem umas coisas, mas vc tem que fazer os outros!!! Sai daqui!!!!!!
   
-# Modulo 02
+# Modulo 02 - diagnóstico: transformação / visualização
+
+  Mas para te ajudar tomar algumas decisões durante a elaboração de métricas e gráficos, os tipos de dados definidos acima, serão um importante aliado.
+  
+  
+# Modulo 03 - preditivo: dateprep / modelagem
+
+
+# Modulo 02 - diagnóstico: testes / comunicação
+
+  
+  
+  
+  
+
+
+
+
+
+
 
 # # ::::: hands-on: exportação de base de dados -----
 
