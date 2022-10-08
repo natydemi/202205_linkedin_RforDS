@@ -21,6 +21,66 @@
 
 
 
+# ::::: Hands-on: funções para análise descritiva -----
+
+#Vamos agora passar por algumas aplicações de funções estatísticas
+# built-in do R, considerando os dados mtcars
+
+#LEMBRETE: para mais informações sobre a base, acesse ?mtcars
+
+View(mtcars)
+
+#`head()` - retorna as primeiras linhas da base de dados, 
+# ou similarmente a função `tail()` que contempla as últimas linhas:
+head(mtcars)
+tail(mtcars)
+
+
+#`str()` - exibe a estrutura interna de um objeto, 
+# no caso da base de dados que estamos trabalhando por exemplo, temos: a
+# estrutura dos dados (data.frame), o número de linhas (32 observações) e 
+# colunas (11 variáveis), além da classe de cada uma das colunas, 
+# e uma amostra das primeiras observações de cada uma das colunas: 
+str(mtcars)
+
+
+# `summary()` - é uma função genérica usada para produzir resumos 
+# de resultados segundo várias funções descritivas, no caso de variáveis 
+# numéricas, por exemplo: 
+summary(mtcars)
+
+# `cor()` - apresenta a matriz de covariâncias     
+cor(mtcars)
+
+#`plot()` - retorna uma matriz de gráficos de dispersão 
+plot(mtcars)
+#`boxplot()` - retorna o gráfico boxplot 
+boxplot(mtcars)
+
+#como esta base faz parte do repertório básico do R, 
+# não a visualizamos na aba `Environment`, salvo se fizermos:
+data("mtcars")
+#ou
+mtcars <- mtcars  
+
+
+#DICA: para consultar mais funções estatísticas: help(package=stats) 
+
+#regressão: um exemplo em que ajustamos a variável qsec 
+# em função da variável carb:
+fit <- lm(qsec ~ carb, data = mtcars)  
+summary(fit)
+plot(fit)
+
+#excluindo o modelo
+rm(fit)
+
+#agora a variável qsec em função de todas as demais variáveis,
+# representadas pelo . (ponto) na equação:
+fit <- lm(qsec ~ ., data = mtcars)  
+summary(fit)
+plot(fit)
+
 
 
 

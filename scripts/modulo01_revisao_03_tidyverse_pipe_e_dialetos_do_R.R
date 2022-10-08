@@ -390,7 +390,7 @@
 # Unindo tabelas -----
   #merge(), left_join() e DT1[ DT2, on = ...]
   
-# Referências: -----   
+# ----- Referências: -----   
   
 # comparação entre os dialetos -----
   # https://github.com/mayer79/data_preparation_r
@@ -408,7 +408,7 @@
   # maneiras de escrever cada uma das ações acima. A proposta aqui se limita
   # a compartilhar uma visão inicial sobre cada uma das sintaxes.
 
-# Por que seguiremos com o tidyverse? -----
+# ----- Por que seguiremos com o tidyverse? -----
   # Tanto pela legibilidade dos códigos quanto pela comunidade madura, e hoje,
   # a maior do R. De modo que independente da introdução que será feita aqui,
   # você terá à disposição uma série de conteúdos gratuitos e acessíveis 

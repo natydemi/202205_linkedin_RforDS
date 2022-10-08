@@ -23,7 +23,7 @@ A etapa de importação de dados pode significar ler dados armazenados em arquiv
 
 ### Via point-and-click
 Para a leitura de arquivos tabulares, vamos primeiro considerar a opção Point-and-Click:
-`File > Import Dataset > From ... `, onde você poderá definir as especificações de leitura, mas tendo acesso aos comandos referentes as instruções dadas. De modo que você possa não apenas aprender os respectivos códigos, como também e principalmente garantir a reprodutibilidade da leitura.  
+`File > Import Dataset > From ... `, onde você poderá definir as especificações de leitura, tendo acesso aos comandos referentes às instruções dadas. De modo que você possa não apenas importar a sua base, mas também aprender os respectivos códigos, garantindo a garantir a reprodutibilidade da leitura.  
 
 Uma alternativa menos replicável é por meio do comando `file.choose()`, que abre um pop-up, onde você pode selecionar o seu arquivo de interesse.
 
@@ -52,7 +52,7 @@ read_csv(readr_example("mtcars.csv"))
 
 ## Dados de diferentes extensões
 
-O R dispõe de uma larga gama de bibliotecas relacionadas à leitura de dados:
+O R dispõe de uma larga gama de bibliotecas relacionadas à leitura de dados, abaixo temos algumas opções listadas:
 
 - readxl: para arquivos .xls e .xlsx.
 - feather: para compartilhar arquivos com Python e outras linguagens.
@@ -69,46 +69,55 @@ Além de  `DBI`, `sparklyr`, esta última particularmente interessante no contex
 
 ## Dados dos pacotes do R
 
-No R temos acesso a diversas bases de dados, para consultá-las podemos utilizar a função `data()`. E para cada biblioteca carregada, teremos uma atualização na lista de dados:
+No R existe também a opção de trabalhar com as bases de dados disponíveis na própria linguagem, para consultá-las podemos utilizar a função `data()`. Adicionalmente, existem muitas bases que acompanham as bibliotecas, de modo que para cada biblioteca carregada, teremos uma atualização na lista de dados:
 
 ```{r}
 data()
 ```
 
-Estas bases de dados são diretamente acessíveis, por exemplo :
+Estas bases de dados podem ser diretamente acessadas:
 
 ```{r}
 AirPassengers
 ```
 
 
-Mas para que os dados constem na janela de Environment, precisamos carregá-las de outra maneira, como `data("AirPassengers") ` ou :
+Mas para que os dados constem na janela de Environment, precisamos carregá-las por meio da função `data("AirPassengers") ` ou :
 
 ```{r}
 AirPassengers <- AirPassengers
 ```
 
 
-### Alguns pacotes legais para encontrar bases de dados
 
-  - dados:: disponibiliza a tradução para português de algumas das bases de dados mais usuais no contexto de tutorias de análise/ciência de dados.
+### Alguns pacotes legais do R para pesquisar bases de dados
 
-  - charlatan:: possibilita a construção de dados falsos a partir de especificações de temas ou de caracteristicas desejadas para as variáveis
+Conforme comentado, temos datasets que acompanham muitas bibliotecas, além de existirem pacotes com este enfoque, alguns exemplos anteriores: 
 
-  - sidrar:: fornece acesso direto aos dados do SIDRA - Sistema IBGE de Recuperação Automática.
+  - `dados::` disponibiliza a tradução para português de algumas das bases de dados mais usuais no contexto de tutorias de análise/ciência de dados.
+
+  - `charlatan::` possibilita a construção de dados falsos a partir de especificações de temas ou de caracteristicas desejadas para as variáveis.
+
+  - `sidrar::` fornece acesso direto aos dados do SIDRA - Sistema IBGE de Recuperação Automática.
+
+  - `microdatasus::` permite baixar dados de várias bases do Datasus (este pacote não está disponível no repositório oficial do R, o CRAN, sendo necessário fazer a instalação a partir do github).
+  
+  - `datasets.load::` provê uma interface para apresentar os conjuntos de dados disponíveis nos pacotes instalados (incluindo os que não estão carregados descarregados) - experimente por exemplo a função `datasets()` do pacote.
 
 
-Para explorar mais opções de dataset existentes em bibliotecas do R, este aplicavo Shiny é particularmente interessante: [Find R data that you need](https://marija-stanojcic.shinyapps.io/R_datasets/), algo como "encontre os dados do R que você precisa". Nele você pode pesquisar bases de dados a partir da especificação de informações como: número mínimo de observações desejadas, a presença de determinados tipo de variáveis, ou palavras-chave relacionadas. 
+Para explorar mais opções de dataset existentes em bibliotecas do R, este aplicativo Shiny é particularmente interessante: [Find R data that you need](https://marija-stanojcic.shinyapps.io/R_datasets/), algo como "encontre os dados do R que você precisa" em português. Nele você pode pesquisar bases de dados a partir da especificação de informações como: número mínimo de observações desejadas, a presença de determinados tipo de variáveis, ou palavras-chave relacionadas. 
+
 
 
 ### Alguns sites legais para pesquisar bases de dados
 
-Seguem algumas opções de sites em que você poderá procurar por bases de dados de diferentes temáticas e especialidades:
+Seguem algumas opções de sites em que você poderá pesquisar por bases de dados de diferentes temáticas e especialidades:
 
-- https://corgis-edu.github.io/corgis/ 
+- https://basedosdados.org/ 
+- https://cetic.br/pt/ 
 - https://www.kaggle.com/datasets 
 - https://data.world/databeats 
-- https://cetic.br/pt/ 
+- https://corgis-edu.github.io/corgis/ 
 - https://www.gapminder.org/data/
 
 
@@ -117,6 +126,14 @@ Seguem algumas opções de sites em que você poderá procurar por bases de dado
 # Exportação
 
 # Exportando um objeto criado 
+
+Para exportar um objeto do R é necessário especificar o nome do objetivo que consta no seu ambiente, o nome que você deseja dar para o arquivo, bem como a extensão, por exemplo:
+
+```{r}
+#exporte os dados em um arquivo .csv
+write_csv(mtcars, "base_exportada.csv")
+```
+
 
 Com a função `write_csv()`, também do pacote `readr` tendo como parametros o nome do objeto a ser exportado e o path, ou seja, o caminho onde você espera que o arquivo criado seja salvo. 
 
@@ -156,6 +173,9 @@ E assim como as demais funções, temos uma série de parâmetros, permitindo es
 
 
 # Trabalhando com Projetos
+
+Conforme apresentado anteriormente, para importar/exportar arquivos que não se encontram no diretório de trabalho corrente, podemos especificar o diretório em que o arquivo se encontra ("diretorio/arquivo.ext"), ou mudar o diretório de trabalho em si (setdw()). Existe ainda uma terceira alternativa: trabalhar com a opção de projetos do RStudio (.RProj). Nesta, o diretório em que o arquivo .RProj estiver salvo, passa a ser a pasta raiz de todas as análises. Assim todas as especificações dos arquivos de input/output, scripts, e etc, podem ser setados sem a necessidade de detalhar a localização exata do diretório. Tal prática, bem como a adoção de estruturas para a organização dos arquivos, facilitam a evolução e o compartilhamento do trabalho. Para criar um projeto no RStudio, é necessário clicar no ícone superior à direita, conforme a imagem abaixo:
+
 
 Existe ainda a alternativa de trabalhar com projetos (`.RProj`). Aqui, o diretório em que o arquivo `.RProj` estiver salvo, passa a ser a pasta raiz da análise. Para criar um projeto no RStudio, é necessário clicar no ícone superior à direita. 
 

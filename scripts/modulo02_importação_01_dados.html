@@ -497,20 +497,29 @@ carregada, teremos uma atualização na lista de dados:</p>
 carregá-las de outra maneira, como <code>data(&quot;AirPassengers&quot;)</code> ou
 :</p>
 <pre class="r"><code>AirPassengers &lt;- AirPassengers</code></pre>
-<div id="alguns-pacotes-legais-para-encontrar-bases-de-dados" class="section level3">
-<h3>Alguns pacotes legais para encontrar bases de dados</h3>
+<div id="alguns-pacotes-legais-do-r-para-pesquisar-bases-de-dados" class="section level3">
+<h3>Alguns pacotes legais do R para pesquisar bases de dados</h3>
 <ul>
-<li><p>dados:: disponibiliza a tradução para português de algumas das
-bases de dados mais usuais no contexto de tutorias de análise/ciência de
-dados.</p></li>
-<li><p>charlatan:: possibilita a construção de dados falsos a partir de
-especificações de temas ou de caracteristicas desejadas para as
-variáveis</p></li>
-<li><p>sidrar:: fornece acesso direto aos dados do SIDRA - Sistema IBGE
-de Recuperação Automática.</p></li>
+<li><p><code>dados::</code> disponibiliza a tradução para português de
+algumas das bases de dados mais usuais no contexto de tutorias de
+análise/ciência de dados.</p></li>
+<li><p><code>charlatan::</code> possibilita a construção de dados falsos
+a partir de especificações de temas ou de caracteristicas desejadas para
+as variáveis.</p></li>
+<li><p><code>sidrar::</code> fornece acesso direto aos dados do SIDRA -
+Sistema IBGE de Recuperação Automática.</p></li>
+<li><p><code>microdatasus::</code> permite baixar dados de várias bases
+do Datasus (este pacote não está disponível no repositório oficial do R,
+o CRAN, sendo necessário fazer a instalação a partir do
+github).</p></li>
+<li><p><code>datasets.load::</code> provê uma interface para apresentar
+os conjuntos de dados disponíveis nos pacotes instalados (incluindo os
+que não estão carregados descarregados) - experimente por exemplo a
+função <code>datasets()</code> do pacote.</p></li>
 </ul>
-<p>Para explorar mais opções de dataset existentes em bibliotecas do R,
-este aplicavo Shiny é particularmente interessante: <a href="https://marija-stanojcic.shinyapps.io/R_datasets/">Find R data
+<p>De maneira geral, por meio do Para explorar mais opções de dataset
+existentes em bibliotecas do R, este aplicavo Shiny é particularmente
+interessante: <a href="https://marija-stanojcic.shinyapps.io/R_datasets/">Find R data
 that you need</a>, algo como “encontre os dados do R que você precisa”.
 Nele você pode pesquisar bases de dados a partir da especificação de
 informações como: número mínimo de observações desejadas, a presença de
