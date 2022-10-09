@@ -9,10 +9,10 @@
 
 # Instalação R -----
 
-  # Para instalar o R o primeiro passo é entrar na página oficial do 
+  # Para instalar o R, o primeiro passo é entrar na página oficial do 
   # ‘The R Project for Statistical Computing’ (http://www.r-project.org/), 
   # e na sessão Downloads, opção CRAN, escolha o servidor do local mais 
-  # próximo a sua região. Ou vá direto em: 
+  # próximo à sua região. Ou vá direto em: 
     # https://cloud.r-project.org
       # escolha o seu sistema operacional e o subdiretório “base” 
       # faça o download da versão mais recente do programa
@@ -22,7 +22,7 @@
   # trabalho, busca do Windows, ou pelo executável que se encontra na pasta 
   # em que o R foi instalado.
 
-  # Neste ambiente via point-and-click temos opções que vão desde mudanças de 
+  # Neste ambiente, via point-and-click, temos opções que vão desde mudanças de 
   #diretórios até a instalação de bibliotecas. 
 
   #Tutorial: https://livro.curso-r.com/1-1-instalacao-do-r.html
@@ -30,7 +30,7 @@
 
 # Instalação RStudio -----
 
-  # O R que baixamos na sessão anterior se trata de um interpretador, e 
+  # O R que baixamos na sessão anterior é um interpretador, e 
   # portanto, disponibiliza poucos recursos em termos de usabilidade. 
   # Como alternativa podemos trabalhar com Ambientes de Desenvolvimento Integrados, 
   # ou IDEs (Integrated Development Environment), como são mais conhecidas. 
@@ -47,12 +47,12 @@
   
 # RStudio (Posit): muito mais que uma IDE ----- 
 
-  #	A RStudio não se trata apenas de uma IDE, mas também de uma empresa, uma 
+  #	RStudio não é apenas de uma IDE, mas também uma empresa, uma 
   # organização que tem por objetivo ajudar cientistas a dar sentido para o 
   # mundo por meio de dados.
 
-  # Em 2022 a RStudio passou a se chamar Posit (https://posit.co/), visando 
-  # ampliar sua comunidade e poder de atuação . 
+  # Em 2022, a RStudio passou a se chamar Posit (https://posit.co/), visando 
+  # ampliar sua comunidade e poder de atuação. 
 
   # Seja como Posit, seja como Rstudio, existem MUITOS materiais interessantes
   # voltados para profissionais que trabalham com dados, vale visitar ;)
@@ -61,7 +61,7 @@
 # Atualizando as versão do R e RStudio ----- 
 
   # Sobre updates: Atualizar a sua versão do R e do RStudio será importante 
-  # para garantir que você tenha acesso aos recursos mais atualizados. 
+  # para garantir que você tenha acesso aos recursos mais recentes. 
   # Sendo assim, seguem algumas dicas para: 
       # checar a versão do R: digite a função R.Version()
       # checar a versão do Rstudio: digite RStudio.Version()
@@ -88,7 +88,7 @@
 # Alternativa às instalações físicas ----- 
 
   #De maneira alternativa à instalação você pode consirar o RStudio Cloud,
-  # um serviço gratuito oferecido pelo RStudio que permite os usuários R 
+  # um serviço gratuito oferecido pelo RStudio que permite que os usuários R 
   # tenham acesso a todo o ambiente RStudio via web, de maneira on-line, 
   # inclusive permitindo colaboração, através do site do RStudio Cloud:
 
@@ -106,7 +106,7 @@
   
   #*Source - onde são abertos os scripts do R, ou seja, onde você irá 
   # escrever o código - sendo necessário enviá-lo manualmente para o Console,
-  # isto é, para execução, quando desejado. Para abrir um script podemos  
+  # isto é, para execução, quando desejado. Para criar um script podemos  
   # utilizar o point-and-click ‘File > New File > R Script’ 
   # ou por meio do atalho Ctrl+Shift+N
   
@@ -238,7 +238,7 @@
   #Uma função no R é um conjunto de instruções organizadas e parametrizadas,
   # visando a execução de uma tarefa.
   
-  #No R apenas com as funções builtins, podemos fazer desde gráficos e
+  #No R, apenas com as funções builtins, podemos fazer desde gráficos e
   # cálculos aritméticos, até análises descritivas e aplicação de
   # modelos estatísticos (deixei alguns spoilers na última seção do script).
   
@@ -279,7 +279,7 @@
   
   #Os Objetos podem ser nomeados com letras, números, e os símbolos `.` e `_`.
   # importante comentar que o R é case sensitive, ou seja, letras maiúsculas  
-  # e minúsculas são processados como caracteres diferentes.
+  # e minúsculas são processadas como caracteres diferentes.
   
   #sintaxe: letras minúsculas
   objeto <- 1 #atribuição da direita para a esquerda (RECOMENDADO)
@@ -305,7 +305,7 @@
   #atribuindo um elemento diretamente
   a <- 2; a
   
-  #ao rodar o comando, note que o a não é alterado
+  #ao rodar o comando, note que o valor de a não é alterado
   a + 1 
   a
   
@@ -376,8 +376,8 @@
 
 # ----- (avançado) -----
 # Um pouco mais sobre a linguagem R ----- 
-  #A partir daqui serão apresentados alguns recursos da linguagem R
-  # não será algo que utilizaremos de maneira direta no curso, 
+  #A partir daqui serão apresentados alguns recursos da linguagem R.
+  # Não será algo que utilizaremos de maneira direta no curso, 
   # mas que serão cruciais 
 
 # Estruturas de controle -----
@@ -416,7 +416,7 @@
   
   
   #if-else: similar ao comando `if()`, porém seguido de um segundo bloco, 
-  # em que será avaliado se, e somente se, o resultado do primeiro bloco 
+  # que será avaliado se, e somente se, o resultado do primeiro bloco 
   # for `FALSE`: 
   x <- 15
   
@@ -475,7 +475,7 @@
   
   #No R podemos criar as nossas próprias funções, por meio do objeto function(), 
   # isto permite a automação de atividades de forma: estruturada, consistente, 
-  # escalonável e reprodutível. Para criar tais funções existem três aspectos 
+  # escalável e reprodutível. Para criar tais funções existem três aspectos 
   # que devemos considerar: 
   #1) o nome do objeto criado para a função ser armazenada (que terá 
   # papel fundamental na legibilidade do código), 

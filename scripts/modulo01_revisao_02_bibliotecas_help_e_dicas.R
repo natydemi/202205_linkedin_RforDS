@@ -1,15 +1,15 @@
 
 # Módulo 01 - Revisão - Bibliotecas, Helps e Fontes de Pesquisa
  
-# Neste script você irá encontrar uma revisão sobre biblioteca no R, e  
-# maneiras de procurar ajuda . 
+# Neste script você irá encontrar uma revisão sobre bibliotecas no R, e  
+# maneiras de procurar ajuda. 
 
 # ----- Bibliotecas -----
 
 # O que são? -----
   #Bibliotecas são uma coleção de: funções, dados e códigos compilados.
   
-  #Tendo que uma função é um conjunto de instruções organizadas, visando
+  #Dado que uma função é um conjunto de instruções organizadas, visando
   # a execução de uma tarefa, podemos fazer uma analogia das bibliotecas 
   # com o papel que os livros assumem na nossa vida. Isto porque os livros  
   # nos permitem acessar conhecimentos relacionados a um tópico de interesse.
@@ -43,21 +43,21 @@
   
   dplyr::band_members
   
-  #está é, inclusive, uma boa prática em termos de programação, visto 
+  #esta é, inclusive, uma boa prática em termos de programação, por 
   #evitar problemas com funções homônimas (com o mesmo nome).
   
   #DICA: com `nome_da_biblioteca::` podemos consultar as funções da biblioteca
 
 # Mais sobre a instalação -----
 
-  #Nos seus códigos uma prática comum é manter um comando para instalar
+  #Nos seus códigos, uma prática comum é manter um comando para instalar
   # as bibliotecas utilizadas no seu script, no caso destas ainda não 
   # terem sido instaladas
   
   if(!require("dplyr")) install.packages("dplyr")
   
   
-  #A rede de distribuição oficial de bibliotecas do R, se chama CRAN, 
+  #A rede de distribuição oficial de bibliotecas do R se chama CRAN, 
   # mas existem também bibliotecas disponibilizadas via repositórios como 
   # o Bioconductor, o GitHub, ou mesmo via .zip
   
@@ -99,7 +99,7 @@ help("praise")
 # para busca, como alternativa use:
 ?praise::praise()
 
-#ATALHO: posicione o mouse na função que você tem interesse em 
+#ATALHO: posicione o cursor na função que você tem interesse em 
 # pesquisar, e digite F1.
 
 #No caso de consultas que envolvam objetos com caracteres especiais, 
@@ -110,10 +110,10 @@ help("praise")
 # funções, por meio de: `help.search()` ou `??`.
 ??median
 
-#erros: não se assuste quando ao tentar executar algum comando, ao receber 
-# uma mensagem procure ler esta com atenção, abstraindo possíveis termos
-# que você não conheça. Não se atentando aos detalhes, você terá uma indicação 
-# importante do que fazer, para resolver o seu problema.
+#erros: não se assuste quando ao tentar executar algum comando e algo der errado.
+# Ao receber uma mensagem de erro procure ler esta com atenção, abstraindo possíveis termos
+# que você não conheça. Mesmo não se atentando aos detalhes, você pode ter uma indicação 
+# importante do que fazer para resolver o seu problema.
 
 #Para pesquisas externas de forma geral (erros, bibliotecas, etc), 
 # é importante que você: escreva a letra `R` antecedendo as palavras-chave 
@@ -122,7 +122,7 @@ help("praise")
 # excluindo palavras. Se você puder fazer a pesquisa em inglês, encontrará mais materiais!
 
 #Na página do tidyverse, você encontrará materiais sobre como criar exemplos 
-# reprodutíveis para facilitar o compartilhamento da sua dúvida. Seguido
+# reprodutíveis para facilitar o compartilhamento da sua dúvida, seguido
 # de algumas sugestões de onde encontrar ajuda: https://www.tidyverse.org/help/#reprex 
 
 
