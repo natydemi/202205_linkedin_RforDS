@@ -403,8 +403,8 @@ respectivos códigos, e garantir a reprodutibilidade desta ação.</p>
 selecionar o seu arquivo de interesse.</p>
 <pre class="r"><code>#file.choose()</code></pre>
 </div>
-<div id="via-código" class="section level3">
-<h3>Via código</h3>
+<div id="via-código-para-o-seu-diretório-de-trabalho" class="section level3">
+<h3>Via código, para o seu diretório de trabalho</h3>
 <p>Apesar do R possuir várias funções default para leitura de dados,
 como <code>read.table()</code> por exemplo, daremos enfoque aqui as
 funções do pacote <code>readr</code> – uma das bibliotecas do universo
@@ -571,33 +571,39 @@ de dados de diferentes temáticas e especialidades:</p>
 </div>
 <div id="exportação" class="section level1">
 <h1>Exportação</h1>
-</div>
-<div id="exportando-um-objeto-criado" class="section level1">
-<h1>Exportando um objeto criado</h1>
-<p>Para exportar um objeto do R é necessário especificar o nome do
-objetivo que consta no seu ambiente, o nome que você deseja dar para o
-arquivo, bem como a extensão, por exemplo:</p>
+<div id="via-código-para-o-seu-diretório-de-trabalho-1" class="section level2">
+<h2>Via código, para o seu diretório de trabalho</h2>
+<p>Para exportar um objeto do R, como uma tabela por exemplo, é
+necessário especificar o nome que o objeto possui no seu environment,
+seguido do que chamamos de <code>path</code>, no caso mais simples, o
+path será apenas o nome que você pretende dar ao arquivo, e a extensão
+desejada, por exemplo:</p>
 <pre class="r"><code>#exporte os dados em um arquivo .csv
 write_csv(mtcars, &quot;base_exportada.csv&quot;)</code></pre>
-<p>Com a função <code>write_csv()</code>, também do pacote
-<code>readr</code> tendo como parametros o nome do objeto a ser
-exportado e o path, ou seja, o caminho onde você espera que o arquivo
-criado seja salvo.</p>
-<pre class="r"><code>state &lt;- mtcars
-
-#exporte os dados em um arquivo .csv
-write_csv(state, &quot;base_exportada.csv&quot;)</code></pre>
-<p>Para saber qual o diretório de trabalho corrente, utilizamos o
-comando <code>getwd()</code> (<em>get working directory</em>)</p>
-<pre class="r"><code>getwd()
-## [1] &quot;C:/Users/natyd/OneDrive/courses/intro_R_language/202205_linkedin_RforDS/scripts&quot;</code></pre>
-<p>Enquanto que para alterar o diretório de trabalho temos a função
-<code>setwd()</code> (<em>set working directory</em>).</p>
+<p>Mas onde o arquivo <code>base_exportada.csv</code>, criado acima se
+encontra no seu computador? Onde o arquivo foi salvo? É a resposta é: no
+seu diretório de trabalho, basicamente a pasta do seu computador que
+está sendo entendida pelo R como a sua pasta raiz, a sua pasta de
+referência.</p>
+<p>E para saber qual o seu diretório de trabalho atual, utilizamos o
+comando <code>getwd()</code> (<em>get working directory</em>), que
+retornará algo como “C:/Users/Documents”. Avalie qual o seu com o
+comando abaixo:</p>
+<pre class="r"><code>#getwd()</code></pre>
+<p>Em termos práticos, o diretório vai te ajudar a trabalhar de uma
+maneira mais prática e organizada. No caso de você ter interesse em
+alterar o diretório de trabalho, temos a função <code>setwd()</code>
+(<em>set working directory</em>), em que é possível passar
+especificações como: <code>setwd(&quot;C:/Users/Desktop&quot;)</code>.</p>
 <pre class="r"><code>#C:\\Users\\natyd\\Desktop
 setwd(&quot;C:/Users/natyd/Desktop&quot;)</code></pre>
-<p>Para a leitura de arquivos: <code>read_table</code>. Vamos ler o
-objeto que foi salvo, em um novo objeto.</p>
-<pre class="r"><code>state1 &lt;- read_csv(&quot;base_exportada.csv&quot;)
+<p>Como alternativa as funções comentadas, você pode explorar a aba
+<code>File</code> do RStudio, onde encontrará algumas opções
+point-and-click para navegar e manusear pelos diretórios.</p>
+<p>Note que com o comando abaixo, caso você não tenha alterado o seu
+diretório de trabalho, podemos importar a base anteriormente
+exportada.</p>
+<pre class="r"><code>base_exportada &lt;- read_csv(&quot;base_exportada.csv&quot;)
 ## Rows: 32 Columns: 11
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -605,7 +611,7 @@ objeto que foi salvo, em um novo objeto.</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-state1
+base_exportada
 ## # A tibble: 32 × 11
 ##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -620,45 +626,69 @@ state1
 ##  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
 ## 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
 ## # … with 22 more rows</code></pre>
-<p>Alternativamente podemos especificar o destino do arquivo de
-interesse, precedendo o nome do arquivo com o diretório desejado, p.e.:
-<code>write_delim(mtcars, file = &quot;C:/Users/mtcars.txt&quot;)</code> note que
-trabalhamos com barras simples (<code>/</code> ou <code>\\</code>) para
-especificação de diretórios.</p>
-<p>E assim como as demais funções, temos uma série de parâmetros,
-permitindo especificações de separadores, títulos e comentários, além de
-variações de extenção para consultar funções relacionadas pesquise os
-tópicos <code>??readr::read_</code> e <code>??readr::write_</code>.</p>
 </div>
-<div id="trabalhando-com-projetos" class="section level1">
-<h1>Trabalhando com Projetos</h1>
+</div>
+<div id="e-quando-os-arquivos-não-estão-no-diretório-de-trabalho" class="section level1">
+<h1>E quando os arquivos não estão no diretório de trabalho?</h1>
+<p>Você só precisa passar o endereço completo, similar ao que foi feito
+aqui: <code>readr_example(&quot;mtcars.csv&quot;)</code>. Basicamente o nome do
+deve ser precedido pelo diretório de origem, tanto para o caso de
+importação, quanto para exportação, algo como:
+<code>write_delim(mtcars, file = &quot;C:/Users/mtcars.txt&quot;)</code> por
+exemplo. Ah, uma dica: dependendo do seu sistema opracional, ou se
+existir algum caracter especial no seu path, você pode ter que trabalhar
+com: barras simples (<code>/</code>), barras invertidas (<code>/</code>)
+ou barras duplas (<code>\\</code>).</p>
+<div id="trabalhe-com-projetos-em-construção" class="section level2">
+<h2>Trabalhe com Projetos! – em construção</h2>
 <p>Conforme apresentado anteriormente, para importar/exportar arquivos
-que não se encontram no diretório de trabalho corrente, podemos
-especificar o diretório em que o arquivo se encontra
-(“diretorio/arquivo.ext”), ou mudar o diretório de trabalho em si
-(setdw()). Existe ainda uma terceira alternativa: trabalhar com a opção
-de projetos do RStudio (.RProj). Nesta, o diretório em que o arquivo
-.RProj estiver salvo, passa a ser a pasta raiz de todas as análises.
-Assim todas as especificações dos arquivos de input/output, scripts, e
-etc, podem ser setados sem a necessidade de detalhar a localização exata
-do diretório. Tal prática, bem como a adoção de estruturas para a
-organização dos arquivos, facilitam a evolução e o compartilhamento do
-trabalho. Para criar um projeto no RStudio, é necessário clicar no ícone
-superior à direita, conforme a imagem abaixo:</p>
-<p>Existe ainda a alternativa de trabalhar com projetos
-(<code>.RProj</code>). Aqui, o diretório em que o arquivo
-<code>.RProj</code> estiver salvo, passa a ser a pasta raiz da análise.
-Para criar um projeto no RStudio, é necessário clicar no ícone superior
-à direita.</p>
-<p>Este recurso é especialmente importante para garantir
-reprodutibilidade no seu trabalho, seja para que outras pessoas consigam
-executar o seu código, seja você mesmo faze-lo em outro ambiente. Aqui
-vale comentar que replicabilidade é um dos princípios básicos do método
+que não se encontram no diretório de trabalho, podemos especificar o
+path de origem do arquivo (“diretorio/arquivo.extensão”), ou mudar o
+diretório de trabalho em si (<code>setwd()</code>). Contudo existe ainda
+uma terceira alternativa (a melhor de todas!): trabalhar com a opção de
+projetos do RStudio (<code>.RProj</code>). Nesta, o diretório em que o
+arquivo .RProj estiver salvo, passa a ser a pasta raiz das análises. De
+modo que se você garantir que todos as pastas e arquivos que estão sendo
+utilizados estejam na mesma pasta (ou subpastas) do .Rproj, será
+possível reproduzir as suas análises em outros ambientes, sem que seja
+necessário corrigir nenhum dos paths.</p>
+<p>Para ilustrar um pouco melhor, sem trabalhar com projetos, se você me
+enviar uma pasta com a sua análise, e a primeira linha de um dos scripts
+for algo como <code>setwd(&quot;C:/Users/seu_nome/Desktop&quot;)</code>, para que
+eu consiga rodar na minha máquina, vou precisar alterar o código para
+algo como <code>setwd(&quot;C:/Users/meu_nome/Desktop&quot;)</code>. Enquanto que
+ao trabalhar com projetos, os códigos já teriam como referência o local
+em que eu tiver salvo a pasta recebida.</p>
+<p>Então seja para que outras pessoas consigam executar o seu código,
+seja para que você mesmo (a) possa trocar de ambiente sem se preocupar
+de atualizar os path para toda e qualquer especificação de arquivos,
+scripts, e etc, basta enviar a pasta dos arquivos necessários, o
+<code>.Rproj</code> na raiz, e os paths construidos de maneira relativa
+que voilà, todos os seus códigos estarão reprodutíveis! . E aqui vale
+comentar que replicabilidade é um dos princípios básicos do método
 científico, e se estamos falando de <strong>ciência</strong> de dados,
-nada mais justo, certo?</p>
-<p>Uma dica: explore o pacote <code>usethis</code>, particularmente a
-função <code>usethis::create_project()</code>. Esta cria um novo arquivo
-de projeto já com uma estrutura de pasta organizada.</p>
+nada mais justo, certo? ;)</p>
+<p>E como criar esse tal <code>.Rproj</code>, é simples: basta apenas
+clicar no ícone superior à direita.</p>
+</div>
+<div id="estrutura-de-pastas-e-organização-de-arquivos" class="section level2">
+<h2>Estrutura de pastas e organização de arquivos</h2>
+<p>Tal prática, bem como a adoção de estruturas para a organização dos
+arquivos, facilitam a evolução e o compartilhamento do trabalho.</p>
+</div>
+</div>
+<div id="arquivos-.rmd-vs-.r" class="section level1">
+<h1>arquivos .Rmd vs .R</h1>
+</div>
+<div id="hands-on" class="section level1">
+<h1>HANDS-ON</h1>
+<p>Que tal conhecer um pouco mais sobre as opções de funções do pacote
+<code>readr</code>? Uma forma bacana de fazer isso é por meio do help
+com duas interrogações: <code>??readr::read_</code> e
+<code>??readr::write_</code>.</p>
+<p>Ou ainda, explorar o pacote <code>usethis</code>, particularmente a
+função <code>usethis::create_project()</code>, que cria um projeto e
+toda uma estrutura de pastas.</p>
 </div>
 
 
