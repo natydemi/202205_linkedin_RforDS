@@ -385,19 +385,19 @@ Ambiente R</h1>
 <div id="dados-tabulares-externos" class="section level2">
 <h2>Dados tabulares externos</h2>
 <p>A etapa de importação de dados pode significar ler dados armazenados
-em arquivos de diferentes extensões, provenientes de outras ferramentas,
-APIs da Web, e etc. Aqui iremos dar enfoque na leitura de dados
-tabulares, isto é, arquivos que possuem características retangulares,
-como por exemplo arquivos excel ou .csv.</p>
+em arquivos das mais diferentes extensões, ou ainda provenientes de
+fontes como APIs, ou diretamente de sites (webscrapping – raspagem de
+dados). Aqui iremos dar enfoque na leitura de dados tabulares, isto é,
+arquivos que possuem características retangulares, como por exemplo
+arquivos excel ou .csv.</p>
 <div id="via-point-and-click" class="section level3">
 <h3>Via point-and-click</h3>
-<p>Para a leitura de arquivos tabulares, vamos primeiro considerar a
-opção Point-and-Click:
-<code>File &gt; Import Dataset &gt; From ...</code>, onde você poderá
-definir as especificações de leitura, mas tendo acesso aos comandos
-referentes as instruções dadas. De modo que você possa não apenas
-aprender os respectivos códigos, como também e principalmente garantir a
-reprodutibilidade da leitura.</p>
+<p>Para a leitura de arquivos tabulares, temos a opção Point-and-Click
+no RStudio: <code>File &gt; Import Dataset &gt; From ...</code>, onde
+você poderá especificar detalhes relacionados a leitura, mas tendo
+também à construção dos comandos referentes as instruções dadas. De modo
+que você possa não apenas importar a sua base, mas também aprender os
+respectivos códigos, e garantir a reprodutibilidade desta ação.</p>
 <p>Uma alternativa menos replicável é por meio do comando
 <code>file.choose()</code>, que abre um pop-up, onde você pode
 selecionar o seu arquivo de interesse.</p>
@@ -407,11 +407,12 @@ selecionar o seu arquivo de interesse.</p>
 <h3>Via código</h3>
 <p>Apesar do R possuir várias funções default para leitura de dados,
 como <code>read.table()</code> por exemplo, daremos enfoque aqui as
-funções do pacote <code>readr</code> – uma das bibliotecas do tidyverse.
-Abaixo seguem alguns exemplos para a leitura de um arquivo que
-denominaremos de forma genérica como “file” – assumindo que este esteja
-no seu diretório corrente de trabalho, considerando diferentes possíveis
-extensões e delimitadores que este arquivo possa vir a ter:</p>
+funções do pacote <code>readr</code> – uma das bibliotecas do universo
+tidyverse. Abaixo seguem alguns exemplos para a leitura de um arquivo
+que denominaremos de forma genérica como “file” – assumindo que este
+esteja no seu diretório corrente de trabalho (falaremos mais sobre isto
+mais a frente), considerando diferentes possíveis extensões e
+delimitadores que este arquivo possa vir a ter:</p>
 <ul>
 <li>read_csv(“file.csv”) - lê arquivos delimitados por vírgula</li>
 <li>read_csv2(“file.csv”) - lê arquivos delimitados por ponto e
@@ -422,15 +423,25 @@ tabulação (exemplo dado para o delimitador |)</li>
 largura fixa (exemplo dado para o padrão 1,3,5)</li>
 </ul>
 <p>Importante ressaltar que em todos os casos é possível especificar
-características do arquivo, por meio de parâmetros como: nome das
-colunas, cabeçalho, linhas para serem puladas, ou ainda a
-pré-especificação da classe de cada uma das colunas do arquivo. Contudo,
-no caso deste último parâmetro não ser listado, as funções do
-<code>readr</code> irão “adivinhar” a classe das colunas, retornando uma
-mensagem com tais informações.</p>
-<p>Como exemplo vamos utilizar um dos arquivos de exemplo do próprio
-pacote:</p>
-<pre class="r"><code>read_csv(readr_example(&quot;mtcars.csv&quot;))
+características do arquivo, considerandoparâmetros como: nome das
+colunas, cabeçalho, linhas para serem ignoradas, ou ainda a
+pré-especificação da classe de cada uma das colunas do arquivo
+(falaremos mais sobre classes ao passarmos para a etapa
+<code>inspeções</code>). Contudo, no caso deste último parâmetro não ser
+listado, as funções do <code>readr</code> irão “adivinhar” a classe das
+colunas, retornando uma mensagem com tais informações.</p>
+<p>Como exemplo vamos utilizar ler um arquivo que acompanha a instalação
+da biblioteca, para que o R encontre este arquivo, precisamos
+compartilhar o seu diretório. Felizmente o pacote readr possui uma
+função que nos retorna a localização exata dos seus dados para
+teste:</p>
+<pre class="r"><code>readr_example(&quot;mtcars.csv&quot;)
+## [1] &quot;C:/Users/natyd/AppData/Local/R/win-library/4.2/readr/extdata/mtcars.csv&quot;
+#dica: explore as demais opções da função `readr_example`</code></pre>
+<p>Assim, sabendo onde está arquivo, o seu diretório, ou ainda o seu
+<code>path</code>, podemos fazer a leitura:</p>
+<pre class="r"><code>path &lt;- readr_example(&quot;mtcars.csv&quot;)
+read_csv(path)
 ## Rows: 32 Columns: 11
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -451,34 +462,50 @@ pacote:</p>
 ##  8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
 ##  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
 ## 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
-## # … with 22 more rows
-#dica: explore as demais opções da função `readr_example`</code></pre>
+## # … with 22 more rows</code></pre>
+<p>Durante o capítulo de exportação vamos discutir um pouco mais sobre
+diretórios, mas note que o importante aqui é saber onde o seu arquivo se
+encontra, e indicar esta informação como parâmetro da função.</p>
 </div>
 </div>
 <div id="dados-de-diferentes-extensões" class="section level2">
 <h2>Dados de diferentes extensões</h2>
 <p>O R dispõe de uma larga gama de bibliotecas relacionadas à leitura de
-dados:</p>
+dados nos mais diferentes contextos, abaixo temos algumas destas
+opções:</p>
 <ul>
-<li>readxl: para arquivos .xls e .xlsx.</li>
-<li>feather: para compartilhar arquivos com Python e outras
+<li><code>readxl</code>: arquivos .xls e .xlsx.</li>
+<li><code>googlesheets4</code>: arquivos</li>
+<li><code>feather</code>: compartilhar arquivos com Python e outras
 linguagens.</li>
-<li>haven: para trabalhar com arquivos do SPSS, SAS e Stata.</li>
-<li>httr: para web apps.</li>
-<li>jsonlite: para JSON arquivos.</li>
-<li>rvest: para web scraping.</li>
-<li>xml2: para XML.</li>
+<li><code>haven</code>: trabalhar com arquivos do SPSS, SAS e
+Stata.</li>
+<li><code>DBI</code> / <code>odbc</code> : conexão de base de dados
+(SQL)</li>
+<li><code>rvest</code> / <code>httr</code>: web scraping.</li>
+<li><code>jsonlite</code>: para JSON arquivos.</li>
+<li><code>xml2</code>: para XML.</li>
 </ul>
-<p>Além de <code>DBI</code>, <code>sparklyr</code>, esta última
-particularmente interessante no contexto de Big Data.</p>
+<p>E apesar de não haver a intenção de ser extensiva aqui, gostaria de
+comentar também do pacote <code>sparklyr</code>, que fornece uma
+interface com o Apache Spark, recurso de extrema relevância no contexto
+de Big Data.</p>
 </div>
 <div id="dados-dos-pacotes-do-r" class="section level2">
 <h2>Dados dos pacotes do R</h2>
-<p>No R temos acesso a diversas bases de dados, para consultá-las
-podemos utilizar a função <code>data()</code>. E para cada biblioteca
-carregada, teremos uma atualização na lista de dados:</p>
-<pre class="r"><code>data()</code></pre>
-<p>Estas bases de dados são diretamente acessíveis, por exemplo :</p>
+<p>No R existe também a opção de trabalhar com as bases de dados
+disponíveis pela própria linguagem, para consultar as opções default,
+podemos utilizar a função <code>data()</code>. Porém não para por aí,
+pois existem muitas bases que acompanham as bibliotecas, de modo que
+para cada biblioteca instalada/carregada, teremos uma atualização nesta
+lista, compare:</p>
+<pre class="r"><code>#data()
+
+#library(dados)
+
+#data()</code></pre>
+<p>As bases de dados que constam aqui, podem ser diretamente
+acessadas:</p>
 <pre class="r"><code>AirPassengers
 ##      Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 ## 1949 112 118 132 129 121 135 148 148 136 119 104 118
@@ -494,11 +521,13 @@ carregada, teremos uma atualização na lista de dados:</p>
 ## 1959 360 342 406 396 420 472 548 559 463 407 362 405
 ## 1960 417 391 419 461 472 535 622 606 508 461 390 432</code></pre>
 <p>Mas para que os dados constem na janela de Environment, precisamos
-carregá-las de outra maneira, como <code>data(&quot;AirPassengers&quot;)</code> ou
+carregá-las por meio da função <code>data(&quot;AirPassengers&quot;)</code> ou
 :</p>
 <pre class="r"><code>AirPassengers &lt;- AirPassengers</code></pre>
 <div id="alguns-pacotes-legais-do-r-para-pesquisar-bases-de-dados" class="section level3">
 <h3>Alguns pacotes legais do R para pesquisar bases de dados</h3>
+<p>Conforme comentado, temos datasets que acompanham as bibliotecas, e
+existem pacotes tendo como enfoque facilitar o acesso aos dados:</p>
 <ul>
 <li><p><code>dados::</code> disponibiliza a tradução para português de
 algumas das bases de dados mais usuais no contexto de tutorias de
@@ -517,23 +546,24 @@ os conjuntos de dados disponíveis nos pacotes instalados (incluindo os
 que não estão carregados descarregados) - experimente por exemplo a
 função <code>datasets()</code> do pacote.</p></li>
 </ul>
-<p>De maneira geral, por meio do Para explorar mais opções de dataset
-existentes em bibliotecas do R, este aplicavo Shiny é particularmente
-interessante: <a href="https://marija-stanojcic.shinyapps.io/R_datasets/">Find R data
-that you need</a>, algo como “encontre os dados do R que você precisa”.
-Nele você pode pesquisar bases de dados a partir da especificação de
-informações como: número mínimo de observações desejadas, a presença de
-determinados tipo de variáveis, ou palavras-chave relacionadas.</p>
+<p>Para explorar mais opções de dataset existentes em bibliotecas do R,
+este aplicativo Shiny é particularmente interessante: <a href="https://marija-stanojcic.shinyapps.io/R_datasets/">Find R data
+that you need</a>, algo como “encontre os dados do R que você precisa”
+em português. Nele você pode pesquisar bases de dados a partir da
+especificação de informações como: número mínimo de observações
+desejadas, a presença de determinadas classes de dados, ou
+palavras-chave relacionadas.</p>
 </div>
 <div id="alguns-sites-legais-para-pesquisar-bases-de-dados" class="section level3">
 <h3>Alguns sites legais para pesquisar bases de dados</h3>
-<p>Seguem algumas opções de sites em que você poderá procurar por bases
+<p>Seguem algumas opções de sites em que você poderá pesquisar por bases
 de dados de diferentes temáticas e especialidades:</p>
 <ul>
-<li><a href="https://corgis-edu.github.io/corgis/" class="uri">https://corgis-edu.github.io/corgis/</a></li>
+<li><a href="https://basedosdados.org/" class="uri">https://basedosdados.org/</a></li>
+<li><a href="https://cetic.br/pt/" class="uri">https://cetic.br/pt/</a></li>
 <li><a href="https://www.kaggle.com/datasets" class="uri">https://www.kaggle.com/datasets</a></li>
 <li><a href="https://data.world/databeats" class="uri">https://data.world/databeats</a></li>
-<li><a href="https://cetic.br/pt/" class="uri">https://cetic.br/pt/</a></li>
+<li><a href="https://corgis-edu.github.io/corgis/" class="uri">https://corgis-edu.github.io/corgis/</a></li>
 <li><a href="https://www.gapminder.org/data/" class="uri">https://www.gapminder.org/data/</a></li>
 </ul>
 </div>
@@ -544,6 +574,11 @@ de dados de diferentes temáticas e especialidades:</p>
 </div>
 <div id="exportando-um-objeto-criado" class="section level1">
 <h1>Exportando um objeto criado</h1>
+<p>Para exportar um objeto do R é necessário especificar o nome do
+objetivo que consta no seu ambiente, o nome que você deseja dar para o
+arquivo, bem como a extensão, por exemplo:</p>
+<pre class="r"><code>#exporte os dados em um arquivo .csv
+write_csv(mtcars, &quot;base_exportada.csv&quot;)</code></pre>
 <p>Com a função <code>write_csv()</code>, também do pacote
 <code>readr</code> tendo como parametros o nome do objeto a ser
 exportado e o path, ou seja, o caminho onde você espera que o arquivo
@@ -597,6 +632,19 @@ tópicos <code>??readr::read_</code> e <code>??readr::write_</code>.</p>
 </div>
 <div id="trabalhando-com-projetos" class="section level1">
 <h1>Trabalhando com Projetos</h1>
+<p>Conforme apresentado anteriormente, para importar/exportar arquivos
+que não se encontram no diretório de trabalho corrente, podemos
+especificar o diretório em que o arquivo se encontra
+(“diretorio/arquivo.ext”), ou mudar o diretório de trabalho em si
+(setdw()). Existe ainda uma terceira alternativa: trabalhar com a opção
+de projetos do RStudio (.RProj). Nesta, o diretório em que o arquivo
+.RProj estiver salvo, passa a ser a pasta raiz de todas as análises.
+Assim todas as especificações dos arquivos de input/output, scripts, e
+etc, podem ser setados sem a necessidade de detalhar a localização exata
+do diretório. Tal prática, bem como a adoção de estruturas para a
+organização dos arquivos, facilitam a evolução e o compartilhamento do
+trabalho. Para criar um projeto no RStudio, é necessário clicar no ícone
+superior à direita, conforme a imagem abaixo:</p>
 <p>Existe ainda a alternativa de trabalhar com projetos
 (<code>.RProj</code>). Aqui, o diretório em que o arquivo
 <code>.RProj</code> estiver salvo, passa a ser a pasta raiz da análise.
