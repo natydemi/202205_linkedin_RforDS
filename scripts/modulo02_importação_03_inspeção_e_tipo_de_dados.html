@@ -382,9 +382,11 @@ pre code {
 <div id="inspeções-iniciais" class="section level1">
 <h1>Inspeções iniciais</h1>
 <p>Após fazer a importação de uma base de dados é importante que o
-objeto seja minimamente examinado. Vamos fazer alguns destes checks
-iniciais considerando dados sobre os filmes da pixar, que podemos
-consultar por meio do pacote <code>pixarfilms</code>. Ou na sua versão
+objeto seja minimamente examinado, em termos de volumetrias, suas
+dimensões (linhas e colunas) e como tais informações estão sendo
+entendidas pela linguagem. Vamos iniciar discutir sobre tais checks
+iniciais considerando dados dos filmes da pixar, que podem ser
+consultados por meio do pacote <code>pixarfilms</code>, ou na sua versão
 traduzida para português, disponível no pacote <code>dados</code>:</p>
 <pre class="r"><code>pixar_filmes &lt;- dados::pixar_filmes
 pixar_filmes
@@ -402,9 +404,10 @@ pixar_filmes
 ##  9 9                WALL-E              2008-06-27           98 Livre           
 ## 10 10               Up - Altas Aventur… 2009-05-29           96 Orientação pare…
 ## # … with 17 more rows</code></pre>
-<p>De maneira alternativa, podemos considerar também funções como:
-<code>View(pixar_filmes)</code>, <code>str(pixar_filmes)</code> ou
-<code>tail(pixar_filmes)</code>.</p>
+<p>Como maneiras alternativas para visualizar os dados, podemos
+considerar também funções como: <code>View(pixar_filmes)</code>,
+<code>str(pixar_filmes)</code>, <code>tail(pixar_filmes)</code>, ou
+ainda:</p>
 <pre class="r"><code>pixar_filmes %&gt;% head()
 ## # A tibble: 6 × 5
 ##   ordem_lancamento filme                data_lancamento duracao classificacao_i…
@@ -417,15 +420,18 @@ pixar_filmes
 ## 6 6                Os Incríveis         2004-11-05          115 Orientação pare…</code></pre>
 <div id="linhas-colunas-e-suas-nomenclaturas" class="section level2">
 <h2>Linhas, colunas e suas nomenclaturas</h2>
-<p>Vale comentar que, devido a natureza multidiciplinar da área, é
-relativamente comum encontrar diferentes nomenclaturas para as mesmas
-“entidades”. Neste curso, em que iremos trabalhar basicamente com dados
-tabulares, iremos nos referir às linhas das bases como observações e às
+<p>Antes de seguirmos gostaria de alertar que é relativamente comum
+encontrar diferentes nomenclaturas para as mesmas “entidades” no
+contexto de análise de dados, o que pode ser particularmente confuso
+para quem está iniciando na área. E não se preocupe, a área possui uma
+natureza multidiciplinar, tais variações são naturais. Neste curso, em
+que vamos trabalhar basicamente com dados tabulares, iremos nos referir
+às linhas das bases como observações, unidades observacionais, e as
 colunas como variáveis, ou ainda features (este último sendo mais usual
 no contexto de modelagem, que veremos mais à frente). Por fim, para
 fazer referencia a intersecção entre variáveis e observações,
 utilizaremos o termo “elementos da tabela”.</p>
-<p>Para examinarmos a quantidade de linhas e colunas da base, podemos
+<p>Para examinarmos as quantidade de linhas e colunas da base, podemos
 trabalhar com funções como:</p>
 <pre class="r"><code>#linhas
 pixar_filmes %&gt;% nrow()
@@ -438,7 +444,7 @@ pixar_filmes %&gt;% ncol()
 #ou ambas
 pixar_filmes %&gt;% dim()
 ## [1] 27  5</code></pre>
-<p>Para o caso de desejarmos checar o nome das colunas da tabela:</p>
+<p>Para o caso de desejarmos checar o nome das variáveis da tabela:</p>
 <pre class="r"><code>pixar_filmes %&gt;% names()
 ## [1] &quot;ordem_lancamento&quot;         &quot;filme&quot;                   
 ## [3] &quot;data_lancamento&quot;          &quot;duracao&quot;                 
@@ -446,7 +452,7 @@ pixar_filmes %&gt;% dim()
 <p>E apesar de existirem muitas funções importantes que podem nos ajudar
 na investigação inicial de uma base de dados, neste curso iremos
 priorizar a função <code>glimpse()</code>. Visto esta nos permitir
-verificar: as dimensões do dataset estudado, os nomes das colunas, suas
+verificar: as dimensões do dataset, os nomes das colunas, suas
 respectivas classes, e uma amostra das primeiras observações de cada
 variável:</p>
 <pre class="r"><code>pixar_filmes %&gt;% glimpse()
@@ -467,11 +473,11 @@ base <code>pixar_filmes</code> podemos observar as classes: character (
 &lt;chr&gt; ), indicando as coluna que possuem strings, ou seja,
 palavras; double ( &lt;dbl&gt; ), isto é, números; e date ( &lt;date&gt;
 ), basicamente, datas. E saber sobre a classe de cada coluna é
-extremamente importante, pois nos permite identificar o tipo do dado,
-matemáticamente falando, e, consequentemente, quais calculos que fazem
-ou não sentido de serem aplicados. Observe o exemplo abaixo e reflita:
-sendo a coluna <code>filme</code> uma palavra, faria sentido termos o
-cálculo de média ?</p>
+extremamente importante, pois nos permite identificar o tipo do dado, um
+conceito matemático que nos guia sobre quais calculos que fazem ou não
+sentido de serem aplicados. Por exemplo, observe o exemplo abaixo e
+reflita: sendo a coluna <code>filme</code> uma palavra, faria sentido
+termos o cálculo de média?</p>
 <pre class="r"><code>pixar_filmes %&gt;% summary()
 ##  ordem_lancamento      filme           data_lancamento         duracao     
 ##  Length:27          Length:27          Min.   :1995-11-22   Min.   : 81.0  
@@ -489,14 +495,24 @@ cálculo de média ?</p>
 ##                          
 ##                          
 ## </code></pre>
+<p>Você pode se perguntar como o R identifica as classes das variáveis,
+e em geral é por meio de regras lógicas, por exemplo: se tivermos uma
+string em uma coluna, não tem como esta variável ser numérica, certo?
+Bem, quase. Pois se tivermos uma coluna com valores monetários, por
+exemplo, é razoável que o número seja precedido do simbolo de
+<code>R$</code>, o ponto é que esta string precisa ser devidamente
+mapeada para que a variável não seja internalizada de maneira
+errada.</p>
 </div>
 <div id="alterando-a-classe-de-uma-coluna" class="section level2">
 <h2>Alterando a classe de uma coluna</h2>
-<p>Note que não necessariamente o computador irá interpretar a variável
-de maneira coerente com a informação que esta representa. Como exemplo
-temos a <code>ordem_lancamento</code>, em que faria sentido aplicar
-cálculos como mínimo, ou máximo. Porém, por estar sendo interpretada
-como uma variável da classe <code>character</code>, não nos permite tais
+<p>Se não necessariamente o computador irá interpretar os dados de
+maneira coerente com a informação que a variável se propõe a
+representar, é importante que possamos ajustar tais interpretações, no
+caso, ajustando as classes. Como exemplo temos a
+<code>ordem_lancamento</code>, em que faria sentido aplicar cálculos
+como mínimo, ou máximo, porém, por estar sendo interpretada como uma
+variável da classe <code>character</code>, não nos permite tais
 estatísticas:</p>
 <pre class="r"><code>dados::pixar_filmes %&gt;% 
   select(ordem_lancamento) %&gt;% 
@@ -505,7 +521,7 @@ estatísticas:</p>
 ##  Length:27         
 ##  Class :character  
 ##  Mode  :character</code></pre>
-<p>Contudo, é possível ajusta-la, alternando para o tipo numérico:</p>
+<p>Agora, alterando esta coluna para o tipo numérico:</p>
 <pre class="r"><code>dados::pixar_filmes %&gt;% 
   select(ordem_lancamento) %&gt;% 
   mutate(ordem_lancamento = as.numeric(ordem_lancamento)) %&gt;% 
@@ -519,10 +535,11 @@ estatísticas:</p>
 ##  Max.   :27.0</code></pre>
 </div>
 </div>
-<div id="classes-do-r-e-tipos-de-dados" class="section level1">
-<h1>Classes do R e Tipos de Dados</h1>
+<div id="classes-do-r-e-tipos-de-dados-da-estatística" class="section level1">
+<h1>Classes do R e Tipos de Dados da Estatística</h1>
 <p>Existem algumas maneiras de classificar os diferentes tipos de dados
-de uma perspectiva matemática, aqui iremos considerar a organização:</p>
+segunda a perspectiva da estatística, aqui iremos considerar a
+organização:</p>
 <ul>
 <li>variáveis qualitativas (categóricas)
 <ul>
@@ -566,24 +583,44 @@ para uma análise de dados:</p>
 <pre class="r"><code>(dados_pixar &lt;- dados::pixar_filmes %&gt;% 
   left_join(dados::pixar_avalicao_publico) %&gt;% 
   select(-ordem_lancamento, -nota_metacritic, -nota_critics_choice) %&gt;% 
-  mutate(duracao = as.integer(duracao)) %&gt;% 
+  mutate(nota_rotten_tomatoes = as.integer(nota_rotten_tomatoes)) %&gt;% 
   mutate(classificacao_indicativa  = as_factor(classificacao_indicativa)) %&gt;% 
   mutate(nota_cinema_score = as.ordered(nota_cinema_score)) %&gt;% 
-  mutate(classificacao_livre  = if_else(classificacao_indicativa == &quot;Livre&quot;, TRUE, FALSE))) %&gt;% 
-  glimpse()
+  mutate(classificacao_livre  = if_else(classificacao_indicativa == &quot;Livre&quot;, TRUE, FALSE)) %&gt;% 
+  relocate(nota_cinema_score, .after = filme) %&gt;% 
+  relocate(classificacao_indicativa, .after = filme) %&gt;% 
+  relocate(where(is.numeric), .after = nota_cinema_score) %&gt;% 
+  glimpse())
+## Warning in gzfile(file, mode): não foi possível abrir o arquivo comprimido &#39;C:/
+## Users/natyd/AppData/Local/Temp/RtmpU90HWW\file19fc7d601213&#39;, motivo provável &#39;No
+## such file or directory&#39;
 ## Joining, by = &quot;filme&quot;
 ## Rows: 27
 ## Columns: 7
 ## $ filme                    &lt;chr&gt; &quot;Toy Story - Um Mundo de Aventuras&quot;, &quot;Vida de…
-## $ data_lancamento          &lt;date&gt; 1995-11-22, 1998-11-25, 1999-11-24, 2001-11-…
-## $ duracao                  &lt;int&gt; 81, 95, 92, 92, 100, 115, 117, 111, 98, 96, 1…
 ## $ classificacao_indicativa &lt;fct&gt; Livre, Livre, Livre, Livre, Livre, Orientação…
-## $ nota_rotten_tomatoes     &lt;dbl&gt; 100, 92, 100, 96, 99, 97, 74, 96, 95, 98, 98,…
 ## $ nota_cinema_score        &lt;ord&gt; A, A, A+, A+, A+, A+, A, A, A, A+, A, A-, A, …
-## $ classificacao_livre      &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TR…</code></pre>
-<p>Para consultar a classe de uma coluna especifico, podemos fazer:</p>
-<pre class="r"><code>
-class(dados_pixar$data_lancamento) 
+## $ duracao                  &lt;dbl&gt; 81, 95, 92, 92, 100, 115, 117, 111, 98, 96, 1…
+## $ nota_rotten_tomatoes     &lt;int&gt; 100, 92, 100, 96, 99, 97, 74, 96, 95, 98, 98,…
+## $ data_lancamento          &lt;date&gt; 1995-11-22, 1998-11-25, 1999-11-24, 2001-11-…
+## $ classificacao_livre      &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TR…
+## # A tibble: 27 × 7
+##    filme              classificacao_i… nota_cinema_sco… duracao nota_rotten_tom…
+##    &lt;chr&gt;              &lt;fct&gt;            &lt;ord&gt;              &lt;dbl&gt;            &lt;int&gt;
+##  1 Toy Story - Um Mu… Livre            A                     81              100
+##  2 Vida de Inseto     Livre            A                     95               92
+##  3 Toy Story 2        Livre            A+                    92              100
+##  4 Monstros S. A.     Livre            A+                    92               96
+##  5 Procurando Nemo    Livre            A+                   100               99
+##  6 Os Incríveis       Orientação pare… A+                   115               97
+##  7 Carros             Livre            A                    117               74
+##  8 Ratatouille        Livre            A                    111               96
+##  9 WALL-E             Livre            A                     98               95
+## 10 Up - Altas Aventu… Orientação pare… A+                    96               98
+## # … with 17 more rows, and 2 more variables: data_lancamento &lt;date&gt;,
+## #   classificacao_livre &lt;lgl&gt;</code></pre>
+<p>Para consultar a classe de uma coluna especifico:</p>
+<pre class="r"><code>class(dados_pixar$data_lancamento) 
 ## [1] &quot;Date&quot;
 
 #ou, alternativamente:
@@ -593,29 +630,34 @@ dados_pixar %&gt;% pull(data_lancamento) %&gt;% class()
 </div>
 <div id="estruturas-de-dados-no-r" class="section level1">
 <h1>Estruturas de Dados no R</h1>
-<p>No R chamamos de Estruturas de Dados a maneira como as informações
-são organizadas. Aqui vamos citar as três estruturas mais usuais no
-contexto de análise de dados:</p>
+<p>No R chamamos de <code>Estruturas de Dados</code> a maneira como as
+informações são organizadas. Aqui vamos citar as três estruturas mais
+usuais no contexto de análise de dados:</p>
 <ul>
 <li><p>Vetores atômicos: estrutura mais básica do R, se caracterizam por
-uma única dimensão, e guardam objetos da mesma classe – por isso o nome
+uma única dimensão, e guarda objetos da mesma classe – por isso o nome
 atômico.</p></li>
 <li><p>Data Frame: estruturas bidimensionais que permitem que cada
-coluna possa ter sua própria classe.</p></li>
-<li><p>Listas: estruturas mais genéricas que permitem que diferentes
-classes sejam guardados em um único objeto, além de serem recursivos,
-i.e., uma lista pode conter outras listas, de diferentes
-tamanhos.</p></li>
+coluna possa ter sua própria classe – em termos práticos, cada coluna é
+um vetor atômico.</p></li>
+<li><p>Listas: a estrutura mais genérica que temos no R, pois permite
+que diferentes classes sejam guardadas em um único objeto.
+Adicionalmente possuem uma propriedade recursiva, isto é, uma lista pode
+conter outras listas, de diferentes tamanhos.</p></li>
 </ul>
+<p>E apesar de estarmos trabalhando majoritariamente com os
+<code>data.frame</code> (no contexto do tidyverse, temos o
+<code>tibble</code> como o equivalente), ter alguma visibilidade sobre
+as outras estruturas, te ajudará a evoluir na linguagem de maneira mais
+consistente.</p>
 </div>
 <div id="hands-on" class="section level1">
 <h1>HANDS-ON</h1>
-<p>Aqui iniciamos a discussão sobre classes do R e o conceito matemático
-de tipos de dados, mas existe toda uma teoria que envolve estas
-abstrações. No script extra sobre tipos e estruturas de dados, você terá
-uma visão mais estruturada sobre as diferenças e relações entre funções
-como: <code>typeof()</code>, <code>class()</code> e
-<code>attributes()</code>. Que tal ler o que tem por lá?</p>
+<p>Aqui iniciamos a discussão sobre classes do R, mas existe toda uma
+teoria que envolve esta abstração. E no script sobre tipos e estruturas
+de dados, você terá uma visão mais detalhada sobre este conceito, a
+relação entre funções como: <code>typeof()</code>, <code>class()</code>
+e <code>attributes()</code>. Que tal ler o que tem por lá?</p>
 </div>
 
 
