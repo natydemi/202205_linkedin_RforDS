@@ -10,9 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introdução
 
-Rmarkdown é um formato (.Rmd) que nos possibilita trabalhar com códigos, assim como um script .R usual, mas também com os outputs dos códigos e textos, de forma mais interativa. Permitindo uma maior praticidade durante a análise, bem como a criação de relatórios dos resultados. Para saber mais, acesse: [rmarkdown.rstudio.com](https://rmarkdown.rstudio.com/).
+Rmarkdown é um formato (.Rmd) que nos possibilita trabalhar com códigos, assim como um script .R usual, mas também com os outputs dos códigos e textos, de forma mais interativa. Permite, assim, uma maior praticidade durante a análise, bem como a criação de relatórios dos resultados. Para saber mais, acesse: [rmarkdown.rstudio.com](https://rmarkdown.rstudio.com/).
 
-Um documento R Markdown pode ser compilado em diferentes formatos, incluindo documentos HTML , PDFs, Word, slides, entre outros, Isso permite que você foque na conteúdo, enquanto o R Markdown garante o output. 
+Um documento R Markdown pode ser compilado em diferentes formatos, incluindo documentos HTML , PDFs, Word, slides, entre outros, Isso permite que você foque no conteúdo, enquanto o R Markdown garante o output. 
 
 
 Vamos agora ver algumas das funcionalidades básicas do Rstudio:
@@ -56,8 +56,8 @@ cars
 ```
 
 
-Fica bacana o output da tabela no script né? Super interativa! :)
-Mas não fica tão bonita no documento final, visto esta base ter muitas linhas, mas existem bibliotecas específicas para tornar a tabela interativa por lá também :)  
+Fica bacana o output da tabela no script, né? Super interativa! :)
+Mas não fica tão bonita no documento final, devido a esta base ter muitas linhas. Mas existem bibliotecas específicas para tornar a tabela interativa por lá também :)  
 
 Vamos ver agora um exemplo de output gráfico:
 
@@ -75,7 +75,7 @@ Pois é, isto também é possível! Se quisermos, por exemplo, saber a quantidad
 
 Outro ponto importante é que a cada vez que você compilar o documento, você irá rodar o seu .Rmd desde o início. Se qualquer chunk tiver qualquer tipo de problema, o documento não será gerado -- mas não se desespere! Usualmente a mensagem de erro já te dará uma boa dica da origem do problema. Uma questão comum, é a utilização de alguma função sem ter, antes, realizado o carregamento da respectiva biblioteca.
 
-Vou adicionar aqui um exemplo, em que chamamos a base de dados `construction`, que faz parte da biblioteca `tidyr` -- lembrando que caso você nunca tenha instalado esta biblioteca, será necessário fazer a instalação por meio do `install.packages("tidyr")` no Console, ou via point-and-click na aba `Packages`. Como teste, inverta os comandos, ou seja, carregue a biblioteca **após** chamar a base, note que na aba `Render` você terá uma mensagem com a frase "objeto não encontrado".
+Vou adicionar aqui um exemplo, em que chamamos a base de dados `construction`, que faz parte da biblioteca `tidyr` -- lembrando que, caso você nunca tenha instalado esta biblioteca, será necessário fazer a instalação por meio do `install.packages("tidyr")` no Console, ou via point-and-click na aba `Packages`. Como teste, inverta os comandos, ou seja, carregue a biblioteca **após** chamar a base, note que na aba `Render` você terá uma mensagem com a frase "objeto não encontrado".
 
 ```{r}
 library(tidyr)
@@ -107,7 +107,7 @@ Ou ainda para acesso a links, como esta excelente referência:
 
 3.  [hiperlink em texto](https://rmarkdown.rstudio.com/)
 
-Um última dica aqui é explorar a opção "Visual" do Rmarkdown (disponível em versões mais recentes), que nos permite trabalhar com uma interface mais visual, em alternativa aos códigos.
+Uma última dica aqui é explorar a opção "Visual" do Rmarkdown (disponível em versões mais recentes), que nos permite trabalhar com uma interface mais visual, em alternativa aos códigos.
 
 
 
