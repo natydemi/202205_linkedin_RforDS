@@ -1,15 +1,14 @@
 
-# Script de Revisão - Tidyverse, Pipe (%>%), e Dialetos do R
+# Script de Revisão - Dados Tidy, Pipe (%>%), tidyverse e Dialetos do R
 
 # ----- O tidyverse? -----
 
-  # O tidyverse é um conjunto de bibliotecas que compartilham a mesma gramática,
-  # design e filosofia, no caso, o conceito de "dados tidy". 
+  # O tidyverse trata-se de um conjunto de bibliotecas que compartilham a 
+  # mesma gramática, design e filosofia, no caso, o conceito de "dados tidy". 
   # De modo a garantir recursos para as mais diferentes tarefas que envolvem 
-  # o Ciclo de Ciência de Dados.
+  # o Ciclo de Ciência de Dados. 
 
-  # Referência:
-  # https://www.tidyverse.org/ 
+  # Para saber mais: https://www.tidyverse.org/
 
 
 # O que são dados tidy?  -----
@@ -33,33 +32,29 @@
   # problemas comuns encontramos em dados que não seguem os princípios tidy,
   # os ditos "messy-tidy" (dados bagunçados):
   
-    # 1. O cabeçalho (primeira linha da tabela) contém valores, e não o nome das variáveis;
+    # 1. O cabeçalho contém valores, e não o nome das variáveis;
     # 2. Diversas variáveis estão armazenadas na mesma coluna;
     # 3. Variáveis são armazenadas tanto em linhas, quanto em colunas;
-    # 4. Diferentes tipos de unidades observacionais estão armazenadas em uma mesma tabela;
+    # 4. Diferentes tipos de unidades observacionais, estão armazenadas em uma mesma tabela;
     # 5. Uma única unidade observacional está armazenada em diferentes tabelas.
 
-  
+
   # Para um maior aprofundamento no tema, recomendo a leitura do artigo
   # escrito pelo Hadley Wickham, idealizador do conceito tidy e de tantos 
   # outros conceitos e ferramentas importantes da comunidade R: 
   # http://vita.had.co.nz/papers/tidy-data.pdf
 
-  #Algumas referências mais:
-    # https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html
-    #https://escoladedados.org/tutoriais/tidy-data-dados-arrumados-e-5-problemas-comuns/
-
 
 # O que é o operador pipe? (%>%)  -----
   
   #O pipe trata-se de uma função com uma sintaxe um pouco diferente, no caso, 
-  # o simbolo: %>%. Que oermite o encadeamento de funções, de modo que o output, 
+  # o simbolo: %>%. Que permite o encadeamento de funções, de modo que o output, 
   # ou seja a saída de uma função, seja o input, a entrada, da função seguinte. 
   # Deste modo passamos a ter uma alternativa à leitura default do R, em que 
   # a sequência de operações lógicas são aplicadas de dentro para fora, isto é:
     # funçãoN(...(função2(função1(dados, args1), args2)...)argsN)
 
-  # para a aplicação de operações em sequência, ou seja:
+  # Para a aplicação de operações em sequência, ou seja:
     # dados %>% 
     #   função1(args1) %>% 
     #   função2(args2) %>% 
@@ -85,26 +80,24 @@
 
   # com o pipe, ou seja, a partir de uma leitura sequencial:
     x %>% 
-      sum %>% 
-      sqrt %>% 
-      floor
+      sum() %>% 
+      sqrt() %>% 
+      floor()
     
   #Assim, para além do claro ganho em termos de leitura, passamos a ter uma
   # análise mais modular, sendo possível alterar, remover ou inserir funções  
   # de maneira muito mais simples:
     
     x %>% 
-      #sum %>% 
-      sqrt %>% 
-      floor %>% 
-      log
+      #sum() %>% 
+      sqrt() %>% 
+      floor() %>% 
+      log()
 
   # O pipe ganhou tamanha importância no R, que passou a ser contemplado por 
   # diversos pacotes, inclusive, o tidyverse. De modo que juntamente com o 
   # conceito de `dados tidy`, forma um dos pilares do universo tidyverse:
   
-    # Ref.:
-    # https://www.curso-r.com/blog/2018-07-03-tutorial-pipe/
 
 
 # Quais bibliotecas que compõem o tidyverse? -----
@@ -144,7 +137,8 @@
   # As bibliotecas que compõem o tidyverse podem ser organizadas ao redor das  
   # etapas que compõem o Ciclo de Análises da Ciência de Dados, proposto por
   # Hadley em seu livro `R for Data Science`: 
-      #https://r4ds.had.co.nz/explore-intro.html
+  # https://r4ds.had.co.nz/explore-intro.html
+      
   # No caso, temos as ações: ler e arrumar os dados, isto é, deixá-lo em uma
   # estrutura tidy, e então entramos em um circuito de transformar, visualizar 
   # e modelar os dados, considerando a quantidade de repetições necessárias,  
@@ -192,7 +186,8 @@
   # existe um pacote chamado tidymodels que super resolve isso, falaremos 
   # dele mais a frente no curso :)
       
-# ----- (avançado) Dialetos para Manipulação de Dados no R -----
+      
+# ----- Dialetos para Manipulação de Dados no R -----
   
   # Existem três importantes opções de sintaxes para manipulação de dados no R:
   
@@ -222,6 +217,14 @@
   
       
     
+# Por que seguiremos com o tidyverse? -----
+  # Tanto pela legibilidade dos códigos quanto pela comunidade madura, e hoje,
+  # a maior do R. De modo que independente da introdução que será feita aqui,
+  # você terá à disposição uma série de conteúdos gratuitos e acessíveis 
+  # para poder seguir evoluindo na linguagem R :)
+      
+      
+# ----- (avançado) -----
 # Comparando as sintaxes: Rbase, tidyverse e data.table -----
   
   # A partir daqui serão listados alguns dos comandos mais usuais relacionados
@@ -284,9 +287,6 @@
   # Adicionalmente, questões como performance e consistência também apresentam 
   # melhorias em comparação aos data.frames.
   
-
-  # Ref.: https://tibble.tidyverse.org/
-    
 
   
 # Selecionando colunas (por nome) -----
@@ -390,26 +390,38 @@
 # Unindo tabelas -----
   #merge(), left_join() e DT1[ DT2, on = ...]
   
-# ----- Referências: -----   
-  
-# comparação entre os dialetos -----
-  # https://github.com/mayer79/data_preparation_r
-
-# data.table + tidyverse (dplyr) -----
-  #Existe um pacote chamado dtplyr que fornece um backend data.table para
-  # o pacote tidyverse -- mais especificamente para o pacote dplyr do tidyverse.  
-  # Com este pacote podemos escrever um código dplyr e este é automaticamente 
-  # traduzido para o código data.table. Garantindo os ganhos de legibilidade 
-  # do dplyr, com a superioridade de performance do data.table. 
-  #Para mais informações consulte: https://dtplyr.tidyverse.org/
-
 # disclaimer sobre as opções apresentadas -----
   # Como dito inicialmente, esta lista não contempla todas as diferentes 
   # maneiras de escrever cada uma das ações acima. A proposta aqui se limita
   # a compartilhar uma visão inicial sobre cada uma das sintaxes.
 
-# ----- Por que seguiremos com o tidyverse? -----
-  # Tanto pela legibilidade dos códigos quanto pela comunidade madura, e hoje,
-  # a maior do R. De modo que independente da introdução que será feita aqui,
-  # você terá à disposição uma série de conteúdos gratuitos e acessíveis 
-  # para poder seguir evoluindo na linguagem R :)
+
+# ----- REFERÊNCIAS -----
+
+  # tidyverse:
+    # https://www.tidyverse.org/ 
+  
+  # Livro `R for Data Science`, Hadley Wickham: 
+    # https://r4ds.had.co.nz/explore-intro.html
+  
+  # dados tidy
+    # https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html
+    # https://escoladedados.org/tutoriais/tidy-data-dados-arrumados-e-5-problemas-comuns/
+  
+  # pipe
+    # https://www.curso-r.com/blog/2018-07-03-tutorial-pipe/
+
+  # dados com estrutura tibble
+    # Ref.: https://tibble.tidyverse.org/
+  
+  # comparação entre os dialetos
+    # https://github.com/mayer79/data_preparation_r
+
+  # data.table + tidyverse (dplyr)
+    #Existe um pacote chamado dtplyr que fornece um backend data.table para
+    # o pacote tidyverse -- mais especificamente para o pacote dplyr do tidyverse.  
+    # Com este pacote podemos escrever um código dplyr e este é automaticamente 
+    # traduzido para o código data.table. Garantindo os ganhos de legibilidade 
+    # do dplyr, com a superioridade de performance do data.table. 
+    #Para mais informações consulte: https://dtplyr.tidyverse.org/
+

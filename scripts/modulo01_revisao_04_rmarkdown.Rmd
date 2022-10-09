@@ -111,6 +111,12 @@ Um última dica aqui é explorar a opção "Visual" do Rmarkdown (disponível em
 
 
 
-# Hands-on
+# HANDS-ON
 
 Que tal repassar os scripts deste módulo para um Rmarkdown? Você pode fazer uma curadoria do que é importante para você, possibilitando um material para consulta melhor formatado, inclusive com os seus próprios comentários :)
+
+# REFERÊNCIAS
+
+- <https://rmarkdown.rstudio.com/>
+
+- Canal no youtube da Fernanda Peres – [R Markdown: Gerando relatórios usando o R (Parte1), ](https://www.youtube.com/watch?v=obxa5VH4WvY)  

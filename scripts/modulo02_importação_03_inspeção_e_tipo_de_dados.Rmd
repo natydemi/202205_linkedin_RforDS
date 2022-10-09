@@ -1,0 +1,160 @@
+---
+title: "Inspeções Iniciais e Tipos de Dados"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
+```
+
+# Bibliotecas
+
+```{r}
+library(tidyverse)
+```
+
+# Inspeções iniciais
+
+Após fazer a importação de uma base de dados é importante que o objeto seja minimamente examinado. Vamos fazer alguns destes checks iniciais considerando dados sobre os filmes da pixar, que podemos consultar por meio do pacote `pixarfilms`. Ou na sua versão traduzida para português, disponível no pacote `dados`:
+
+```{r}
+pixar_filmes <- dados::pixar_filmes
+pixar_filmes
+```
+
+De maneira alternativa, podemos considerar também funções como: `View(pixar_filmes)`, `str(pixar_filmes)` ou `tail(pixar_filmes)`.
+
+```{r}
+pixar_filmes %>% head()
+```
+
+## Linhas, colunas e suas nomenclaturas
+
+Vale comentar que, devido a natureza multidiciplinar da área, é relativamente comum encontrar diferentes nomenclaturas para as mesmas "entidades". Neste curso, em que iremos trabalhar basicamente com dados tabulares, iremos nos referir às linhas das bases como observações e às colunas como variáveis, ou ainda features (este último sendo mais usual no contexto de modelagem, que veremos mais à frente). Por fim, para fazer referencia a intersecção entre variáveis e observações, utilizaremos o termo "elementos da tabela".
+
+Para examinarmos a quantidade de linhas e colunas da base, podemos trabalhar com funções como:
+
+```{r}
+#linhas
+pixar_filmes %>% nrow()
+
+#colunas
+pixar_filmes %>% ncol()
+
+#ou ambas
+pixar_filmes %>% dim()
+
+```
+
+Para o caso de desejarmos checar o nome das colunas da tabela:
+
+```{r}
+pixar_filmes %>% names()
+```
+
+E apesar de existirem muitas funções importantes que podem nos ajudar na investigação inicial de uma base de dados, neste curso iremos priorizar a função `glimpse()`. Visto esta nos permitir verificar: as dimensões do dataset estudado, os nomes das colunas, suas respectivas classes, e uma amostra das primeiras observações de cada variável:
+
+```{r}
+pixar_filmes %>% glimpse()
+```
+
+
+## Identificando as classes das colunas
+
+A partir do resultado da função `glimpse()` temos nosso primeiro contato com um dos conceitos mais fundamentais no contexto de análise de dados: as classes das colunas de um dataset. Considerando a base `pixar_filmes` podemos observar as classes: character ( \<chr\> ), indicando as coluna que possuem strings, ou seja, palavras; double ( \<dbl\> ), isto é, números; e date ( \<date\> ), basicamente, datas. E saber sobre a classe de cada coluna é extremamente importante, pois nos permite identificar o tipo do dado, matemáticamente falando, e, consequentemente, quais calculos que fazem ou não sentido de serem aplicados. Observe o exemplo abaixo e reflita: sendo a coluna  `filme` uma palavra, faria sentido termos o cálculo de média ?
+
+```{r}
+pixar_filmes %>% summary()
+```
+
+
+## Alterando a classe de uma coluna
+
+Note que não necessariamente o computador irá interpretar a variável de maneira coerente com a informação que esta representa. Como exemplo temos a `ordem_lancamento`, em que faria sentido aplicar cálculos como mínimo, ou máximo. Porém, por estar sendo interpretada como uma variável da classe `character`, não nos permite tais estatísticas:
+
+```{r}
+dados::pixar_filmes %>% 
+  select(ordem_lancamento) %>% 
+  summary()
+```
+
+Contudo, é possível ajusta-la, alternando para o tipo numérico:
+
+```{r}
+dados::pixar_filmes %>% 
+  select(ordem_lancamento) %>% 
+  mutate(ordem_lancamento = as.numeric(ordem_lancamento)) %>% 
+  summary()
+```
+
+
+# Classes do R e Tipos de Dados
+
+Existem algumas maneiras de classificar os diferentes tipos de dados de  uma perspectiva matemática, aqui iremos considerar a organização:
+
+-   variáveis qualitativas (categóricas)
+    -   nominal
+    -   ordinal
+    
+-   variáveis quantitativas (numéricas)
+    -   discretas
+    -   contínuas
+
+De modo que para cada um destes tipo, teremos classes no R, indicando quais propriedades e funções fazem ou não sentido para cada coluna da tabela:
+
+-   variáveis qualitativas (categóricas)
+    -   nominal (`character`, `<chr>` ou `factor`, `<fct>`)
+    -   ordinal (`ordered`, `<ord>`)
+    
+-   variáveis quantitativas (numéricas)
+    -   discretas (`integer`, `<int>`)
+    -   contínuas (`double`, `<dbl>`)
+
+
+Importante comentar que nesta organização casos como variáveis lógicas, do tipo TRUE/FALSE (`logical`,`<lgl>`), ou ainda datas, to tipo ano, mês, dia, etc (`date`,`<date>`), apesar de poderem ser entendidas como subcasos da organização acima, por possuírem muitas características próprias, possuem suas próprias classes no R. 
+
+
+## construindo um exemplo
+
+Para apresentar as principais classes do R, iremos construir uma base de dados, visando um exemplo que contemple os tipos de dados mais usuais para uma análise de dados:
+
+```{r}
+(dados_pixar <- dados::pixar_filmes %>% 
+  left_join(dados::pixar_avalicao_publico) %>% 
+  select(-ordem_lancamento, -nota_metacritic, -nota_critics_choice) %>% 
+  mutate(nota_rotten_tomatoes = as.integer(nota_rotten_tomatoes)) %>% 
+  mutate(classificacao_indicativa  = as_factor(classificacao_indicativa)) %>% 
+  mutate(nota_cinema_score = as.ordered(nota_cinema_score)) %>% 
+  mutate(classificacao_livre  = if_else(classificacao_indicativa == "Livre", TRUE, FALSE)) %>% 
+  relocate(nota_cinema_score, .after = filme) %>% 
+  relocate(classificacao_indicativa, .after = filme) %>% 
+  relocate(where(is.numeric), .after = nota_cinema_score) %>% 
+  glimpse())
+```
+
+Para consultar a classe de uma coluna especifico, podemos fazer:
+```{r}
+
+class(dados_pixar$data_lancamento) 
+
+#ou, alternativamente:
+dados_pixar %>% pull(data_lancamento) %>% class()
+```
+
+# Estruturas de Dados no R
+
+No R chamamos de Estruturas de Dados a maneira como as informações são organizadas. Aqui vamos citar as três estruturas mais usuais no contexto de análise de dados:
+
+- Vetores atômicos: estrutura mais básica do R, se caracterizam por uma única dimensão, e guardam objetos da mesma classe – por isso o nome atômico.
+
+- Data Frame: estruturas bidimensionais que permitem que cada coluna possa ter sua própria classe.
+
+- Listas: estruturas mais genéricas que permitem que diferentes classes sejam guardados em um único objeto, além de serem recursivos, i.e., uma lista pode conter outras listas, de diferentes tamanhos.
+
+
+
+# HANDS-ON
+
+Aqui iniciamos a discussão sobre classes do R e o conceito matemático de tipos de dados, mas existe toda uma teoria que envolve estas abstrações. No script extra sobre tipos e estruturas de dados, você terá uma visão mais estruturada sobre as diferenças e relações entre funções como: `typeof()`,  `class()` e `attributes()`. Que tal ler o que tem por lá? 
+
+

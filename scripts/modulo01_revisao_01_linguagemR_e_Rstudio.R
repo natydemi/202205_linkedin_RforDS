@@ -1,8 +1,8 @@
 
 # Módulo 01 - Revisão - Linguagem R e RStudio
 
-#Neste script você irá encontrar uma revisão sobre o R, considerando a 
-#apresentação do ambiente R, e aspectos estruturais da linguagem. 
+# Neste script você irá encontrar uma revisão sobre o R, considerando a 
+# apresentação do ambiente RStudio, e aspectos estruturais da linguagem. 
 
 
 # ----- Instalação -----
@@ -374,7 +374,8 @@
   mtcars <- mtcars
 
 
-# ----- (avançado)Um pouco mais sobre a linguagem R ----- 
+# ----- (avançado) -----
+# Um pouco mais sobre a linguagem R ----- 
   #A partir daqui serão apresentados alguns recursos da linguagem R
   # não será algo que utilizaremos de maneira direta no curso, 
   # mas que serão cruciais 
@@ -555,3 +556,6 @@
   # você encontrará materiais para praticar e seguir evoluindo na linguagem 
 
 
+
+# ----- REFERÊNCIAS -----
+  

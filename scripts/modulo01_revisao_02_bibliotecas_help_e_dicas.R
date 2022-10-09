@@ -1,6 +1,8 @@
 
 # Módulo 01 - Revisão - Bibliotecas, Helps e Fontes de Pesquisa
  
+# Neste script você irá encontrar uma revisão sobre biblioteca no R, e  
+# maneiras de procurar ajuda . 
 
 # ----- Bibliotecas -----
 
@@ -148,3 +150,6 @@ help("praise")
   # você encontrará o RStudio primers, com vários tutoriais interativos: 
   # https://rstudio.cloud/learn/primers
 
+
+# ----- REFERÊNCIAS -----
+  
