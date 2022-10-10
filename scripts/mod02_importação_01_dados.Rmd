@@ -23,7 +23,7 @@ A etapa de importação de dados pode significar ler dados armazenados em arquiv
 
 ### Via point-and-click
 Para a leitura de arquivos tabulares, temos a opção Point-and-Click no RStudio:
-`File > Import Dataset > From ... `, onde você poderá especificar detalhes relacionados a leitura, mas tendo também à construção dos comandos referentes as instruções dadas. De modo que você possa não apenas importar a sua base, mas também aprender os respectivos códigos, e garantir a reprodutibilidade desta ação.  
+`File > Import Dataset > From ... `, onde você poderá especificar detalhes relacionados à leitura, mas tendo também a construção dos comandos referentes às instruções dadas. Assim, você pode não apenas importar a sua base, mas também aprender os respectivos códigos, e garantir a reprodutibilidade desta ação.  
 
 Uma alternativa menos replicável é por meio do comando `file.choose()`, que abre um pop-up, onde você pode selecionar o seu arquivo de interesse.
 
@@ -41,16 +41,16 @@ Apesar do R possuir várias funções default para leitura de dados, como `read.
 * read_delim("file.txt", delim="|") - lê arquivos delimitados por tabulação (exemplo dado para o delimitador |)
 * read_fwf("file.fwf", col_positions = c(1,3,5)) - lê arquivos com largura fixa (exemplo dado para o padrão 1,3,5)
 
-Importante ressaltar que em todos os casos é possível especificar características do arquivo, considerandoparâmetros como: nome das colunas, cabeçalho, linhas para serem ignoradas, ou ainda a pré-especificação da classe de cada uma das colunas do arquivo (falaremos mais sobre classes ao passarmos para a etapa `inspeções`). Contudo, no caso deste último parâmetro não ser listado, as funções do `readr` irão “adivinhar” a classe das colunas, retornando uma mensagem com tais informações. 
+Importante ressaltar que em todos os casos é possível especificar características do arquivo, considerando parâmetros como: nome das colunas, cabeçalho, linhas para serem ignoradas, ou ainda a pré-especificação da classe de cada uma das colunas do arquivo (falaremos mais sobre classes ao passarmos para a etapa `inspeções`). Contudo, no caso deste último parâmetro não ser listado, as funções do `readr` irão “adivinhar” a classe das colunas, retornando uma mensagem com tais informações. 
 
-Como exemplo vamos utilizar ler um arquivo que acompanha a instalação da biblioteca, para que o R encontre este arquivo, precisamos compartilhar o seu diretório. Felizmente o pacote readr possui uma função que nos retorna a localização exata dos seus dados para teste:
+Como exemplo, vamos ler um arquivo que acompanha a instalação da biblioteca, para que o R encontre este arquivo, precisamos compartilhar o seu diretório. Felizmente o pacote readr possui uma função que nos retorna a localização exata dos seus dados para teste:
 
 ```{r}
 readr_example("mtcars.csv")
 #dica: explore as demais opções da função `readr_example`
 ```
 
-Assim, sabendo onde está arquivo, o seu diretório, ou ainda o seu `path`, podemos fazer a leitura:
+Assim, sabendo onde está o arquivo, o seu diretório, ou ainda o seu `path`, podemos fazer a leitura:
 
 ```{r}
 path <- readr_example("mtcars.csv")
@@ -65,7 +65,7 @@ Durante o capítulo de exportação vamos discutir um pouco mais sobre diretóri
 O  R dispõe de uma larga gama de bibliotecas relacionadas à leitura de dados nos mais diferentes contextos, abaixo temos algumas destas opções:
 
 - `readxl`: arquivos .xls e .xlsx.
-- `googlesheets4`: arquivos
+- `googlesheets4`: planilhas do google sheets
 - `feather`: compartilhar arquivos com Python e outras linguagens.
 - `haven`: trabalhar com arquivos do SPSS, SAS e Stata.
 - `DBI` / `odbc` : conexão de base de dados (SQL)
@@ -73,13 +73,13 @@ O  R dispõe de uma larga gama de bibliotecas relacionadas à leitura de dados n
 - `jsonlite`: para JSON arquivos.
 - `xml2`: para XML.
 
-E apesar de não haver a intenção de ser extensiva aqui, gostaria de comentar também do pacote `sparklyr`, que fornece uma interface com o Apache Spark, recurso de extrema relevância no contexto de Big Data.
+Apesar de não haver a intenção de ser extensiva aqui, gostaria de comentar também do pacote `sparklyr`, que fornece uma interface com o Apache Spark, recurso de extrema relevância no contexto de Big Data.
 
 
 
 ## Dados dos pacotes do R
 
-No R existe também a opção de trabalhar com as bases de dados disponíveis pela própria linguagem, para consultar as opções default, podemos utilizar a função `data()`. Porém não para por aí, pois existem muitas bases que acompanham as bibliotecas, de modo que para cada biblioteca instalada/carregada, teremos uma atualização nesta lista, compare:
+No R, existe também a opção de trabalhar com as bases de dados disponíveis pela própria linguagem.. Para consultar as opções default, podemos utilizar a função `data()`. Porém, não para por aí, pois existem muitas bases que acompanham as bibliotecas, de modo que para cada biblioteca instalada/carregada, teremos uma atualização nesta lista, compare:
 
 ```{r}
 #data()
@@ -116,7 +116,7 @@ Conforme comentado, temos datasets que acompanham as bibliotecas, e existem paco
 
   - `microdatasus::` permite baixar dados de várias bases do Datasus (este pacote não está disponível no repositório oficial do R, o CRAN, sendo necessário fazer a instalação a partir do github).
   
-  - `datasets.load::` provê uma interface para apresentar os conjuntos de dados disponíveis nos pacotes instalados (incluindo os que não estão carregados descarregados) - experimente por exemplo a função `datasets()` do pacote.
+  - `datasets.load::` provê uma interface para apresentar os conjuntos de dados disponíveis nos pacotes instalados (incluindo os que não estão carregados) - experimente por exemplo a função `datasets()` do pacote.
 
 
 Para explorar mais opções de dataset existentes em bibliotecas do R, este aplicativo Shiny é particularmente interessante: [Find R data that you need](https://marija-stanojcic.shinyapps.io/R_datasets/), algo como "encontre os dados do R que você precisa" em português. Nele você pode pesquisar bases de dados a partir da especificação de informações como: número mínimo de observações desejadas, a presença de determinadas classes de dados, ou palavras-chave relacionadas. 
@@ -149,7 +149,7 @@ write_csv(mtcars, "base_exportada.csv")
 ```
 
 
-Mas onde o arquivo `base_exportada.csv`, criado acima se encontra no seu computador? Onde o arquivo foi salvo? É a resposta é: no seu diretório de trabalho, basicamente a pasta do seu computador que está sendo entendida pelo R como a sua pasta raiz, a sua pasta de referência.  
+Mas onde o arquivo `base_exportada.csv`, criado acima se encontra no seu computador? Onde o arquivo foi salvo? A resposta é: no seu diretório de trabalho, basicamente a pasta do seu computador que está sendo entendida pelo R como a sua pasta raiz, a sua pasta de referência.  
 
 E para saber qual o seu diretório de trabalho atual, utilizamos o comando `getwd()` (*get working directory*), que retornará algo como "C:/Users/Documents". Avalie qual o seu com o comando abaixo:
 
@@ -165,7 +165,7 @@ Em termos práticos, o diretório vai te ajudar a trabalhar de uma maneira mais 
 setwd("C:/Users/natyd/Desktop")
 ```
 
-Como alternativa as funções comentadas, você pode explorar a aba `File` do RStudio, onde encontrará algumas opções point-and-click para navegar e manusear pelos diretórios. 
+Como alternativa às funções comentadas, você pode explorar a aba `File` do RStudio, onde encontrará algumas opções point-and-click para navegar e manusear pelos diretórios. 
 
 Note que com o comando abaixo, caso você não tenha alterado o seu diretório de trabalho, podemos importar a base anteriormente exportada. 
 
@@ -177,7 +177,7 @@ base_exportada
 
 # E quando os arquivos não estão no diretório de trabalho? 
 
-Você só precisa passar o endereço completo, similar ao que foi feito aqui: `readr_example("mtcars.csv")`. Basicamente o nome do deve ser precedido pelo diretório de origem, tanto para o caso de importação, quanto para exportação, algo como: `write_delim(mtcars, file = "C:/Users/mtcars.txt")` por exemplo. Ah, uma dica: dependendo do seu sistema opracional, ou se existir algum caracter especial no seu path, você pode ter que trabalhar com: barras simples (`/`), barras invertidas (`/`) ou barras duplas (`\\`).
+Você só precisa passar o endereço completo, similar ao que foi feito aqui: `readr_example("mtcars.csv")`. Basicamente o nome do arquivo deve ser precedido pelo diretório de origem, tanto para o caso de importação, quanto para exportação, algo como: `write_delim(mtcars, file = "C:/Users/mtcars.txt")` por exemplo. Ah, uma dica: dependendo do seu sistema opracional, ou se existir algum caracter especial no seu path, você pode ter que trabalhar com: barras simples (`/`), barras invertidas (`\`) ou barras duplas (`\\`).
 
 
 
@@ -187,7 +187,7 @@ Conforme apresentado anteriormente, para importar/exportar arquivos que não se 
 
 Para ilustrar um pouco melhor, sem trabalhar com projetos, se você me enviar uma pasta com a sua análise, e a primeira linha de um dos scripts for algo como `setwd("C:/Users/seu_nome/Desktop")`, para que eu consiga rodar na minha máquina, vou precisar alterar o código para algo como `setwd("C:/Users/meu_nome/Desktop")`. Enquanto que ao trabalhar com projetos, os códigos já teriam como referência o local em que eu tiver salvo a pasta recebida. 
 
-Então seja para que outras pessoas consigam executar o seu código, seja para que você mesmo (a) possa trocar de ambiente sem se preocupar de atualizar os path para toda e qualquer  especificação de arquivos, scripts, e etc, basta enviar a pasta dos arquivos necessários, o `.Rproj` na raiz, e os paths construidos de maneira relativa que voilà, todos os seus códigos estarão reprodutíveis! . E aqui vale comentar que replicabilidade é um dos princípios básicos do método científico, e se estamos falando de **ciência** de dados, nada mais justo, certo? ;)
+Então seja para que outras pessoas consigam executar o seu código, seja para que você mesmo (a) possa trocar de ambiente sem se preocupar de atualizar os path para toda e qualquer especificação de arquivos, scripts, e etc, basta enviar a pasta dos arquivos necessários, o `.Rproj` na raiz, e os paths construidos de maneira relativa que voilà, todos os seus códigos estarão reprodutíveis! E aqui vale comentar que replicabilidade é um dos princípios básicos do método científico, e se estamos falando de **ciência** de dados, nada mais justo, certo? ;)
 
 
 E como criar esse tal `.Rproj`, é simples: basta apenas clicar no ícone superior à direita. 
@@ -204,7 +204,7 @@ Camihos relativos são aqueles que tem início no diretório de trabalho da sua 
 
 
 ## arquivos .Rmd vs .R
-Um ponto importante de comentar é que aio trabalhar com arquivos .Rmd, mesmo trabalhando com projetos, o diretório default é atualizado para onde o .Rmd estiver. Desta forma, e apesar disso não impactar muito a sua rotina, é importante que tenha isto em mente quando estiver indicando a origem do seu arquivo. Considerando o que falamos sobre caminho relativo, no caso do seu .Rmd estar numa subpasta chamada `/códigos`, e você tivesse interesse em ler um arquivo que esteja em uma pasta `/dados`, a leitura seria feita da seguinte forma: `./dados/nome_do_arquivo.extensão`, isto porque o  `./` antes do nome da pasta, indica que o computador deve voltar um passo na hierarquia de pastas.
+Um ponto importante de comentar é que ao trabalhar com arquivos .Rmd, mesmo trabalhando com projetos, o diretório default é atualizado para onde o .Rmd estiver. Desta forma, e apesar disso não impactar muito a sua rotina, é importante que tenha isto em mente quando estiver indicando a origem do seu arquivo. Considerando o que falamos sobre caminho relativo, no caso do seu .Rmd estar numa subpasta chamada `/códigos`, e você tivesse interesse em ler um arquivo que esteja em uma pasta `/dados`, a leitura seria feita da seguinte forma: `../dados/nome_do_arquivo.extensão`, isto porque o  `../` antes do nome da pasta, indica que o computador deve voltar um passo na hierarquia de pastas.
 
 
 
