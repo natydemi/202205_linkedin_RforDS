@@ -18,7 +18,73 @@
   
   
 
+# ::::: bases consideradas -----
 
+```{r}
+covid19brazil::brazil_region %>% ungroup() %>%  glimpse()
+covid19brazil::brazil_region %>% ungroup() %>% skimr::skim()
+```
+
+
+```{r}
+rent <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-07-05/rent.csv') %>%  glimpse()
+```
+
+
+```{r}
+permits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-07-05/sf_permits.csv') %>%  glimpse()
+```
+
+
+```{r}
+new_construction <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-07-05/new_construction.csv') %>%  glimpse()
+```
+
+```{r}
+olympics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-07-27/olympics.csv')
+
+olympics %>%  glimpse()
+```
+
+
+```{r}
+survey <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv')
+
+survey %>%  glimpse()
+```
+
+
+```{r}
+games <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-16/games.csv')
+
+games %>%  glimpse()
+```
+
+
+
+```{r}
+youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
+
+youtube %>%  glimpse()
+
+```
+
+```{r}
+ikea <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-11-03/ikea.csv')
+ikea %>%  glimpse()
+```
+
+```{r}
+black_in_data <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-11-17/black_in_data.csv')
+
+black_in_data %>%  glimpse()
+```
+
+```{r}
+bigmac <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-12-22/big-mac.csv')
+
+bigmac %>%  glimpse()
+```
 
 
 # ::::: Hands-on: funções para análise descritiva -----

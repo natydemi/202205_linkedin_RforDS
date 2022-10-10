@@ -15,127 +15,145 @@ library(tidyverse)
 
 
 # Dados
-Vamos 
-
-```{r}
-covid19brazil::brazil_region %>% ungroup() %>%  glimpse()
-covid19brazil::brazil_region %>% ungroup() %>% skimr::skim()
-```
-
-
-```{r}
-rent <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-07-05/rent.csv') %>%  glimpse()
-```
-
-
-```{r}
-permits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-07-05/sf_permits.csv') %>%  glimpse()
-```
-
-
-```{r}
-new_construction <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-07-05/new_construction.csv') %>%  glimpse()
-```
-
-```{r}
-olympics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-07-27/olympics.csv')
-
-olympics %>%  glimpse()
-```
-
-
-```{r}
-survey <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv')
-
-survey %>%  glimpse()
-```
-
-
-```{r}
-games <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-16/games.csv')
-
-games %>%  glimpse()
-```
-
+Vamos trabalhar com uma base de comerciais do Superbow, considerando os anúncios das 10 marcas que mais veicularam nos Super Bowls dos últimos anos, tendo, para cada comercial, a classificação binária relacionada a sete critérios pré-especificados. Para mais informações sobre o levantamento acesse:
+- <https://projects.fivethirtyeight.com/super-bowl-ads/>
+- <https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md>
 
 
 ```{r}
 youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
-
-youtube %>%  glimpse()
-
 ```
+
 
 ```{r}
-ikea <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-11-03/ikea.csv')
-ikea %>%  glimpse()
-```
-
-```{r}
-black_in_data <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-11-17/black_in_data.csv')
-
-black_in_data %>%  glimpse()
-```
-
-```{r}
-bigmac <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-12-22/big-mac.csv')
-
-bigmac %>%  glimpse()
+youtube %>% glimpse()
 ```
 
 
 
-# Bibliotecas para exploração 
+
+
+# Bibliotecas para EDA
+
+Vamos primeiramente definir EDA, do inglês, Exploratory Data Analysis, ou em português Análise Exploratória de Dados. Trata-se da tentativa de resumir um conjuntos de dados, visando identificar as suas principais características. E no R temos uma série de pacotes que procuram acelerar este processo:
 
 ## janitor
-Este pacote disponibiliza algumas funções para limpar bases de dados. 
+Este pacote disponibiliza algumas funções para limpar e avaliar bases de dados: 
 
 ```{r}
 #janitor::
-dados_pixar %>% janitor::clean_names() %>%  glimpse()
+youtube %>% janitor::clean_names(case = "upper_camel") %>%  glimpse()
 ```
 
+```{r}
+youtube %>% janitor::tabyl(year) 
+```
+
+```{r}
+youtube %>% 
+  janitor::tabyl(brand) %>%  
+  janitor::adorn_totals() %>%  
+  janitor::adorn_pct_formatting()
+```
 
 ## inspectdf
-Este pacote 
+Este pacote traz uma série de recursos para apresentação de resumos, como volumetrias e dados faltantes, respeitando sempre a classe das variáveis.
 
 ```{r}
 #inspectdf::
-dados_pixar %>% inspectdf::inspect_types()
+youtube %>% inspectdf::inspect_types()
 ```
 
 ```{r}
-dados_pixar %>% inspectdf::inspect_na()
+youtube %>% inspectdf::inspect_na()
 ```
 
 ```{r}
-dados_pixar %>% inspectdf::inspect_imb()
+youtube %>% inspectdf::inspect_imb()
 ```
 
 ```{r}
-dados_pixar %>% inspectdf::inspect_imb() %>% inspectdf::show_plot()
+youtube %>% inspectdf::inspect_imb() %>% inspectdf::show_plot()
 ```
 
 ```{r}
-dados_pixar %>% inspectdf::inspect_num()
+youtube %>% inspectdf::inspect_num()
 ```
 
 ## skimr
 
-Em português skim significa algo como "tirar a nata" de algo, e isto é exatamente o que este pacote faz, visto que nos permite uma visão geral de toda a base, com uma serie de estatísticas importantes, respeitando o tipo de cada coluna:
+Em português skim significa algo como "tirar a nata" de algo, e isto é exatamente o que este pacote faz, visto que nos permite uma visão geral de toda a base, com uma serie de estatísticas, organizadas de acordo com a classe das colunas:
 
 ```{r}
 #skimr::
-dados_pixar %>%  skimr::skim()
+youtube %>%  skimr::skim()
+```
+
+# Como avaliar os resultados? 
+
+Estatística! Aqui não tem muito como correr, é da estatística os ferramentais que utilizamos para sumarizar os dados. E como se trata de um tema amplo, e nosso objetivo neste curso não é aprofundar no tema, vou deixar aqui as aulas da Disciplina de Estatística Básica, ofertada pelo Departamento de Estatística da UFPR para consulta e aprofundamento no tema: 
+
+<https://www.youtube.com/playlist?list=PLQcLb-PUD9WNZnVBYDKEonioyJw3nEaOM>
+
+Aqui, teremos como enfoque a discussão conceitual de algus conceitos chave:
+
+## Principais medidas de resumo
+
+São elas:
+
+- Medidas de Posição/concentração: média, moda, mediana
+- Medidas de Ordenação (posição relativa): quartis, percentis, máximo e mínimo
+-  Medidas de Dispersão (absoluta): variância, desvio padrão, amplitude e intervalo interquartil.
+-  Medidas de Dispersão (relativa): coeficiente de variação
+
+
+
+
+## Distribuição de frequência de uma variável
+
+Um quarto grupo seriam as medidas de forma, caso da kurtosa ou medida de assimetria, porém, alternativamente, vamos focar na distribuição de frequência de uma variável. Isto porque com este temos todas as informações citadas acima, de maneira integrada e visual. E ao avaliar uma distribuição de frequência, é importante considerar as seguintes características: 
+
+- Concentração: centro das observações
+- Dispersão: variabilidade das observações
+- Outliers: observações que se diferenciam drasticamente dos demais
+- Forma: simétrica, assimétrica (à esquerda/direita)
+
+Para discussão, considere dados com informações meteorológicas de Lincoln, Nebraska, no ano de 2016 
+
+
+```{r}
+ggridges::lincoln_weather %>% 
+  janitor::clean_names() %>% 
+  ggplot(aes(x = mean_temperature_f, y = month, fill = stat(x))) +
+  ggridges::geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_discrete(expand = c(0, 0)) +
+  scale_fill_viridis_c(name = "Temp. [F]", option = "C") +
+  coord_cartesian(clip = "off") +
+  labs(title = 'Temperatures in Lincoln NE in 2016') +
+  ggridges::theme_ridges(font_size = 13, grid = TRUE) +
+  theme(axis.title.y = element_blank())
+```
+
+Agora comparando a distribuição dos dados, com as suas respectivas medidas de resumo.
+```{r}
+ggridges::lincoln_weather %>% 
+  janitor::clean_names() %>%
+  select(month, mean_temperature_f) %>% 
+  group_by(month) %>% 
+  skimr::skim()
 ```
 
 
 
-## mais pacotes
-
-No R você irá encontrar dezenas de pacotes com o objetivo de "facilitar" a sua visão, particularmente para a exploração descritiva de dados. Bibliotecas como: `visdat`, `naniar`, `DataExplorer`, entre tantas outras. Que tal explorar um pouco por aí? 
 
 
-# Tipos de dados vs. objetivos de análise 
+
+# HANDS-ON
+
+No R você irá encontrar dezenas de pacotes com o objetivo de "facilitar" a sua visão, particularmente para a exploração descritiva de dados. Bibliotecas como: `visdat`, `naniar`, `DataExplorer`, entre tantas outras. Que tal explorar um pouco estes pacotes?
+
+E em relação às distribuições de frequências, você já ouviu falar da distribuição Normal (Gaussiana)? Ou talvez da distribuição Poisson? Exponencial? já refletiu sobre o porquê estudamos diferentes.
+
 
 
