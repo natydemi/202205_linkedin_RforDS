@@ -1,5 +1,5 @@
 ---
-title: "Visualização"
+title: "Visualização de Dados"
 output: html_document
 ---
 
@@ -7,6 +7,86 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# ...
+# Visualização
+A etapa de visualização possui um papel importantíssimo no contexto de análise de dados, uma vez que, quando devidamente utilizados, nos permitem o entendimento dos dados e suas particularidades. E, apesar da visualização também contemplar  um conjunto de medidas organizadas em tabelas, vamos focar este capítulo na opção gráfica, visto já termos apresentado o pacote `dplyr`, e funções de sumarização como o `summarise()` - um pacote particularmente útil para visualizações descritivas é o `skimr`.
+
+Conforme apresentado no capítulo de [Análises Descritivas](#AnalisesDescritivas), o RBase oferece uma série de opções gráficas. Contudo, é quando começamos a trabalhar com as bibliotecas de visualização do R, que o recurso gráfico é realmente potencializado. Para tal temos o pacote `ggplot2` como uma das opções atualmente mais utilizada e difundida. Nesta trabalhamos com a filosófia chamada *Grammar of Graphics*, em que o mapeamento dos dados é feito a partir de objetos geométricos e atributos estéticos, ambos trabalhados em uma lógica de camadas, similarmente ao encadeamento do `Pipe` - porém utilizando o operador `+` no lugar do `%>%`. Assim temos a estrutura:
+
+```{r, eval=F}
+  ggplot(dados) +
+    função_geometrica(mapeamentos) +
+    funções_estéticas
+```
+
+em que na primeira linha inicializamos o objeto gráfico, na segunda especificamos a representação geométrica escolhida (tipo de gráfico, como dispersão, boxplot ou mapa p.e.), quais informações serão utilizadas (eixos x e y p.e.) e possíveis especificações relacionados a representação escolhida e, por fim, funções estéticas permitindo o ajuste de: divisão de gráficos (faceting), rótulos, escalas, legendas, sistemas de coordenadas, temas de fundo, etc.
+
+Como um primeiro exemplo, vamos refazer o histograma da variável `qsec`, da base `mtcars`, feita [anteriormente](#AnalisesDescritivas):
+
+```{r, out.width = '100%', fig.align = "center", message=F}
+  ggplot(mtcars) +
+   geom_histogram(aes(qsec))
+
+```
+
+E agora, reestruturando a primeira linha segundo a lógica pipe, diminuindo o intervalo de quebra do histograma (que tem 30 por default), e alguns parâmetros estéticos:
+
+```{r, out.width = '100%', fig.align = "center", message=F, warning=F}
+  mtcars %>% 
+   ggplot() +
+     geom_histogram(aes(qsec), bins = 20) + 
+     labs(title = "exemplo gráfico") +
+     scale_x_continuous(limits = c(15,20)) +
+     theme_minimal() 
+```
+
+Visando ilustrar outras funcionalidades do `ggplot2` segue um exemplo em que a visualização é dada em termos da variável `mpg` por `disp`, segmentando por `vs` e modelando segundo para um dos níveis de `cyl` - note que ambas as variáveis de segmentaçao são originalmente numéricas e, portanto, precisam ser redefinidas como fatores, visando permitir a leitura:
+
+```{r}
+#exemplo: gráfico ggplot
+  mtcars %>% 
+    ggplot(aes(x = mpg, y = disp, color = as.factor(cyl))) + 
+    geom_point() + 
+    facet_grid(~as.factor(vs)) +
+    stat_smooth(method = 'lm')
+```
+
+
+Adicionalmente, segue um exemplo considerando a base `diamonds`, onde o interesse é entender a distribuição da variável `cut` em relação à `clarity`, ou ambas quanto a `count`:  
+
+```{r}
+#visualização dos dados
+  diamonds %>% glimpse
+```
+
+```{r}
+# visualização 1
+  diamonds %>% 
+    ggplot(aes(x = cut, fill = clarity)) + 
+    geom_bar()
+# visualização 2
+  diamonds %>% 
+    ggplot(aes(x = cut,  y = price)) + 
+    geom_bar(aes(fill = clarity), 
+             stat = "identity", 
+             position = "fill")
+  
+```
+
+Por fim segue um exemplo de dados temporais em que, em conjunto com as funções do `tidyr` e `dplyr`, remodelamos a base de dados `economics` visando obter a visualização das variáveis `psavert` e `uempmed` desde `1990`:
+
+```{r}
+economics
+```
+
+```{r}
+economics %>%
+  select(date, psavert, uempmed) %>%
+  filter(date>1990) %>% 
+  gather(key = "variable", value = "value", -date) %>% 
+  ggplot(aes(x = date, y = value)) + 
+  geom_line(aes(color = variable), size = 1) +
+  scale_color_manual(values = c("#00AFBB", "#E7B800")) 
+```
+
 
 

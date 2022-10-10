@@ -1,5 +1,5 @@
 ---
-title: "Dataprep"
+title: "Modelagem de Dados"
 output: html_document
 ---
 
@@ -7,8 +7,30 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# ...
+# Modelagem 
+Após um entendimento mais profundo sobre os dados, seu comportamento, natureza e especificidades, podemos passar para a fase de modelagem. Assim, tendo as perguntas bem especificadas, podemos utilizar um modelo para respondê-las. No `tidyverse` a biblioteca `broom` é direcionada para esta etapa da análise, porém de um ponto de vista de integração. Isto porque tem como finalidade transformar resultados de modelos estatísticos e de machine learning em objetos com formato *tidy*, facilitando desde o entendimento e comunicação resultado, visto a integração com as muitas ferramentas do `tidyverse`, quanto a comparação entre   diferentes modelos. O R possui como uma de suas bibliotecas default o `stats`, contemplando uma série de funções estatísticas, como, por exemplo, para o ajuste de um modelo de regressão linear simples:
 
+```{r}
+#exemplo: regressão linear simples
+  fit <- lm(Sepal.Width ~ Petal.Length + Petal.Width, data = iris)
+#e ao invés de visulizar os dados com os comandos abaixo 
+  fit
+  summary(fit)
+  
+#podemos utilizar um dos comandos da biblioteca `broom`   
+  broom::tidy(fit)
+```
 
-....
+Em relação à modelagem em si, visto ser algo que demanda conhecimentos prévios, não iremos nos aprofundar. Contudo segue uma lista com opções de bibliotecas para algumas metodologias/áreas:
+
+- Árvore de Decisão - `part` e `rpart`
+- Clusterização - `stats`, `cluster` e `fpc`
+- Deep Learning - `keras`
+- Random Forest - `randomForest`
+- Redes Neurais - `nnet`, `neuralnet` e `RSNNS`
+- Regressões - `stats`, `nlme` e  `gbm`
+- Séries Temporais - `forest` e `dtw`
+- Text Mining - `tm` e `wordcloud`
+- Validação Cruzada - `caret`
+
 

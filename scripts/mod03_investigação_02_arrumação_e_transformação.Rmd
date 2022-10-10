@@ -1,5 +1,5 @@
 ---
-title: "Arrumação e Transformação do Dado"
+title: "Arrumação e Transformação de Dados"
 output: html_document
 ---
 
@@ -7,6 +7,228 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# ...
+## Tidy 
+Após a importação dos dados, passamos para a etapa de tidy dos dados, também chamada de *tidying data*. Para isto iremos primeiramente visualizar os dados, no R existem várias funções *built-in* para isto, como a função `names()`, que retorna o nome das colunas, ou `str()`, que permite a visualização da estrutura de um objeto arbitrário.   
+
+Todas as funções citadas serão igualmente úteis e utilizadas no contexto do `tidyverse`, mas, com o pacote `dplyr`, passamos a ter também a opção `glimpse()`. Nesta, de modo similar ao `str()`, temos o número de observações (linhas) e variáveis (colunas) dos dados, porém com a quantidade de observações ajustadas ao display do Console.
+
+```{r}
+#exemplo: função `glimpse` para visualização 
+  mtcars %>% glimpse()
+```
+
+A partir da visualização começamos a fazer os ajustes necessários para garantir que os dados estejam organizado de uma forma `tidy`, tendo como principal ferramenta a biblioteca `tidyr`. Seguem as principais funções deste pacote utilizando bases disponíveis pela própria biblioteca:
+
+- **Redimensionamento de dados**
+  - `gather()` - reorganiza os dados, combinando as colunas especificadas na coluna parâmetro `key`, e seus valores na coluna parâmetro `value`. Com tal tipo de ajuste podemos organizar os dados de modo a consultar várias colunas de interesse de uma única vez, algo útil para a aplicação de loops, funções e gráficos, conforme veremos na seção `Visualização`.
+
+```{r}
+#base para exemplo
+  table4a
+
+#exemplo: passando as colunas para linhas
+  table4a_new <- table4a %>% 
+    gather(`1999`, `2000`, key = "ano", value = "valores") 
+  
+  table4a_new
+```
+
+
+- `spread()` - de maneira oposta a função anterior, aqui podemos expandir linhas em colunas:
+
+```{r}
+#exemplo: passando linhas para colunas
+  table4a_new %>% 
+    spread(ano, valores) 
+```
+
+- **Dividir/combinar células**
+  - `separate()` - divide uma única coluna em várias colunas, similarmente a opção `separate_rows()`, que faz a mesma coisa para linhas.
+```{r}
+#base para exemplo
+  table3
+
+#exemplo: dividindo colunas
+  table3 %>% separate(rate, into = c("cases","pop"))
+  
+#exemplo: dividindo linhas
+  table3 %>% separate_rows(rate)
+```
+  
+  - `unite()` - e de maneira oposta as separações, temos a função que combina várias colunas.
+
+```{r}
+#base para exemplo
+  table3_separate <- table3 %>% separate(rate, into = c("cases", "pop"))
+
+#exemplo: separando a coluna rate em duas
+  table3_separate %>%
+    unite(cases, pop, col = "rate", sep = "/")
+```
+
+- **Dados Faltantes**
+
+  - `drop_na()` - excluí todas as linhas que apresentam elementos faltantes. 
+  - `fill()` - substituí os dados faltantes pelo valor mais recente da referida coluna.
+  - `replace_na()` - substituí os dados faltantes por um valor pré especificado.
+  
+```{r}
+#base para exemplo
+  airquality[1:5,] 
+
+#exemplo: exclusão das linhas identificadas com NA
+  airquality[1:5,] %>% drop_na() 
+  airquality[1:5,] %>% fill(c(Ozone, Solar.R)) 
+  airquality[1:5,] %>% replace_na(list(Ozone=0, Solar.R=0)) 
+
+```
+
+> Uma função particularmente interessante é o `View()`, pertencente ao R Base, que exibe os dados em uma nova janela, permitindo recursos como filtros e ordenação, via point-and-click.
+
+    
+## Manipulação 
+A próxima etapa no processo de análise é a manipulação da base visando desde o entendimento de suas variáveis, considerando tabulações e estatísticas, até a criação de novas variáveis. Para tal trabalharemos com o pacote `dplyr`, com recursos para:
+
+  - **Manipulação de variáveis**
+    - `select()` - seleciona variáveis, permitindo o uso de recursos como:
+        - `starts_with()`, `matches()`, `num_range()`, ou `everything()`  
+    - `mutate()` - cria/modifica variáveis
+    - `rename()` - renomeia variáveis
+
+```{r}
+#base exemplo
+  iris[1:5,] %>% as_tibble()
+
+#exemplo: seleção, mudança de nome, e definição de uma nova variável 
+  iris[1:5,] %>% 
+    as_tibble() %>% 
+    select(Sepal.Length) %>% 
+    rename(variavel_original = Sepal.Length) %>% 
+    mutate(variavel_original_normalizada =  variavel_original %>% scale)
+```
+
+  - **Sumarizações**
+    - `group_by()` - manipula a base de dados segmentando por cada "grupo" da variável especificada e, posteriormente, combina os resultados, considerando os comandos seguintes dados.
+    - `summarise()` - calcula resumos de uma tabela conforme especificação
+
+```{r}
+#exemplo: calculo da quantidade de observações de cada categoria, e 
+# média para a variável Petal.Length considerando a visão por Species
+  iris %>% 
+    group_by(Species) %>% 
+    summarise(N = n(),
+              PetalLength_media = mean(Petal.Length))
+```   
+
+  - **Manipulação de casos**
+    - `filter()` - filtra linhas da base de dados a partir de critérios lógicos (retorno `TRUE`/`FALSE`)
+    - `slice()` - seleciona linhas por suas posições ordinais
+    - `top_n()` - ordena as primeiras `n` observações das colunas listadas 
+    - `arrange()` - ordena as linhas de acordo com as colunas especificadas
+    - `distinct()` - remove as linhas duplicadas de uma dada entrada
+
+```{r}
+#exemplo: seleção segundo padrão de nomenclatura + filtro e ordenação
+  iris %>% 
+    select(starts_with("Petal")) %>%
+    filter(Petal.Length > 6, Petal.Width > 2) %>% 
+    arrange(Petal.Width)
+
+#exemplo: valor máximo de Sepal.Length para cada specie
+  iris %>% 
+    group_by(Species) %>% 
+    top_n(1, Sepal.Length)
+  
+```
+
+  - **Amostra**
+    - `sample_n()` - seleciona uma amostra aleatória considerando o número de elementos especificado
+    - `sample_frac()` - seleciona uma amostra aleatória considerando a proporção especificada
+ 
+```{r}
+#exemplo: amostra considerando o número de observações desejado 
+# seguido de uma amostra considerando proporção
+  iris %>% 
+    sample_n(10) %>% 
+    sample_frac(0.5) 
+```
+
+
+  - **Combinando Bases**
+    - `inner_join()` - retorna todas as linhas da base à esquerda que possuem valores correspondentes na base à direita. Se houver várias correspondências entre xe y, todas as combinações das correspondências serão retornadas.
+    - `left_join()` - retorna todas as linhas de x e todas as colunas de x e y. Linhas em x sem correspondência em y terão valores de NA nas novas colunas. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
+    - `full_join()` - retorna todas as linhas e todas as colunas de xe y. Onde não há valores correspondentes, retorna NA para o ausente.
+    
+```{r, collapse = T}
+#bases para exemplo
+  band_members %>% glimpse()
+  band_instruments %>% glimpse()
+  band_instruments2 %>% glimpse()
+
+#exemplo: em que as variáveis para join possuem nomes iguais
+  left_join(band_members, band_instruments) %>% glimpse()
+
+#exemplo: em que as variáveis para join possuem nomes diferentes
+  left_join(band_members, band_instruments2, by = c("name"="artist")) %>%
+    glimpse()
+```
+
+Conforme já comentado, existem bibliotecas para trabalharmos com diferentes classes de dados. Vamos citar algumas funcionalidades dos três pacotes com tal finalidade contidos no `tidyverse`:
+
+  - **fatores**
+    - `fct_count()` - conta o número de valores de cada nível
+    - `fct_relevel()` - reordenar os níveis dos fatores
+    - `fct_explicit_na()` - adicionar o `NA` como um dos níveis
+
+```{r}
+#base para exemplo
+  gss_cat %>% glimpse
+
+#exemplo: contabilizando a quantidade de religiões declaradas 
+  gss_cat$race %>% 
+  fct_count() 
+```
+
+  - **strings**
+    - `str_detect()` - identificar a presença de padrões em uma string
+    - `str_count()` - contabiliza o número de vezes que um padrão é encontrado
+    - `str_replace()` - substitui um dado padrão em uma string 
+    - `str_to_lower()` - converter strings maiúsculas e minúsculas
+
+```{r}
+#base para exemplo
+  fruit %>% 
+    enframe %>% #versão tibble para vetores
+    glimpse
+
+#exemplo: obtenção da quantidade de palavras contendo a string "berry"
+  fruit %>% 
+    str_count("berry") %>% 
+    sum()
+    
+```
+
+  - **datas**
+    - `as_date()` - converter um objeto para uma data ou hora 
+    - `wday()` - retorna o dia da semana como um número decimal 
+    - `today()` - retorna a data corrente 
+    - `floor_date()` - arredonda para o limite inferior mais próximo da unidade de tempo
+
+```{r, error=TRUE, message=F}
+#exemplo: retorna erro por não ser uma data válida
+  birthday <- lubridate::dmy("29/02/1971")
+  
+#data ok
+  birthday <- lubridate::dmy("29/02/1972"); birthday
+  
+#carregando `lubridate`, tornando o prefixo `lubridate::` desnecessário
+  library(lubridate)
+  
+#obtenção do dia da semana da data especificada
+  wday(birthday, label = TRUE)
+
+```
+
+
 
 

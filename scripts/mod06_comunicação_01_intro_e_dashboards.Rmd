@@ -1,0 +1,27 @@
+---
+title: "Comunicação para Ciência de Dados"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Comunicação
+Por fim temos a apresentação dos resultados, uma parte crítica do processo, visto que, usualmente, é neste momento que toda a análise passa a ter um significado prático. Para tal podemos exportar as informações de interesse para outras ferramentas, como excel, power point, ou etc, o que não costuma ser muito prático. Como alternativa podemos fazer a análise e montar o report conjuntamente pelo R, garantindo reprodutibilidade e histórico, por meio do Rmarkdown. Tal recurso é uma extensão do R que permite que padrões básicos de formatação sejam utilizados, além de pedaços de código, imagens, e etc, possibilitando a geração de diferentes tipos de documentos a partir do Script do R:
+
+
+```{r , echo=FALSE, out.width = '40%', fig.align = "center", fig.cap="RMarkdown"}
+ knitr::include_graphics("Figs/Fig_2_Rmarkdown.png")
+```
+
+Para criar tais arquivos basta ir em 'File > New File > R Markdown ...', preencher as especificações do Documento, e então apertar o botão Knit, ou o atalho 'Ctrl + Shift + K'.
+
+Além do RMarkdown, temos também ferramentas como o Shiny - pacote usado para geração de gráficos e dashboards interativos. que permitem a construção de aplicações Web. Para tal, as ferramentas da biblioteca convertem os dados analisados e as funções de R para HTML, CSS e JavaScript, gerando arquivos que podem ser abertos e trabalhados em um navegador. 
+
+O Shiny é baseado em dois componentes principais: ‘server’, que é responsável pela lógica do programa, tratamento e exibição dos dados, e ‘ui’ (user interface) que é responsável por oferecer as interações necessárias com o usuário através do navegador. Ambos possuem métodos e funções prontas para uso para as funcionalidades mais populares. 
+
+```{r , echo=FALSE, out.width = '30%', fig.align = "center", fig.cap="RMarkdown + Shiny"}
+ knitr::include_graphics("Figs/Fig_2_Shiny_Rmarkdown.png")
+```
+
