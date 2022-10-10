@@ -22,7 +22,7 @@ pixar_filmes <- dados::pixar_filmes
 pixar_filmes
 ```
 
-Como maneiras alternativas para visualizar os dados, podemos considerar também funções como: `View(pixar_filmes)`, `str(pixar_filmes)`, `tail(pixar_filmes)`, ou ainda:
+Existem diferentes alternativas para visualizar os dados no R, funções como `str(pixar_filmes)` ou `View(pixar_filmes)`, esta última particularmente interessante pois abre os dados em uma janela a parte, permitindo recursos como filtros e ordenação. Outro recurso interessante são as funções `tail(pixar_filmes)` ou: 
 
 ```{r}
 pixar_filmes %>% head()

@@ -4,10 +4,18 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 ```
 
-## Tidy 
+# Bibliotecas
+
+```{r}
+library(tidyverse)
+```
+
+
+
+# Tidy 
 Após a importação dos dados, passamos para a etapa de tidy dos dados, também chamada de *tidying data*. Para isto iremos primeiramente visualizar os dados, no R existem várias funções *built-in* para isto, como a função `names()`, que retorna o nome das colunas, ou `str()`, que permite a visualização da estrutura de um objeto arbitrário.   
 
 Todas as funções citadas serão igualmente úteis e utilizadas no contexto do `tidyverse`, mas, com o pacote `dplyr`, passamos a ter também a opção `glimpse()`. Nesta, de modo similar ao `str()`, temos o número de observações (linhas) e variáveis (colunas) dos dados, porém com a quantidade de observações ajustadas ao display do Console.
@@ -83,10 +91,9 @@ A partir da visualização começamos a fazer os ajustes necessários para garan
 
 ```
 
-> Uma função particularmente interessante é o `View()`, pertencente ao R Base, que exibe os dados em uma nova janela, permitindo recursos como filtros e ordenação, via point-and-click.
 
     
-## Manipulação 
+# Manipulação 
 A próxima etapa no processo de análise é a manipulação da base visando desde o entendimento de suas variáveis, considerando tabulações e estatísticas, até a criação de novas variáveis. Para tal trabalharemos com o pacote `dplyr`, com recursos para:
 
   - **Manipulação de variáveis**
@@ -154,7 +161,8 @@ A próxima etapa no processo de análise é a manipulação da base visando desd
 ```
 
 
-  - **Combinando Bases**
+# Combinando Bases
+
     - `inner_join()` - retorna todas as linhas da base à esquerda que possuem valores correspondentes na base à direita. Se houver várias correspondências entre xe y, todas as combinações das correspondências serão retornadas.
     - `left_join()` - retorna todas as linhas de x e todas as colunas de x e y. Linhas em x sem correspondência em y terão valores de NA nas novas colunas. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
     - `full_join()` - retorna todas as linhas e todas as colunas de xe y. Onde não há valores correspondentes, retorna NA para o ausente.
@@ -173,9 +181,12 @@ A próxima etapa no processo de análise é a manipulação da base visando desd
     glimpse()
 ```
 
-Conforme já comentado, existem bibliotecas para trabalharmos com diferentes classes de dados. Vamos citar algumas funcionalidades dos três pacotes com tal finalidade contidos no `tidyverse`:
 
-  - **fatores**
+# Pacotes para classes especiais de dados
+
+## fatores
+
+
     - `fct_count()` - conta o número de valores de cada nível
     - `fct_relevel()` - reordenar os níveis dos fatores
     - `fct_explicit_na()` - adicionar o `NA` como um dos níveis
@@ -189,7 +200,8 @@ Conforme já comentado, existem bibliotecas para trabalharmos com diferentes cla
   fct_count() 
 ```
 
-  - **strings**
+
+## strings
     - `str_detect()` - identificar a presença de padrões em uma string
     - `str_count()` - contabiliza o número de vezes que um padrão é encontrado
     - `str_replace()` - substitui um dado padrão em uma string 
@@ -208,7 +220,7 @@ Conforme já comentado, existem bibliotecas para trabalharmos com diferentes cla
     
 ```
 
-  - **datas**
+## datas
     - `as_date()` - converter um objeto para uma data ou hora 
     - `wday()` - retorna o dia da semana como um número decimal 
     - `today()` - retorna a data corrente 
