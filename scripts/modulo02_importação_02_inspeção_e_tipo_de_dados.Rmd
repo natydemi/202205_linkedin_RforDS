@@ -15,7 +15,7 @@ library(tidyverse)
 
 # Inspeções iniciais
 
-Após fazer a importação de uma base de dados é importante que o objeto seja minimamente examinado, em termos de volumetrias, suas dimensões (linhas e colunas) e como tais informações estão sendo entendidas pela linguagem. Vamos iniciar discutir sobre tais checks iniciais considerando dados dos filmes da pixar, que podem ser consultados por meio do pacote `pixarfilms`, ou na sua versão traduzida para português, disponível no pacote `dados`:
+Após fazer a importação de uma base de dados é importante que o objeto seja minimamente examinado, em termos de volumetrias, suas dimensões (linhas e colunas) e como tais informações estão sendo entendidas pela linguagem. Vamos iniciar discutindo sobre tais verificações considerando dados dos filmes da Pixar, que podem ser consultados por meio do pacote `pixarfilms`, ou na sua versão traduzida para português, disponível no pacote `dados`:
 
 ```{r}
 pixar_filmes <- dados::pixar_filmes
@@ -31,9 +31,9 @@ pixar_filmes %>% head()
 
 ## Linhas, colunas e suas nomenclaturas
 
-Antes de seguirmos gostaria de alertar que é relativamente comum encontrar diferentes nomenclaturas para as mesmas "entidades" no contexto de análise de dados, o que pode ser particularmente confuso para quem está iniciando na área. E não se preocupe, a área possui uma natureza multidiciplinar, tais variações são naturais. Neste curso, em que vamos trabalhar basicamente com dados tabulares, iremos nos referir às linhas das bases como observações, unidades observacionais, e as colunas como variáveis, ou ainda features (este último sendo mais usual no contexto de modelagem, que veremos mais à frente). Por fim, para fazer referencia a intersecção entre variáveis e observações, utilizaremos o termo "elementos da tabela".
+Antes de seguirmos gostaria de alertar que é relativamente comum encontrar diferentes nomenclaturas para as mesmas "entidades" no contexto de análise de dados, o que pode ser particularmente confuso para quem está iniciando na área. E não se preocupe, a área possui uma natureza multidiciplinar, tais variações são naturais. Neste curso, em que vamos trabalhar basicamente com dados tabulares, iremos nos referir às linhas das bases como observações, unidades observacionais, e as colunas como variáveis, ou ainda features (este último sendo mais usual no contexto de modelagem, que veremos mais à frente). Por fim, para fazer referência a intersecção entre variáveis e observações, utilizaremos o termo "elementos da tabela".
 
-Para examinarmos as  quantidade de linhas e colunas da base, podemos trabalhar com funções como:
+Para examinarmos as quantidades de linhas e colunas da base, podemos trabalhar com funções como:
 
 ```{r}
 #linhas
@@ -53,7 +53,7 @@ Para o caso de desejarmos checar o nome das variáveis da tabela:
 pixar_filmes %>% names()
 ```
 
-E apesar de existirem muitas funções importantes que podem nos ajudar na investigação inicial de uma base de dados, neste curso iremos priorizar a função `glimpse()`. Visto esta nos permitir verificar: as dimensões do dataset, os nomes das colunas, suas respectivas classes, e uma amostra das primeiras observações de cada variável:
+E apesar de existirem muitas funções importantes que podem nos ajudar na investigação inicial de uma base de dados, neste curso iremos priorizar a função `glimpse()`. Visto que esta nos permite verificar: as dimensões do dataset, os nomes das colunas, suas respectivas classes, e uma amostra das primeiras observações de cada variável:
 
 ```{r}
 pixar_filmes %>% glimpse()
@@ -62,7 +62,7 @@ pixar_filmes %>% glimpse()
 
 ## Identificando as classes das colunas
 
-A partir do resultado da função `glimpse()` temos nosso primeiro contato com um dos conceitos mais fundamentais no contexto de análise de dados: as classes das colunas de um dataset. Considerando a base `pixar_filmes` podemos observar as classes: character ( \<chr\> ), indicando as coluna que possuem strings, ou seja, palavras; double ( \<dbl\> ), isto é, números; e date ( \<date\> ), basicamente, datas. E saber sobre a classe de cada coluna é extremamente importante, pois nos permite identificar o tipo do dado, um conceito matemático que nos guia sobre quais calculos que fazem ou não sentido de serem aplicados. Por exemplo, observe o exemplo abaixo e reflita: sendo a coluna  `filme` uma palavra, faria sentido termos o cálculo de média?
+A partir do resultado da função `glimpse()` temos nosso primeiro contato com um dos conceitos mais fundamentais no contexto de análise de dados: as classes das colunas de um dataset. Considerando a base `pixar_filmes` podemos observar as classes: character ( \<chr\> ), indicando as coluna que possuem strings, ou seja, palavras; double ( \<dbl\> ), isto é, números; e date ( \<date\> ), basicamente, datas. E saber sobre a classe de cada coluna é extremamente importante, pois nos permite identificar o tipo do dado, um conceito matemático que nos guia sobre quais cálculos que fazem ou não sentido de serem aplicados. Por exemplo, observe o exemplo abaixo e reflita: sendo a coluna `filme` uma palavra, faria sentido termos o cálculo de média?
 
 ```{r}
 pixar_filmes %>% summary()
@@ -73,7 +73,7 @@ Você pode se perguntar como o R identifica as classes das variáveis, e em gera
 
 ## Alterando a classe de uma coluna
 
-Se não necessariamente o computador irá interpretar os dados de maneira coerente com a informação que a variável se propõe a representar, é importante que possamos ajustar tais interpretações, no caso, ajustando as classes. Como exemplo temos a `ordem_lancamento`, em que faria sentido aplicar cálculos como mínimo, ou máximo, porém, por estar sendo interpretada como uma variável da classe `character`, não nos permite tais estatísticas:
+Senão necessariamente o computador irá interpretar os dados de maneira coerente com a informação que a variável se propõe a representar, é importante que possamos ajustar tais interpretações, no caso, ajustando as classes. Como exemplo temos a `ordem_lancamento`, em que faria sentido aplicar cálculos como mínimo, ou máximo, porém, por estar sendo interpretada como uma variável da classe `character`, não nos permite tais estatísticas:
 
 ```{r}
 dados::pixar_filmes %>% 
@@ -93,7 +93,7 @@ dados::pixar_filmes %>%
 
 # Classes do R e Tipos de Dados da Estatística
 
-Existem algumas maneiras de classificar os diferentes tipos de dados segunda a perspectiva da estatística, aqui iremos considerar a organização:
+Existem algumas maneiras de classificar os diferentes tipos de dados segundo a perspectiva da estatística, aqui iremos considerar a organização:
 
 -   variáveis qualitativas (categóricas)
     -   nominal
@@ -147,7 +147,7 @@ dados_pixar %>% pull(data_lancamento) %>% class()
 
 No R chamamos de `Estruturas de Dados` a maneira como as informações são organizadas. Aqui vamos citar as três estruturas mais usuais no contexto de análise de dados:
 
-- Vetores atômicos: estrutura mais básica do R, se caracterizam por uma única dimensão, e guarda objetos da mesma classe – por isso o nome atômico.
+- Vetores atômicos: estrutura mais básica do R, se caracterizam por uma única dimensão, e guardam objetos da mesma classe – por isso o nome atômico.
 
 - Data Frame: estruturas bidimensionais que permitem que cada coluna possa ter sua própria classe – em termos práticos, cada coluna é um vetor atômico.
 
