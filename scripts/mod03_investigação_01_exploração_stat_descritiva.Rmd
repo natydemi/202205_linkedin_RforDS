@@ -1,5 +1,5 @@
 ---
-title: "Inspeções Iniciais e Tipos de Dados"
+title: "Exploração e Estatística  Descritiva"
 output: html_document
 ---
 
