@@ -551,7 +551,79 @@
   # devem ser especificadas e passadas como argumentos da função.
 
 
-# ----- HANDS-ON -----
+# Tratamento de exceções -----
+ 
+  # Chamamos de exceção qualquer condição anormal que possa aparecer quando 
+  # estamos executando um programa de computador. Normalmente, esses erros 
+  # acontecem por fatores externos do ponto de vista do código, como valores
+  # ou tipos não suportados passados para uma função, necessidade de leitura 
+  # ou gravação de arquivos no sistema operacional, necessidade de conexão com 
+  # a internet para obter algum dado.
+  
+  # As linguagens costumam ter formas de tratar as exceções, ou seja, métodos 
+  # e funções que possam ser usados para que o programa não quebre a execução, 
+  # não apresente erros abruptos ou até mesmo continue a partir do ponto em que 
+  # o erro ocorreu. O tratamento de exceções em R é feito utilizando a função 
+  # `tryCatch.` A sintaxe da função é:
+    
+  result = tryCatch(
+    {
+      #Código a ser executado
+    }, 
+    warning = function(condição) {
+      #Código a ser executado caso ocorra algum aviso (warning)
+    }, 
+    error = function(condição) {
+      #Código a ser executado caso ocorra algum erro
+    }, 
+    finally={
+      # Código a sempre ser executado após um dos três blocos acima.
+    }
+  )
+  
+  
+  # Por exemplo, vamos escrever um código que retorna para uma variável as 
+  # linhas de um arquivo lido de uma url:
+    
+  arquivo <- function(url) {
+    linhas <- tryCatch(
+      {
+        message("Tentando ler o arquivo")
+        readLines(con=url)
+      },
+      error=function(condicao) {
+        message(paste("O caminho não pode ser acessado: ", url))
+        message("Mensagem de erro original: ")
+        message(condicao)
+        return(NA)
+      },
+      warning=function(condicao) {
+        message("Warnings foram gerados ao ler a url:") 
+        message(condicao)
+        return(NULL)
+      },
+      finally={
+        message("Fim da execução")
+      }
+    )    
+    return(linhas)
+  }
+
+  
+  # Caso o arquivo consiga ser lido, a última linha do primeiro bloco ( o 
+  # resultado de readLines ) será retornado. Se ocorrer um erro, as mensagens 
+  # de erro são exibidas e é retornado o valor NA. Se ocorrer algum warning, 
+  # as mensagens correspondentes são enviadas e a função retorna NULL.
+  # Independente do valor de retorno, a mensagem de fim da execução será 
+  # exibida ao final. É importante utilizar blocos de tratamento de exceção 
+  # toda vez que não houver certeza sobre as condições necessárias para 
+  # execução do código. Uma boa escolha de alternativas em caso de erros ou 
+  # problemas faz com que o programa seja executado com maior confiabilidade, 
+  # além de melhorar a legibilidade e diminuir o tempo gasto para correção 
+  # desses erros e problemas.
+
+  
+  # ----- HANDS-ON -----
   #No RStudio Learn Primers: #https://rstudio.cloud/learn/primers 
   # você encontrará materiais para praticar e seguir evoluindo na linguagem 
 
