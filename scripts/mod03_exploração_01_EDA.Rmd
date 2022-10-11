@@ -1,5 +1,5 @@
 ---
-title: "Exploração e Estatística  Descritiva"
+title: "EDA - Exploratory Data Analysis, ou simplesmente Análise Exploratória de Dados"
 output: html_document
 ---
 
@@ -13,8 +13,10 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 library(tidyverse)
 ```
 
+# Exploratory 
 
 # Dados
+
 Vamos trabalhar com uma base de comerciais do Superbow, considerando os anúncios das 10 marcas que mais veicularam nos Super Bowls dos últimos anos, tendo, para cada comercial, a classificação binária relacionada a sete critérios pré-especificados. Para mais informações sobre o levantamento acesse:
 - <https://projects.fivethirtyeight.com/super-bowl-ads/>
 - <https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md>
@@ -22,6 +24,7 @@ Vamos trabalhar com uma base de comerciais do Superbow, considerando os anúncio
 
 ```{r}
 youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
+
 ```
 
 
@@ -95,18 +98,35 @@ Estatística! Aqui não tem muito como correr, é da estatística os ferramentai
 
 <https://www.youtube.com/playlist?list=PLQcLb-PUD9WNZnVBYDKEonioyJw3nEaOM>
 
-Aqui, teremos como enfoque a discussão conceitual de algus conceitos chave:
+Mas não se preocupe, iremos passar por alguns conceitos chave. E vamos dividir esta discussão em três momentos
 
-## Principais medidas de resumo
+## Medidas de resumo
 
-São elas:
+Aqui temos a essencia do que se trata a estatística descritiva, resumir, sumarizar os dados, de modo que independente do quantos dados você tenha, será possível sintetizar as características dos dados. Mas note que qualquer resumo implica em uma simplificação, uma perda, e no contexto da estatística descritiva não é difirente. Contudo, aqui, podemos nos cercar de medidas, de modo que, em conjunto, seja possível traçar o perfil dos dados. Dentre as principais medidas, temos: 
 
-- Medidas de Posição/concentração: média, moda, mediana
-- Medidas de Ordenação (posição relativa): quartis, percentis, máximo e mínimo
--  Medidas de Dispersão (absoluta): variância, desvio padrão, amplitude e intervalo interquartil.
--  Medidas de Dispersão (relativa): coeficiente de variação
+- Medidas de Posição (ou concentração): média, moda, mediana
+- Medidas de Dispersão (absoluta): variância, desvio padrão, amplitude e intervalo interquartil.
+- Medidas de Dispersão (relativa): coeficiente de variação
+- Medidas de Ordenação (posição relativa): máximo, mínimo, quartis e percentis 
+
+E para discutir melhor estes grupos, vamos considerar 
+```{r}
+youtube %>% select(where(is.numeric)) %>% slice(20:36)
+```
 
 
+```{r}
+youtube %>% slice(20:30) %>% pull(dislike_count)
+```
+
+```{r}
+youtube %>% slice(20:31) %>% pull(dislike_count) %>% sort()
+```
+
+
+```{r}
+youtube %>% slice(20:30) %>% select(dislike_count) %>% skimr::skim()
+```
 
 
 ## Distribuição de frequência de uma variável
