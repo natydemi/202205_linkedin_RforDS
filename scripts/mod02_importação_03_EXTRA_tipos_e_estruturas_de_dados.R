@@ -7,24 +7,24 @@
     # No R existem seis tipos de dados, que basicamente indicam como os objetos são armazenados (*low-level*)
         # character - textos ou strings:  `"a"` ou `"isto é um teste"` (sempre entre aspas simples ou duplas)
         # numeric (ou double ): valores decimais - `6` ou `19.4`
-        # integer: números naturais -`2L` ou `0L` (o `L` diz para o R armazenar o objeto como inteiro)
+        # integer: números inteiros -`2L` ou `0L` (o `L` diz para o R armazenar o objeto como inteiro)
         # logical: valores booleanos - `TRUE` e `FALSE`
         # complex: números complexos - `1+4i` ou `1+3i`  
         # raw: bytes - `0a` ou `c8`
         
     #Para verificar qual é o tipo de armazenamento interno de um objeto, podemos utilizar a função `typeof()`.
 
-    #A função `class()` também pode ser utilizada, porém, por possuir uma natureza mais genérica, esta trata-se de uma 
-    # classificação orientada a objetos, de acordo com a hierarquia de classes do R. Em linhas gerais o resultado 
+    #A função `class()` também pode ser utilizada, porém, ela possui uma natureza mais genérica - 
+    # classificação orientada a objetos - de acordo com a hierarquia de classes do R. Em linhas gerais o resultado 
     # será o mesmo do `typeof()` quando o objeto estiver na estrutura mais básica do R - vetores atômicos. 
     # Para os demais casos o `class()` retornará a estrutura do dados – falaremos destes um pouco adiante. 
 
-    #De modo geral falaremos utilizaremos o `class()`, tanto por este conceito ser mais genérico, nos permitindo ter conhecimento
+    #De modo geral, utilizaremos o `class()`, tanto por este conceito ser mais genérico, nos permitindo ter conhecimento
     # não apenas de como o dado é internamente processado pelo R, mas sim sobre atributos – conceito que veremos mais adiante.
     # Mas, de maneira geral, um dado pode ser guardado como um número, por exemplo, mas ter atributos de data, pois bem, 
     # enquanto a função `typeof` nos falará do número, a função `class()`  nos dará a visibilidade sobre a data.
   
-    #Por fim, vale comentando que existe o conceito de tipo de variáveis no contexto matemático/estatístico, que até   
+    #Por fim, vale comentar que existe o conceito de tipo de variáveis no contexto matemático/estatístico, que até   
     # possuem alguma similaridade com os Tipos de Dados do R (`typeof()`), mas não se tratam da mesma abstração. 
     
     #Para conferir e manusear a classe de um vetor, podemos utilizar as funções `is.` e `as.` 
@@ -58,7 +58,7 @@
     #o R irá modificar o tipo dos objetos de modo que todos passem a pertencer à mesma classe. 
     #falaremos de vetores na próxima seção, mas adiantando que   
     #a forma mais usual para criar um vetor no R é por meio da função `c()`
-        #Algumas funções inclusive fazem a mudança na classe do objeto de forma automática:
+        #Algumas funções, inclusive, fazem a mudança na classe do objeto de forma automática:
             #coerção da classe lógica para inteira
             class(length(c(TRUE, FALSE))) #`length()` retorna o tamanho do objeto
             #coerção da classe inteira para numérica
@@ -77,9 +77,9 @@
         #Arrays
             #similares as Matrizes, porém permitindo mais que duas dimensões 
         #Data Frame
-            #estruturas bidimensionais mais genéricas que as matrizes, uma vez que suas colunas podem conter tipos de objetos diferentes.
+            #estruturas bidimensionais mais genéricas que as matrizes, uma vez que suas colunas podem conter tipos de dados diferentes.
         #Listas
-            #permitem que diferentes tipos de objetos sejam guardados em um único `vetor`
+            #permitem que diferentes tipos de dados sejam guardados em um único `vetor`
             #além de serem recursivos, i.e., uma lista pode conter outras listas, de diferentes tamanhos
         
         
@@ -135,7 +135,7 @@
               #excluindo os três últimos elementos
               n <- 5; ex_acesso[-((n-2):n)]
           
-          #O `[1]` que precede o resultado no Console, se trata a quantidade de elementos do resultado
+          #O `[1]` que precede o resultado no Console, indica a quantidade de elementos do resultado
               #exemplo
               letters
           
@@ -261,7 +261,7 @@
             # %y: anos com dois dígitos (19)
             # %Y:	anos com quatro dígitos (2019)
             
-        #Desta forma podemos fazer cálculos cabíveis à dados desta natureza, como
+        #Desta forma podemos fazer cálculos cabíveis a dados desta natureza, como
             #quantidade de dias entre duas datas:
             ex_date[1] - ex_date[2]
 
@@ -345,7 +345,7 @@
           #se quisermos adicionar uma nova coluna
               raça <- c("indígena", "preta" ,"branca", "preta")
               raça <- as.factor(raça)
-              # note que faz sentido termos mapeados as raças independentemente 
+              # note que faz sentido termos mapeado as raças independentemente 
               # de constarem originalmente no vetor ou não 
               raça <- factor(raça, 
                              levels = c("branca","preta", "amarela", "indígena", "parda"),
@@ -421,7 +421,7 @@
 #  ----- HANDS-ON -----
                
     #1.considerando a base mtcars
-        #1.1. exclua as variáveis que estão atrapalhando a visão dos demais boxplots?
+        #1.1. exclua as variáveis que estão atrapalhando a visão dos demais boxplots
         #1.2. como ver o resultado médio de uma variável apenas? #dica: mean()
         #1.3. qual a média das primeiras 10 linhas da base? 
         #1.4. quantas linhas possuem vs e am igual a 0?
