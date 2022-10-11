@@ -3,11 +3,20 @@ title: "Modelagem de Dados"
 output: html_document
 ---
 
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 ```
 
+# Bibliotecas
+
+```{r}
+library(tidyverse)
+```
+
+
 # Modelagem 
+
 Após um entendimento mais profundo sobre os dados, seu comportamento, natureza e especificidades, podemos passar para a fase de modelagem. Assim, tendo as perguntas bem especificadas, podemos utilizar um modelo para respondê-las. No `tidyverse` a biblioteca `broom` é direcionada para esta etapa da análise, porém de um ponto de vista de integração. Isto porque tem como finalidade transformar resultados de modelos estatísticos e de machine learning em objetos com formato *tidy*, facilitando desde o entendimento e comunicação resultado, visto a integração com as muitas ferramentas do `tidyverse`, quanto a comparação entre   diferentes modelos. O R possui como uma de suas bibliotecas default o `stats`, contemplando uma série de funções estatísticas, como, por exemplo, para o ajuste de um modelo de regressão linear simples:
 
 ```{r}
