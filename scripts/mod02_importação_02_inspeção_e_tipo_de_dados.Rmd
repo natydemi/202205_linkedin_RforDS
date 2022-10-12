@@ -31,7 +31,7 @@ pixar_filmes %>% head()
 
 ## Linhas, colunas e suas nomenclaturas
 
-Antes de seguirmos gostaria de alertar que é relativamente comum encontrar diferentes nomenclaturas para as mesmas "entidades" no contexto de análise de dados, o que pode ser particularmente confuso para quem está iniciando na área. E não se preocupe, a área possui uma natureza multidiciplinar, tais variações são naturais. Neste curso, em que vamos trabalhar basicamente com dados tabulares, iremos nos referir às linhas das bases como observações, unidades observacionais, e as colunas como variáveis, ou ainda features (este último sendo mais usual no contexto de modelagem, que veremos mais à frente). Por fim, para fazer referência à intersecção entre variáveis e observações, utilizaremos o termo "elementos da tabela".
+Antes de seguirmos gostaria de alertar que é relativamente comum encontrar diferentes nomenclaturas para as mesmas "entidades" no contexto de análise de dados, o que pode ser particularmente confuso para quem está iniciando na área. E não se preocupe, a área possui uma natureza multidiciplinar, tais variações são naturais. Neste curso, em que vamos trabalhar basicamente com dados tabulares, iremos nos referir às linhas das bases como observações, unidades observacionais, e as colunas como variáveis, às vezes como tributos ou ainda features (este último sendo mais usual no contexto de modelagem, que veremos mais à frente). Por fim, para fazer referência à intersecção entre variáveis e observações, utilizaremos o termo "elementos da tabela".
 
 Para examinarmos as quantidades de linhas e colunas da base, podemos trabalhar com funções como:
 

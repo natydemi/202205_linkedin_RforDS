@@ -13,17 +13,23 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 library(tidyverse)
 ```
 
-# Exploratory 
+# EDA
+
+EDA, do inglês Exploratory Data Analysis, e em português Análise Exploratória de Dados, trata do entendimento do dado de uma maneira mais ampla do que as verificações de volumetrias iniciais. Aqui é possível tanto ir em uma linha mais descritiva, por meio de estatísticas e visualizações, quanto ir em uma linha mais diagnóstica, investigando comportamentos mais complexos, como padrões de associaçao por exemplo. Em linhas gerais, nesta etapa damos *sentido* aos dados! 
+
 
 # Dados
 
-Vamos trabalhar com uma base de comerciais do Superbow, considerando os anúncios das 10 marcas que mais veicularam nos Super Bowls dos últimos anos, tendo, para cada comercial, a classificação binária relacionada a sete critérios pré-especificados. Para mais informações sobre o levantamento acesse:
+Vamos trabalhar com uma base de comerciais do Superbow, considerando os anúncios das 10 marcas que mais veicularam nos Super Bowls dos últimos anos, tendo, para cada comercial, uma classificação binária relacionada a sete critérios pré-especificados. Para mais informações sobre o levantamento e a base de dados acesse:
+
 - <https://projects.fivethirtyeight.com/super-bowl-ads/>
+
 - <https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md>
 
 
 ```{r}
-youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
+youtube <- readr::read_csv(
+  'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
 
 ```
 
@@ -38,29 +44,12 @@ youtube %>% glimpse()
 
 # Bibliotecas para EDA
 
-Vamos primeiramente definir EDA, do inglês, Exploratory Data Analysis, ou em português Análise Exploratória de Dados. Trata-se da tentativa de resumir um conjuntos de dados, visando identificar as suas principais características. E no R temos uma série de pacotes que procuram acelerar este processo:
+Vamos iniciar fazendo uso de pacotes que nos ajudam a entender as suas principais características dos dados:
 
-## janitor
-Este pacote disponibiliza algumas funções para limpar e avaliar bases de dados: 
 
-```{r}
-#janitor::
-youtube %>% janitor::clean_names(case = "upper_camel") %>%  glimpse()
-```
-
-```{r}
-youtube %>% janitor::tabyl(year) 
-```
-
-```{r}
-youtube %>% 
-  janitor::tabyl(brand) %>%  
-  janitor::adorn_totals() %>%  
-  janitor::adorn_pct_formatting()
-```
 
 ## inspectdf
-Este pacote traz uma série de recursos para apresentação de resumos, como volumetrias e dados faltantes, respeitando sempre a classe das variáveis.
+Este pacote traz uma série de recursos para apresentação de resumos, como volumetrias e dados faltantes, respeitando sempre a classe das variáveis .
 
 ```{r}
 #inspectdf::
@@ -98,34 +87,54 @@ Estatística! Aqui não tem muito como correr, é da estatística os ferramentai
 
 <https://www.youtube.com/playlist?list=PLQcLb-PUD9WNZnVBYDKEonioyJw3nEaOM>
 
-Mas não se preocupe, iremos passar por alguns conceitos chave. E vamos dividir esta discussão em três momentos
+Mas não se preocupe, iremos passar por alguns conceitos chave. E vamos dividir esta discussão em três momentos:
 
 ## Medidas de resumo
 
-Aqui temos a essencia do que se trata a estatística descritiva, resumir, sumarizar os dados, de modo que independente do quantos dados você tenha, será possível sintetizar as características dos dados. Mas note que qualquer resumo implica em uma simplificação, uma perda, e no contexto da estatística descritiva não é difirente. Contudo, aqui, podemos nos cercar de medidas, de modo que, em conjunto, seja possível traçar o perfil dos dados. Dentre as principais medidas, temos: 
+Aqui temos a essencia do que se trata a estatística descritiva, resumir, sumarizar os dados, de modo que independente do quantos dados você tenha, será possível sintetizar as características dos dados. Mas note que qualquer resumo implica em uma simplificação, uma perda, e no contexto da estatística descritiva não é difirente. Contudo, aqui, podemos nos cercar de medidas, de modo que, em conjunto, seja possível traçar o perfil dos dados. Dentre as principais medidas: 
 
 - Medidas de Posição (ou concentração): média, moda, mediana
 - Medidas de Dispersão (absoluta): variância, desvio padrão, amplitude e intervalo interquartil.
 - Medidas de Dispersão (relativa): coeficiente de variação
 - Medidas de Ordenação (posição relativa): máximo, mínimo, quartis e percentis 
 
-E para discutir melhor estes grupos, vamos considerar 
+E para discutir melhor estes grupos, vamos considerar os colunas numéricas da base de comerciais do Superbowl:
 ```{r}
-youtube %>% select(where(is.numeric)) %>% slice(20:36)
+youtube %>% select(where(is.numeric)) 
 ```
 
+Para facilitar a discussão vamos filtrar algumas linhas e salvar este objeto: 
 
 ```{r}
-youtube %>% slice(20:30) %>% pull(dislike_count)
+(youtube_dislike_count = youtube %>% slice(20:31) %>% pull(dislike_count))
 ```
 
+E agora ordena-la:
 ```{r}
-youtube %>% slice(20:31) %>% pull(dislike_count) %>% sort()
+youtube_dislike_count %>% sort()
 ```
 
+Ao comparar a lista de números com as estatísticas geradas, perceba como a média (`r mean(youtube_dislike_count)`)é pouco descritiva em relação aos dados de origem. Um outro ponto que chama a atençao é o desvio padrão de `r sd(youtube_dislike_count)`. E o que aconteceu para que esses números fossem tão **misleading**, ou seja, tão enganosos em relação ao que ocorre na base de dados, e a resposta é: outlier. Esta entidade, também conhecida como pontos aberrantes, pontos distante dos demais, e que acabam por influenciar algumas medidas de resumo, como a média. Neste contexto, trabalhar com a mediana (`r mean(youtube_dislike_count)`) como medida de posição, e com o amplitude do intervalo interquartil (`r IQR(youtube_dislike_count)`), tendem a ser alternativas interessantes. 
 
 ```{r}
-youtube %>% slice(20:30) %>% select(dislike_count) %>% skimr::skim()
+youtube_dislike_count %>% skimr::skim()
+```
+
+Por fim vamos comentar da questão do absoluto vs. relativo, ao trabalhar com métricas de natureza absoluta, vamos lidar com os resultados respeitando a magnitude do dado, contudo, isto nem sempre é interessante, particularmente quando queremos comparar variáveis que possuam magnitudes muito diferentes:
+
+```{r}
+youtube %>% select(dislike_count, view_count) %>% skimr::skim()
+```
+
+neste caso trabalhar com o coeficiente de variação possa ser interessante. Para a comparação abaixo, apesar da diferença em valores absolutos, em termos relativos, ambos os atributos possuem uma dispersão similar:
+
+```{r}
+# dislike_count
+(sd(youtube$dislike_count, na.rm = TRUE) / mean(youtube$dislike_count, na.rm = TRUE))
+
+# view_count
+(sd(youtube$view_count, na.rm = TRUE) / mean(youtube$view_count, na.rm = TRUE))
+
 ```
 
 
@@ -166,7 +175,7 @@ ggridges::lincoln_weather %>%
 
 
 
-
+Como último ponto eu gostaria de pontuar que: EDA é sobre interação, quanto mais você investiga, mais informações terá para tornar a investigação mais
 
 
 # HANDS-ON
@@ -176,4 +185,10 @@ No R você irá encontrar dezenas de pacotes com o objetivo de "facilitar" a sua
 E em relação às distribuições de frequências, você já ouviu falar da distribuição Normal (Gaussiana)? Ou talvez da distribuição Poisson? Exponencial? já refletiu sobre o porquê estudamos diferentes.
 
 
+
+# REFERÊNCIA
+
+Um livro muito bacana para se situar em termos de análise descritiva: 
+
+- 
 

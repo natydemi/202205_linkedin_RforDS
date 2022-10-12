@@ -381,7 +381,7 @@ pre code {
 </div>
 <div id="inspeções-iniciais" class="section level1">
 <h1>Inspeções iniciais</h1>
-<p>Após fazer a importação de uma base de dados é importante que o
+<p>Após fazer a importação de uma base de dados, é importante que o
 objeto seja minimamente examinado, em termos de volumetrias, suas
 dimensões (linhas e colunas) e como tais informações estão sendo
 entendidas pela linguagem. Vamos iniciar discutindo sobre tais
@@ -404,10 +404,12 @@ pixar_filmes
 ##  9 9                WALL-E              2008-06-27           98 Livre           
 ## 10 10               Up - Altas Aventur… 2009-05-29           96 Orientação pare…
 ## # … with 17 more rows</code></pre>
-<p>Como maneiras alternativas para visualizar os dados, podemos
-considerar também funções como: <code>View(pixar_filmes)</code>,
-<code>str(pixar_filmes)</code>, <code>tail(pixar_filmes)</code>, ou
-ainda:</p>
+<p>Existem diferentes alternativas para visualizar os dados no R,
+funções como <code>str(pixar_filmes)</code> ou
+<code>View(pixar_filmes)</code>. Esta última é particularmente
+interessante, pois abre os dados em uma janela à parte, permitindo
+recursos como filtros e ordenação. Outro recurso interessante são as
+funções <code>tail(pixar_filmes)</code> ou:</p>
 <pre class="r"><code>pixar_filmes %&gt;% head()
 ## # A tibble: 6 × 5
 ##   ordem_lancamento filme                data_lancamento duracao classificacao_i…
@@ -427,10 +429,10 @@ para quem está iniciando na área. E não se preocupe, a área possui uma
 natureza multidiciplinar, tais variações são naturais. Neste curso, em
 que vamos trabalhar basicamente com dados tabulares, iremos nos referir
 às linhas das bases como observações, unidades observacionais, e as
-colunas como variáveis, ou ainda features (este último sendo mais usual
-no contexto de modelagem, que veremos mais à frente). Por fim, para
-fazer referência a intersecção entre variáveis e observações,
-utilizaremos o termo “elementos da tabela”.</p>
+colunas como variáveis, às vezes como tributos ou ainda features (este
+último sendo mais usual no contexto de modelagem, que veremos mais à
+frente). Por fim, para fazer referência à intersecção entre variáveis e
+observações, utilizaremos o termo “elementos da tabela”.</p>
 <p>Para examinarmos as quantidades de linhas e colunas da base, podemos
 trabalhar com funções como:</p>
 <pre class="r"><code>#linhas
@@ -449,7 +451,7 @@ pixar_filmes %&gt;% dim()
 ## [1] &quot;ordem_lancamento&quot;         &quot;filme&quot;                   
 ## [3] &quot;data_lancamento&quot;          &quot;duracao&quot;                 
 ## [5] &quot;classificacao_indicativa&quot;</code></pre>
-<p>E apesar de existirem muitas funções importantes que podem nos ajudar
+<p>Apesar de existirem muitas funções importantes que podem nos ajudar
 na investigação inicial de uma base de dados, neste curso iremos
 priorizar a função <code>glimpse()</code>. Visto que esta nos permite
 verificar: as dimensões do dataset, os nomes das colunas, suas
@@ -472,7 +474,7 @@ análise de dados: as classes das colunas de um dataset. Considerando a
 base <code>pixar_filmes</code> podemos observar as classes: character (
 &lt;chr&gt; ), indicando as coluna que possuem strings, ou seja,
 palavras; double ( &lt;dbl&gt; ), isto é, números; e date ( &lt;date&gt;
-), basicamente, datas. E saber sobre a classe de cada coluna é
+), basicamente, datas. Saber sobre a classe de cada coluna é
 extremamente importante, pois nos permite identificar o tipo do dado, um
 conceito matemático que nos guia sobre quais cálculos que fazem ou não
 sentido de serem aplicados. Por exemplo, observe o exemplo abaixo e
@@ -500,16 +502,16 @@ e em geral é por meio de regras lógicas, por exemplo: se tivermos uma
 string em uma coluna, não tem como esta variável ser numérica, certo?
 Bem, quase. Pois se tivermos uma coluna com valores monetários, por
 exemplo, é razoável que o número seja precedido do simbolo de
-<code>R$</code>, o ponto é que esta string precisa ser devidamente
+<code>R$</code>. O ponto é que esta string precisa ser devidamente
 mapeada para que a variável não seja internalizada de maneira
 errada.</p>
 </div>
 <div id="alterando-a-classe-de-uma-coluna" class="section level2">
 <h2>Alterando a classe de uma coluna</h2>
-<p>Senão necessariamente o computador irá interpretar os dados de
-maneira coerente com a informação que a variável se propõe a
-representar, é importante que possamos ajustar tais interpretações, no
-caso, ajustando as classes. Como exemplo temos a
+<p>Se o mapeamento de uma variável não estiver correto, o computador irá
+interpretar os dados de maneira incoerente com a informação que a
+variável se propõe a representar. É importante que possamos ajustar tais
+interpretações, no caso, ajustando as classes. Como exemplo temos a
 <code>ordem_lancamento</code>, em que faria sentido aplicar cálculos
 como mínimo, ou máximo, porém, por estar sendo interpretada como uma
 variável da classe <code>character</code>, não nos permite tais
@@ -552,8 +554,8 @@ organização:</p>
 <li>contínuas</li>
 </ul></li>
 </ul>
-<p>De modo que para cada um destes tipo, teremos classes no R, indicando
-quais propriedades e funções fazem ou não sentido para cada coluna da
+<p>Para cada um destes tipos, teremos classes no R indicando quais
+propriedades e funções fazem ou não sentido para cada coluna da
 tabela:</p>
 <ul>
 <li>variáveis qualitativas (categóricas)
@@ -568,9 +570,9 @@ tabela:</p>
 <li>contínuas (<code>double</code>, <code>&lt;dbl&gt;</code>)</li>
 </ul></li>
 </ul>
-<p>Importante comentar que nesta organização casos como variáveis
+<p>Importante comentar que, nesta organização, casos como variáveis
 lógicas, do tipo TRUE/FALSE
-(<code>logical</code>,<code>&lt;lgl&gt;</code>), ou ainda datas, to tipo
+(<code>logical</code>,<code>&lt;lgl&gt;</code>), ou ainda datas, do tipo
 ano, mês, dia, etc (<code>date</code>,<code>&lt;date&gt;</code>), apesar
 de poderem ser entendidas como subcasos da organização acima, por
 possuírem muitas características próprias, possuem suas próprias classes
@@ -616,7 +618,7 @@ para uma análise de dados:</p>
 ## 10 Up - Altas Aventu… Orientação pare… A+                    96               98
 ## # … with 17 more rows, and 2 more variables: data_lancamento &lt;date&gt;,
 ## #   classificacao_livre &lt;lgl&gt;</code></pre>
-<p>Para consultar a classe de uma coluna especifico:</p>
+<p>Para consultar a classe de uma coluna especifica:</p>
 <pre class="r"><code>class(dados_pixar$data_lancamento) 
 ## [1] &quot;Date&quot;
 
@@ -627,12 +629,12 @@ dados_pixar %&gt;% pull(data_lancamento) %&gt;% class()
 </div>
 <div id="estruturas-de-dados-no-r" class="section level1">
 <h1>Estruturas de Dados no R</h1>
-<p>No R chamamos de <code>Estruturas de Dados</code> a maneira como as
+<p>No R, chamamos de <code>Estruturas de Dados</code> a maneira como as
 informações são organizadas. Aqui vamos citar as três estruturas mais
 usuais no contexto de análise de dados:</p>
 <ul>
 <li><p>Vetores atômicos: estrutura mais básica do R, se caracterizam por
-uma única dimensão, e guardam objetos da mesma classe – por isso o nome
+uma única dimensão e guardam objetos da mesma classe – por isso o nome
 atômico.</p></li>
 <li><p>Data Frame: estruturas bidimensionais que permitem que cada
 coluna possa ter sua própria classe – em termos práticos, cada coluna é
@@ -642,7 +644,7 @@ que diferentes classes sejam guardadas em um único objeto.
 Adicionalmente possuem uma propriedade recursiva, isto é, uma lista pode
 conter outras listas, de diferentes tamanhos.</p></li>
 </ul>
-<p>E apesar de estarmos trabalhando majoritariamente com os
+<p>Apesar de estarmos trabalhando majoritariamente com os
 <code>data.frame</code> (no contexto do tidyverse, temos o
 <code>tibble</code> como o equivalente), ter alguma visibilidade sobre
 as outras estruturas, te ajudará a evoluir na linguagem de maneira mais

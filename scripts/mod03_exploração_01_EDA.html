@@ -380,18 +380,29 @@ simplesmente Análise Exploratória de Dados</h1>
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
-<div id="exploratory" class="section level1">
-<h1>Exploratory</h1>
+<div id="eda" class="section level1">
+<h1>EDA</h1>
+<p>EDA, do inglês Exploratory Data Analysis, e em português Análise
+Exploratória de Dados, trata do entendimento do dado de uma maneira mais
+ampla do que as verificações descritivas iniciais. Aqui é possível tanto
+descrever o dado em relação as suas características, quanto ir em uma
+linha mais diagnóstica, apontando a possibilidade de padrões de
+associaçao, por exemplo. Em linhas gerais, nesta etapa damos
+<em>sentido</em> aos dados!</p>
 </div>
 <div id="dados" class="section level1">
 <h1>Dados</h1>
 <p>Vamos trabalhar com uma base de comerciais do Superbow, considerando
 os anúncios das 10 marcas que mais veicularam nos Super Bowls dos
-últimos anos, tendo, para cada comercial, a classificação binária
+últimos anos, tendo, para cada comercial, uma classificação binária
 relacionada a sete critérios pré-especificados. Para mais informações
-sobre o levantamento acesse: - <a href="https://projects.fivethirtyeight.com/super-bowl-ads/" class="uri">https://projects.fivethirtyeight.com/super-bowl-ads/</a> -
-<a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md" class="uri">https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md</a></p>
-<pre class="r"><code>youtube &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv&#39;)
+sobre o levantamento e a base de dados acesse:</p>
+<ul>
+<li><p><a href="https://projects.fivethirtyeight.com/super-bowl-ads/" class="uri">https://projects.fivethirtyeight.com/super-bowl-ads/</a></p></li>
+<li><p><a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md" class="uri">https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md</a></p></li>
+</ul>
+<pre class="r"><code>youtube &lt;- readr::read_csv(
+  &#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv&#39;)
 ## Rows: 247 Columns: 25
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -999,7 +1010,7 @@ pelo Departamento de Estatística da UFPR para consulta e aprofundamento
 no tema:</p>
 <p><a href="https://www.youtube.com/playlist?list=PLQcLb-PUD9WNZnVBYDKEonioyJw3nEaOM" class="uri">https://www.youtube.com/playlist?list=PLQcLb-PUD9WNZnVBYDKEonioyJw3nEaOM</a></p>
 <p>Mas não se preocupe, iremos passar por alguns conceitos chave. E
-vamos dividir esta discussão em três momentos</p>
+vamos dividir esta discussão em três momentos:</p>
 <div id="medidas-de-resumo" class="section level2">
 <h2>Medidas de resumo</h2>
 <p>Aqui temos a essencia do que se trata a estatística descritiva,
@@ -1008,7 +1019,7 @@ você tenha, será possível sintetizar as características dos dados. Mas
 note que qualquer resumo implica em uma simplificação, uma perda, e no
 contexto da estatística descritiva não é difirente. Contudo, aqui,
 podemos nos cercar de medidas, de modo que, em conjunto, seja possível
-traçar o perfil dos dados. Dentre as principais medidas, temos:</p>
+traçar o perfil dos dados. Dentre as principais medidas:</p>
 <ul>
 <li>Medidas de Posição (ou concentração): média, moda, mediana</li>
 <li>Medidas de Dispersão (absoluta): variância, desvio padrão, amplitude
@@ -1017,34 +1028,42 @@ e intervalo interquartil.</li>
 <li>Medidas de Ordenação (posição relativa): máximo, mínimo, quartis e
 percentis</li>
 </ul>
-<p>E para discutir melhor estes grupos, vamos considerar</p>
-<pre class="r"><code>youtube %&gt;% select(where(is.numeric)) %&gt;% slice(20:36)
-## # A tibble: 17 × 7
+<p>E para discutir melhor estes grupos, vamos considerar os colunas
+numéricas da base de comerciais do Superbowl:</p>
+<pre class="r"><code>youtube %&gt;% select(where(is.numeric)) 
+## # A tibble: 247 × 7
 ##     year view_count like_count dislike_count favorite_count comment_count
 ##    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;
-##  1  2020    1990447      10717           576              0           319
-##  2  2007      72997         86            30              0            33
-##  3  2020      29219        146            38              0            29
-##  4  2019      38968        216            15              0             0
-##  5  2009     302143        527            15              0            36
-##  6  2011      36832        200             7              0            12
-##  7  2019      41828        683            14              0            46
-##  8  2019      69050        773            37              0            65
-##  9  2013       4302         22             0              0             2
-## 10  2019      77720        680            15              0            82
-## 11  2011     113771        235             8              0            29
-## 12  2019     128792        961            15              0            35
-## 13  2016       5049         40             3              0             1
-## 14  2010      85454        120             3              0            24
-## 15  2000       9036         51             2              0             7
-## 16  2001       2801          9             0              0             1
-## 17  2018      23327        333             6              0            16
-## # … with 1 more variable: category_id &lt;dbl&gt;</code></pre>
-<pre class="r"><code>youtube %&gt;% slice(20:30) %&gt;% pull(dislike_count)
-##  [1] 576  30  38  15  15   7  14  37   0  15   8</code></pre>
-<pre class="r"><code>youtube %&gt;% slice(20:31) %&gt;% pull(dislike_count) %&gt;% sort()
+##  1  2018     173929       1233            38              0            NA
+##  2  2020      47752        485            14              0            14
+##  3  2006     142310        129            15              0             9
+##  4  2018        198          2             0              0             0
+##  5  2003      13741         20             3              0             2
+##  6  2020      23636        115            11              0            13
+##  7  2020     304254       1470           384              0           227
+##  8  2020      17892         78             6              0             6
+##  9  2020      38385        342             7              0            30
+## 10  2020        782          7             0              0             0
+## # … with 237 more rows, and 1 more variable: category_id &lt;dbl&gt;</code></pre>
+<p>Para facilitar a discussão vamos filtrar algumas linhas e salvar este
+objeto:</p>
+<pre class="r"><code>(youtube_dislike_count = youtube %&gt;% slice(20:31) %&gt;% pull(dislike_count))
+##  [1] 576  30  38  15  15   7  14  37   0  15   8  15</code></pre>
+<p>E agora ordena-la:</p>
+<pre class="r"><code>youtube_dislike_count %&gt;% sort()
 ##  [1]   0   7   8  14  15  15  15  15  30  37  38 576</code></pre>
-<pre class="r"><code>youtube %&gt;% slice(20:30) %&gt;% select(dislike_count) %&gt;% skimr::skim()</code></pre>
+<p>Ao comparar a lista de números com as estatísticas geradas, perceba
+como a média (64.1666667)é pouco descritiva em relação aos dados de
+origem. Um outro ponto que chama a atençao é o desvio padrão de
+161.6082994. E o que aconteceu para que esses números fossem tão
+<strong>misleading</strong>, ou seja, tão enganosos em relação ao que
+ocorre na base de dados, e a resposta é: outlier. Esta entidade, também
+conhecida como pontos aberrantes, pontos distante dos demais, e que
+acabam por influenciar algumas medidas de resumo, como a média. Neste
+contexto, trabalhar com a mediana (64.1666667) como medida de posição, e
+com o amplitude do intervalo interquartil (19.25), tendem a ser
+alternativas interessantes.</p>
+<pre class="r"><code>youtube_dislike_count %&gt;% skimr::skim()</code></pre>
 <table>
 <caption>Data summary</caption>
 <tbody>
@@ -1054,7 +1073,7 @@ percentis</li>
 </tr>
 <tr class="even">
 <td align="left">Number of rows</td>
-<td align="left">11</td>
+<td align="left">12</td>
 </tr>
 <tr class="odd">
 <td align="left">Number of columns</td>
@@ -1083,7 +1102,7 @@ percentis</li>
 </tbody>
 </table>
 <p><strong>Variable type: numeric</strong></p>
-<table>
+<table style="width:100%;">
 <colgroup>
 <col width="17%" />
 <col width="12%" />
@@ -1091,9 +1110,9 @@ percentis</li>
 <col width="7%" />
 <col width="8%" />
 <col width="3%" />
-<col width="5%" />
-<col width="5%" />
 <col width="6%" />
+<col width="5%" />
+<col width="7%" />
 <col width="6%" />
 <col width="7%" />
 </colgroup>
@@ -1114,20 +1133,133 @@ percentis</li>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">dislike_count</td>
+<td align="left">data</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">68.64</td>
-<td align="right">168.72</td>
+<td align="right">64.17</td>
+<td align="right">161.61</td>
 <td align="right">0</td>
-<td align="right">11</td>
+<td align="right">12.5</td>
 <td align="right">15</td>
-<td align="right">33.5</td>
+<td align="right">31.75</td>
 <td align="right">576</td>
 <td align="left">▇▁▁▁▁</td>
 </tr>
 </tbody>
 </table>
+<p>Por fim vamos comentar da questão do absoluto vs. relativo, ao
+trabalhar com métricas de natureza absoluta, vamos lidar com os
+resultados respeitando a magnitude do dado, contudo, isto nem sempre é
+interessante, particularmente quando queremos comparar variáveis que
+possuam magnitudes muito diferentes:</p>
+<pre class="r"><code>youtube %&gt;% select(dislike_count, view_count) %&gt;% skimr::skim()</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">247</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="10%" />
+<col width="14%" />
+<col width="11%" />
+<col width="12%" />
+<col width="3%" />
+<col width="5%" />
+<col width="6%" />
+<col width="9%" />
+<col width="10%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">dislike_count</td>
+<td align="right">22</td>
+<td align="right">0.91</td>
+<td align="right">833.54</td>
+<td align="right">6948.52</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">24.0</td>
+<td align="right">92990</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">view_count</td>
+<td align="right">16</td>
+<td align="right">0.94</td>
+<td align="right">1407556.46</td>
+<td align="right">11971111.01</td>
+<td align="right">10</td>
+<td align="right">6431</td>
+<td align="right">41379</td>
+<td align="right">170015.5</td>
+<td align="right">176373378</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+<p>neste caso trabalhar com o coeficiente de variação possa ser
+interessante. Para a comparação abaixo, apesar da diferença em valores
+absolutos, em termos relativos, ambos os atributos possuem uma dispersão
+similar:</p>
+<pre class="r"><code># dislike_count
+(sd(youtube$dislike_count, na.rm = TRUE) / mean(youtube$dislike_count, na.rm = TRUE))
+## [1] 8.336181
+
+# view_count
+(sd(youtube$view_count, na.rm = TRUE) / mean(youtube$view_count, na.rm = TRUE))
+## [1] 8.504889</code></pre>
 </div>
 <div id="distribuição-de-frequência-de-uma-variável" class="section level2">
 <h2>Distribuição de frequência de uma variável</h2>
@@ -1406,6 +1538,9 @@ medidas de resumo.</p>
 </tr>
 </tbody>
 </table>
+<p>Como último ponto eu gostaria de pontuar que: EDA é sobre interação,
+quanto mais você investiga, mais informações terá para tornar a
+investigação mais</p>
 </div>
 </div>
 <div id="hands-on" class="section level1">
@@ -1418,6 +1553,14 @@ pouco estes pacotes?</p>
 <p>E em relação às distribuições de frequências, você já ouviu falar da
 distribuição Normal (Gaussiana)? Ou talvez da distribuição Poisson?
 Exponencial? já refletiu sobre o porquê estudamos diferentes.</p>
+</div>
+<div id="referência" class="section level1">
+<h1>REFERÊNCIA</h1>
+<p>Um livro muito bacana para se situar em termos de análise
+descritiva:</p>
+<ul>
+<li></li>
+</ul>
 </div>
 
 
