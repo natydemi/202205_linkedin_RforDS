@@ -47,34 +47,76 @@ youtube %>% glimpse()
 Vamos iniciar fazendo uso de pacotes que nos ajudam a entender as suas principais características dos dados:
 
 
+## janitor
+Este pacote disponibiliza algumas funções para limpar e avaliar bases de dados, com funções como:
+
+- `janitor::remove_empty_cols()` para a remoção de colunas vazias;
+- `janitor::get_dupes()` para a identificação de linhas duplicadas; e
+- `janitor::round_half_up()` para arredondar resultados numéricos.
+
+Ah tem uma função MUITO legal, `janitor::clean_names()` que limpa o nome das colunas, para a base do SuperBown ela não é muito relevante, visto os nomes já estarem em um ótimo formato, mas mais para frente passaremos por um exemplo em que esta função irá ajudar bastante. Apenas para ilustrar o seu uso, segue uma aplicação para a modição do estilo das colunas : 
+  
+```{r}
+#janitor::
+youtube %>% janitor::clean_names(case = "upper_camel") %>%  glimpse()
+```
+
+
+
+```{r}
+youtube %>% janitor::tabyl(year) 
+```
+
+```{r}
+youtube %>% 
+  janitor::tabyl(brand) %>%  
+  janitor::adorn_totals() %>%  
+  janitor::adorn_pct_formatting()
+```
+
+  
+```{r}
+youtube %>% 
+  janitor::tabyl(year, brand) %>%  
+  janitor::adorn_totals(c("row", "col")) 
+```
 
 ## inspectdf
-Este pacote traz uma série de recursos para apresentação de resumos, como volumetrias e dados faltantes, respeitando sempre a classe das variáveis .
 
+Este pacote traz uma série de recursos para apresentação de resumos, como volumetrias e dados faltantes, respeitando sempre a classe das variáveis:
 ```{r}
 #inspectdf::
 youtube %>% inspectdf::inspect_types()
 ```
-
+Uma forma de consultar colunas do tipo lista:
 ```{r}
-youtube %>% inspectdf::inspect_na()
+youtube %>% inspectdf::inspect_types() %>% pull(col_name)
 ```
 
+Categorias (níveis) mais comuns considerando as variáveis categóricas:
 ```{r}
 youtube %>% inspectdf::inspect_imb()
 ```
 
+Versão gráfica da tabela acima:
 ```{r}
 youtube %>% inspectdf::inspect_imb() %>% inspectdf::show_plot()
 ```
 
+Volumetria dos dados faltantes:
+```{r}
+youtube %>% inspectdf::inspect_na()
+```
+
+Estatísticas relacionadas às variáveis numéricas:
 ```{r}
 youtube %>% inspectdf::inspect_num()
 ```
 
+
 ## skimr
 
-Em português skim significa algo como "tirar a nata" de algo, e isto é exatamente o que este pacote faz, visto que nos permite uma visão geral de toda a base, com uma serie de estatísticas, organizadas de acordo com a classe das colunas:
+Em português skim significa algo como "tirar a nata" de algo, e isto é exatamente o que este pacote faz, visto que nos permite uma visão geral de toda a base, com uma serie de estatísticas organizadas de acordo com a classe das colunas – inclusive com um gráfico de frequência! Muito legal né? :p 
 
 ```{r}
 #skimr::
@@ -87,46 +129,56 @@ Estatística! Aqui não tem muito como correr, é da estatística os ferramentai
 
 <https://www.youtube.com/playlist?list=PLQcLb-PUD9WNZnVBYDKEonioyJw3nEaOM>
 
-Mas não se preocupe, iremos passar por alguns conceitos chave. E vamos dividir esta discussão em três momentos:
+Mas não se preocupe, iremos passar por alguns conceitos chave, dividindo a discussão em três momentos:
 
-## Medidas de resumo
+## Medidas de Resumo (univariadas)
 
 Aqui temos a essencia do que se trata a estatística descritiva, resumir, sumarizar os dados, de modo que independente do quantos dados você tenha, será possível sintetizar as características dos dados. Mas note que qualquer resumo implica em uma simplificação, uma perda, e no contexto da estatística descritiva não é difirente. Contudo, aqui, podemos nos cercar de medidas, de modo que, em conjunto, seja possível traçar o perfil dos dados. Dentre as principais medidas: 
 
-- Medidas de Posição (ou concentração): média, moda, mediana
-- Medidas de Dispersão (absoluta): variância, desvio padrão, amplitude e intervalo interquartil.
-- Medidas de Dispersão (relativa): coeficiente de variação
-- Medidas de Ordenação (posição relativa): máximo, mínimo, quartis e percentis 
+- Medidas de Posição, Concentração ou Tendência Central: média (μ), moda (Mo), mediana (Md)
+- Medidas de Ordenação (posição relativa): máximo, mínimo, quartis (1º quartíl = q1, e 3º  = q3), decis e percentis.
+- Medidas de Dispersão (absoluta): variância (σ²), desvio padrão (σ), amplitude interquartil (IQR)
+- Medidas de Dispersão (relativa): coeficiente de variação (CV)
+- Medidas de Forma: kurtose e assimetria
+- Medidas de dependência: covariância e correlação (ρ)
+
 
 E para discutir melhor estes grupos, vamos considerar os colunas numéricas da base de comerciais do Superbowl:
 ```{r}
 youtube %>% select(where(is.numeric)) 
 ```
 
-Para facilitar a discussão vamos filtrar algumas linhas e salvar este objeto: 
+Para facilitar a discussão vamos filtrar algumas linhas e salvar em um objeto a parte: 
 
 ```{r}
-(youtube_dislike_count = youtube %>% slice(20:31) %>% pull(dislike_count))
+(youtube_dislike_count = 
+  youtube %>% slice(20:30) %>% pull(dislike_count))
+```
+Vamos observar a tabela de frequência destes dados – pra refletir: como fazer uma tabela no caso em que temos dados contínuos, ao invés de dados discretos?
+
+```{r}
+table(youtube_dislike_count)
 ```
 
 E agora ordena-la:
+
 ```{r}
 youtube_dislike_count %>% sort()
 ```
 
-Ao comparar a lista de números com as estatísticas geradas, perceba como a média (`r mean(youtube_dislike_count)`)é pouco descritiva em relação aos dados de origem. Um outro ponto que chama a atençao é o desvio padrão de `r sd(youtube_dislike_count)`. E o que aconteceu para que esses números fossem tão **misleading**, ou seja, tão enganosos em relação ao que ocorre na base de dados, e a resposta é: outlier. Esta entidade, também conhecida como pontos aberrantes, pontos distante dos demais, e que acabam por influenciar algumas medidas de resumo, como a média. Neste contexto, trabalhar com a mediana (`r mean(youtube_dislike_count)`) como medida de posição, e com o amplitude do intervalo interquartil (`r IQR(youtube_dislike_count)`), tendem a ser alternativas interessantes. 
+Ao comparar a lista de números com as estatísticas geradas, perceba como a média (`r mean(youtube_dislike_count)`)é pouco descritiva em relação aos dados de origem. Um outro ponto que chama a atençao é o desvio padrão de `r sd(youtube_dislike_count)`. E o que aconteceu para que esses números fossem tão **misleading**, ou seja, tão enganosos em relação ao que ocorre na base de dados, e a resposta é: outlier. Este termo é utilizado no contexto em que um ou mais pontos pontos estão demasiadamente distante dos demais, o que pode acabar por influenciar algumas medidas de resumo, como é o caso da média, ou do desvio padrão (que é baseado na média). Neste contexto, trabalhar com a mediana (`r mean(youtube_dislike_count)`) como medida de tendencia central, e com o amplitude do intervalo interquartil (`r IQR(youtube_dislike_count)`) como medida de dispersão, podem ser alternativas interessantes. 
 
 ```{r}
 youtube_dislike_count %>% skimr::skim()
 ```
 
-Por fim vamos comentar da questão do absoluto vs. relativo, ao trabalhar com métricas de natureza absoluta, vamos lidar com os resultados respeitando a magnitude do dado, contudo, isto nem sempre é interessante, particularmente quando queremos comparar variáveis que possuam magnitudes muito diferentes:
+Por fim vamos comentar da questão do absoluto vs. relativo, ao trabalhar com métricas de natureza absoluta, vamos lidar com os resultados respeitando a magnitude do dado, o valor absoluto em si. Contudo, isto nem sempre é interessante, particularmente quando queremos comparar variáveis que possuam magnitudes muito diferentes:
 
 ```{r}
 youtube %>% select(dislike_count, view_count) %>% skimr::skim()
 ```
 
-neste caso trabalhar com o coeficiente de variação possa ser interessante. Para a comparação abaixo, apesar da diferença em valores absolutos, em termos relativos, ambos os atributos possuem uma dispersão similar:
+Neste caso o coeficiente de variação é mais informativo. Por exemplo, para as mesmas variáveis que vimos uma diferença significativa em termos de dispersão absoluta, não se sustenta em termos relativos, com ambos os atributos apresentando dispersões similares:
 
 ```{r}
 # dislike_count
@@ -138,28 +190,34 @@ neste caso trabalhar com o coeficiente de variação possa ser interessante. Par
 ```
 
 
-## Distribuição de frequência de uma variável
+## Caracterização de uma Distribuição de Frequência
 
 Um quarto grupo seriam as medidas de forma, caso da kurtosa ou medida de assimetria, porém, alternativamente, vamos focar na distribuição de frequência de uma variável. Isto porque com este temos todas as informações citadas acima, de maneira integrada e visual. E ao avaliar uma distribuição de frequência, é importante considerar as seguintes características: 
 
-- Concentração: centro das observações
-- Dispersão: variabilidade das observações
-- Outliers: observações que se diferenciam drasticamente dos demais
-- Forma: simétrica, assimétrica (à esquerda/direita)
+- Concentração: ponto (s) ou intervalo (s) de concentração das observações
+- Dispersão: o quão próximo ou distante as observações estão entre si
+- Outliers: observações que se diferenciam de maneira significativa das demais
+- Forma: aspectos de forma, como simetria ou assimetria (à esquerda ou direita)
 
-Para discussão, considere dados com informações meteorológicas de Lincoln, Nebraska, no ano de 2016 
+
+Para discussão, considere a base de dados `lincoln_weather` do pacote `ggridges`, com informações meteorológicas de Lincoln, (EUA - Nebraska), no ano de 2016: 
+
+```{r}
+ggridges::lincoln_weather %>% glimpse()
+```
 
 
 ```{r}
 ggridges::lincoln_weather %>% 
   janitor::clean_names() %>% 
-  ggplot(aes(x = mean_temperature_f, y = month, fill = stat(x))) +
+  mutate(media_temperatura_c = (mean_temperature_f - 32)/1,8) %>% 
+  ggplot(aes(x = media_temperatura_c, y = month, fill = stat(x))) +
   ggridges::geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_discrete(expand = c(0, 0)) +
-  scale_fill_viridis_c(name = "Temp. [F]", option = "C") +
+  scale_fill_viridis_c(name = "Temp. [C]", option = "C") +
   coord_cartesian(clip = "off") +
-  labs(title = 'Temperatures in Lincoln NE in 2016') +
+  labs(title = 'Temperaturas em Lincoln (USA-NE) no ano de 2016') +
   ggridges::theme_ridges(font_size = 13, grid = TRUE) +
   theme(axis.title.y = element_blank())
 ```
@@ -174,8 +232,21 @@ ggridges::lincoln_weather %>%
 ```
 
 
+## Medidas de Resumo (bivariadas)
+
+xxx
+
+# Considerações Finais sobre EDA
 
 Como último ponto eu gostaria de pontuar que: EDA é sobre interação, quanto mais você investiga, mais informações terá para tornar a investigação mais
+
+pensar em hipóteses, quais os tipos de variáveis, principais características, como se relacionam. 
+próximos passos, Mas para podermos realmente de uma EDA f* é necessário aplciar transformações e trabalhar com visualizações, 
+próximo módulo
+
+
+
+
 
 
 # HANDS-ON
@@ -184,11 +255,4 @@ No R você irá encontrar dezenas de pacotes com o objetivo de "facilitar" a sua
 
 E em relação às distribuições de frequências, você já ouviu falar da distribuição Normal (Gaussiana)? Ou talvez da distribuição Poisson? Exponencial? já refletiu sobre o porquê estudamos diferentes.
 
-
-
-# REFERÊNCIA
-
-Um livro muito bacana para se situar em termos de análise descritiva: 
-
-- 
 

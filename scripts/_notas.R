@@ -14,28 +14,7 @@
 # Modulo 02 - diagnóstico: testes / comunicação
 
   
-# pct janitor ------
-## janitor
-Este pacote disponibiliza algumas funções para limpar e avaliar bases de dados: 
-  
-  ```{r}
-#janitor::
-youtube %>% janitor::clean_names(case = "upper_camel") %>%  glimpse()
-```
 
-```{r}
-youtube %>% janitor::tabyl(year) 
-```
-
-```{r}
-youtube %>% 
-  janitor::tabyl(brand) %>%  
-  janitor::adorn_totals() %>%  
-  janitor::adorn_pct_formatting()
-```
-
-  
-  
 
 # ::::: bases consideradas -----
 
