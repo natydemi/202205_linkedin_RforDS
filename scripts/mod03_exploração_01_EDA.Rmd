@@ -15,13 +15,13 @@ library(tidyverse)
 
 # EDA
 
-EDA, do inglês Exploratory Data Analysis, e em português Análise Exploratória de Dados, trata do processo de explorar os dados, o que tipicamente inclui desde examinar a estrutura do dataset, algo que iniciamos no módulo anterior, até entendimento mais profundo sobre o comportamento de uma variável, ou padrões entre variáveis. A EDA nos permite:
+EDA, do inglês Exploratory Data Analysis, e em português Análise Exploratória de Dados, é o processo de explorar os dados, o que tipicamente inclui desde examinar a estrutura do dataset, algo que iniciamos no módulo anterior, até o entendimento mais profundo sobre o comportamento de uma variável, ou padrões entre variáveis. A EDA nos permite:
 
 - Identificar se há algum problema com o seu conjunto de dados.
 - Determinar se a pergunta que você está fazendo pode ser respondida pelos dados que você possui
-- Desenvolver uma esboço da resposta à sua pergunta, por vezes responde-la de fato
+- Desenvolver uma esboço da resposta à sua pergunta, por vezes respondê-la de fato
 
-Aqui é possível tanto ir em uma linha de exploração mais descritiva, por meio de volumetrias, estatísticas e visualizações, quanto ir em uma linha mais diagnóstica, investigando comportamentos mais complexos, como padrões de associaçao por exemplo. Em linhas gerais, é nesta etapa que *aprendemos* e damos *sentido* aos dados! 
+Aqui, é possível, tanto ir em uma linha de exploração mais descritiva, por meio de volumetrias, estatísticas e visualizações, quanto ir em uma linha mais diagnóstica, investigando comportamentos mais complexos, como padrões de associação, por exemplo. Em linhas gerais, é nesta etapa que *aprendemos* e damos *sentido* aos dados! 
 
 
 
@@ -51,7 +51,7 @@ youtube %>% glimpse()
 
 # Bibliotecas para EDA
 
-Vamos iniciar fazendo uso de pacotes que nos ajudam a entender as suas principais características dos dados:
+Vamos iniciar fazendo uso de pacotes que nos ajudam a entender as principais características dos dados:
 
 
 ## janitor
@@ -61,7 +61,7 @@ Este pacote disponibiliza algumas funções para limpar e avaliar bases de dados
 - `janitor::get_dupes()` para a identificação de linhas duplicadas; e
 - `janitor::round_half_up()` para arredondar resultados numéricos.
 
-Ah tem uma função MUITO legal, `janitor::clean_names()` que limpa o nome das colunas, para a base do SuperBown ela não é muito relevante, visto os nomes já estarem em um ótimo formato, mas mais para frente passaremos por um exemplo em que esta função irá ajudar bastante. Apenas para ilustrar o seu uso, segue uma aplicação para a modição do estilo das colunas : 
+Ah, tem uma função MUITO legal, `janitor::clean_names()` que limpa o nome das colunas. Para a base do SuperBow ela não é muito relevante, visto que os nomes já estão em um ótimo formato. Mas mais para frente passaremos por um exemplo em que esta função irá ajudar bastante. Apenas para ilustrar o seu uso, segue uma aplicação para a modição do estilo das colunas : 
   
 ```{r}
 #janitor::
@@ -83,7 +83,7 @@ youtube %>%
   janitor::adorn_pct_formatting()
 ```
 
-Essa mesma função funciona também para visualizar duas variáveis por vezes:
+Essa mesma função funciona também para visualizar duas variáveis por vez:
 
 ```{r}
 youtube %>% 
@@ -93,7 +93,7 @@ youtube %>%
 
 ## inspectdf
 
-Este pacote traz uma série de recursos para apresentação de resumos dos dados, como volumetrias e dados faltantes, respeitando sempre a classe das variáveis – lembrando que já discutimos sobre o quão importante este conceito é, tanto conceitualmente, na estatística ou matemática, quanto no contexto computacionais:
+Este pacote traz uma série de recursos para apresentação de resumos dos dados, como volumetrias e dados faltantes, respeitando sempre a classe das variáveis – lembrando que já discutimos sobre o quão importante este conceito é, tanto conceitualmente, na estatística ou matemática, quanto no contexto computacional:
 
 ```{r}
 #inspectdf::
@@ -114,7 +114,7 @@ Ou ainda a versão gráfica da tabela acima:
 youtube %>% inspectdf::inspect_imb() %>% inspectdf::show_plot()
 ```
 
-Bem como recursos para sobre os dados faltantes por coluna:
+Bem como recursos sobre os dados faltantes por coluna:
 ```{r}
 youtube %>% inspectdf::inspect_na()
 ```
@@ -137,7 +137,7 @@ youtube %>%  skimr::skim()
 
 # Como avaliar os resultados? 
 
-Estatística! Aqui não tem muito como correr, é da estatística que vêm os ferramentais que utilizamos para sumarizar os dados. E como se trata de um tema amplo, e o nosso objetivo neste curso não é aprofundar no tema, vou deixar aqui as aulas remotas de Estatística Básica, ofertada pelo Departamento de Estatística da UFPR entre 2020 e 2021, para o caso de você ter interesse em aprofundar no tema: 
+Estatística! Aqui não tem muito para onde correr, é da estatística que vêm os ferramentais que utilizamos para sumarizar os dados. E como se trata de um tema amplo, e o nosso objetivo neste curso não é aprofundar no tema, vou deixar aqui as aulas remotas de Estatística Básica, ofertada pelo Departamento de Estatística da UFPR entre 2020 e 2021, para o caso de você ter interesse em aprofundar no tema: 
 
 - [Aulas Remotas da Disciplina de Estatística Básica ofertada pelo DEST-UFPR ](https://www.youtube.com/playlist?list=PLQcLb-PUD9WNZnVBYDKEonioyJw3nEaOM)
 
@@ -145,13 +145,13 @@ Mas não se preocupe, iremos passar por alguns dos conceitos chave, dividindo a 
 
 ## 1. Medidas de Resumo (univariadas)
 
-Aqui temos a essencia do que se trata a estatística descritiva: resumir dados. De modo que independente do quantas observações você tenha na sua tabela, seja possível sumariza-las e ter conclusões a respeito das características dos dados. Mas note que assim como qualquer resumo, implica em uma simplificação, implica em perda de informação, e no caso da estatística descritiva não é difirente. Contudo, aqui, podemos nos cercar de medidas, de modo que, em conjunto, tais metricas nos permitam traçar o perfil dos dados. Dentre as principais medidas de resumo, temos: 
+Aqui temos a essência do que se trata a estatística descritiva: resumir dados. De modo que independente de quantas observações você tenha na sua tabela, seja possível sumariza-las e ter conclusões a respeito das características dos dados. Mas note que assim como qualquer resumo, implica em uma simplificação, implica em perda de informação, e no caso da estatística descritiva não é difirente. Contudo, aqui, podemos nos cercar de medidas, de modo que, em conjunto, tais metricas nos permitam traçar o perfil dos dados. Dentre as principais medidas de resumo, temos: 
 
 - Medidas de Posição, Concentração ou Tendência Central: média (μ), moda (Mo), mediana (Md)
 - Medidas de Ordenação (posição relativa): máximo, mínimo, quartis (1º quartíl = q1, e 3º  = q3), decis e percentis.
 - Medidas de Dispersão (absoluta): variância (σ²), desvio padrão (σ), amplitude interquartil (IQR)
 - Medidas de Dispersão (relativa): coeficiente de variação (CV)
-- Medidas de Forma: kurtose e assimetria
+- Medidas de Forma: curtose e assimetria
 - Medidas de dependência: covariância e correlação (ρ)
 
 
@@ -161,7 +161,7 @@ youtube %>% select(where(is.numeric))
 ```
 
 
-Para facilitar a discussão vamos filtrar algumas linhas e salvar em um objeto a parte: 
+Para facilitar a discussão vamos filtrar algumas linhas e salvar em um objeto à parte: 
 
 ```{r}
 (youtube_dislike_count = 
@@ -175,7 +175,7 @@ table(youtube_dislike_count)
 ```
 
 
-Um parenteses aqui pra refletir: como poderiamos fazer uma tabela desta no caso em que temos dados contínuos, ao invés de dados discretos?
+Um parênteses aqui pra refletir: como poderiamos fazer uma tabela desta, no caso em que temos dados contínuos, ao invés de dados discretos?
 
 Voltando aos nossos dados, vamos agora ordena-los:
 
@@ -191,7 +191,7 @@ youtube_dislike_count %>% skimr::skim() %>%  skimr::yank("numeric")
 ```
 
 E agora, ao comparar a lista dos números ordenador com as estatísticas geradas, a média `r round(mean(youtube_dislike_count),2)` parece estar descrevendo bem os dados? Você diria que o valor 68 é uma representação da quantidade de 'dislikes' das propagandas? Um outro ponto que chama a atençao é o quão alto é o desvio padrão, no caso, `r round(sd(youtube_dislike_count),2)`. E o que aconteceu para que estes números fossem tão **misleading**, ou seja, tão enganosos em relação ao que ocorre na base de dados, e a resposta é: outlier. 
-Este termo é utilizado no contexto em que um ou mais pontos pontos estão demasiadamente distante dos demais, o que pode acabar por influenciar algumas medidas de resumo, como é o caso da média, ou do desvio padrão (que tem o seu calculo baseado na média) – uma forma de perceber a questão do outlier é percebendo o quão distante o máximo é das demais métricas de posição e/ou ordenação. Neste cenário, trabalhar com medidas de ordenação, como a mediana (`r median(youtube_dislike_count)`) para a caracterização da tendencia central, e a amplitude do intervalo interquartil (`r IQR(youtube_dislike_count)`) como medida de dispersão, são alternativas interessantes, visto serem métricas robustas a outliers. 
+Este termo é utilizado no contexto em que um ou mais pontos estão demasiadamente distante dos demais, o que pode acabar por influenciar algumas medidas de resumo, como é o caso da média, ou do desvio padrão (que tem o seu calculo baseado na média) – uma forma de perceber a questão do outlier é notando o quão distante o máximo é das demais métricas de posição e/ou ordenação. Neste cenário, trabalhar com medidas de ordenação, como a mediana (`r median(youtube_dislike_count)`) para a caracterização da tendencia central, e a amplitude do intervalo interquartil (`r IQR(youtube_dislike_count)`) como medida de dispersão, são alternativas interessantes, visto serem métricas robustas a outliers. 
 
 
 Por fim vamos comentar um pouco sobre a questão do absoluto vs. relativo, esta diferenciação é importante pois, ao trabalhar com métricas de natureza absoluta, vamos lidar com os resultados segundo a grandeza do dado original. Contudo, isto nem sempre é interessante, particularmente quando queremos comparar variáveis que possuam magnitudes muito diferentes. Por exemplo:
@@ -200,7 +200,7 @@ Por fim vamos comentar um pouco sobre a questão do absoluto vs. relativo, esta 
 youtube %>% select(dislike_count, view_count) %>% skimr::skim() %>%  skimr::yank("numeric")
 ```
 
-Neste caso o coeficiente de variação é mais informativo. Pois para as mesmas variáveis que vemos uma diferença significativa em termos de dispersão absoluta, ao trabalhar em termos relativos, a conclusão muda, com ambos os atributos apresentando dispersões similares:
+Neste caso, o coeficiente de variação é mais informativo. Pois para as mesmas variáveis que vemos uma diferença significativa em termos de dispersão absoluta, ao trabalhar em termos relativos, a conclusão muda, com ambos os atributos apresentando dispersões similares:
 
 ```{r}
 # dislike_count
@@ -216,7 +216,7 @@ Um último grupo de medidas de resumo seriam as medidas de forma, caso do coefic
 
 ## 2. Distribuição Empírica dos Dados
 
-Cada uma das estatísticas que vimos até aqui resume os dados em um único número, o que tem uma vantagem prática, mas conforme também pudemos observar, tratam-se de visões parciais. Neste sentido é útil explorar como os dados são distribuidos de maneira geral, e, para isto, temos a distribuição empírica dos dados, que nos possibilita ter noção da frequência das observações. Antes de continuarmos, eu gostaria de pontuar que trata-se de um tema extenso, a partir do qual tópicos como: definição do intervalo de tabelas de frequência, densidade Kernel, distribuições de probabilidade, probabilidade a posteriori, e tantos outros poderiam ser abordados. Mas aqui vamos abstrair dos (importantes) detalhes técnicos, para focar na interpretação das distribuições empíricas. Meu objetivo aqui é que você perceba a importância de avaliar a distribuição dos dados, considerando as seguintes características: 
+Cada uma das estatísticas que vimos até aqui resume os dados em um único número. Isso tem uma vantagem prática, mas conforme também pudemos observar, tratam-se de visões parciais. Neste sentido, é útil explorar como os dados são distribuidos de maneira geral. Para isto, temos a distribuição empírica dos dados, que nos possibilita ter noção da frequência das observações. Antes de continuarmos, eu gostaria de pontuar que trata-se de um tema extenso, a partir do qual tópicos como: definição do intervalo de tabelas de frequência, densidade Kernel, distribuições de probabilidade, probabilidade a posteriori, e tantos outros poderiam ser abordados. Mas aqui vamos abstrair dos (importantes) detalhes técnicos, para focar na interpretação das distribuições empíricas. Meu objetivo aqui é que você perceba a importância de avaliar a distribuição dos dados, considerando as seguintes características: 
 
 - Concentração: ponto(s) ou intervalo(s) de concentração das observações
 - Dispersão: o quão próximo ou distante as observações estão entre si
@@ -302,13 +302,13 @@ Um ponto importante, mas que não aprofundaremos aqui, é a relação entre o c�
 
 # Considerações Finais sobre EDA
 
-Como último ponto eu gostaria de pontuar que: EDA é sobre interação, quanto mais você investiga, mais informações terá para que os próximos passos da exploração sejam mais efetivos e **insightful** (algo esclarecedor). Aqui ter uma abordagem curiosa e cientifica é extramemente recomendado, basicamente pensar em hipóteses, investiga-las, criar novas conjecturas, é uma excelente maneira de lidar com o dolorido fato de que: não sabemos o que vamos encontrar, e tá tudo bem!O John Tukey, um importante estatístico do século passado, visto por muitos como um dos pais da EDA, tem uma frase famosa que diz:  
+Como último ponto eu gostaria de pontuar é que: EDA é sobre interação. Quanto mais você investiga, mais informações terá para que os próximos passos da exploração sejam mais efetivos e **insightful** (algo esclarecedor). Aqui, ter uma abordagem curiosa e cientifica é extramemente recomendado. Basicamente, pensar em hipóteses, investiga-las, criar novas conjecturas, é uma excelente maneira de lidar com o dolorido fato de que: não sabemos o que vamos encontrar, e tá tudo bem! O John Tukey, um importante estatístico do século passado, visto por muitos como um dos pais da EDA, tem uma frase famosa que diz:  
 
 >  “EDA is an attitude, a state of flexibility, a willingness to look for those things that we believe are not there, as well as those we believe to be there” (Tukey, 1986).
 
 Em português seria algo como: "“EDA é uma atitude, um estado de flexibilidade, uma vontade de procurar por coisas que acreditamos que não existem, assim como por coisas que acreditamos que estão lá”, poético né? 
 
-E para "procurar por coisas", quanto mais ferramentas você possuir, melhor. Aprender a arte de manusear, transformar e visualizar dados por exemplo, e são estes os temas que veremos na sequência.
+E para "procurar por coisas", quanto mais ferramentas você possuir, melhor. Aprender a arte de manusear, transformar e visualizar dados, por exemplo. E são estes os temas que veremos na sequência.
 
 Até lá ;)
 

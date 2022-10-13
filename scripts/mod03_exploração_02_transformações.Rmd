@@ -16,7 +16,7 @@ library(tidyverse)
 
 
 # Tidy 
-Após a importação dos dados, passamos para a etapa de tidy dos dados, também chamada de *tidying data*. Para isto iremos primeiramente visualizar os dados, no R existem várias funções *built-in* para isto, como a função `names()`, que retorna o nome das colunas, ou `str()`, que permite a visualização da estrutura de um objeto arbitrário.   
+Após a importação dos dados, passamos para a etapa de tidy dos dados, também chamada de *tidying data*. Para isto iremos primeiramente visualizar os dados. No R, existem várias funções *built-in* para isto, como a função `names()`, que retorna o nome das colunas, ou `str()`, que permite a visualização da estrutura de um objeto arbitrário.   
 
 Todas as funções citadas serão igualmente úteis e utilizadas no contexto do `tidyverse`, mas, com o pacote `dplyr`, passamos a ter também a opção `glimpse()`. Nesta, de modo similar ao `str()`, temos o número de observações (linhas) e variáveis (colunas) dos dados, porém com a quantidade de observações ajustadas ao display do Console.
 
@@ -25,7 +25,7 @@ Todas as funções citadas serão igualmente úteis e utilizadas no contexto do 
   mtcars %>% glimpse()
 ```
 
-A partir da visualização começamos a fazer os ajustes necessários para garantir que os dados estejam organizado de uma forma `tidy`, tendo como principal ferramenta a biblioteca `tidyr`. Seguem as principais funções deste pacote utilizando bases disponíveis pela própria biblioteca:
+A partir da visualização, começamos a fazer os ajustes necessários para garantir que os dados estejam organizados de uma forma `tidy`, tendo como principal ferramenta a biblioteca `tidyr`. Seguem as principais funções deste pacote, utilizando bases disponíveis pela própria biblioteca:
 
 - **Redimensionamento de dados**
   - `gather()` - reorganiza os dados, combinando as colunas especificadas na coluna parâmetro `key`, e seus valores na coluna parâmetro `value`. Com tal tipo de ajuste podemos organizar os dados de modo a consultar várias colunas de interesse de uma única vez, algo útil para a aplicação de loops, funções e gráficos, conforme veremos na seção `Visualização`.
@@ -94,7 +94,7 @@ A partir da visualização começamos a fazer os ajustes necessários para garan
 
     
 # Manipulação 
-A próxima etapa no processo de análise é a manipulação da base visando desde o entendimento de suas variáveis, considerando tabulações e estatísticas, até a criação de novas variáveis. Para tal trabalharemos com o pacote `dplyr`, com recursos para:
+A próxima etapa no processo de análise é a manipulação da base visando desde o entendimento de suas variáveis, considerando tabulações e estatísticas, até a criação de novas variáveis. Para tal, trabalharemos com o pacote `dplyr`, com recursos para:
 
   - **Manipulação de variáveis**
     - `select()` - seleciona variáveis, permitindo o uso de recursos como:
@@ -163,7 +163,7 @@ A próxima etapa no processo de análise é a manipulação da base visando desd
 
 # Combinando Bases
 
-    - `inner_join()` - retorna todas as linhas da base à esquerda que possuem valores correspondentes na base à direita. Se houver várias correspondências entre xe y, todas as combinações das correspondências serão retornadas.
+    - `inner_join()` - retorna todas as linhas da base à esquerda que possuem valores correspondentes na base à direita. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
     - `left_join()` - retorna todas as linhas de x e todas as colunas de x e y. Linhas em x sem correspondência em y terão valores de NA nas novas colunas. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
     - `full_join()` - retorna todas as linhas e todas as colunas de xe y. Onde não há valores correspondentes, retorna NA para o ausente.
     
@@ -195,7 +195,7 @@ A próxima etapa no processo de análise é a manipulação da base visando desd
 #base para exemplo
   gss_cat %>% glimpse
 
-#exemplo: contabilizando a quantidade de religiões declaradas 
+#exemplo: contabilizando a quantidade de raças declaradas 
   gss_cat$race %>% 
   fct_count() 
 ```
