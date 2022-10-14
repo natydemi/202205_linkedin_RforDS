@@ -216,7 +216,7 @@ Um último grupo de medidas de resumo seriam as medidas de forma, caso do coefic
 
 ## 2. Distribuição Empírica dos Dados
 
-Cada uma das estatísticas que vimos até aqui resume os dados em um único número. Isso tem uma vantagem prática, mas conforme também pudemos observar, tratam-se de visões parciais. Neste sentido, é útil explorar como os dados são distribuidos de maneira geral. Para isto, temos a distribuição empírica dos dados, que nos possibilita ter noção da frequência das observações. Antes de continuarmos, eu gostaria de pontuar que trata-se de um tema extenso, a partir do qual tópicos como: definição do intervalo de tabelas de frequência, densidade Kernel, distribuições de probabilidade, probabilidade a posteriori, e tantos outros poderiam ser abordados. Mas aqui vamos abstrair dos (importantes) detalhes técnicos, para focar na interpretação das distribuições empíricas. Meu objetivo aqui é que você perceba a importância de avaliar a distribuição dos dados, considerando as seguintes características: 
+Cada uma das estatísticas que vimos até aqui resume os dados em um único número. Isso tem uma vantagem prática, mas conforme também pudemos observar, tratam-se de visões parciais. Neste sentido, é útil explorar como os dados são distribuidos de maneira geral. Para isto, temos a distribuição empírica dos dados, que nos possibilita ter noção da frequência das observações. Antes de continuarmos, é importante pontuar que trata-se de um tema extenso, a partir do qual tópicos como: definição do intervalo de tabelas de frequência, densidade Kernel, distribuições de probabilidade, probabilidade a posteriori, e tantos outros poderiam ser abordados. Mas aqui vamos abstrair dos (importantes) detalhes técnicos, para focar na interpretação das distribuições empíricas. Nosso objetivo aqui é que você perceba a importância de avaliar a distribuição dos dados, considerando para isto características de: 
 
 - Concentração: ponto(s) ou intervalo(s) de concentração das observações
 - Dispersão: o quão próximo ou distante as observações estão entre si
@@ -271,14 +271,12 @@ Algo como: "No fundo, a teoria das probabilidades é apenas o sesnso comum expre
 
 Scatter plot
 
-Por fim vamos comententar de medidas que nos dão informações sobre a relação entre variáveis. 
-É conveniente utilizar um único número, se a relação existe, e se é positiva ou negativa.
-Correlação varia entre -1 e 1, e indica o quão próximo de uma linha reta as observações estão, uma correlação 1 indica que todos os pontos estão alinhados, enquanto que uma correlação próxima de zero significa que as observações não apresentam nenhum comportamento linear, uma nuvem de pontos aleatória:
+Por fim vamos comententar de medidas que nos permitem reduzir a um único número a relação entre duas variáveis:
 
 - Medidas de Dependência ou Associação (absoluta): covariância (cov)
 - Medidas de Dependência ou Associação (relativa): correlação (r ou ρ)
 
-matriz de correlação, vários pares de variáveis
+No caso da covariância temos a questão de ser uma métrica absoluta, tornando díficil interpretar a sua magnitude. Enquanto que a correlação pode ser entendido como uma versão normalizada da covariância, permitindo uma interpretação muito  mais direta, visto variar -1 e 1. No caso em que o valor é próximo a 1, temos o indício de uma tendência positiva entre as variáveis, indicando que ao desenhar um scatterplot entre as duas variáveis, teremos os pontos próximos a uma linha reta crescente (coeficiente angular positivo). Enquanto que se o valor é próximo de -1, temos indícios de uma associação negativa. Por fim uma correlação próxima de zero significa que as observações não apresentam associações lineares, mas sim algo como uma nuvem de pontos aleatória.
 
 
 ```{r, warning=FALSE}
@@ -297,12 +295,15 @@ ggridges::lincoln_weather %>%
   GGally::ggpairs(progress = FALSE)
 ```
 
-Um ponto importante, mas que não aprofundaremos aqui, é a relação entre o cálculo de medidas de dependência e os diferentes tipos de variáveis, kendall ....
+
+Um ponto importante, mas que não aprofundaremos aqui, é a relação entre o cálculo de medidas de dependência e os diferentes tipos de variáveis, considerando coeficientes de correlação de: Pearson, Spearman, Kendall, entre outros.
+
+Por fim sempre importante lembrar que: correlação não significa causalidade! Ou seja, não é porque existe uma correlação forte entre dois atributos, que um irá necessariamente causar a mudança de movimento no outro. Dois termos interessantes para pesquisar e entender melhor sobre este tipo de fenômeno, são: variável de confusão e correlação espúria. Para esta última temos uma referência incrível para ilustrar este conceito: [Spurious Correlations](http://tylervigen.com/spurious-correlations).
 
 
 # Considerações Finais sobre EDA
 
-Como último ponto eu gostaria de pontuar é que: EDA é sobre interação. Quanto mais você investiga, mais informações terá para que os próximos passos da exploração sejam mais efetivos e **insightful** (algo esclarecedor). Aqui, ter uma abordagem curiosa e cientifica é extramemente recomendado. Basicamente, pensar em hipóteses, investiga-las, criar novas conjecturas, é uma excelente maneira de lidar com o dolorido fato de que: não sabemos o que vamos encontrar, e tá tudo bem! O John Tukey, um importante estatístico do século passado, visto por muitos como um dos pais da EDA, tem uma frase famosa que diz:  
+EDA é sobre interação! Quanto mais você investiga, mais informações terá para que os próximos passos da exploração sejam mais efetivos e **insightful** (esclarecedores). Aqui, ter uma abordagem curiosa e cientifica é extramemente recomendado. Basicamente, pensar em hipóteses, investiga-las, criar novas conjecturas, é uma excelente maneira de lidar com o dolorido fato de que: não sabemos o que vamos encontrar, e tá tudo bem! O John Tukey, um importante estatístico do século passado, visto por muitos como um dos pais da EDA, tem uma frase famosa que diz:  
 
 >  “EDA is an attitude, a state of flexibility, a willingness to look for those things that we believe are not there, as well as those we believe to be there” (Tukey, 1986).
 
@@ -318,12 +319,9 @@ Até lá ;)
 
 # HANDS-ON
 
-No R você irá encontrar dezenas de pacotes com o objetivo de "facilitar" a sua visão, particularmente para a exploração descritiva de dados. Bibliotecas como: `visdat`, `naniar`, `DataExplorer`, entre tantas outras. Que tal explorar um pouco estes pacotes?
+- No R você irá encontrar dezenas de pacotes com o objetivo de "facilitar" a sua visão, particularmente para a exploração descritiva de dados. Bibliotecas como: `visdat`, `naniar`, `DataExplorer`, entre tantas outras. Que tal explorar um pouco estes pacotes?
 
-Mas vale comentar que o Rbase, ou seja, o R sem nenhum pacote também nos possibilita muitas análises
-  
-
-E em relação às distribuições de frequências, você já ouviu falar da distribuição Normal (Gaussiana)? Ou talvez da distribuição Poisson? Exponencial? Já refletiu sobre o porquê estudamos diferentes?
+- E em relação às distribuições de frequências, você já ouviu falar da distribuição Normal (Gaussiana)? Ou talvez da distribuição Poisson? Exponencial? Já refletiu sobre o porquê estudamos diferentes?
 [Aplicativo Shiny para explorar distribuições de probabilidade](https://antoinesoetewey.shinyapps.io/statistics-101/)
 
 
