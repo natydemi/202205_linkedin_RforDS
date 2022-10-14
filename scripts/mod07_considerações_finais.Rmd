@@ -8,15 +8,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Considerações Finais 
-Além das soluções e bibliotecas aqui comentados, é importante lembrar que o R oferece muitas formas de completar uma mesma atividade. Sendo assim, é sempre recomendado que procure opções para otimizar sua rotina. Seguem abaixo as algumas referências open-source para o aprofundamento dos pontos aqui listados:
 
-- R for data science: https://r4ds.had.co.nz/introduction.html
-- Advanced R: http://adv-r.had.co.nz/
-- Hands-On Programming with R: https://rstudio-education.github.io/hopr/
-- Curso-R: https://www.curso-r.com/material/
- 
- 
-# Programação
+
+# Programação Funcional
+
+```{r}
+library(tidyverse)
+```
+
 Como ferramenta transversal a todas as etapas do workflow de análise, temos a programação funcional, que permite a criação de códigos mais rápidos, simples e reproduzíveis. No contexto do `tidyverse` a biblioteca `purrr` disponibiliza de uma série de funcionalidades visando aprimorar a programação funcional no R. Como principal função temos o `map()`, transformando a sua entrada por meio da aplicação de uma função a cada elemento, e retornando uma lista com o mesmo comprimento que a entrada:
 
 
@@ -48,51 +47,48 @@ O `map()` retorna listas por default, para que o resultado tenha outra estrutura
 
 
 
-# R para Big Data
-O R, por padrão, trabalha com dados carregados em memória, por meio de processamento sequencial, o que pode limita tanto o tamanho da base de dados que podemos trabalhar, quanto a velocidade de análise. Alternativas para quando estamos sob alguma destas limitações incluem: trabalhar com amostragens, usar um computador com mais recursos, acessar os dados considerando outras formas de leitura/processamento, ou segmentação de dados. Detalhando estas duas últimas opções temos:
+# Dicas de pacotes em temas variados
 
-- outras formas de acesso: 
-  - substituir os data.frames/tibbles pelo data.table, da biblioteca `data.table()`, uma vez que este trabalha com otimização de processamento e memória;
-  - processar os dados em disco, ao invés da memória, por meio de bibliotecas como `bigmemory`, `ff` ou `RevoScaleR`;
-  - dado que o R é por padrão uma linguagem interpretada, utilizar funções como `compile()` ou `enableJIT()` para acelerar o processamento de uma análise, principalmente se ela for executada repeditamente; e
-  - utilizar pacotes que possibilitam paralelismo, como `Foreach` ou `Multicore`.
-
-- segmentação: aqui podemos trabalhar "manualmente", carregando sub-conjuntos das base de dados, analisando cada uma delas, e depois combinando os resultados. Ou carregar bibliotecas que permitam integração do R com o ecossistema de Big Data, permitindo a distribuição e análise de forma automática. O `RHadoop`, por exemplo, é um conjunto de pacotes que permite conectar o ambiente R em clusters HDFS e HBASE para a execução de operações. Outra opção é o `sparklyr`, que possibilita a execução de comandos do R em clusters do Apache Spark.
-Tanto o `RHadoop` quanto o `sparklyr` possibilitam o uso de comandos do pacote `dplyr`, e a sintaxe do `tidyverse()`. Assim, as tecnologias se complementam: é possível escrever código de forma mais simples e rápida no R e executá-lo distribuidamente em grandes bases de dados no Hadoop ou Spark, e podemos alavancar os tradicionais sistemas de Big Data, integrando a eles as funcionalidades de análise e machine learning disponíveis no ecossistema do R.
-
-Visando ilustrar a facilidade de tais integrações, segue a aplicação do mesmo conjunto de códigos anteriormente utilizados para a base `mtcars`:
-
-
-```{r}
-# #carregando da biblioteca após sua instalação
-# library(sparklyr)
-# library(dplyr)
-# 
-# #criando uma conexão
-# spark_conexao <- spark_connect(master = "local")
-# 
-#  #transformando os dados de memŕia numa tbl_spark
-#   mtcars_tbl <- sdf_copy_to(spark_conexao,
-#                             mtcars, name = "mtcars_tbl",
-#                             memory = FALSE)
-#   class(mtcars_tbl)
-# 
-#  #verificando a estrutura dos dados
-#   mtcars_tbl %>% glimpse()
-# 
-#  #selecionando alguma variaveis usando o dplyr
-#   mtcars_reduzido <- mtcars_tbl %>%
-#     select(mpg, hp)
-# 
-#  #salvando o mtcars_reduzido em memória
-#   mtcars_reduzido_ram <- collect(mtcars_reduzido)
-# 
-# #Disconnect from Spark
-# spark_disconnect(sc = spark_conexao)
-```
-
-Vale ressaltar que muitas das soluções que envolvem Big Data no R são novas, assim como o ecosistema de Big Data em si. E, portanto, estão em constante desenvolvimento, aumentando ainda mais a importância de manter o tracking de melhorias e correções dos pacotes. Vale ressaltar que mesmo com toda a necessidade de ajustes aqui apresentada, a quantidade de recursos que o R oferece para o flow da Ciência de Dados, faz com que grandes empresas, como Google, Microsoft, Bank of America e Shell, optem por trabalhar com a linguagem R.
+- interoperabilidade R e Python: [reticulate](https://rstudio.github.io/reticulate/) 
+- criar mapas: [leaflet](https://rstudio.github.io/leaflet/)
+- gerar memes: [memer](https://github.com/sctyner/memer)
+- trabalhar com deep learning: [torch](https://torch.mlverse.org/packages/)
+- automatizar processos: [usethis](https://github.com/r-lib/usethis)
+- modelagem bayesiana: [tidybayes](http://mjskay.github.io/tidybayes/)
+- analisar texto: [tidytext](https://github.com/juliasilge/tidytext)
+- desenvolver pacotes: [devtools](https://github.com/r-lib/devtools)
+- gerenciar dependências do R: [renv](https://rstudio.github.io/renv/articles/renv.html)
+- testar códigos: [testthat](https://testthat.r-lib.org/)
+- deploy de modelos: [vetiver](https://github.com/rstudio/vetiver-r)
+- gerenciar e analisar dados com o Hadoop: [RHadoop](https://github.com/RevolutionAnalytics/RHadoop/wiki) 
 
 
 
-# Boa sorte! 
+# Referências
+Além das soluções e bibliotecas aqui comentados, é importante lembrar que o R oferece muitas formas de completar uma mesma atividade. Sendo assim, é sempre recomendado que procure opções para otimizar sua rotina. Seguem abaixo as algumas referências open-source para o aprofundamento dos pontos aqui listados:
+
+- R for data science: https://r4ds.had.co.nz/introduction.html
+- Advanced R: http://adv-r.had.co.nz/
+- Hands-On Programming with R: https://rstudio-education.github.io/hopr/
+- Curso-R: https://www.curso-r.com/material/
+- Zen do R - https://lnkd.in/dZG4pb2
+•	Livro que passa por praticamente tudo o que vimos aqui, porem em inglês:
+https://worldpece.org/sites/default/files/datastyle.pdf   
+
+- github - Happy Git and GitHub for the useR: https://happygitwithr.com/index.html
+
+Seguir #rstats nas redes sociais, ou participar de grupos como: R-Ladies, R-Brasil no Telegram, ou ainda se manter ligado em eventos como: ventos
+		○ rstudio::conf(2021) - https://rstudio.com/conference/
+		○ SatRday - https://satrdays.org/ 
+		○ TidyTuesday
+		○ Cheat Sheets RStudio: https://rstudio.com/resources/cheatsheets/
+		○ Rstudio - https://education.rstudio.com/
+
+-  kaggle
+- páginas do Rstudio
+- #rstats
+
+A grande dica é: saiba que existe um mundo de coisa para aprender, e que por um lado é ótimo acompanhar páginas e pessoas de referencia na áreas, para seguir ampliando o seu horizonte de possibilidades, mas aplicar os conhecimentos, fazer pesquisas sobre novas maneiras de resolver algum desafio, aumente a sua produtividade!  
+ 
+ 
+# Até a próxima

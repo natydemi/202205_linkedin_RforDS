@@ -17,6 +17,11 @@ Por fim temos a apresentação dos resultados, uma parte crítica do processo, v
 
 Para criar tais arquivos basta ir em 'File > New File > R Markdown ...', preencher as especificações do Documento, e então apertar o botão Knit, ou o atalho 'Ctrl + Shift + K'.
 
+# Flexdashboard
+
+
+# Shiny
+
 Além do RMarkdown, temos também ferramentas como o Shiny - pacote usado para geração de gráficos e dashboards interativos. que permitem a construção de aplicações Web. Para tal, as ferramentas da biblioteca convertem os dados analisados e as funções de R para HTML, CSS e JavaScript, gerando arquivos que podem ser abertos e trabalhados em um navegador. 
 
 O Shiny é baseado em dois componentes principais: ‘server’, que é responsável pela lógica do programa, tratamento e exibição dos dados, e ‘ui’ (user interface) que é responsável por oferecer as interações necessárias com o usuário através do navegador. Ambos possuem métodos e funções prontas para uso para as funcionalidades mais populares. 
@@ -25,3 +30,10 @@ O Shiny é baseado em dois componentes principais: ‘server’, que é respons�
  knitr::include_graphics("Figs/Fig_2_Shiny_Rmarkdown.png")
 ```
 
+
+# Outros
+
+
+xaringan
+pagedown
+rtcles
