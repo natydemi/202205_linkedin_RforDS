@@ -17,9 +17,21 @@ library(tidyverse)
 # Dataprep
 
 Data wrangling ou data cleaning, não é uma tarefa pontual, mas sim algo que deverá 
+formatação incorreta
 
 
-## missing
+Completude 
+Uniformidade
+  Abreviação de Dados
+  Espaços extras
+Conformidade com o mundo real
+  Fora da escala
+  Erro de medida e/ou representação
+
+## lidando com dados duplicados
+
+
+## tratando dados faltantes (missing)
 
 Pacote tidy possue algumas funções interessantes
 
@@ -41,9 +53,19 @@ Pacote tidy possue algumas funções interessantes
 
 Mas existem pacotes mais robustos, como é o exemplo do pacote naniar 
 
-## recode
+## diferentes encode
 
-## normalização
+
+
+## identificando valores extremos (outliers)
+
+
+## aplicando padronizações / normalização
+
+Dados extremos
+previnir escalar diferentes
+
+
 
 # Feature Engineering
 

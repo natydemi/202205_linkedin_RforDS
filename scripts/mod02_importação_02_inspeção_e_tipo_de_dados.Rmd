@@ -15,7 +15,7 @@ library(tidyverse)
 
 # Inspeções iniciais
 
-Após fazer a importação de uma base de dados, é importante que o objeto seja minimamente examinado, em termos de volumetrias, suas dimensões (linhas e colunas) e como tais informações estão sendo entendidas pela linguagem. Vamos iniciar discutindo sobre tais verificações considerando dados dos filmes da Pixar, que podem ser consultados por meio do pacote `pixarfilms`, ou na sua versão traduzida para português, disponível no pacote `dados`:
+Após fazer a importação de uma base de dados, é importante que o objeto seja minimamente examinado, em termos de volumetrias, contadores únicos, suas dimensões (linhas e colunas), e como tais informações estão sendo entendidas pela linguagem. Vamos iniciar discutindo sobre tais verificações considerando dados dos filmes da Pixar, que podem ser consultados por meio do pacote `pixarfilms`, ou na sua versão traduzida para português, disponível no pacote `dados`:
 
 ```{r}
 pixar_filmes <- dados::pixar_filmes

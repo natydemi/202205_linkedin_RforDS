@@ -126,7 +126,7 @@ o	Quantil
 
 # Redimensionando os dados (dados tidy)
 
-
+função que ajuda : https://r-rudra.github.io/tidycells/
 
    # A filosofia tidy, é uma forma de vincular a estrutura de um  
   # conjunto de dados (seu layout físico) com sua semântica (seu significado).  
