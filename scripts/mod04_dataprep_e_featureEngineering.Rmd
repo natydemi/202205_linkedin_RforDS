@@ -1,0 +1,81 @@
+---
+title: "Arrumação e Transformação de Dados"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
+```
+
+# Bibliotecas
+
+```{r}
+library(tidyverse)
+```
+
+
+
+# Pacotes para classes especiais de dados
+
+## fatores
+
+
+    - `fct_count()` - conta o número de valores de cada nível
+    - `fct_relevel()` - reordenar os níveis dos fatores
+    - `fct_explicit_na()` - adicionar o `NA` como um dos níveis
+
+```{r}
+#base para exemplo
+  gss_cat %>% glimpse
+
+#exemplo: contabilizando a quantidade de raças declaradas 
+  gss_cat$race %>% 
+  fct_count() 
+```
+
+
+## strings
+    - `str_detect()` - identificar a presença de padrões em uma string
+    - `str_count()` - contabiliza o número de vezes que um padrão é encontrado
+    - `str_replace()` - substitui um dado padrão em uma string 
+    - `str_to_lower()` - converter strings maiúsculas e minúsculas
+
+```{r}
+#base para exemplo
+  fruit %>% 
+    enframe %>% #versão tibble para vetores
+    glimpse
+
+#exemplo: obtenção da quantidade de palavras contendo a string "berry"
+  fruit %>% 
+    str_count("berry") %>% 
+    sum()
+    
+```
+
+## datas
+    - `as_date()` - converter um objeto para uma data ou hora 
+    - `wday()` - retorna o dia da semana como um número decimal 
+    - `today()` - retorna a data corrente 
+    - `floor_date()` - arredonda para o limite inferior mais próximo da unidade de tempo
+
+```{r, error=TRUE, message=F}
+#exemplo: retorna erro por não ser uma data válida
+  birthday <- lubridate::dmy("29/02/1971")
+  
+#data ok
+  birthday <- lubridate::dmy("29/02/1972"); birthday
+  
+#carregando `lubridate`, tornando o prefixo `lubridate::` desnecessário
+  library(lubridate)
+  
+#obtenção do dia da semana da data especificada
+  wday(birthday, label = TRUE)
+
+```
+
+
+
+# HANDS-ON
+
+

@@ -692,11 +692,11 @@ considerando a proporção especificada</li>
     sample_n(10) %&gt;% 
     sample_frac(0.5) 
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 1          6.6         2.9          4.6         1.3 versicolor
-## 2          6.1         2.9          4.7         1.4 versicolor
-## 3          6.3         2.3          4.4         1.3 versicolor
-## 4          5.7         4.4          1.5         0.4     setosa
-## 5          6.3         2.7          4.9         1.8  virginica</code></pre>
+## 1          6.3         2.7          4.9         1.8  virginica
+## 2          5.1         3.8          1.5         0.3     setosa
+## 3          6.3         2.5          5.0         1.9  virginica
+## 4          5.6         2.9          3.6         1.3 versicolor
+## 5          6.0         3.0          4.8         1.8  virginica</code></pre>
 </div>
 <div id="combinando-bases" class="section level1">
 <h1>Combinando Bases</h1>
@@ -737,82 +737,6 @@ considerando a proporção especificada</li>
 ## $ name  &lt;chr&gt; &quot;Mick&quot;, &quot;John&quot;, &quot;Paul&quot;
 ## $ band  &lt;chr&gt; &quot;Stones&quot;, &quot;Beatles&quot;, &quot;Beatles&quot;
 ## $ plays &lt;chr&gt; NA, &quot;guitar&quot;, &quot;bass&quot;</code></pre>
-</div>
-<div id="pacotes-para-classes-especiais-de-dados" class="section level1">
-<h1>Pacotes para classes especiais de dados</h1>
-<div id="fatores" class="section level2">
-<h2>fatores</h2>
-<pre><code>- `fct_count()` - conta o número de valores de cada nível
-- `fct_relevel()` - reordenar os níveis dos fatores
-- `fct_explicit_na()` - adicionar o `NA` como um dos níveis</code></pre>
-<pre class="r"><code>#base para exemplo
-  gss_cat %&gt;% glimpse
-## Rows: 21,483
-## Columns: 9
-## $ year    &lt;int&gt; 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 20…
-## $ marital &lt;fct&gt; Never married, Divorced, Widowed, Never married, Divorced, Mar…
-## $ age     &lt;int&gt; 26, 48, 67, 39, 25, 25, 36, 44, 44, 47, 53, 52, 52, 51, 52, 40…
-## $ race    &lt;fct&gt; White, White, White, White, White, White, White, White, White,…
-## $ rincome &lt;fct&gt; $8000 to 9999, $8000 to 9999, Not applicable, Not applicable, …
-## $ partyid &lt;fct&gt; &quot;Ind,near rep&quot;, &quot;Not str republican&quot;, &quot;Independent&quot;, &quot;Ind,near…
-## $ relig   &lt;fct&gt; Protestant, Protestant, Protestant, Orthodox-christian, None, …
-## $ denom   &lt;fct&gt; &quot;Southern baptist&quot;, &quot;Baptist-dk which&quot;, &quot;No denomination&quot;, &quot;No…
-## $ tvhours &lt;int&gt; 12, NA, 2, 4, 1, NA, 3, NA, 0, 3, 2, NA, 1, NA, 1, 7, NA, 3, 3…
-
-#exemplo: contabilizando a quantidade de raças declaradas 
-  gss_cat$race %&gt;% 
-  fct_count() 
-## # A tibble: 4 × 2
-##   f                  n
-##   &lt;fct&gt;          &lt;int&gt;
-## 1 Other           1959
-## 2 Black           3129
-## 3 White          16395
-## 4 Not applicable     0</code></pre>
-</div>
-<div id="strings" class="section level2">
-<h2>strings</h2>
-<pre><code>- `str_detect()` - identificar a presença de padrões em uma string
-- `str_count()` - contabiliza o número de vezes que um padrão é encontrado
-- `str_replace()` - substitui um dado padrão em uma string 
-- `str_to_lower()` - converter strings maiúsculas e minúsculas</code></pre>
-<pre class="r"><code>#base para exemplo
-  fruit %&gt;% 
-    enframe %&gt;% #versão tibble para vetores
-    glimpse
-## Rows: 80
-## Columns: 2
-## $ name  &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1…
-## $ value &lt;chr&gt; &quot;apple&quot;, &quot;apricot&quot;, &quot;avocado&quot;, &quot;banana&quot;, &quot;bell pepper&quot;, &quot;bilberr…
-
-#exemplo: obtenção da quantidade de palavras contendo a string &quot;berry&quot;
-  fruit %&gt;% 
-    str_count(&quot;berry&quot;) %&gt;% 
-    sum()
-## [1] 14</code></pre>
-</div>
-<div id="datas" class="section level2">
-<h2>datas</h2>
-<pre><code>- `as_date()` - converter um objeto para uma data ou hora 
-- `wday()` - retorna o dia da semana como um número decimal 
-- `today()` - retorna a data corrente 
-- `floor_date()` - arredonda para o limite inferior mais próximo da unidade de tempo</code></pre>
-<pre class="r"><code>#exemplo: retorna erro por não ser uma data válida
-  birthday &lt;- lubridate::dmy(&quot;29/02/1971&quot;)
-## Warning: 1 failed to parse.
-  
-#data ok
-  birthday &lt;- lubridate::dmy(&quot;29/02/1972&quot;); birthday
-## [1] &quot;1972-02-29&quot;
-  
-#carregando `lubridate`, tornando o prefixo `lubridate::` desnecessário
-  library(lubridate)
-  
-#obtenção do dia da semana da data especificada
-  wday(birthday, label = TRUE)
-## [1] ter
-## Levels: dom &lt; seg &lt; ter &lt; qua &lt; qui &lt; sex &lt; sáb</code></pre>
-</div>
 </div>
 <div id="hands-on" class="section level1">
 <h1>HANDS-ON</h1>
