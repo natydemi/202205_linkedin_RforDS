@@ -14,8 +14,38 @@ library(tidyverse)
 ```
 
 
+# Dataprep
 
-# Pacotes para classes especiais de dados
+Data wrangling ou data cleaning, não é uma tarefa pontual, mas sim algo que deverá 
+
+
+## missing
+
+Pacote tidy possue algumas funções interessantes
+
+  - `drop_na()` - excluí todas as linhas que apresentam elementos faltantes. 
+  - `fill()` - substituí os dados faltantes pelo valor mais recente da referida coluna.
+  - `replace_na()` - substituí os dados faltantes por um valor pré especificado.
+  
+```{r}
+#base para exemplo
+  airquality[1:5,] 
+
+#exemplo: exclusão das linhas identificadas com NA
+  airquality[1:5,] %>% drop_na() 
+  airquality[1:5,] %>% fill(c(Ozone, Solar.R)) 
+  airquality[1:5,] %>% replace_na(list(Ozone=0, Solar.R=0)) 
+
+```
+
+
+Mas existem pacotes mais robustos, como é o exemplo do pacote naniar 
+
+## recode
+
+## normalização
+
+# Feature Engineering
 
 ## fatores
 

@@ -7,6 +7,20 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+# Bibliotecas
+
+```{r}
+library(tidyverse)
+```
+
+
+“Visualization gives you answers to questions you didn’t know you had“
+
+ Ben Shneiderman
+
+
+
 # Visualização
 A etapa de visualização possui um papel importantíssimo no contexto de análise de dados, uma vez que, quando devidamente utilizada, nos permite o entendimento dos dados e suas particularidades. Apesar da visualização também contemplar  um conjunto de medidas organizadas em tabelas, vamos focar este capítulo na opção gráfica, visto já termos apresentado o pacote `dplyr`, e funções de sumarização como o `summarise()` - um pacote particularmente útil para visualizações descritivas é o `skimr`.
 
@@ -25,7 +39,6 @@ Como um primeiro exemplo, vamos refazer o histograma da variável `qsec`, da bas
 ```{r, out.width = '100%', fig.align = "center", message=F}
   ggplot(mtcars) +
    geom_histogram(aes(qsec))
-
 ```
 
 E agora, reestruturando a primeira linha segundo a lógica pipe, diminuindo o intervalo de quebra do histograma (que tem 30 por default), e alguns parâmetros estéticos:

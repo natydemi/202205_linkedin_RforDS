@@ -387,7 +387,7 @@
 # Pivotagem (de linhas para colunas) -----
   #reshape(), pivot_wider() e dcast()
 
-# Unindo tabelas -----
+# Combinando tabelas -----
   #merge(), left_join() e DT1[ DT2, on = ...]
   
 # disclaimer sobre as opções apresentadas -----

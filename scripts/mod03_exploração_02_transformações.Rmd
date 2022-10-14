@@ -14,7 +14,137 @@ library(tidyverse)
 ```
 
 
-# Dados Tidy 
+
+
+    
+# Manuseando Colunas 
+
+A próxima etapa no processo de análise é a manipulação da base visando desde o entendimento de suas variáveis, considerando tabulações e estatísticas, até a criação de novas variáveis. Para tal, trabalharemos com o pacote `dplyr`, com recursos para:
+
+Limpeza, data cleaning 
+
+
+## selecionando colunas 
+
+Por nome ou por posição
+
+Ou ainda linhas, observações, que não se refiram ao nosso objetivo de estudo
+
+
+    - `select()` - seleciona variáveis, permitindo o uso de recursos como:
+        - `starts_with()`, `matches()`, `num_range()`, ou `everything()`  
+        
+        
+## selecionando linhas
+
+por posição pelo valor 
+
+* filter for particular observations, arrange the observations in a desired order, and mutate to add or change a column.
+
+    - `filter()` - filtra linhas da base de dados a partir de critérios lógicos (retorno `TRUE`/`FALSE`)
+    - `slice()` - seleciona linhas por suas posições ordinais
+    - `top_n()` - ordena as primeiras `n` observações das colunas listadas 
+    - `arrange()` - ordena as linhas de acordo com as colunas especificadas
+    - `distinct()` - remove as linhas duplicadas de uma dada entrada
+
+```{r}
+#exemplo: seleção segundo padrão de nomenclatura + filtro e ordenação
+  iris %>% 
+    select(starts_with("Petal")) %>%
+    filter(Petal.Length > 6, Petal.Width > 2) %>% 
+    arrange(Petal.Width)
+
+#exemplo: valor máximo de Sepal.Length para cada specie
+  iris %>% 
+    group_by(Species) %>% 
+    top_n(1, Sepal.Length)
+  
+```
+
+por amostra
+
+    - `sample_n()` - seleciona uma amostra aleatória considerando o número de elementos especificado
+    - `sample_frac()` - seleciona uma amostra aleatória considerando a proporção especificada
+ 
+```{r}
+#exemplo: amostra considerando o número de observações desejado 
+# seguido de uma amostra considerando proporção
+  iris %>% 
+    sample_n(10) %>% 
+    sample_frac(0.5) 
+```
+
+
+
+        
+## alterando e criando novas colunas
+
+excluindo
+
+    - `mutate()` - cria/modifica variáveis
+    - `rename()` - renomeia variáveis
+`arrange()` - renomeia variáveis
+
+convertendo dados!
+
+```{r}
+#base exemplo
+  iris[1:5,] %>% as_tibble()
+
+#exemplo: seleção, mudança de nome, e definição de uma nova variável 
+  iris[1:5,] %>% 
+    as_tibble() %>% 
+    select(Sepal.Length) %>% 
+    rename(variavel_original = Sepal.Length) %>% 
+    mutate(variavel_original_normalizada =  variavel_original %>% scale)
+```
+
+•	ifelse, case_when
+
+## criando sumarizações
+
+    - `summarise()` - calcula resumos de uma tabela conforme especificação
+
+o	Media
+o	Quantil 
+
+
+```{r}
+#exemplo: calculo da quantidade de observações de cada categoria, e 
+# média para a variável Petal.Length considerando a visão por Species
+  iris %>% 
+    group_by(Species) %>% 
+    summarise(N = n(),
+              PetalLength_media = mean(Petal.Length))
+```   
+
+## criando sumarizações por grupo
+
+    - `group_by()` - manipula a base de dados segmentando por cada "grupo" da variável especificada e, posteriormente, combina os resultados, considerando os comandos seguintes dados.
+
+
+
+# Redimensionando os dados (dados tidy)
+
+
+
+   # A filosofia tidy, é uma forma de vincular a estrutura de um  
+  # conjunto de dados (seu layout físico) com sua semântica (seu significado).  
+  # Para tal, temos que, independente da origem, características, problemas e 
+  # layout dos dados, estes precisam ser organizados garantindo que:
+    
+    # cada variável/informação tenha a sua própria coluna;
+    # cada observação/unidade de análise tenha a sua própria linha; e
+    # que cada valor tenha a sua própria célula.
+    
+  # Apesar da simplicidade das premissas, respeitá-las permite um grande ganho 
+  # em termos de produtividade de análise. Contudo, nem sempre é trivial obter  
+  # esta estrutura. Ponto este, que o próprio ecossistema de pacotes do tidyverse   
+  # nos auxilia, oferecendo uma série de recursos para a obtenção e manutenção 
+  # de uma estrutura tidy. 
+
+
+  
 Vamos agora retornar em um conceito importante para 
 Após a importação dos dados, passamos para a etapa de tidy dos dados, também chamada de *tidying data*. Para isto iremos primeiramente visualizar os dados. No R, existem várias funções *built-in* para isto, como a função `names()`, que retorna o nome das colunas, ou `str()`, que permite a visualização da estrutura de um objeto arbitrário.   
 
@@ -27,7 +157,13 @@ Todas as funções citadas serão igualmente úteis e utilizadas no contexto do 
 
 A partir da visualização, começamos a fazer os ajustes necessários para garantir que os dados estejam organizados de uma forma `tidy`, tendo como principal ferramenta a biblioteca `tidyr`. Seguem as principais funções deste pacote, utilizando bases disponíveis pela própria biblioteca:
 
-- **Redimensionamento de dados**
+
+## pivotando 
+
+Uma outra ação comum, diz respeito a necessidade de combinar diferentes bases de dados visando obter uma fonte única, com todas as informações de interesse, aqui denominada agregação.
+
+### de colunas para linhas 
+
   - `gather()` - reorganiza os dados, combinando as colunas especificadas na coluna parâmetro `key`, e seus valores na coluna parâmetro `value`. Com tal tipo de ajuste podemos organizar os dados de modo a consultar várias colunas de interesse de uma única vez, algo útil para a aplicação de loops, funções e gráficos, conforme veremos na seção `Visualização`.
 
 ```{r}
@@ -42,6 +178,8 @@ A partir da visualização, começamos a fazer os ajustes necessários para gara
 ```
 
 
+### de linhas para colunas
+
 - `spread()` - de maneira oposta a função anterior, aqui podemos expandir linhas em colunas:
 
 ```{r}
@@ -50,7 +188,10 @@ A partir da visualização, começamos a fazer os ajustes necessários para gara
     spread(ano, valores) 
 ```
 
-- **Dividir/combinar células**
+
+## combinando colunas  
+
+
   - `separate()` - divide uma única coluna em várias colunas, similarmente a opção `separate_rows()`, que faz a mesma coisa para linhas.
 ```{r}
 #base para exemplo
@@ -74,91 +215,11 @@ A partir da visualização, começamos a fazer os ajustes necessários para gara
     unite(cases, pop, col = "rate", sep = "/")
 ```
 
-- **Dados Faltantes**
-
-  - `drop_na()` - excluí todas as linhas que apresentam elementos faltantes. 
-  - `fill()` - substituí os dados faltantes pelo valor mais recente da referida coluna.
-  - `replace_na()` - substituí os dados faltantes por um valor pré especificado.
-  
-```{r}
-#base para exemplo
-  airquality[1:5,] 
-
-#exemplo: exclusão das linhas identificadas com NA
-  airquality[1:5,] %>% drop_na() 
-  airquality[1:5,] %>% fill(c(Ozone, Solar.R)) 
-  airquality[1:5,] %>% replace_na(list(Ozone=0, Solar.R=0)) 
-
-```
 
 
-    
-# Manipulação 
-A próxima etapa no processo de análise é a manipulação da base visando desde o entendimento de suas variáveis, considerando tabulações e estatísticas, até a criação de novas variáveis. Para tal, trabalharemos com o pacote `dplyr`, com recursos para:
 
-  - **Manipulação de variáveis**
-    - `select()` - seleciona variáveis, permitindo o uso de recursos como:
-        - `starts_with()`, `matches()`, `num_range()`, ou `everything()`  
-    - `mutate()` - cria/modifica variáveis
-    - `rename()` - renomeia variáveis
 
-```{r}
-#base exemplo
-  iris[1:5,] %>% as_tibble()
 
-#exemplo: seleção, mudança de nome, e definição de uma nova variável 
-  iris[1:5,] %>% 
-    as_tibble() %>% 
-    select(Sepal.Length) %>% 
-    rename(variavel_original = Sepal.Length) %>% 
-    mutate(variavel_original_normalizada =  variavel_original %>% scale)
-```
-
-  - **Sumarizações**
-    - `group_by()` - manipula a base de dados segmentando por cada "grupo" da variável especificada e, posteriormente, combina os resultados, considerando os comandos seguintes dados.
-    - `summarise()` - calcula resumos de uma tabela conforme especificação
-
-```{r}
-#exemplo: calculo da quantidade de observações de cada categoria, e 
-# média para a variável Petal.Length considerando a visão por Species
-  iris %>% 
-    group_by(Species) %>% 
-    summarise(N = n(),
-              PetalLength_media = mean(Petal.Length))
-```   
-
-  - **Manipulação de casos**
-    - `filter()` - filtra linhas da base de dados a partir de critérios lógicos (retorno `TRUE`/`FALSE`)
-    - `slice()` - seleciona linhas por suas posições ordinais
-    - `top_n()` - ordena as primeiras `n` observações das colunas listadas 
-    - `arrange()` - ordena as linhas de acordo com as colunas especificadas
-    - `distinct()` - remove as linhas duplicadas de uma dada entrada
-
-```{r}
-#exemplo: seleção segundo padrão de nomenclatura + filtro e ordenação
-  iris %>% 
-    select(starts_with("Petal")) %>%
-    filter(Petal.Length > 6, Petal.Width > 2) %>% 
-    arrange(Petal.Width)
-
-#exemplo: valor máximo de Sepal.Length para cada specie
-  iris %>% 
-    group_by(Species) %>% 
-    top_n(1, Sepal.Length)
-  
-```
-
-  - **Amostra**
-    - `sample_n()` - seleciona uma amostra aleatória considerando o número de elementos especificado
-    - `sample_frac()` - seleciona uma amostra aleatória considerando a proporção especificada
- 
-```{r}
-#exemplo: amostra considerando o número de observações desejado 
-# seguido de uma amostra considerando proporção
-  iris %>% 
-    sample_n(10) %>% 
-    sample_frac(0.5) 
-```
 
 
 # Combinando Bases
@@ -180,6 +241,17 @@ A próxima etapa no processo de análise é a manipulação da base visando desd
   left_join(band_members, band_instruments2, by = c("name"="artist")) %>%
     glimpse()
 ```
+
+
+
+# Recursos avançados
+
+Até aqui o tidyverse apresenta o seu ponto forte em termos de legibilidade do código, aproximação com a maneira com que pensamos as ações que gostariamos de aplicar nos dados. Mas são nos recursos avançados que vemos ganhos consideráveis em termos de produtividade. 
+
+* across, relocate
+	        #adicionar exemplos de formas de definir funções
+        # avengers %>% summarise(across(contains("Death"), ~ sum(is.na(.x)))) %>% glimpse
+        # avengers %>% summarise(across(contains("Death"), function(x) sum(is.na(x)))) %>% glimpse
 
 
 

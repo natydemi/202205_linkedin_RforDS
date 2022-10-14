@@ -379,8 +379,154 @@ pre code {
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
-<div id="dados-tidy" class="section level1">
-<h1>Dados Tidy</h1>
+<div id="manuseando-colunas" class="section level1">
+<h1>Manuseando Colunas</h1>
+<p>A próxima etapa no processo de análise é a manipulação da base
+visando desde o entendimento de suas variáveis, considerando tabulações
+e estatísticas, até a criação de novas variáveis. Para tal,
+trabalharemos com o pacote <code>dplyr</code>, com recursos para:</p>
+<p>Limpeza, data cleaning</p>
+<div id="selecionando-colunas" class="section level2">
+<h2>selecionando colunas</h2>
+<p>Por nome ou por posição</p>
+<p>Ou ainda linhas, observações, que não se refiram ao nosso objetivo de
+estudo</p>
+<pre><code>- `select()` - seleciona variáveis, permitindo o uso de recursos como:
+    - `starts_with()`, `matches()`, `num_range()`, ou `everything()`  
+    
+    </code></pre>
+</div>
+<div id="selecionando-linhas" class="section level2">
+<h2>selecionando linhas</h2>
+<p>por posição pelo valor</p>
+<ul>
+<li><p>filter for particular observations, arrange the observations in a
+desired order, and mutate to add or change a column.</p>
+<ul>
+<li><code>filter()</code> - filtra linhas da base de dados a partir de
+critérios lógicos (retorno <code>TRUE</code>/<code>FALSE</code>)</li>
+<li><code>slice()</code> - seleciona linhas por suas posições
+ordinais</li>
+<li><code>top_n()</code> - ordena as primeiras <code>n</code>
+observações das colunas listadas</li>
+<li><code>arrange()</code> - ordena as linhas de acordo com as colunas
+especificadas</li>
+<li><code>distinct()</code> - remove as linhas duplicadas de uma dada
+entrada</li>
+</ul></li>
+</ul>
+<pre class="r"><code>#exemplo: seleção segundo padrão de nomenclatura + filtro e ordenação
+  iris %&gt;% 
+    select(starts_with(&quot;Petal&quot;)) %&gt;%
+    filter(Petal.Length &gt; 6, Petal.Width &gt; 2) %&gt;% 
+    arrange(Petal.Width)
+##   Petal.Length Petal.Width
+## 1          6.6         2.1
+## 2          6.7         2.2
+## 3          6.9         2.3
+## 4          6.1         2.3
+## 5          6.1         2.5
+
+#exemplo: valor máximo de Sepal.Length para cada specie
+  iris %&gt;% 
+    group_by(Species) %&gt;% 
+    top_n(1, Sepal.Length)
+## # A tibble: 3 × 5
+## # Groups:   Species [3]
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species   
+##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;     
+## 1          5.8         4            1.2         0.2 setosa    
+## 2          7           3.2          4.7         1.4 versicolor
+## 3          7.9         3.8          6.4         2   virginica</code></pre>
+<p>por amostra</p>
+<pre><code>- `sample_n()` - seleciona uma amostra aleatória considerando o número de elementos especificado
+- `sample_frac()` - seleciona uma amostra aleatória considerando a proporção especificada</code></pre>
+<pre class="r"><code>#exemplo: amostra considerando o número de observações desejado 
+# seguido de uma amostra considerando proporção
+  iris %&gt;% 
+    sample_n(10) %&gt;% 
+    sample_frac(0.5) 
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1          7.6         3.0          6.6         2.1  virginica
+## 2          5.2         4.1          1.5         0.1     setosa
+## 3          5.0         3.2          1.2         0.2     setosa
+## 4          4.6         3.1          1.5         0.2     setosa
+## 5          5.5         2.4          3.7         1.0 versicolor</code></pre>
+</div>
+<div id="alterando-e-criando-novas-colunas" class="section level2">
+<h2>alterando e criando novas colunas</h2>
+<p>excluindo</p>
+<pre><code>- `mutate()` - cria/modifica variáveis
+- `rename()` - renomeia variáveis</code></pre>
+<p><code>arrange()</code> - renomeia variáveis</p>
+<p>convertendo dados!</p>
+<pre class="r"><code>#base exemplo
+  iris[1:5,] %&gt;% as_tibble()
+## # A tibble: 5 × 5
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+## 1          5.1         3.5          1.4         0.2 setosa 
+## 2          4.9         3            1.4         0.2 setosa 
+## 3          4.7         3.2          1.3         0.2 setosa 
+## 4          4.6         3.1          1.5         0.2 setosa 
+## 5          5           3.6          1.4         0.2 setosa
+
+#exemplo: seleção, mudança de nome, e definição de uma nova variável 
+  iris[1:5,] %&gt;% 
+    as_tibble() %&gt;% 
+    select(Sepal.Length) %&gt;% 
+    rename(variavel_original = Sepal.Length) %&gt;% 
+    mutate(variavel_original_normalizada =  variavel_original %&gt;% scale)
+## # A tibble: 5 × 2
+##   variavel_original variavel_original_normalizada[,1]
+##               &lt;dbl&gt;                             &lt;dbl&gt;
+## 1               5.1                             1.16 
+## 2               4.9                             0.193
+## 3               4.7                            -0.772
+## 4               4.6                            -1.25 
+## 5               5                               0.675</code></pre>
+<p>• ifelse, case_when</p>
+</div>
+<div id="criando-sumarizações" class="section level2">
+<h2>criando sumarizações</h2>
+<pre><code>- `summarise()` - calcula resumos de uma tabela conforme especificação</code></pre>
+<p>o Media o Quantil</p>
+<pre class="r"><code>#exemplo: calculo da quantidade de observações de cada categoria, e 
+# média para a variável Petal.Length considerando a visão por Species
+  iris %&gt;% 
+    group_by(Species) %&gt;% 
+    summarise(N = n(),
+              PetalLength_media = mean(Petal.Length))
+## # A tibble: 3 × 3
+##   Species        N PetalLength_media
+##   &lt;fct&gt;      &lt;int&gt;             &lt;dbl&gt;
+## 1 setosa        50              1.46
+## 2 versicolor    50              4.26
+## 3 virginica     50              5.55</code></pre>
+</div>
+<div id="criando-sumarizações-por-grupo" class="section level2">
+<h2>criando sumarizações por grupo</h2>
+<pre><code>- `group_by()` - manipula a base de dados segmentando por cada &quot;grupo&quot; da variável especificada e, posteriormente, combina os resultados, considerando os comandos seguintes dados.</code></pre>
+</div>
+</div>
+<div id="redimensionando-os-dados-dados-tidy" class="section level1">
+<h1>Redimensionando os dados (dados tidy)</h1>
+<p># A filosofia tidy, é uma forma de vincular a estrutura de um<br />
+# conjunto de dados (seu layout físico) com sua semântica (seu
+significado).<br />
+# Para tal, temos que, independente da origem, características,
+problemas e # layout dos dados, estes precisam ser organizados
+garantindo que:</p>
+<pre><code># cada variável/informação tenha a sua própria coluna;
+# cada observação/unidade de análise tenha a sua própria linha; e
+# que cada valor tenha a sua própria célula.</code></pre>
+<p># Apesar da simplicidade das premissas, respeitá-las permite um
+grande ganho # em termos de produtividade de análise. Contudo, nem
+sempre é trivial obter<br />
+# esta estrutura. Ponto este, que o próprio ecossistema de pacotes do
+tidyverse<br />
+# nos auxilia, oferecendo uma série de recursos para a obtenção e
+manutenção # de uma estrutura tidy.</p>
 <p>Vamos agora retornar em um conceito importante para Após a importação
 dos dados, passamos para a etapa de tidy dos dados, também chamada de
 <em>tidying data</em>. Para isto iremos primeiramente visualizar os
@@ -415,8 +561,13 @@ para garantir que os dados estejam organizados de uma forma
 <code>tidy</code>, tendo como principal ferramenta a biblioteca
 <code>tidyr</code>. Seguem as principais funções deste pacote,
 utilizando bases disponíveis pela própria biblioteca:</p>
-<ul>
-<li><strong>Redimensionamento de dados</strong>
+<div id="pivotando" class="section level2">
+<h2>pivotando</h2>
+<p>Uma outra ação comum, diz respeito a necessidade de combinar
+diferentes bases de dados visando obter uma fonte única, com todas as
+informações de interesse, aqui denominada agregação.</p>
+<div id="de-colunas-para-linhas" class="section level3">
+<h3>de colunas para linhas</h3>
 <ul>
 <li><code>gather()</code> - reorganiza os dados, combinando as colunas
 especificadas na coluna parâmetro <code>key</code>, e seus valores na
@@ -424,7 +575,6 @@ coluna parâmetro <code>value</code>. Com tal tipo de ajuste podemos
 organizar os dados de modo a consultar várias colunas de interesse de
 uma única vez, algo útil para a aplicação de loops, funções e gráficos,
 conforme veremos na seção <code>Visualização</code>.</li>
-</ul></li>
 </ul>
 <pre class="r"><code>#base para exemplo
   table4a
@@ -449,6 +599,9 @@ conforme veremos na seção <code>Visualização</code>.</li>
 ## 4 Afghanistan 2000     2666
 ## 5 Brazil      2000    80488
 ## 6 China       2000   213766</code></pre>
+</div>
+<div id="de-linhas-para-colunas" class="section level3">
+<h3>de linhas para colunas</h3>
 <ul>
 <li><code>spread()</code> - de maneira oposta a função anterior, aqui
 podemos expandir linhas em colunas:</li>
@@ -462,13 +615,14 @@ podemos expandir linhas em colunas:</li>
 ## 1 Afghanistan    745   2666
 ## 2 Brazil       37737  80488
 ## 3 China       212258 213766</code></pre>
-<ul>
-<li><strong>Dividir/combinar células</strong>
+</div>
+</div>
+<div id="combinando-colunas" class="section level2">
+<h2>combinando colunas</h2>
 <ul>
 <li><code>separate()</code> - divide uma única coluna em várias colunas,
 similarmente a opção <code>separate_rows()</code>, que faz a mesma coisa
 para linhas.</li>
-</ul></li>
 </ul>
 <pre class="r"><code>#base para exemplo
   table3
@@ -530,173 +684,7 @@ função que combina várias colunas.</li>
 ## 4 Brazil       2000 80488/174504898  
 ## 5 China        1999 212258/1272915272
 ## 6 China        2000 213766/1280428583</code></pre>
-<ul>
-<li><p><strong>Dados Faltantes</strong></p>
-<ul>
-<li><code>drop_na()</code> - excluí todas as linhas que apresentam
-elementos faltantes.</li>
-<li><code>fill()</code> - substituí os dados faltantes pelo valor mais
-recente da referida coluna.</li>
-<li><code>replace_na()</code> - substituí os dados faltantes por um
-valor pré especificado.</li>
-</ul></li>
-</ul>
-<pre class="r"><code>#base para exemplo
-  airquality[1:5,] 
-##   Ozone Solar.R Wind Temp Month Day
-## 1    41     190  7.4   67     5   1
-## 2    36     118  8.0   72     5   2
-## 3    12     149 12.6   74     5   3
-## 4    18     313 11.5   62     5   4
-## 5    NA      NA 14.3   56     5   5
-
-#exemplo: exclusão das linhas identificadas com NA
-  airquality[1:5,] %&gt;% drop_na() 
-##   Ozone Solar.R Wind Temp Month Day
-## 1    41     190  7.4   67     5   1
-## 2    36     118  8.0   72     5   2
-## 3    12     149 12.6   74     5   3
-## 4    18     313 11.5   62     5   4
-  airquality[1:5,] %&gt;% fill(c(Ozone, Solar.R)) 
-##   Ozone Solar.R Wind Temp Month Day
-## 1    41     190  7.4   67     5   1
-## 2    36     118  8.0   72     5   2
-## 3    12     149 12.6   74     5   3
-## 4    18     313 11.5   62     5   4
-## 5    18     313 14.3   56     5   5
-  airquality[1:5,] %&gt;% replace_na(list(Ozone=0, Solar.R=0)) 
-##   Ozone Solar.R Wind Temp Month Day
-## 1    41     190  7.4   67     5   1
-## 2    36     118  8.0   72     5   2
-## 3    12     149 12.6   74     5   3
-## 4    18     313 11.5   62     5   4
-## 5     0       0 14.3   56     5   5</code></pre>
 </div>
-<div id="manipulação" class="section level1">
-<h1>Manipulação</h1>
-<p>A próxima etapa no processo de análise é a manipulação da base
-visando desde o entendimento de suas variáveis, considerando tabulações
-e estatísticas, até a criação de novas variáveis. Para tal,
-trabalharemos com o pacote <code>dplyr</code>, com recursos para:</p>
-<ul>
-<li><strong>Manipulação de variáveis</strong>
-<ul>
-<li><code>select()</code> - seleciona variáveis, permitindo o uso de
-recursos como:
-<ul>
-<li><code>starts_with()</code>, <code>matches()</code>,
-<code>num_range()</code>, ou <code>everything()</code><br />
-</li>
-</ul></li>
-<li><code>mutate()</code> - cria/modifica variáveis</li>
-<li><code>rename()</code> - renomeia variáveis</li>
-</ul></li>
-</ul>
-<pre class="r"><code>#base exemplo
-  iris[1:5,] %&gt;% as_tibble()
-## # A tibble: 5 × 5
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
-## 1          5.1         3.5          1.4         0.2 setosa 
-## 2          4.9         3            1.4         0.2 setosa 
-## 3          4.7         3.2          1.3         0.2 setosa 
-## 4          4.6         3.1          1.5         0.2 setosa 
-## 5          5           3.6          1.4         0.2 setosa
-
-#exemplo: seleção, mudança de nome, e definição de uma nova variável 
-  iris[1:5,] %&gt;% 
-    as_tibble() %&gt;% 
-    select(Sepal.Length) %&gt;% 
-    rename(variavel_original = Sepal.Length) %&gt;% 
-    mutate(variavel_original_normalizada =  variavel_original %&gt;% scale)
-## # A tibble: 5 × 2
-##   variavel_original variavel_original_normalizada[,1]
-##               &lt;dbl&gt;                             &lt;dbl&gt;
-## 1               5.1                             1.16 
-## 2               4.9                             0.193
-## 3               4.7                            -0.772
-## 4               4.6                            -1.25 
-## 5               5                               0.675</code></pre>
-<ul>
-<li><strong>Sumarizações</strong>
-<ul>
-<li><code>group_by()</code> - manipula a base de dados segmentando por
-cada “grupo” da variável especificada e, posteriormente, combina os
-resultados, considerando os comandos seguintes dados.</li>
-<li><code>summarise()</code> - calcula resumos de uma tabela conforme
-especificação</li>
-</ul></li>
-</ul>
-<pre class="r"><code>#exemplo: calculo da quantidade de observações de cada categoria, e 
-# média para a variável Petal.Length considerando a visão por Species
-  iris %&gt;% 
-    group_by(Species) %&gt;% 
-    summarise(N = n(),
-              PetalLength_media = mean(Petal.Length))
-## # A tibble: 3 × 3
-##   Species        N PetalLength_media
-##   &lt;fct&gt;      &lt;int&gt;             &lt;dbl&gt;
-## 1 setosa        50              1.46
-## 2 versicolor    50              4.26
-## 3 virginica     50              5.55</code></pre>
-<ul>
-<li><strong>Manipulação de casos</strong>
-<ul>
-<li><code>filter()</code> - filtra linhas da base de dados a partir de
-critérios lógicos (retorno <code>TRUE</code>/<code>FALSE</code>)</li>
-<li><code>slice()</code> - seleciona linhas por suas posições
-ordinais</li>
-<li><code>top_n()</code> - ordena as primeiras <code>n</code>
-observações das colunas listadas</li>
-<li><code>arrange()</code> - ordena as linhas de acordo com as colunas
-especificadas</li>
-<li><code>distinct()</code> - remove as linhas duplicadas de uma dada
-entrada</li>
-</ul></li>
-</ul>
-<pre class="r"><code>#exemplo: seleção segundo padrão de nomenclatura + filtro e ordenação
-  iris %&gt;% 
-    select(starts_with(&quot;Petal&quot;)) %&gt;%
-    filter(Petal.Length &gt; 6, Petal.Width &gt; 2) %&gt;% 
-    arrange(Petal.Width)
-##   Petal.Length Petal.Width
-## 1          6.6         2.1
-## 2          6.7         2.2
-## 3          6.9         2.3
-## 4          6.1         2.3
-## 5          6.1         2.5
-
-#exemplo: valor máximo de Sepal.Length para cada specie
-  iris %&gt;% 
-    group_by(Species) %&gt;% 
-    top_n(1, Sepal.Length)
-## # A tibble: 3 × 5
-## # Groups:   Species [3]
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species   
-##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;     
-## 1          5.8         4            1.2         0.2 setosa    
-## 2          7           3.2          4.7         1.4 versicolor
-## 3          7.9         3.8          6.4         2   virginica</code></pre>
-<ul>
-<li><strong>Amostra</strong>
-<ul>
-<li><code>sample_n()</code> - seleciona uma amostra aleatória
-considerando o número de elementos especificado</li>
-<li><code>sample_frac()</code> - seleciona uma amostra aleatória
-considerando a proporção especificada</li>
-</ul></li>
-</ul>
-<pre class="r"><code>#exemplo: amostra considerando o número de observações desejado 
-# seguido de uma amostra considerando proporção
-  iris %&gt;% 
-    sample_n(10) %&gt;% 
-    sample_frac(0.5) 
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 1          6.3         2.7          4.9         1.8  virginica
-## 2          5.1         3.8          1.5         0.3     setosa
-## 3          6.3         2.5          5.0         1.9  virginica
-## 4          5.6         2.9          3.6         1.3 versicolor
-## 5          6.0         3.0          4.8         1.8  virginica</code></pre>
 </div>
 <div id="combinando-bases" class="section level1">
 <h1>Combinando Bases</h1>
@@ -737,6 +725,19 @@ considerando a proporção especificada</li>
 ## $ name  &lt;chr&gt; &quot;Mick&quot;, &quot;John&quot;, &quot;Paul&quot;
 ## $ band  &lt;chr&gt; &quot;Stones&quot;, &quot;Beatles&quot;, &quot;Beatles&quot;
 ## $ plays &lt;chr&gt; NA, &quot;guitar&quot;, &quot;bass&quot;</code></pre>
+</div>
+<div id="recursos-avançados" class="section level1">
+<h1>Recursos avançados</h1>
+<p>Até aqui o tidyverse apresenta o seu ponto forte em termos de
+legibilidade do código, aproximação com a maneira com que pensamos as
+ações que gostariamos de aplicar nos dados. Mas são nos recursos
+avançados que vemos ganhos consideráveis em termos de produtividade.</p>
+<ul>
+<li>across, relocate #adicionar exemplos de formas de definir funções #
+avengers %&gt;% summarise(across(contains(“Death”), ~ sum(is.na(.x))))
+%&gt;% glimpse # avengers %&gt;% summarise(across(contains(“Death”),
+function(x) sum(is.na(x)))) %&gt;% glimpse</li>
+</ul>
 </div>
 <div id="hands-on" class="section level1">
 <h1>HANDS-ON</h1>
