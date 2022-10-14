@@ -428,13 +428,14 @@ contexto de análise de dados, o que pode ser particularmente confuso
 para quem está iniciando na área. E não se preocupe, a área possui uma
 natureza multidiciplinar, tais variações são naturais. Neste curso, em
 que vamos trabalhar basicamente com dados tabulares, iremos nos referir
-às linhas das bases como observações, unidades observacionais, e as
-colunas como variáveis, às vezes como tributos ou ainda features (este
-último sendo mais usual no contexto de modelagem, que veremos mais à
-frente). Por fim, para fazer referência à intersecção entre variáveis e
-observações, utilizaremos o termo “elementos da tabela”.</p>
-<p>Para examinarmos as quantidades de linhas e colunas da base, podemos
-trabalhar com funções como:</p>
+às linhas das bases como observações ou unidades observacionais, e as
+colunas como: Variáveis, Características, Atributos ou ainda Features
+(este último sendo mais usual no contexto de modelagem, que veremos mais
+à frente). Por fim, para fazer referência à intersecção entre variáveis
+e observações, utilizaremos o termo “elementos da tabela” ou “célula da
+tabela”.</p>
+<p>Para examinarmos as quantidades de observações e variáveis da base de
+dados, podemos trabalhar com funções como:</p>
 <pre class="r"><code>#linhas
 pixar_filmes %&gt;% nrow()
 ## [1] 27
@@ -446,7 +447,7 @@ pixar_filmes %&gt;% ncol()
 #ou ambas
 pixar_filmes %&gt;% dim()
 ## [1] 27  5</code></pre>
-<p>Para o caso de desejarmos checar o nome das variáveis da tabela:</p>
+<p>Para o caso de desejarmos checar o nome dos atributos da tabela:</p>
 <pre class="r"><code>pixar_filmes %&gt;% names()
 ## [1] &quot;ordem_lancamento&quot;         &quot;filme&quot;                   
 ## [3] &quot;data_lancamento&quot;          &quot;duracao&quot;                 
@@ -499,23 +500,35 @@ termos o cálculo de média?</p>
 ## </code></pre>
 <p>Você pode se perguntar como o R identifica as classes das variáveis,
 e em geral é por meio de regras lógicas, por exemplo: se tivermos uma
-string em uma coluna, não tem como esta variável ser numérica, certo?
-Bem, quase. Pois se tivermos uma coluna com valores monetários, por
-exemplo, é razoável que o número seja precedido do simbolo de
-<code>R$</code>. O ponto é que esta string precisa ser devidamente
-mapeada para que a variável não seja internalizada de maneira
-errada.</p>
+string, uma letra, em uma coluna, não tem como esta variável ser
+numérica, certo? Bem, quase. Pois se tivermos uma coluna com valores
+monetários, por exemplo, é possível que o número esteja precedido pelo
+simbolo de <code>R$</code>. O ponto é que esta string precisa ser
+devidamente indicada para que o R entenda que se trata de um número, e
+não de uma palavra.</p>
+<pre class="r"><code>(exemplo &lt;- &quot;R$ 1.00&quot;)
+## [1] &quot;R$ 1.00&quot;
+class(exemplo)
+## [1] &quot;character&quot;
+exemplo %&gt;% as.numeric()
+## Warning in exemplo %&gt;% as.numeric(): NAs introduzidos por coerção
+## [1] NA</code></pre>
+<pre class="r"><code>(exemplo &lt;- exemplo %&gt;% stringr::str_replace(&quot;R\\$&quot;, &quot;&quot;) %&gt;% as.numeric() )
+## [1] 1
+class(exemplo)
+## [1] &quot;numeric&quot;</code></pre>
 </div>
 <div id="alterando-a-classe-de-uma-coluna" class="section level2">
 <h2>Alterando a classe de uma coluna</h2>
 <p>Se o mapeamento de uma variável não estiver correto, o computador irá
 interpretar os dados de maneira incoerente com a informação que a
-variável se propõe a representar. É importante que possamos ajustar tais
-interpretações, no caso, ajustando as classes. Como exemplo temos a
+variável se propõe a representar. Sendo importante ajustar tais
+interpretações que serão feitas pela máquina, no caso, fazemos isto por
+meio do ajuste das classes. Como exemplo temos a
 <code>ordem_lancamento</code>, em que faria sentido aplicar cálculos
-como mínimo, ou máximo, porém, por estar sendo interpretada como uma
-variável da classe <code>character</code>, não nos permite tais
-estatísticas:</p>
+como mínimo, ou máximo, mas que não conseguimos por esta característica
+estar sendo indevidamente interpretada como uma variável da classe
+<code>character</code>:</p>
 <pre class="r"><code>dados::pixar_filmes %&gt;% 
   select(ordem_lancamento) %&gt;% 
   summary()
@@ -523,7 +536,8 @@ estatísticas:</p>
 ##  Length:27         
 ##  Class :character  
 ##  Mode  :character</code></pre>
-<p>Agora, alterando esta coluna para o tipo numérico:</p>
+<p>Agora, alterando a classe da coluna para o tipo numérico, passamos a
+ter:</p>
 <pre class="r"><code>dados::pixar_filmes %&gt;% 
   select(ordem_lancamento) %&gt;% 
   mutate(ordem_lancamento = as.numeric(ordem_lancamento)) %&gt;% 
@@ -618,7 +632,12 @@ para uma análise de dados:</p>
 ## 10 Up - Altas Aventu… Orientação pare… A+                    96               98
 ## # … with 17 more rows, and 2 more variables: data_lancamento &lt;date&gt;,
 ## #   classificacao_livre &lt;lgl&gt;</code></pre>
-<p>Para consultar a classe de uma coluna especifica:</p>
+<p>Ao utilizar a função <code>class()</code> teremos a informação de
+qual a estrutura do dado, no caso:</p>
+<pre class="r"><code>class(dados_pixar) 
+## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<p>Já ao consultar uma coluna em especifico, teremos a sua classe no
+sentido que foi discutido até aqui:</p>
 <pre class="r"><code>class(dados_pixar$data_lancamento) 
 ## [1] &quot;Date&quot;
 
@@ -644,11 +663,70 @@ que diferentes classes sejam guardadas em um único objeto.
 Adicionalmente possuem uma propriedade recursiva, isto é, uma lista pode
 conter outras listas, de diferentes tamanhos.</p></li>
 </ul>
+<p>Adicionalmente a estas, temos as matrizes e arrays, que possuem a
+mesma natureza atômica que os vetores, porém com mais dimensões.</p>
 <p>Apesar de estarmos trabalhando majoritariamente com os
 <code>data.frame</code> (no contexto do tidyverse, temos o
-<code>tibble</code> como o equivalente), ter alguma visibilidade sobre
-as outras estruturas, te ajudará a evoluir na linguagem de maneira mais
-consistente.</p>
+<code>tibble</code> como uma versão melhorada do data.frame), uma
+estrutura de duas dimensões, em que as linhas são necessariamente de uma
+mesma classe. Ter alguma visibilidade sobre as outras estruturas, te
+ajudará a evoluir na linguagem de maneira mais consistente.</p>
+<p>Para saber a classe de um objeto, basta utilizar a função
+<code>class()</code> salvo quando a estrutura do dado for um vetor,
+neste caso, teremos a informação da classe de fato, ou seja, se a
+informação guardada por aquele vetor se trata de um número, uma string,
+ou uma data, por exemplo.</p>
+<pre class="r"><code>ex_estrutura = data.frame(a = c(1L, 2L, 3L), b = c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;))
+class(ex_estrutura)
+## [1] &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>ex_vetor = c(1L, 2L, 3L)
+class(ex_vetor)
+## [1] &quot;integer&quot;</code></pre>
+<div id="vetores-e-a-hierarquia-de-coerção" class="section level2">
+<h2>vetores e a hierarquia de coerção</h2>
+<p>Sabe a propriedade de que o vetor precisa ter a mesma classe? Pois
+bem, isto é levadoa a sério pelo vetor, de modo que se você misturar
+classes em um único vetor, o R irá transformar tudo em uma classe só.
+Para esta coerção, são consideradas não as classes em si, mas sim a
+maneira como tais informações são armazenadas internamente pelo R, algo
+um pouco mais low code. Abaixo consta a a hierarquia de coerção:</p>
+<ul>
+<li><code>character</code> &gt; <code>complex</code> &gt;
+<code>double</code> &gt; <code>integer</code> &gt; <code>logical</code>
+&gt; <code>raw</code></li>
+</ul>
+<p>Mas de maneira mais prática: se você tiver um vetor numérico, e
+adicionar uma string neste, o vetor passará a ser da classe
+character:</p>
+<pre class="r"><code>(ex1 = c(1, 2, 3))
+## [1] 1 2 3
+class(ex1)
+## [1] &quot;numeric&quot;
+
+(ex1 = c(ex1, &quot;0&quot;))
+## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;0&quot;
+class(ex1)
+## [1] &quot;character&quot;</code></pre>
+<p>Similarmente se estiver trabalhando com informações lógicas, estas
+podem ser transformadas em números, no caso TRUE = 1 e o FALSE = 0.</p>
+<pre class="r"><code>(ex2 = c(TRUE, FALSE, TRUE))
+## [1]  TRUE FALSE  TRUE
+class(ex2)
+## [1] &quot;logical&quot;
+
+(ex2 = c(ex2, 0))
+## [1] 1 0 1 0
+class(ex2)
+## [1] &quot;numeric&quot;</code></pre>
+<p>Temos ainda que algumas funções aplicam estas coerções de maneira
+independente:</p>
+<pre class="r"><code>sum(c(TRUE, FALSE, TRUE))
+## [1] 2</code></pre>
+<p>Note que a característica de coerção faz sentido no contexto de
+análise de dados, mas que também pode te dar muita dor de cabeça, pois
+basta que uma célula da tabela tenha sido digitada errada para que toda
+a coluna seja desconfigurada.</p>
+</div>
 </div>
 <div id="hands-on" class="section level1">
 <h1>HANDS-ON</h1>

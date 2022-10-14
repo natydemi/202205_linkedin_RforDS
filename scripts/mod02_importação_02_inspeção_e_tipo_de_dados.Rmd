@@ -31,9 +31,9 @@ pixar_filmes %>% head()
 
 ## Linhas, colunas e suas nomenclaturas
 
-Antes de seguirmos gostaria de alertar que é relativamente comum encontrar diferentes nomenclaturas para as mesmas "entidades" no contexto de análise de dados, o que pode ser particularmente confuso para quem está iniciando na área. E não se preocupe, a área possui uma natureza multidiciplinar, tais variações são naturais. Neste curso, em que vamos trabalhar basicamente com dados tabulares, iremos nos referir às linhas das bases como observações, unidades observacionais, e as colunas como variáveis, às vezes como tributos ou ainda features (este último sendo mais usual no contexto de modelagem, que veremos mais à frente). Por fim, para fazer referência à intersecção entre variáveis e observações, utilizaremos o termo "elementos da tabela".
+Antes de seguirmos gostaria de alertar que é relativamente comum encontrar diferentes nomenclaturas para as mesmas "entidades" no contexto de análise de dados, o que pode ser particularmente confuso para quem está iniciando na área. E não se preocupe, a área possui uma natureza multidiciplinar, tais variações são naturais. Neste curso, em que vamos trabalhar basicamente com dados tabulares, iremos nos referir às linhas das bases como observações ou unidades observacionais, e as colunas como: Variáveis, Características, Atributos ou ainda Features (este último sendo mais usual no contexto de modelagem, que veremos mais à frente). Por fim, para fazer referência à intersecção entre variáveis e observações, utilizaremos o termo "elementos da tabela" ou "célula da tabela".
 
-Para examinarmos as quantidades de linhas e colunas da base, podemos trabalhar com funções como:
+Para examinarmos as quantidades de observações e variáveis da base de dados, podemos trabalhar com funções como:
 
 ```{r}
 #linhas
@@ -47,7 +47,7 @@ pixar_filmes %>% dim()
 
 ```
 
-Para o caso de desejarmos checar o nome das variáveis da tabela:
+Para o caso de desejarmos checar o nome dos atributos da tabela:
 
 ```{r}
 pixar_filmes %>% names()
@@ -68,12 +68,24 @@ A partir do resultado da função `glimpse()` temos nosso primeiro contato com u
 pixar_filmes %>% summary()
 ```
 
-Você pode se perguntar como o R identifica as classes das variáveis, e em geral é por meio de regras lógicas, por exemplo: se tivermos uma string em uma coluna, não tem como esta variável ser numérica, certo? Bem, quase. Pois se tivermos uma coluna com valores monetários, por exemplo, é razoável que o número seja precedido do simbolo de `R$`. O ponto é que esta string precisa ser devidamente mapeada para que a variável não seja internalizada de maneira errada. 
+Você pode se perguntar como o R identifica as classes das variáveis, e em geral é por meio de regras lógicas, por exemplo: se tivermos uma string, uma letra, em uma coluna, não tem como esta variável ser numérica, certo? Bem, quase. Pois se tivermos uma coluna com valores monetários, por exemplo, é possível que o número esteja precedido pelo simbolo de `R$`. O ponto é que esta string precisa ser devidamente indicada para que o R entenda que se trata de um número, e não de uma palavra. 
+
+```{r}
+(exemplo <- "R$ 1.00")
+class(exemplo)
+exemplo %>% as.numeric()
+```
+
+
+```{r}
+(exemplo <- exemplo %>% stringr::str_replace("R\\$", "") %>% as.numeric() )
+class(exemplo)
+```
 
 
 ## Alterando a classe de uma coluna
 
-Se o mapeamento de uma variável não estiver correto, o computador irá interpretar os dados de maneira incoerente com a informação que a variável se propõe a representar. É importante que possamos ajustar tais interpretações, no caso, ajustando as classes. Como exemplo temos a `ordem_lancamento`, em que faria sentido aplicar cálculos como mínimo, ou máximo, porém, por estar sendo interpretada como uma variável da classe `character`, não nos permite tais estatísticas:
+Se o mapeamento de uma variável não estiver correto, o computador irá interpretar os dados de maneira incoerente com a informação que a variável se propõe a representar. Sendo importante ajustar tais interpretações que serão feitas pela máquina, no caso, fazemos isto por meio do ajuste das classes. Como exemplo temos a `ordem_lancamento`, em que faria sentido aplicar cálculos como mínimo, ou máximo, mas que não conseguimos por esta característica estar sendo indevidamente interpretada como uma variável da classe `character`:
 
 ```{r}
 dados::pixar_filmes %>% 
@@ -81,7 +93,7 @@ dados::pixar_filmes %>%
   summary()
 ```
 
-Agora, alterando esta coluna para o tipo numérico:
+Agora, alterando a classe da coluna para o tipo numérico, passamos a ter:
 
 ```{r}
 dados::pixar_filmes %>% 
@@ -135,13 +147,21 @@ Para apresentar as principais classes do R, iremos construir uma base de dados, 
   glimpse())
 ```
 
-Para consultar a classe de uma coluna especifica:
+Ao utilizar a função `class()` teremos a informação de qual a estrutura do dado, no caso:
+
+```{r}
+class(dados_pixar) 
+```
+
+Já ao consultar uma coluna em especifico, teremos a sua classe no sentido que foi discutido até aqui:
 ```{r}
 class(dados_pixar$data_lancamento) 
 
 #ou, alternativamente:
 dados_pixar %>% pull(data_lancamento) %>% class()
 ```
+
+
 
 # Estruturas de Dados no R
 
@@ -153,7 +173,57 @@ No R, chamamos de `Estruturas de Dados` a maneira como as informações são org
 
 - Listas: a estrutura mais genérica que temos no R, pois permite que diferentes classes sejam guardadas em um único objeto. Adicionalmente possuem uma propriedade recursiva, isto é, uma lista pode conter outras listas, de diferentes tamanhos.
 
-Apesar de estarmos trabalhando majoritariamente com os `data.frame` (no contexto do tidyverse, temos o `tibble` como o equivalente), ter alguma visibilidade sobre as outras estruturas, te ajudará a evoluir na linguagem de maneira mais consistente.
+Adicionalmente a estas, temos as matrizes e arrays, que possuem a mesma natureza atômica que os vetores, porém com mais dimensões. 
+
+Apesar de estarmos trabalhando majoritariamente com os `data.frame` (no contexto do tidyverse, temos o `tibble` como uma versão melhorada do data.frame), uma estrutura de duas dimensões, em que as linhas são necessariamente de uma mesma classe. Ter alguma visibilidade sobre as outras estruturas, te ajudará a evoluir na linguagem de maneira mais consistente.
+
+
+Para saber a classe de um objeto, basta utilizar a função `class()` salvo quando a estrutura do dado for um vetor, neste caso, teremos a informação da classe de fato, ou seja, se a informação guardada por aquele vetor se trata de um número, uma string, ou uma data, por exemplo.
+
+```{r}
+ex_estrutura = data.frame(a = c(1L, 2L, 3L), b = c("1", "2", "3"))
+class(ex_estrutura)
+```
+```{r}
+ex_vetor = c(1L, 2L, 3L)
+class(ex_vetor)
+```
+
+
+
+## vetores e a hierarquia de coerção 
+
+Sabe a propriedade de que o vetor precisa ter a mesma classe? Pois bem, isto é levadoa a sério pelo vetor, de modo que se você misturar classes em um único vetor, o R irá transformar tudo em uma classe só. Para esta coerção, são consideradas não as classes em si, mas sim a maneira como tais informações são armazenadas internamente pelo R, algo um pouco mais low code. Abaixo consta a a hierarquia de coerção: 
+
+- `character` > `complex` > `double` > `integer` > `logical` > `raw`
+
+Mas de maneira mais prática: se você tiver um vetor numérico, e adicionar uma string neste, o vetor passará a ser da classe character:
+
+```{r}
+(ex1 = c(1, 2, 3))
+class(ex1)
+
+(ex1 = c(ex1, "0"))
+class(ex1)
+```
+
+Similarmente se estiver trabalhando com informações lógicas, estas podem ser transformadas em números, no caso TRUE = 1 e o FALSE = 0.
+
+```{r}
+(ex2 = c(TRUE, FALSE, TRUE))
+class(ex2)
+
+(ex2 = c(ex2, 0))
+class(ex2)
+```
+
+Temos ainda que algumas funções aplicam estas coerções de maneira independente:
+
+```{r}
+sum(c(TRUE, FALSE, TRUE))
+```
+
+Note que a característica de coerção faz sentido no contexto de análise de dados, mas que também pode te dar muita dor de cabeça, pois basta que uma célula da tabela tenha sido digitada errada para que toda a coluna seja desconfigurada.
 
 
 
