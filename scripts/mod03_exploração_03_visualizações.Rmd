@@ -15,53 +15,153 @@ library(tidyverse)
 ```
 
 
-“Visualization gives you answers to questions you didn’t know you had“
 
- Ben Shneiderman
+# ggplot2
 
+A etapa de visualização possui um papel importantíssimo no contexto de análise de dados, Ben Shneiderman, um importante nome da ciência da computação: "Visualização nos dá resposta para perguntas que nós não sabiamos que tinhamos". 
 
-
-# Visualização
-A etapa de visualização possui um papel importantíssimo no contexto de análise de dados, uma vez que, quando devidamente utilizada, nos permite o entendimento dos dados e suas particularidades. Apesar da visualização também contemplar  um conjunto de medidas organizadas em tabelas, vamos focar este capítulo na opção gráfica, visto já termos apresentado o pacote `dplyr`, e funções de sumarização como o `summarise()` - um pacote particularmente útil para visualizações descritivas é o `skimr`.
-
-Conforme apresentado no capítulo de [Análises Descritivas](#AnalisesDescritivas), o RBase oferece uma série de opções gráficas. Contudo, é quando começamos a trabalhar com as bibliotecas de visualização do R, que o recurso gráfico é realmente potencializado. Para tal, temos o pacote `ggplot2` como uma das opções atualmente mais utilizadas e difundidas. Nesta, trabalhamos com a filosofia chamada *Grammar of Graphics*, em que o mapeamento dos dados é feito a partir de objetos geométricos e atributos estéticos, ambos trabalhados em uma lógica de camadas, similarmente ao encadeamento do `Pipe` - porém utilizando o operador `+` no lugar do `%>%`. Assim temos a estrutura:
+E no R, apesar de existirem muitos recursos default para a visualização de dados, como as funções: `plot()`, `hist()` e `boxplot()`, é quando começamos a trabalhar com as bibliotecas de visualização do R, que o recurso gráfico é realmente potencializado. E sem dúvida o principal pacote para visualização no R, é o `ggplot2`. Neste, trabalhamos com a lógica do *Grammar of Graphics*, uma abstração lógica em que o gráfico é visto como um mapeamento feito por camadas, são elas:
 
 ```{r, eval=F}
-  ggplot(dados) +
-    função_geometrica(mapeamentos) +
-    funções_estéticas
+  dados %>% 
+    ggplot(aesthetic) +
+      geometries(statistics) +
+      facets() +
+      coord()
+      themes()
 ```
 
-em que: na primeira linha inicializamos o objeto gráfico; na segunda especificamos a representação geométrica escolhida (tipo de gráfico, como dispersão, boxplot ou mapa p.e.), quais informações serão utilizadas (eixos x e y p.e.) e possíveis especificações relacionados a representação escolhida e, por fim, funções estéticas permitindo o ajuste de: divisão de gráficos (faceting), rótulos, escalas, legendas, sistemas de coordenadas, temas de fundo, etc.
+Contudo apenas três destas são obrigatórias: dados,  atributos estéticos (aesthetic), e objetos geométricos (geometries: pontos, barras, linhas, etc). Vamos começar por eles.
 
-Como um primeiro exemplo, vamos refazer o histograma da variável `qsec`, da base `mtcars`, feita [anteriormente](#AnalisesDescritivas):
 
-```{r, out.width = '100%', fig.align = "center", message=F}
-  ggplot(mtcars) +
-   geom_histogram(aes(qsec))
+## camadas obrigatórias
+
+Para as camadas obrigatórias, temos um layout similar a este:
+
+```{r, eval=F}
+  dados %>% 
+    ggplot(aesthetic) +
+      geometries() 
 ```
 
-E agora, reestruturando a primeira linha segundo a lógica pipe, diminuindo o intervalo de quebra do histograma (que tem 30 por default), e alguns parâmetros estéticos:
 
-```{r, out.width = '100%', fig.align = "center", message=F, warning=F}
-  mtcars %>% 
-   ggplot() +
-     geom_histogram(aes(qsec), bins = 20) + 
-     labs(title = "exemplo gráfico") +
-     scale_x_continuous(limits = c(15,20)) +
-     theme_minimal() 
-```
 
-Visando ilustrar outras funcionalidades do `ggplot2`, segue um exemplo em que a visualização é dada em termos da variável `mpg` por `disp`, segmentando por `vs` e modelando segundo para um dos níveis de `cyl` - note que ambas as variáveis de segmentaçao são originalmente numéricas e, portanto, precisam ser redefinidas como fatores, visando permitir a leitura:
+E para entender melhor do que se tratam, vamos adicioná-los um a um. Vamos utilizar aqui a base `fivethirtyeight::drinks`, e no que ao aplicar o ggplot apenas, temos um painel em branco, com isto podemos entender que esta função tem como papel inicializar o gráfico:
 
 ```{r}
-#exemplo: gráfico ggplot
-  mtcars %>% 
-    ggplot(aes(x = mpg, y = disp, color = as.factor(cyl))) + 
-    geom_point() + 
-    facet_grid(~as.factor(vs)) +
-    stat_smooth(method = 'lm')
+fivethirtyeight::drinks %>% head()
 ```
+
+
+```{r}
+fivethirtyeight::drinks %>% 
+  ggplot() 
+```
+Passamos agora para o elemento `aesthetic`, no R esta função é representada de maneira abreviada, `aes()`. E por ser uma função, podemos pesquisar sobre, e então teremos que este "mapeamento estético" descreve como as variáveis dos dados serão mapeadas para propriedades visuais (estéticas) de geometrias. Não ajudou muito né? Mas traduzindo, o que estamos dizendo é que no `aes()` você indicará qual variável será mapeada no gráfico. Um mapeamente usual trata do eixo x e eixo y:
+
+
+```{r}
+fivethirtyeight::drinks %>% 
+  ggplot(aes(x = beer_servings, y = wine_servings)) 
+```
+
+Note que agora o gráfico passou a apresentar as variáveis nos eixos, mas nada além disto, por quê? Pois não indicamos como gostariamos que este gráfico apresentasse estes eixos. E para isto temos o nosso terceiro elemento obrigatório, as geometrias:
+
+
+```{r}
+fivethirtyeight::drinks %>% 
+  ggplot(aes(x = beer_servings, y = wine_servings)) +
+  geom_point()
+```
+E poderíamos trabalhar com outra geometria. Qualquer uma? Não. Precisaria ser uma geometria que trabalhasse com dois eixos, sendo ambos numéricos, dado as variáveis escolhidas:
+
+```{r}
+fivethirtyeight::drinks %>% 
+  ggplot(aes(x = beer_servings, y = wine_servings)) +
+    #geom_point()
+    #geom_area() +
+    #geom_bin_2d() +
+    #geom_jitter()
+    geom_rug()
+```
+
+Inclusive podemos usar mais de um layer, e fazendo ajustes nas geometrias de forma independente:
+
+```{r}
+fivethirtyeight::drinks %>% 
+  ggplot(aes(x = beer_servings, y = wine_servings)) +
+    geom_point(aes(color = total_litres_of_pure_alcohol)) +
+    #geom_area()
+    #geom_bin_2d() +
+    #geom_jitter()
+    geom_rug(alpha = 0.2)
+```
+
+Mas quem são esses? 
+
+```{r}
+fivethirtyeight::drinks %>% 
+  ggplot(aes(x = beer_servings, y = wine_servings, color = total_litres_of_pure_alcohol)) +
+    geom_point() +
+    geom_text(aes(label = country))
+```
+
+
+Ruim de ler? 
+
+
+```{r}
+fivethirtyeight::drinks %>% 
+  ggplot(aes(x = beer_servings, y = wine_servings, color = total_litres_of_pure_alcohol)) +
+    geom_point(alpha = 0.1) +
+    geom_text(data = . %>% filter( total_litres_of_pure_alcohol > 10), aes(label = country))
+```
+
+
+```{r}
+fivethirtyeight::drinks %>% 
+  ggplot(aes(x = beer_servings, y = wine_servings, color = total_litres_of_pure_alcohol)) +
+    geom_point(alpha = 0.1) +
+    ggrepel::geom_text_repel(data = . %>% filter( total_litres_of_pure_alcohol > 10), aes(label = country))
+```
+
+Aqui já estamos utilizando recursos avançados, mas o meu ponto era justo mostrar o quanto a dificuldade não é o código. Mas não se preocupe pois vamos passar por recursos suficientes para que você possa evoluir neste pacote ;)
+
+No mais vale comentar também que o ggplot trabalha com o encadeamento de funções, porém a dinâmica aqui é um pouco diferente do `%>%` e por isso trabalhamos com o operador `+`.
+
+
+
+## demais camadas 
+
+Retornando a totalidade da camadas, temos ainda os níveis em que podemos fazer: a divisão de gráficos (faceting), sistemas de coordenadas (coord), temas de fundo (themes), e sumarizações estatísticas (statistics).
+
+
+```{r, eval=F}
+  dados %>% 
+    ggplot(aesthetic) +
+      geometries(statistics) +
+      facets() +
+      coord()
+      themes()
+```
+
+
+E aqui vale dar uma checada na cheat sheet do ggplot, pois ela nos dá dicas valiosas sobre quais geometrias você pode ou não aplicar a depender do tipo da variável, além de sobre as demais camadas: 
+
+
+```{r , echo=FALSE, fig.align = "center", fig.cap="CheatSheet ggplot2 (folha 01)"}
+knitr::include_graphics('https://i.pinimg.com/originals/5d/f0/dd/5df0dd5a1c5751f039b8db8ad9267cb5.jpg')
+```
+
+
+
+# E como aprender tudo isso? 
+
+Treinando, e usando o pacote `esquisser()` ;) 
+
+
+# E como escolher: 
+
 
 
 Adicionalmente, segue um exemplo considerando a base `diamonds`, onde o interesse é entender a distribuição da variável `cut` em relação à `clarity`, ou ambas quanto a `count`:  
@@ -76,6 +176,10 @@ Adicionalmente, segue um exemplo considerando a base `diamonds`, onde o interess
   diamonds %>% 
     ggplot(aes(x = cut, fill = clarity)) + 
     geom_bar()
+```
+
+
+```{r}
 # visualização 2
   diamonds %>% 
     ggplot(aes(x = cut,  y = price)) + 
@@ -85,7 +189,9 @@ Adicionalmente, segue um exemplo considerando a base `diamonds`, onde o interess
   
 ```
 
-Por fim segue um exemplo de dados temporais em que, em conjunto com as funções do `tidyr` e `dplyr`, remodelamos a base de dados `economics` visando obter a visualização das variáveis `psavert` e `uempmed` desde `1990`:
+
+
+# Por fim segue um exemplo de dados temporais em que, em conjunto com as funções do `tidyr` e `dplyr`, remodelamos a base de dados `economics` visando obter a visualização das variáveis `psavert` e `uempmed` desde `1990`:
 
 ```{r}
 economics
@@ -100,6 +206,44 @@ economics %>%
   geom_line(aes(color = variable), size = 1) +
   scale_color_manual(values = c("#00AFBB", "#E7B800")) 
 ```
+
+
+
+# Tabelas
+
+Por tras de todo grande gráfico temos uma grande tabela:
+
+uma vez que, quando devidamente utilizada, nos permite um entendimento muito mais profundo entendimento dos dados e suas particularidades. Apesar da visualização também contemplar  um conjunto de medidas organizadas em tabelas, vamos focar este capítulo na opção gráfica, visto já termos apresentado o pacote `dplyr`, e funções de sumarização como o `summarise()` - um pacote particularmente útil para visualizações descritivas é o `skimr`.
+
+
+kableExtra
+Para mais detalhes, consulte o link: https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html
+
+```{r}
+starwars %>% 
+  janitor::tabyl(hair_color ) %>% 
+  kableExtra::kbl() %>%
+  kableExtra::kable_styling()
+```
+
+```{r}
+starwars %>% 
+  janitor::tabyl(hair_color) %>% 
+  dplyr::arrange(-n) %>% 
+  dplyr::mutate(percent = scales::percent(percent)) %>% 
+  dplyr::mutate(valid_percent = scales::percent(valid_percent)) 
+```
+
+
+
+# Hands-on
+
+
+No RStudio Learn Primers: https://rstudio.cloud/learn/primers, faça os exercícios propostos na aba Work with Data, priorizando a seção Derive Information with dplyr em https://rstudio.cloud/learn/primers/2.3
+
+https://rstudio.cloud/learn/primers/3 
+
+Visualize Data
 
 
 

@@ -378,6 +378,7 @@ pre code {
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<p>dplyrassisstent</p>
 </div>
 <div id="manuseando-colunas" class="section level1">
 <h1>Manuseando Colunas</h1>
@@ -446,12 +447,12 @@ entrada</li>
   iris %&gt;% 
     sample_n(10) %&gt;% 
     sample_frac(0.5) 
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 1          5.1         3.5          1.4         0.3     setosa
-## 2          5.6         2.7          4.2         1.3 versicolor
-## 3          6.7         3.0          5.0         1.7 versicolor
-## 4          6.3         2.8          5.1         1.5  virginica
-## 5          4.4         2.9          1.4         0.2     setosa</code></pre>
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+## 1          6.5         3.0          5.2         2.0 virginica
+## 2          7.7         2.8          6.7         2.0 virginica
+## 3          4.6         3.2          1.4         0.2    setosa
+## 4          6.2         2.8          4.8         1.8 virginica
+## 5          6.0         3.0          4.8         1.8 virginica</code></pre>
 </div>
 <div id="alterando-e-criando-novas-colunas" class="section level2">
 <h2>alterando e criando novas colunas</h2>
@@ -711,9 +712,6 @@ função que combina várias colunas.</li>
 
 #exemplo: em que as variáveis para join possuem nomes iguais
   left_join(band_members, band_instruments) %&gt;% glimpse()
-## Warning in gzfile(file, mode): não foi possível abrir o arquivo comprimido &#39;C:/
-## Users/natyd/AppData/Local/Temp/RtmpcP7j2f\file1d3c2fd5275c&#39;, motivo provável &#39;No
-## such file or directory&#39;
 ## Joining, by = &quot;name&quot;
 ## Rows: 3
 ## Columns: 3
@@ -732,6 +730,42 @@ função que combina várias colunas.</li>
 </div>
 <div id="recursos-avançados" class="section level1">
 <h1>Recursos avançados</h1>
+<p>O dplyr é o pacote mais útil para realizar transformação de dados,
+aliando simplicidade e eficiência de uma forma elegante. Os scripts em R
+que fazem uso inteligente dos verbos dplyr e as facilidades do operador
+pipe tendem a ficar mais legíveis e organizados sem perder velocidade de
+execução.</p>
+<p>As principais funções do dplyr são:</p>
+<p>select() - seleciona colunas mutate() - cria/modifica colunas
+rename() - renomeia variáveis group_by() - agrupa a base summarise() -
+sumariza a base filter() - filtra linhas arrange() - ordena a base</p>
+<p>Com a nova versão 1.0 do pacote dplyr, surgiu uma nova função
+across(), que nos ajuda a aplicar cálculos de forma simultânea a
+multiplas colunas.</p>
+<pre class="r"><code>starwars %&gt;% 
+    summarise(across(is.numeric, mean, na.rm = T))
+## Warning: Predicate functions must be wrapped in `where()`.
+## 
+##   # Bad
+##   data %&gt;% select(is.numeric)
+## 
+##   # Good
+##   data %&gt;% select(where(is.numeric))
+## 
+## ℹ Please update your code.
+## This message is displayed once per session.
+## # A tibble: 1 × 3
+##   height  mass birth_year
+##    &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+## 1   174.  97.3       87.6
+
+
+starwars %&gt;% 
+    summarise(across(contains(&quot;_color&quot;), n_distinct))
+## # A tibble: 1 × 3
+##   hair_color skin_color eye_color
+##        &lt;int&gt;      &lt;int&gt;     &lt;int&gt;
+## 1         13         31        15</code></pre>
 <p>Até aqui o tidyverse apresenta o seu ponto forte em termos de
 legibilidade do código, aproximação com a maneira com que pensamos as
 ações que gostariamos de aplicar nos dados. Mas são nos recursos

@@ -26,7 +26,7 @@ Limpeza, data cleaning
 
 ## selecionando colunas 
 
-Por nome ou por posição
+Podemos selecionar por nome ou por posição
 
 Ou ainda linhas, observações, que não se refiram ao nosso objetivo de estudo
 
@@ -164,18 +164,39 @@ Uma outra ação comum, diz respeito a necessidade de combinar diferentes bases 
 
 ### de colunas para linhas 
 
-  - `gather()` - reorganiza os dados, combinando as colunas especificadas na coluna parâmetro `key`, e seus valores na coluna parâmetro `value`. Com tal tipo de ajuste podemos organizar os dados de modo a consultar várias colunas de interesse de uma única vez, algo útil para a aplicação de loops, funções e gráficos, conforme veremos na seção `Visualização`.
+  - `pivot_longer()` - reorganiza os dados, combinando as colunas especificadas na coluna parâmetro `key`, e seus valores na coluna parâmetro `value`. Com tal tipo de ajuste podemos organizar os dados de modo a consultar várias colunas de interesse de uma única vez, algo útil para a aplicação de loops, funções e gráficos.
+
 
 ```{r}
 #base para exemplo
-  table4a
+data("billboard")
 
-#exemplo: passando as colunas para linhas
-  table4a_new <- table4a %>% 
-    gather(`1999`, `2000`, key = "ano", value = "valores") 
-  
-  table4a_new
+billboard %>% head()
 ```
+
+
+```{r}
+billboard_longer <- billboard %>% 
+  pivot_longer(cols = starts_with("wk"),
+               names_to = "week",
+               names_prefix = "wk",
+               values_to = "rank",
+               values_drop_na = TRUE)
+
+billboard_longer %>% head()
+```
+
+
+```{r}
+billboard_longer %>% 
+  group_by(track, artist) %>% 
+  summarise(n_week = n(), rank_mean = mean(rank)) %>% 
+  filter(n_week>30) %>% 
+  arrange(desc(n_week)) 
+```
+
+
+
 
 
 ### de linhas para colunas
