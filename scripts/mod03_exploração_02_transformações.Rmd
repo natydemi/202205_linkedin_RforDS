@@ -14,8 +14,8 @@ library(tidyverse)
 ```
 
 
-
-# Tidy 
+# Dados Tidy 
+Vamos agora retornar em um conceito importante para 
 Após a importação dos dados, passamos para a etapa de tidy dos dados, também chamada de *tidying data*. Para isto iremos primeiramente visualizar os dados. No R, existem várias funções *built-in* para isto, como a função `names()`, que retorna o nome das colunas, ou `str()`, que permite a visualização da estrutura de um objeto arbitrário.   
 
 Todas as funções citadas serão igualmente úteis e utilizadas no contexto do `tidyverse`, mas, com o pacote `dplyr`, passamos a ter também a opção `glimpse()`. Nesta, de modo similar ao `str()`, temos o número de observações (linhas) e variáveis (colunas) dos dados, porém com a quantidade de observações ajustadas ao display do Console.
@@ -242,5 +242,7 @@ A próxima etapa no processo de análise é a manipulação da base visando desd
 ```
 
 
+
+# HANDS-ON
 
 

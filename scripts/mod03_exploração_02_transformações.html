@@ -379,14 +379,15 @@ pre code {
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
-<div id="tidy" class="section level1">
-<h1>Tidy</h1>
-<p>Após a importação dos dados, passamos para a etapa de tidy dos dados,
-também chamada de <em>tidying data</em>. Para isto iremos primeiramente
-visualizar os dados, no R existem várias funções <em>built-in</em> para
-isto, como a função <code>names()</code>, que retorna o nome das
-colunas, ou <code>str()</code>, que permite a visualização da estrutura
-de um objeto arbitrário.</p>
+<div id="dados-tidy" class="section level1">
+<h1>Dados Tidy</h1>
+<p>Vamos agora retornar em um conceito importante para Após a importação
+dos dados, passamos para a etapa de tidy dos dados, também chamada de
+<em>tidying data</em>. Para isto iremos primeiramente visualizar os
+dados. No R, existem várias funções <em>built-in</em> para isto, como a
+função <code>names()</code>, que retorna o nome das colunas, ou
+<code>str()</code>, que permite a visualização da estrutura de um objeto
+arbitrário.</p>
 <p>Todas as funções citadas serão igualmente úteis e utilizadas no
 contexto do <code>tidyverse</code>, mas, com o pacote
 <code>dplyr</code>, passamos a ter também a opção
@@ -409,11 +410,11 @@ Console.</p>
 ## $ am   &lt;dbl&gt; 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,…
 ## $ gear &lt;dbl&gt; 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3,…
 ## $ carb &lt;dbl&gt; 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1, 2,…</code></pre>
-<p>A partir da visualização começamos a fazer os ajustes necessários
-para garantir que os dados estejam organizado de uma forma
+<p>A partir da visualização, começamos a fazer os ajustes necessários
+para garantir que os dados estejam organizados de uma forma
 <code>tidy</code>, tendo como principal ferramenta a biblioteca
-<code>tidyr</code>. Seguem as principais funções deste pacote utilizando
-bases disponíveis pela própria biblioteca:</p>
+<code>tidyr</code>. Seguem as principais funções deste pacote,
+utilizando bases disponíveis pela própria biblioteca:</p>
 <ul>
 <li><strong>Redimensionamento de dados</strong>
 <ul>
@@ -575,8 +576,8 @@ valor pré especificado.</li>
 <h1>Manipulação</h1>
 <p>A próxima etapa no processo de análise é a manipulação da base
 visando desde o entendimento de suas variáveis, considerando tabulações
-e estatísticas, até a criação de novas variáveis. Para tal trabalharemos
-com o pacote <code>dplyr</code>, com recursos para:</p>
+e estatísticas, até a criação de novas variáveis. Para tal,
+trabalharemos com o pacote <code>dplyr</code>, com recursos para:</p>
 <ul>
 <li><strong>Manipulação de variáveis</strong>
 <ul>
@@ -691,15 +692,15 @@ considerando a proporção especificada</li>
     sample_n(10) %&gt;% 
     sample_frac(0.5) 
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 1          5.8         2.7          5.1         1.9  virginica
-## 2          5.1         3.7          1.5         0.4     setosa
-## 3          5.8         2.8          5.1         2.4  virginica
-## 4          7.2         3.0          5.8         1.6  virginica
-## 5          6.8         2.8          4.8         1.4 versicolor</code></pre>
+## 1          6.6         2.9          4.6         1.3 versicolor
+## 2          6.1         2.9          4.7         1.4 versicolor
+## 3          6.3         2.3          4.4         1.3 versicolor
+## 4          5.7         4.4          1.5         0.4     setosa
+## 5          6.3         2.7          4.9         1.8  virginica</code></pre>
 </div>
 <div id="combinando-bases" class="section level1">
 <h1>Combinando Bases</h1>
-<pre><code>- `inner_join()` - retorna todas as linhas da base à esquerda que possuem valores correspondentes na base à direita. Se houver várias correspondências entre xe y, todas as combinações das correspondências serão retornadas.
+<pre><code>- `inner_join()` - retorna todas as linhas da base à esquerda que possuem valores correspondentes na base à direita. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
 - `left_join()` - retorna todas as linhas de x e todas as colunas de x e y. Linhas em x sem correspondência em y terão valores de NA nas novas colunas. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
 - `full_join()` - retorna todas as linhas e todas as colunas de xe y. Onde não há valores correspondentes, retorna NA para o ausente.</code></pre>
 <pre class="r"><code>#bases para exemplo
@@ -758,7 +759,7 @@ considerando a proporção especificada</li>
 ## $ denom   &lt;fct&gt; &quot;Southern baptist&quot;, &quot;Baptist-dk which&quot;, &quot;No denomination&quot;, &quot;No…
 ## $ tvhours &lt;int&gt; 12, NA, 2, 4, 1, NA, 3, NA, 0, 3, 2, NA, 1, NA, 1, 7, NA, 3, 3…
 
-#exemplo: contabilizando a quantidade de religiões declaradas 
+#exemplo: contabilizando a quantidade de raças declaradas 
   gss_cat$race %&gt;% 
   fct_count() 
 ## # A tibble: 4 × 2
@@ -812,6 +813,9 @@ considerando a proporção especificada</li>
 ## [1] ter
 ## Levels: dom &lt; seg &lt; ter &lt; qua &lt; qui &lt; sex &lt; sáb</code></pre>
 </div>
+</div>
+<div id="hands-on" class="section level1">
+<h1>HANDS-ON</h1>
 </div>
 
 
