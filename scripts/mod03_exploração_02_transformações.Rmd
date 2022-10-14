@@ -246,6 +246,27 @@ Uma outra ação comum, diz respeito a necessidade de combinar diferentes bases 
 
 # Recursos avançados
 
+O dplyr é o pacote mais útil para realizar transformação de dados, aliando simplicidade e eficiência de uma forma elegante. Os scripts em R que fazem uso inteligente dos verbos dplyr e as facilidades do operador pipe tendem a ficar mais legíveis e organizados sem perder velocidade de execução.
+
+As principais funções do dplyr são:
+
+select() - seleciona colunas mutate() - cria/modifica colunas rename() - renomeia variáveis group_by() - agrupa a base summarise() - sumariza a base filter() - filtra linhas arrange() - ordena a base
+
+Com a nova versão 1.0 do pacote dplyr, surgiu uma nova função across(), que nos ajuda a aplicar cálculos de forma simultânea a multiplas colunas.
+
+
+```{r}
+starwars %>% 
+    summarise(across(is.numeric, mean, na.rm = T))
+
+
+starwars %>% 
+    summarise(across(contains("_color"), n_distinct))
+```
+
+
+
+
 Até aqui o tidyverse apresenta o seu ponto forte em termos de legibilidade do código, aproximação com a maneira com que pensamos as ações que gostariamos de aplicar nos dados. Mas são nos recursos avançados que vemos ganhos consideráveis em termos de produtividade. 
 
 * across, relocate

@@ -33,6 +33,11 @@ Conformidade com o mundo real
 
 ## tratando dados faltantes (missing)
 
+Deletar
+• Imputar valores
+• Criação de uma nova categoria
+• Técnicas baseadas em modelos
+
 Pacote tidy possue algumas funções interessantes
 
   - `drop_na()` - excluí todas as linhas que apresentam elementos faltantes. 
@@ -69,24 +74,50 @@ previnir escalar diferentes
 
 # Feature Engineering
 
-## fatores
-
-
-    - `fct_count()` - conta o número de valores de cada nível
-    - `fct_relevel()` - reordenar os níveis dos fatores
-    - `fct_explicit_na()` - adicionar o `NA` como um dos níveis
-
-```{r}
-#base para exemplo
-  gss_cat %>% glimpse
-
-#exemplo: contabilizando a quantidade de raças declaradas 
-  gss_cat$race %>% 
-  fct_count() 
-```
-
 
 ## strings
+
+
+Pacotes úteis para feature engineer
+Vamos avaliar algumas bibliotecas importantes do tidyverse, que nos ajudam particularmente a fazer feature engineer:
+
+stringr::
+Variáveis de texto são muito comuns nos bancos de dados e, geralmente, dão bastante trabalho para serem manipuladas.
+
+Vantagens do stringr em relação às funções do R base:
+
+Sintaxe unificada, o que auxilia na memorização das funções e leitura do código.
+Todas as funções são vetorizadas.
+Construído sobre a biblioteca ICU, implementada em C e C++, uma garantia de resultados mais rápidos.
+Regras básicas do pacote:
+
+As funções de manipulação de texto começam com str_. Caso esqueça o nome de uma função, basta digitar stringr::str_ e apertar TAB para ver quais são as opções.
+
+O primeiro argumento da função é sempre uma string ou um vetor de strings.
+
+Principais funções:
+
+str_detect() - identificar a presença de padrões em uma string;
+
+str_count() - contabiliza o número de vezes que um padrão é encontrado;
+
+str_replace() - substitui um dado padrão em uma string;
+
+str_to_lower() - converter strings maiúsculas e minúsculas
+
+Exercício: Quantos `blue` existem na coluna skin_color?
+
+
+```{r}
+starwars %>% 
+    #mutate(index_blue = ifelse(skin_color == "blue", "linhas com", "linhas sem")) %>% 
+    mutate(index_blue = ifelse( str_detect(skin_color, "blue") ,
+                                "linhas com", "linhas sem")) %>% 
+    group_by(index_blue) %>% 
+    count
+```
+
+Exercício: criar uma coluna com as skin_color unicas
     - `str_detect()` - identificar a presença de padrões em uma string
     - `str_count()` - contabiliza o número de vezes que um padrão é encontrado
     - `str_replace()` - substitui um dado padrão em uma string 
@@ -105,7 +136,15 @@ previnir escalar diferentes
     
 ```
 
-## datas
+## datas (lubridate)
+
+lubridate::
+Trabalhar com datas no R era uma chateação. As funções do R base são, em grande parte, contraintuitivas e podem mudar de acordo com o tipo do objeto que você está usando (data, hora, data/hora).
+
+Datas no R são tratadas como um tipo especial de objeto, com classe date. Há várias formas de criar objetos dessa classe com o pacote {lubridate}:
+
+
+
     - `as_date()` - converter um objeto para uma data ou hora 
     - `wday()` - retorna o dia da semana como um número decimal 
     - `today()` - retorna a data corrente 
@@ -127,6 +166,105 @@ previnir escalar diferentes
 ```
 
 
+As funções date() e as_date() assumem que a ordem segue o padrão da língua inglesa: ano-mês-dia (ymd). A função dmy() resolve esse problema estabelecendo explicitamente a ordem dia-mês-ano. Existem funções para todas as ordens possíveis: dmy(), mdy(), myd(), ymd(), ydm() etc.
+
+Uma grande facilidade que essas funções trazem é poder criar objetos com classe date a partir de números e strings em diversos formatos.
+
+```{r}
+data_string <- "21-10-2015"
+class(data_string)
+## [1] "character"
+
+data_date <- date(data_string)
+class(data_date)
+## [1] "Date"
+data_date
+## [1] "0021-10-20"
+
+data_as_date <- as_date(data_string)
+## Warning: All formats failed to parse. No formats found.
+class(data_as_date)
+## [1] "Date"
+data_as_date
+## [1] NA
+
+data_mdy <- dmy(data_string)
+class(data_mdy)
+## [1] "Date"
+data_mdy
+## [1] "2015-10-21"
+```
+
+```{r}
+#lubridate::
+
+library(lubridate)
+
+dmy(21102015)
+## [1] "2015-10-21"
+dmy("21102015")
+## [1] "2015-10-21"
+dmy("21/10/2015")
+## [1] "2015-10-21"
+dmy("21.10.2015")
+## [1] "2015-10-21"
+
+temp1 <- ymd_hms("2010-08-03 00:50:50") ; temp1
+temp2 <- date(temp1) - today() ; temp2
+temp3 <- temp1 + months(3) + weeks(1) ; temp3
+
+rm(temp1, temp2, temp3)
+```
+
+
+## fatores
+forcats::
+Grande parte da frustração associada ao uso de fatores no R existe por conta da falta de algumas ferramentas úteis no pacote base.
+
+As principais funções do forcats servem para alterar a ordem e modificar os níveis de um fator.
+
+Principais funções:
+
+fct_count() - conta o número de valores de cada nível;
+fct_relevel() - reordenar os níveis dos fatores;
+fct_explicit_na() - adicionar o NA como um dos níveis
+
+    - `fct_count()` - conta o número de valores de cada nível
+    - `fct_relevel()` - reordenar os níveis dos fatores
+    - `fct_explicit_na()` - adicionar o `NA` como um dos níveis
+
+```{r}
+#base para exemplo
+  gss_cat %>% glimpse
+
+#exemplo: contabilizando a quantidade de raças declaradas 
+  gss_cat$race %>% 
+  fct_count() 
+```
+
+```{r}
+starwars %>% 
+  mutate(gender = fct_explicit_na(gender)) %>% 
+  group_by(gender) %>% 
+  count
+## # A tibble: 3 x 2
+## # Groups:   gender [3]
+##   gender        n
+##   <fct>     <int>
+## 1 feminine     17
+## 2 masculine    66
+## 3 (Missing)     4
+
+starwars %>% 
+    mutate(gender = fct_explicit_na(gender)) %>% 
+    mutate(gender = fct_relevel(gender)) %>% 
+    ggplot(aes(gender, height, color = gender)) + 
+    geom_boxplot()
+```
+
+# Referência
+
+- [Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/)
 
 # HANDS-ON
 

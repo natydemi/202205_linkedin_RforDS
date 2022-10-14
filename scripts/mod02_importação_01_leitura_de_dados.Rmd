@@ -183,19 +183,28 @@ Você só precisa passar o endereço completo, similar ao que foi feito aqui: `r
 
 # Trabalhe com Projetos! 
 
-Conforme apresentado anteriormente, para importar/exportar arquivos que não se encontram no diretório de trabalho, podemos especificar o path de origem do arquivo ("diretorio/arquivo.extensão"), ou mudar o diretório de trabalho em si (`setwd()`). Contudo existe ainda uma terceira alternativa (a melhor de todas!): trabalhar com a opção de projetos do RStudio (`.RProj`). Nesta, o diretório em que o arquivo .RProj estiver salvo, passa a ser a pasta raiz das análises. De modo que se você garantir que todos as pastas e arquivos que estão sendo utilizados estejam na mesma pasta (ou subpastas) do .Rproj, será possível reproduzir as suas análises em outros ambientes, sem que seja necessário corrigir nenhum dos paths. 
-
-Para ilustrar um pouco melhor, sem trabalhar com projetos, se você me enviar uma pasta com a sua análise, e a primeira linha de um dos scripts for algo como `setwd("C:/Users/seu_nome/Desktop")`, para que eu consiga rodar na minha máquina, vou precisar alterar o código para algo como `setwd("C:/Users/meu_nome/Desktop")`. Enquanto que ao trabalhar com projetos, os códigos já teriam como referência o local em que eu tiver salvo a pasta recebida. 
-
-Então seja para que outras pessoas consigam executar o seu código, seja para que você mesmo (a) possa trocar de ambiente sem se preocupar de atualizar os path para toda e qualquer especificação de arquivos, scripts, e etc, basta enviar a pasta dos arquivos necessários, o `.Rproj` na raiz, e os paths construidos de maneira relativa que voilà, todos os seus códigos estarão reprodutíveis! E aqui vale comentar que replicabilidade é um dos princípios básicos do método científico, e se estamos falando de **ciência** de dados, nada mais justo, certo? ;)
+Conforme já comentado, para importar/exportar arquivos que não se encontram no seu diretório de trabalho atual, é possível especificar o endereço (`path`) de origem do arquivo (algo como "diretorio/arquivo.extensão"), ou mudar o diretório de trabalho em si (`setwd()`). Contudo nenhuma destas são práticas recomendadas, visto tornar o seu trabalho não reprodutível por outras pessoas, ou mesmo por você em outros ambientes. Como a melhhor alternativa podemos trabalhar com a opção de projetos do RStudio (`.RProj`). Nesta, o diretório em que o arquivo .RProj estiver salvo, passa a ser a pasta raiz das análises, como se fosse um `setwd()` automático. De modo que se você garantir que todos as pastas e arquivos que estão sendo utilizados estejam na mesma pasta, ou nas subpastas, do .Rproj, será possível reproduzir as suas análises em outros contextos, sem que seja necessário corrigir nenhum dos paths. Legal né? 
 
 
-E como criar esse tal `.Rproj`, é simples: basta apenas clicar no ícone superior à direita. 
+> Para ilustrar um pouco melhor, sem trabalhar com projetos, se você me enviar uma pasta com a sua análise, e a primeira linha de um dos scripts for algo como `setwd("C:/Users/seu_nome/Desktop")`, para que eu consiga rodar na minha máquina, vou precisar alterar o código para algo como `setwd("C:/Users/meu_nome/Desktop")`. Enquanto que ao trabalhar com projetos, os códigos já teriam como referência o local em que eu tiver salvo a pasta recebida. 
+
+Então seja para que outras pessoas consigam executar o seu código, seja para que você mesmo (a) possa trocar de ambiente sem se preocupar de atualizar todos os endereços de especificação de arquivos, scripts, e etc, basta enviar a pasta dos arquivos necessários, o `.Rproj` na raiz, e os paths construidos de maneira relativa e voilà, todos os seus códigos estarão reprodutíveis! E aqui vale comentar que replicabilidade é um dos princípios básicos do método científico, e se estamos falando de **ciência** de dados, nada mais justo, certo? ;)
+
+
+E como criar esse tal `.Rproj`, é simples: b
+
+1. Clique no ícone azul que consta no canto superior direito do RStudio
+2. Clique em “Novo Diretório”. Digite um nome para esta nova pasta (ou “diretório”), por exemplo, “Meu projeto R”, e escolha um local conveniente para ela. Este será seu diretório de trabalho
+3. Clique no botão “Criar Projeto"
+
+Vamos testar? Saia do RStudio, e navegue até o diretório onde você criou um projeto no Task 01. Clique duas vezes no arquivo `.Rproj` deste diretório, e pronto! Se você quiser fechar ou trocar de projeto, você pode fazer a alteração no canto superior direito da tela :)
+
+
 
 
 ## Estrutura de pastas e organização de arquivos
 
-Tal prática, bem como a adoção de estruturas para a organização dos arquivos, facilitam a evolução e o compartilhamento do trabalho.
+Para que os seus projetos sejam ainda mais efetivos, é interessante que você adote algumas boas práticas para estruturação de pastas para a organização dos arquivos, o que irá facilitar a evolução e o compartilhamento do seu trabalho.
 
 
 ## caminho relativo
@@ -209,10 +218,8 @@ Um ponto importante de comentar é que ao trabalhar com arquivos .Rmd, mesmo tra
 
 
 
-
-
 # HANDS-ON
 
 Que tal conhecer um pouco mais sobre as opções de funções do pacote `readr`? Uma forma bacana de fazer isso é por meio do help com duas interrogações: `??readr::read_` e `??readr::write_`.
 
-Ou ainda, explorar o pacote `usethis`, particularmente a função `usethis::create_project()`, que cria um projeto e toda uma estrutura de pastas. 
+Crie um projeto com o nome do nosso curso, e salve todos os scripts por lá. Se quiser testar algo mais prático, recomendo qie explore o pacote `usethis`, particularmente a função `usethis::create_project()`, que cria um projeto junto com toda a estrutura de pastas para você organizar os seus arquivos.
