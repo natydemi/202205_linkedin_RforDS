@@ -1,5 +1,5 @@
 ---
-title: "Dataprep"
+title: "Considerações Finais "
 output: html_document
 ---
 
@@ -7,12 +7,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Considerações Finais 
+
 
 
 # Programação Funcional
 
-```{r}
+```{r, warning=FALSE}
 library(tidyverse)
 ```
 
@@ -91,4 +91,4 @@ Seguir #rstats nas redes sociais, ou participar de grupos como: R-Ladies, R-Bras
 A grande dica é: saiba que existe um mundo de coisa para aprender, e que por um lado é ótimo acompanhar páginas e pessoas de referencia na áreas, para seguir ampliando o seu horizonte de possibilidades, mas aplicar os conhecimentos, fazer pesquisas sobre novas maneiras de resolver algum desafio, aumente a sua produtividade!  
  
  
-# Até a próxima
+# Até a próxima!

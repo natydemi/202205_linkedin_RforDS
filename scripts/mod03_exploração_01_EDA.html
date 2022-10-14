@@ -386,14 +386,14 @@ Exploratória de Dados)</h1>
 Exploratória de Dados, é o processo de explorar os dados, o que
 tipicamente inclui desde examinar a estrutura do dataset, algo que
 iniciamos no módulo anterior, até o entendimento mais profundo sobre o
-comportamento de uma variável, ou padrões entre variáveis. A EDA nos
-permite:</p>
+comportamento das variáveis. A EDA nos permite:</p>
 <ul>
-<li>Identificar se há algum problema com o seu conjunto de dados.</li>
+<li>Observar padrões não necessariamente conhecidos a priori</li>
+<li>Identificar se há algum problema com o seu conjunto de dados</li>
 <li>Determinar se a pergunta que você está fazendo pode ser respondida
 pelos dados que você possui</li>
 <li>Desenvolver uma esboço da resposta à sua pergunta, por vezes
-respondê-la de fato</li>
+respondê-la</li>
 </ul>
 <p>Aqui, é possível, tanto ir em uma linha de exploração mais
 descritiva, por meio de volumetrias, estatísticas e visualizações,
@@ -415,6 +415,9 @@ sobre o levantamento e a base de dados acesse:</p>
 </ul>
 <pre class="r"><code>youtube &lt;- readr::read_csv(
   &#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv&#39;)
+## Warning in gzfile(file, mode): não foi possível abrir o arquivo comprimido &#39;C:/
+## Users/natyd/AppData/Local/Temp/RtmpcP7j2f\file37ec3d1a3ed2&#39;, motivo provável &#39;No
+## such file or directory&#39;
 ## Rows: 247 Columns: 25
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;

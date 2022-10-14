@@ -107,13 +107,15 @@ Ou ainda para acesso a links, como esta excelente referência:
 
 3.  [hiperlink em texto](https://rmarkdown.rstudio.com/)
 
-Uma última dica aqui é explorar a opção "Visual" do Rmarkdown (disponível em versões mais recentes), que nos permite trabalhar com uma interface mais visual, em alternativa aos códigos.
+Uma última dica aqui é explorar a opção "Visual" do Rmarkdown (disponível em versões mais recentes), que nos permite trabalhar com uma interface com menos código, e mais opções point-and-click.
 
 
 
 # HANDS-ON
 
 Que tal repassar os scripts deste módulo para um Rmarkdown? Você pode fazer uma curadoria do que é importante para você, possibilitando um material para consulta melhor formatado, inclusive com os seus próprios comentários :)
+
+
 
 # REFERÊNCIAS
 

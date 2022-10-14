@@ -15,11 +15,12 @@ library(tidyverse)
 
 # EDA
 
-EDA, do inglês Exploratory Data Analysis, e em português Análise Exploratória de Dados, é o processo de explorar os dados, o que tipicamente inclui desde examinar a estrutura do dataset, algo que iniciamos no módulo anterior, até o entendimento mais profundo sobre o comportamento de uma variável, ou padrões entre variáveis. A EDA nos permite:
+EDA, do inglês Exploratory Data Analysis, e em português Análise Exploratória de Dados, é o processo de explorar os dados, o que tipicamente inclui desde examinar a estrutura do dataset, algo que iniciamos no módulo anterior, até o entendimento mais profundo sobre o comportamento das variáveis. A EDA nos permite:
 
-- Identificar se há algum problema com o seu conjunto de dados.
+- Observar padrões não necessariamente conhecidos a priori
+- Identificar se há algum problema com o seu conjunto de dados
 - Determinar se a pergunta que você está fazendo pode ser respondida pelos dados que você possui
-- Desenvolver uma esboço da resposta à sua pergunta, por vezes respondê-la de fato
+- Desenvolver uma esboço da resposta à sua pergunta, por vezes respondê-la 
 
 Aqui, é possível, tanto ir em uma linha de exploração mais descritiva, por meio de volumetrias, estatísticas e visualizações, quanto ir em uma linha mais diagnóstica, investigando comportamentos mais complexos, como padrões de associação, por exemplo. Em linhas gerais, é nesta etapa que *aprendemos* e damos *sentido* aos dados! 
 
