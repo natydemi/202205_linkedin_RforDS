@@ -46,22 +46,23 @@ Para as camadas obrigatórias, temos um layout similar a este:
 
 
 
-E para entender melhor do que se tratam, vamos adicioná-los um a um. Vamos utilizar aqui a base `fivethirtyeight::drinks`, e no que ao aplicar o ggplot apenas, temos um painel em branco, com isto podemos entender que esta função tem como papel inicializar o gráfico:
+E para entender melhor do que se tratam, vamos adicioná-los um a um. Vamos utilizar aqui a base `drinks`, e no que ao aplicar o ggplot apenas, temos um painel em branco, com isto podemos entender que esta função tem como papel inicializar o gráfico:
 
 ```{r}
-fivethirtyeight::drinks %>% head()
+drinks <- fivethirtyeight::drinks
+drinks %>% head()
 ```
 
 
 ```{r}
-fivethirtyeight::drinks %>% 
+drinks %>% 
   ggplot() 
 ```
 Passamos agora para o elemento `aesthetic`, no R esta função é representada de maneira abreviada, `aes()`. E por ser uma função, podemos pesquisar sobre, e então teremos que este "mapeamento estético" descreve como as variáveis dos dados serão mapeadas para propriedades visuais (estéticas) de geometrias. Não ajudou muito né? Mas traduzindo, o que estamos dizendo é que no `aes()` você indicará qual variável será mapeada no gráfico. Um mapeamente usual trata do eixo x e eixo y:
 
 
 ```{r}
-fivethirtyeight::drinks %>% 
+drinks %>% 
   ggplot(aes(x = beer_servings, y = wine_servings)) 
 ```
 
@@ -69,14 +70,14 @@ Note que agora o gráfico passou a apresentar as variáveis nos eixos, mas nada 
 
 
 ```{r}
-fivethirtyeight::drinks %>% 
+drinks %>% 
   ggplot(aes(x = beer_servings, y = wine_servings)) +
   geom_point()
 ```
 E poderíamos trabalhar com outra geometria. Qualquer uma? Não. Precisaria ser uma geometria que trabalhasse com dois eixos, sendo ambos numéricos, dado as variáveis escolhidas:
 
 ```{r}
-fivethirtyeight::drinks %>% 
+drinks %>% 
   ggplot(aes(x = beer_servings, y = wine_servings)) +
     #geom_point()
     #geom_area() +
@@ -88,7 +89,7 @@ fivethirtyeight::drinks %>%
 Inclusive podemos usar mais de um layer, e fazendo ajustes nas geometrias de forma independente:
 
 ```{r}
-fivethirtyeight::drinks %>% 
+drinks %>% 
   ggplot(aes(x = beer_servings, y = wine_servings)) +
     geom_point(aes(color = total_litres_of_pure_alcohol)) +
     #geom_area()
@@ -100,7 +101,7 @@ fivethirtyeight::drinks %>%
 Mas quem são esses? 
 
 ```{r}
-fivethirtyeight::drinks %>% 
+drinks %>% 
   ggplot(aes(x = beer_servings, y = wine_servings, color = total_litres_of_pure_alcohol)) +
     geom_point() +
     geom_text(aes(label = country))
@@ -111,7 +112,7 @@ Ruim de ler?
 
 
 ```{r}
-fivethirtyeight::drinks %>% 
+drinks %>% 
   ggplot(aes(x = beer_servings, y = wine_servings, color = total_litres_of_pure_alcohol)) +
     geom_point(alpha = 0.1) +
     geom_text(data = . %>% filter( total_litres_of_pure_alcohol > 10), aes(label = country))
@@ -119,7 +120,7 @@ fivethirtyeight::drinks %>%
 
 
 ```{r}
-fivethirtyeight::drinks %>% 
+drinks %>% 
   ggplot(aes(x = beer_servings, y = wine_servings, color = total_litres_of_pure_alcohol)) +
     geom_point(alpha = 0.1) +
     ggrepel::geom_text_repel(data = . %>% filter( total_litres_of_pure_alcohol > 10), aes(label = country))
@@ -149,41 +150,151 @@ Retornando a totalidade da camadas, temos ainda os níveis em que podemos fazer:
 E aqui vale dar uma checada na cheat sheet do ggplot, pois ela nos dá dicas valiosas sobre quais geometrias você pode ou não aplicar a depender do tipo da variável, além de sobre as demais camadas: 
 
 
+
 ```{r , echo=FALSE, fig.align = "center", fig.cap="CheatSheet ggplot2 (folha 01)"}
 knitr::include_graphics('https://i.pinimg.com/originals/5d/f0/dd/5df0dd5a1c5751f039b8db8ad9267cb5.jpg')
 ```
 
 
 
-# E como aprender tudo isso? 
+# E como eu sigo aprendendo tudo isso? 
 
-Treinando, e usando o pacote `esquisser()` ;) 
-
-
-# E como escolher: 
+Treinando, fazendo uso das muitas excelentes referências existentes, e usando o pacote `esquisse::esquisser()` :) 
 
 
 
-Adicionalmente, segue um exemplo considerando a base `diamonds`, onde o interesse é entender a distribuição da variável `cut` em relação à `clarity`, ou ambas quanto a `count`:  
+# E como eu escolho o gráfico? 
+
+Existem diferentes opções de geometria, 
+
+
+geom_line - para linhas definidas por pares (x,y).
+
+geom_abline - para retas definidas por um intercepto e uma inclinação.
+
+geom_hline - para retas horizontais.
+
+geom_bar - para barras.
+
+geom_histogram - para histogramas.
+
+geom_boxplot - para boxplots.
+
+geom_density - para densidades.
+
+geom_area - para áreas.
+
+
+isso além de todos as demais camadas
+
+Por meio do frame que relaciona a classe das variáveis ou o possível objetivo da análise com os gráficos:
+
+>  <https://www.data-to-viz.com/>
+
+
+Vamos ver algumas possíbilidades
 
 ```{r}
-#visualização dos dados
-  diamonds %>% glimpse
+diamante <- dados::diamante %>%  glimpse()
 ```
 
+## distribuição 
+
 ```{r}
-# visualização 1
-  diamonds %>% 
-    ggplot(aes(x = cut, fill = clarity)) + 
+library(titanic)
+titanic <- titanic_train
+
+# Gráfico
+
+titanic %>%
+  ggplot(aes(x = Age,y = ..density..,fill = Sex)) +
+  geom_histogram(binwidth = 5,
+                 position = "dodge",
+                 col = "white",
+                 boundary = 0,
+                 alpha = 0.7) +
+  facet_grid(~Sex,
+             labeller = labeller(Sex = function(Sex) paste(Sex,
+                                                           "passengers")))+
+  scale_x_continuous(expand = c(0, 0))+
+  labs(y = "Density")+
+  theme_minimal()+
+  theme(panel.grid.minor.y =element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        legend.position = "none",
+        panel.spacing = unit(1, "lines"),
+        strip.text=element_text(hjust=0.8, vjust = -1.2)
+  )
+  
+```
+
+
+```{r}
+titanic %>%
+  ggplot(aes(x = Age, y = ..count..)) +
+  geom_density(data = select(titanic, -Sex),
+               aes(fill = "a"),
+               color = "transparent",
+               alpha = 0.6)+
+  geom_density(aes(fill = Sex),
+               color = "transparent")+
+  scale_x_continuous(name = "age (years)",
+                     limits = c(0, 85),
+                     expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 25),
+                     name = "scaled density",
+                     expand = c(0, 0))+
+  scale_fill_manual(breaks = c("a", "female", "male"),
+                    values = c("gray", "#D55E00", "#0072B2"),
+                    labels=c("all","female","male"),
+                    name = "")+
+  facet_wrap(~Sex)+
+  theme_minimal()+
+  theme(panel.grid.minor.y =element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        legend.position = "bottom",
+        legend.justification = "right",
+        strip.text.x = element_blank())+
+  ggtitle("Titanic Passengers Age by Sex")
+```
+
+
+
+
+## relação
+
+```{r}
+p <-  diamante %>% 
+  sample_frac(0.10) %>% 
+  ggplot(aes(x = quilate, y = preco)) +
+  geom_point(aes(text = transparencia), size = 4) +
+  geom_smooth(aes(colour = corte, fill = corte)) + 
+  facet_grid(.~corte) 
+plotly::ggplotly(p)
+```
+
+
+
+
+
+
+## ordenação 
+Um  exemplo considerando a base `diamonds`, onde o interesse é entender a distribuição da variável `cut` em relação à `clarity`, ou ambas quanto a `count`:  
+
+
+```{r}
+  diamante %>% 
+    ggplot(aes(x = corte, fill = transparencia)) + 
     geom_bar()
 ```
 
 
 ```{r}
-# visualização 2
-  diamonds %>% 
-    ggplot(aes(x = cut,  y = price)) + 
-    geom_bar(aes(fill = clarity), 
+ diamante %>% 
+    ggplot(aes(x = corte,  y = preco)) + 
+    geom_bar(aes(fill = transparencia), 
              stat = "identity", 
              position = "fill")
   
@@ -191,59 +302,153 @@ Adicionalmente, segue um exemplo considerando a base `diamonds`, onde o interess
 
 
 
-# Por fim segue um exemplo de dados temporais em que, em conjunto com as funções do `tidyr` e `dplyr`, remodelamos a base de dados `economics` visando obter a visualização das variáveis `psavert` e `uempmed` desde `1990`:
+
+## evolução
+
+Por fim segue um exemplo de dados temporais em que, em conjunto com as funções do `tidyr` e `dplyr`, remodelamos a base de dados `economics` visando obter a visualização das variáveis `psavert` e `uempmed` desde `1990`:
 
 ```{r}
-economics
+economics %>%  glimpse()
 ```
 
 ```{r}
 economics %>%
   select(date, psavert, uempmed) %>%
   filter(date>1990) %>% 
-  gather(key = "variable", value = "value", -date) %>% 
+  pivot_longer(-date) %>% #() 
+  #gather(key = "variable", value = "value", -date) %>% 
   ggplot(aes(x = date, y = value)) + 
-  geom_line(aes(color = variable), size = 1) +
-  scale_color_manual(values = c("#00AFBB", "#E7B800")) 
+  geom_line(aes(color = name), size = 1) 
+```
+
+# Respondendo: qual país bebe mais? 
+
+
+## gráfico de barra
+
+```{r}
+paises <- c(paises <- c( "Argentina", "Brazil", "Uruguay", "Chile"))
+
+# Colocando a base no formato tidy
+drinks_tidy <- drinks %>%
+  select(country,
+         beer = beer_servings,
+         spirit = spirit_servings,
+         wine = wine_servings) %>%
+  pivot_longer(beer:wine,
+               names_to = "type",
+               values_to = "servings") %>%
+  filter(country %in% paises & type == "beer") %>%
+  arrange(country, desc(servings))
+
+# Grafico
+
+drinks_tidy %>%
+  ggplot(mapping = aes(x = reorder(country, servings), y = servings))+
+  geom_col(position = "dodge", fill = "lightblue", width = 0.8, alpha = 0.8)+
+  labs(x = "",
+       y = "Servings per person (2010)",
+       title = "Where Do People Drink The Most Beer?",
+       caption = "Source: World Health Organization (FiveThirtyEight)")+
+  scale_y_continuous(limits = c(0,260), expand = c(0, 0))+
+  theme_minimal()+
+  theme(panel.grid.major.y =element_blank(),
+        panel.grid.minor.x = element_blank(),
+        plot.caption = element_text(hjust = 0, vjust = -0.5,size = 8))+
+  coord_flip()
 ```
 
 
+## dot plot
+
+```{r}
+# Selecionando os paises
+top20 <- drinks %>%
+  select(country,
+         beer = beer_servings,
+         spirit = spirit_servings,
+         wine = wine_servings) %>%
+  pivot_longer(beer:wine,
+               names_to = "type",
+               values_to = "servings") %>%
+  filter(type == "beer") %>%
+  arrange(country, desc(servings)) %>%
+  top_n(20, servings)
+
+# Grafico 
+
+top20 %>%
+  ggplot(mapping = aes(x = servings, y = reorder(country, servings)))+
+  geom_point(col = "darkgreen", size = 3)+
+  labs(x = "Servings per person (2010)",
+       y = "",
+       title = "Where Do People Drink The Most Beer? (Top 20)",
+       caption = "Source: World Health Organization (FiveThirtyEight)")+
+  scale_x_continuous(limits = c(250,380),expand = c(0, 0))+
+  theme_minimal()+
+  theme(plot.caption = element_text(hjust = 0, vjust = -0.5,size = 8))
+```
+
+
+# barra agrupada
+
+```{r}
+paises <- c(paises <- c("China", "Italy", "Saudi Arabia", "USA"))
+drinks_tidy <- drinks %>%
+  select(country,
+         beer = beer_servings,
+         spirit = spirit_servings,
+         wine = wine_servings) %>%
+  pivot_longer(beer:wine,
+               names_to = "type",
+               values_to = "servings") %>%
+  filter(country %in% paises) %>%
+  arrange(type, desc(servings))
+
+# Gráfico
+
+drinks_tidy %>%
+  ggplot(mapping = aes(x = country, y = servings, fill = type))+
+  geom_col(position = "dodge")+
+  geom_text(aes(label = ifelse(servings == 0, "", servings)),
+            position = position_dodge(width = 1),
+            vjust = -0.5, size = 3) +
+  scale_y_continuous(limits = c(0,260), expand = c(0, 0))+
+  labs(x = "", y = "", fill = "Type",
+       title = "Who Drinks The Most Beer, Spirits and Wine?",
+       subtitle = "Servings Per Person (2010)",
+       caption = "Source: World Health Organization (FiveThirtyEight)")+
+  theme_minimal()+
+  theme(axis.line=element_blank(), panel.border =element_blank(), panel.grid.major.x =element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.caption = element_text(hjust = 0, vjust = 7,size = 8))+
+  scale_fill_brewer(palette = "Pastel1")
+
+```
 
 # Tabelas
 
-Por tras de todo grande gráfico temos uma grande tabela:
+Por fim gostaria de comentar de uma entidade tão importante quanto o gráfico em si: as tabelas. Eu tenho um amigo, que costuma dizer que "por tras de todo grande gráfico temos uma grande tabela". O que faz sentido, inclusive, se você reparar para vários dos nossos exemplos foi necessário fazer algum ajuste nos dados antes de chegar no gráfico:
 
-uma vez que, quando devidamente utilizada, nos permite um entendimento muito mais profundo entendimento dos dados e suas particularidades. Apesar da visualização também contemplar  um conjunto de medidas organizadas em tabelas, vamos focar este capítulo na opção gráfica, visto já termos apresentado o pacote `dplyr`, e funções de sumarização como o `summarise()` - um pacote particularmente útil para visualizações descritivas é o `skimr`.
-
-
-kableExtra
-Para mais detalhes, consulte o link: https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html
-
+## DT
+Default do knitr
 ```{r}
-starwars %>% 
-  janitor::tabyl(hair_color ) %>% 
-  kableExtra::kbl() %>%
-  kableExtra::kable_styling()
+drinks %>% DT::datatable()
 ```
 
-```{r}
-starwars %>% 
-  janitor::tabyl(hair_color) %>% 
-  dplyr::arrange(-n) %>% 
-  dplyr::mutate(percent = scales::percent(percent)) %>% 
-  dplyr::mutate(valid_percent = scales::percent(valid_percent)) 
-```
+# Outras opções de bibliotecas
+
+- [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
+
 
 
 
 # Hands-on
 
 
-No RStudio Learn Primers: https://rstudio.cloud/learn/primers, faça os exercícios propostos na aba Work with Data, priorizando a seção Derive Information with dplyr em https://rstudio.cloud/learn/primers/2.3
+No RStudio Learn Primers: https://rstudio.cloud/learn/primers, faça os exercícios propostos na aba Visualize Data,  https://rstudio.cloud/learn/primers/3 
 
-https://rstudio.cloud/learn/primers/3 
 
-Visualize Data
 
 
 
