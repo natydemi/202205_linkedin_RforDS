@@ -21,7 +21,7 @@ Ufa, muita coisa né? Sim, e aqui é só o começo
 
 
 ### de modo indireto
-- unfairness / viés amostral / bias 
+- fairness / viés amostral / bias 
   - este tema é particularmente importante! Tem um documentário bacana chamado `Coded Bias` e aqui um artigo bem completo sobre o tema: [Algorithmic Fairness](https://arxiv.org/pdf/2001.09784.pdf)    
 - Privacidade de dados e LGPD
 
@@ -31,7 +31,7 @@ Ufa, muita coisa né? Sim, e aqui é só o começo
 ### Com um olhar mais próximo do universo da computação
 
 - deep learning
-- reinforced learning
+- Reinforcement Learning
 - dados não estruturados
   - text mining
   - NLP

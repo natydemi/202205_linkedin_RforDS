@@ -33,6 +33,25 @@ E no R, apesar de existirem muitos recursos default para a visualização de dad
       themes()
 ```
 
+
+How do we express visuals in words?
+Data to be visualized
+Geometric objects that appear on the plot
+Aesthetic mappings from data to visual component
+Statistics transform data on the way to visualization
+Coordinates organize location of geometric objects
+Scales define the range of values for aesthetics
+Facets group into subplots
+
+Como expressamos o visual em palavras?
+Dados a serem visualizados
+Objetos geométricos que aparecem na plotagem
+Mapeamentos estéticos de dados para componentes visuais
+As estatísticas transformam os dados no caminho para a visualização
+Coordenadas organizam a localização de objetos geométricos
+As escalas definem o intervalo de valores para a estética
+As facetas agrupam-se em subtramas
+
 Contudo apenas três destas são obrigatórias: dados,  atributos estéticos (aesthetic), e objetos geométricos (geometries: pontos, barras, linhas, etc). Vamos começar por eles.
 
 
@@ -135,6 +154,10 @@ No mais vale comentar também que o ggplot trabalha com o encadeamento de funç�
 
 
 ## demais camadas 
+
+
+<https://ggplot2.tidyverse.org/reference/>
+
 
 Retornando a totalidade da camadas, temos ainda os níveis em que podemos fazer: a divisão de gráficos (faceting), sistemas de coordenadas (coord), temas de fundo (themes), e sumarizações estatísticas (statistics).
 
@@ -436,9 +459,33 @@ Existem mais de 350 pacotes relacionados ao pacote ggplot2, oferecendo recursos
 
 Poderiam fácil ter mais algumas horas de curso só apra falar sobre isto
 
+Pacotes úteis (em ordem alfabética):
+
+{cowplot} — arranjos de enredo, temas e anotações
+{ggalt} — coordenadas alternativas, geoms, estatísticas e escalas
+{gganimate} — cria animações
+{ggbump} — geoms para gráficos de colisão
+{ggforce} — vários recursos adicionais interessantes
+{ggiraph} — geoms para visualizações dinâmicas e interativas
+{ggmaps} — acesso aos mapas do Google e Stamen
+{ggplotly} — cria gráficos interativos
+{ggraph} — redes, gráficos e árvores
+{ggrepel} — evita a sobreposição de rótulos de texto
+{ggridges} — geoms para plotagens de ridgeline
+{ggsankey} — geoms para diagramas sankey
+{ggstream} — geoms para gráficos de fluxo
+{ggtext} — renderização em rich text
+{ggthemes} — temas, escalas e geometrias adicionais
+{hrbrthemes} — temas mínimos centrados em tipografia
+{lemon} — complementos de eixo e legenda
+{patchwork} — combine ggplots com gráficos de vários painéis
+{rayshader} — mapas sombreados em 2D e 3D
+{systemfonts} — use fontes personalizadas (substitui {extrafont} e {showtext})
+
+olçha até onde podemos chegar!  [ggplot Wizardry](https://www.cedricscherer.com/slides/OutlierConf2021_ggplot-wizardry.pdf)
 
 
-# Tabelas
+# Bônus: Tabelas
 
 Por fim gostaria de comentar de uma entidade tão importante quanto o gráfico em si: as tabelas. Eu tenho um amigo, que costuma dizer que "por tras de todo grande gráfico temos uma grande tabela". O que faz sentido, inclusive, se você reparar para vários dos nossos exemplos foi necessário fazer algum ajuste nos dados antes de chegar no gráfico:
 
@@ -452,7 +499,7 @@ drinks %>% DT::datatable()
 
 - [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
 
-
+- [flextable](https://ardata-fr.github.io/flextable-book/)
 
 
 # Hands-on
