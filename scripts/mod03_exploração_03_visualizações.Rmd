@@ -16,10 +16,12 @@ library(tidyverse)
 
 
 
-# ggplot2
+# Intro
 
 A etapa de visualização possui um papel importantíssimo no contexto de análise de dados, Ben Shneiderman, um importante nome da ciência da computação: "Visualização nos dá resposta para perguntas que nós não sabiamos que tinhamos". 
 
+
+# O pacote ggplot2
 E no R, apesar de existirem muitos recursos default para a visualização de dados, como as funções: `plot()`, `hist()` e `boxplot()`, é quando começamos a trabalhar com as bibliotecas de visualização do R, que o recurso gráfico é realmente potencializado. E sem dúvida o principal pacote para visualização no R, é o `ggplot2`. Neste, trabalhamos com a lógica do *Grammar of Graphics*, uma abstração lógica em que o gráfico é visto como um mapeamento feito por camadas, são elas:
 
 ```{r, eval=F}
@@ -157,35 +159,30 @@ knitr::include_graphics('https://i.pinimg.com/originals/5d/f0/dd/5df0dd5a1c5751f
 
 
 
-# E como eu sigo aprendendo tudo isso? 
+## Parece legal, mas como eu supero a barreira de entrada? 
 
 Treinando, fazendo uso das muitas excelentes referências existentes, e usando o pacote `esquisse::esquisser()` :) 
 
 
+# Como fazer boas escolhas visuais?
 
-# E como eu escolho o gráfico? 
+Uma divisão interessante é separar a etapa de exploração, da etapa de explanação. Ou seja tratar de maneira diferente quando você está minerando o dado, procurando encontrar insights e validar hipóteses, e quando você já chegou em algo que será compartilhado, e deseja comunicar isto para outras pessoas.
 
-Existem diferentes opções de geometria, 
+# Exploração: qual gráfico usar? (geom_*)
 
-
-geom_line - para linhas definidas por pares (x,y).
-
-geom_abline - para retas definidas por um intercepto e uma inclinação.
-
-geom_hline - para retas horizontais.
-
-geom_bar - para barras.
-
-geom_histogram - para histogramas.
-
-geom_boxplot - para boxplots.
-
-geom_density - para densidades.
-
-geom_area - para áreas.
+Existem diferentes opções de geometria no ggplot, para citar alguns: 
 
 
-isso além de todos as demais camadas
+- geom_line - para linhas definidas por pares (x,y).
+- geom_abline - para retas definidas por um intercepto e uma inclinação.
+- geom_hline - para retas horizontais.
+- geom_bar - para barras.
+- geom_histogram - para histogramas.
+- geom_boxplot - para boxplots.
+- geom_density - para densidades.
+- geom_area - para áreas.
+
+e existem vários pacotes que aumentam estas opções
 
 Por meio do frame que relaciona a classe das variáveis ou o possível objetivo da análise com os gráficos:
 
@@ -320,11 +317,18 @@ economics %>%
   ggplot(aes(x = date, y = value)) + 
   geom_line(aes(color = name), size = 1) 
 ```
+# Explanação: como apresentar? 
 
-# Respondendo: qual país bebe mais? 
+isso além de todos as demais camadas
+
+https://r4ds.had.co.nz/graphics-for-communication.html 
 
 
-## gráfico de barra
+## demais layers do ggplot)
+
+Respondendo: qual país bebe mais? 
+
+### gráfico de barra
 
 ```{r}
 paises <- c(paises <- c( "Argentina", "Brazil", "Uruguay", "Chile"))
@@ -359,7 +363,7 @@ drinks_tidy %>%
 ```
 
 
-## dot plot
+### dot plot
 
 ```{r}
 # Selecionando os paises
@@ -390,7 +394,7 @@ top20 %>%
 ```
 
 
-# barra agrupada
+### barra agrupada
 
 ```{r}
 paises <- c(paises <- c("China", "Italy", "Saudi Arabia", "USA"))
@@ -426,6 +430,14 @@ drinks_tidy %>%
 
 ```
 
+# Explanação: próximos passos! 
+
+Existem mais de 350 pacotes relacionados ao pacote ggplot2, oferecendo recursos 
+
+Poderiam fácil ter mais algumas horas de curso só apra falar sobre isto
+
+
+
 # Tabelas
 
 Por fim gostaria de comentar de uma entidade tão importante quanto o gráfico em si: as tabelas. Eu tenho um amigo, que costuma dizer que "por tras de todo grande gráfico temos uma grande tabela". O que faz sentido, inclusive, se você reparar para vários dos nossos exemplos foi necessário fazer algum ajuste nos dados antes de chegar no gráfico:
@@ -436,7 +448,7 @@ Default do knitr
 drinks %>% DT::datatable()
 ```
 
-# Outras opções de bibliotecas
+## Outras opções de bibliotecas
 
 - [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
 
@@ -444,7 +456,6 @@ drinks %>% DT::datatable()
 
 
 # Hands-on
-
 
 No RStudio Learn Primers: https://rstudio.cloud/learn/primers, faça os exercícios propostos na aba Visualize Data,  https://rstudio.cloud/learn/primers/3 
 

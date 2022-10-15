@@ -7,19 +7,28 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# ...
+
+# Intro
 
 Ufa, muita coisa né? Sim, e aqui é só o começo
 
 
+# Tópicos relacionados ao processo de modelagem
+
+### de modo direto
 - dados desbalanceados
+- interpretabibilidade dos modelos 
+
+
+### de modo indireto
 - unfairness / viés amostral / bias 
-  - este particularmente importante [Algorithmic Fairness](https://arxiv.org/pdf/2001.09784.pdf)    
-- interpretabibilidade dos modelos
+  - este tema é particularmente importante! Tem um documentário bacana chamado `Coded Bias` e aqui um artigo bem completo sobre o tema: [Algorithmic Fairness](https://arxiv.org/pdf/2001.09784.pdf)    
 - Privacidade de dados e LGPD
 
 
-Com um olhar mais próximo do universo computacional:
+# Outras técnicas/algoritmos/modelos
+
+### Com um olhar mais próximo do universo da computação
 
 - deep learning
 - reinforced learning
@@ -28,6 +37,7 @@ Com um olhar mais próximo do universo computacional:
   - NLP
   - Visão Computacional
 
+### Com um olhar mais próximo do universo da estatística
 
 - Series Temporais
 - Modelos bayesianos
@@ -35,10 +45,14 @@ Com um olhar mais próximo do universo computacional:
 - métodos não paramêtricos
 
 
-Além de tópicos que irão ajudar a entender :
+# Para entender melhor os fundamentos:
+
 - Otimização
+- Álgebra
 - Amostragem
 - Probabilidade 
 
-....
 
+# Referência
+
+No fim do curso passaremos por algumas dicas mais gerais, mas aqui gostaria de deixar uma em particular: o canal no youtube do [Stat Quest](https://www.youtube.com/c/joshstarmer), do Josh Starmer. É simplesmente incrível, te ajuda a entender conceitos complexos de uma maneira muito acessível. Ah, ele mantem também um blog, como prefira: <https://statquest.org/>

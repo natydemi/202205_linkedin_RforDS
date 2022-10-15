@@ -378,14 +378,21 @@ pre code {
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<p>dplyrassisstent</p>
 </div>
-<div id="manuseando-colunas" class="section level1">
-<h1>Manuseando Colunas</h1>
-<p>A próxima etapa no processo de análise é a manipulação da base
-visando desde o entendimento de suas variáveis, considerando tabulações
-e estatísticas, até a criação de novas variáveis. Para tal,
-trabalharemos com o pacote <code>dplyr</code>, com recursos para:</p>
+<div id="intro" class="section level1">
+<h1>Intro</h1>
+<p>Neste módulo falaremos mais sobre as ações de transformação, manuseio
+e limpeza de dados que os pacotes <code>dplyr</code> e
+<code>tidyr</code> possibilitam. Iniciando pelo <code>dplyr</code>, que
+tem um enfoque maior na aplicação de transformações, seguido pelo
+<code>tidyr</code>, que tem como maior objetivo oferecer ferramentas
+para facilitar a passagem dos dados para o formato tidy. Por vezes tais
+etapas são conhecidas como</p>
+</div>
+<div id="dplyr" class="section level1">
+<h1>Dplyr</h1>
+<p>Aqui falaremos desde seleções até criação de novas variáveis e
+sumarizações estatísticas.</p>
 <p>Limpeza, data cleaning</p>
 <div id="selecionando-colunas" class="section level2">
 <h2>selecionando colunas</h2>
@@ -448,11 +455,11 @@ entrada</li>
     sample_n(10) %&gt;% 
     sample_frac(0.5) 
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 1          5.4         3.0          4.5         1.5 versicolor
-## 2          6.3         2.9          5.6         1.8  virginica
-## 3          6.2         2.2          4.5         1.5 versicolor
-## 4          5.6         2.8          4.9         2.0  virginica
-## 5          6.3         2.5          4.9         1.5 versicolor</code></pre>
+## 1          5.0         3.2          1.2         0.2     setosa
+## 2          5.8         2.7          5.1         1.9  virginica
+## 3          6.7         3.1          5.6         2.4  virginica
+## 4          6.2         2.2          4.5         1.5 versicolor
+## 5          5.1         3.3          1.7         0.5     setosa</code></pre>
 </div>
 <div id="alterando-e-criando-novas-colunas" class="section level2">
 <h2>alterando e criando novas colunas</h2>
@@ -813,9 +820,71 @@ avengers %&gt;% summarise(across(contains(“Death”), ~ sum(is.na(.x))))
 %&gt;% glimpse # avengers %&gt;% summarise(across(contains(“Death”),
 function(x) sum(is.na(x)))) %&gt;% glimpse</li>
 </ul>
+<div id="programação-funcional" class="section level2">
+<h2>Programação Funcional</h2>
+<p>Como ferramenta transversal a todas as etapas do workflow de análise,
+temos a programação funcional, que permite a criação de códigos mais
+rápidos, simples e reproduzíveis. No contexto do <code>tidyverse</code>
+a biblioteca <code>purrr</code> disponibiliza de uma série de
+funcionalidades visando aprimorar a programação funcional no R. Como
+principal função temos o <code>map()</code>, transformando a sua entrada
+por meio da aplicação de uma função a cada elemento, e retornando uma
+lista com o mesmo comprimento que a entrada:</p>
+<pre class="r"><code>#exemplo: , contabilização de tal identificação de dados faltantes por coluna, 
+  starwars %&gt;% 
+    map(is.na) %&gt;% #identificação de quais elementos, de cada coluna, são NA&#39;s
+    map(sum) %&gt;% #contabilização dos dados faltantes por coluna  
+    glimpse() #sumarização do resultado
+## List of 14
+##  $ name      : int 0
+##  $ height    : int 6
+##  $ mass      : int 28
+##  $ hair_color: int 5
+##  $ skin_color: int 0
+##  $ eye_color : int 0
+##  $ birth_year: int 44
+##  $ sex       : int 4
+##  $ gender    : int 4
+##  $ homeworld : int 10
+##  $ species   : int 4
+##  $ films     : int 0
+##  $ vehicles  : int 0
+##  $ starships : int 0
+
+#outras opções de sintaxe para obter o mesmo resultado
+  #starwars %&gt;% map(~sum(is.na(.)))
+  #starwars %&gt;% map( function(x) sum(is.na(x)) )</code></pre>
+<p>O <code>map()</code> retorna listas por default, para que o resultado
+tenha outra estrutura/classe, podemos utilizar funções como:
+<code>map_dbl</code> que retorna um vetor número, <code>map_dfc</code>
+para um data.frame que combina os resultados por coluna, entre outras
+opções. Adicionalmente temos recursos como:</p>
+<ul>
+<li><code>walk()</code> - similar ao <code>map</code>, porém sem ter o
+retorno da lista no console</li>
+<li><code>pmap()</code> - aplica uma função a um grupo de elementos de
+um grupo de listas</li>
+<li><code>append()</code> - adiciona valores ao fim de uma lista</li>
+</ul>
+<pre class="r"><code>#exemplo: para visulizar todos os arquivos de um dado diretório
+  list.files(&quot;\diretório&quot;, pattern=&#39;*.xlsx&#39;) %&gt;% 
+    map(read_excel) %&gt;% 
+    walk(glimpse)</code></pre>
+</div>
 </div>
 <div id="hands-on" class="section level1">
 <h1>HANDS-ON</h1>
+<p>Se você estiver trabalhando com uma versão mais recente do RStudio,
+verá uma aba chamada Tutorial entre os paineis que estão na parte
+superior à direita da sua IDE. Nela você vai encontrar várias opções de
+manuais interativos, recomendo particularmente:
+<code>Filter observations</code>, <code>Create new variables</code> e
+<code>Summarise Tables</code>. Uma última observação: para voltar para
+sair de algum dos tutoriais você precisa apertar o botão
+<code>stop</code> uma bolinha vermelha que aparece no canto superior
+esquerdo da própria aba Tutorial ;)</p>
+<p><a href="https://www.rstudio.com/resources/cheatsheets/">cheatsheets
+do R-Studio</a></p>
 </div>
 
 
