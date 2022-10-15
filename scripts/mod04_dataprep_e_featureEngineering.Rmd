@@ -63,6 +63,8 @@ Mas existem pacotes mais robustos, como é o exemplo do pacote naniar
 
 
 ## identificando valores extremos (outliers)
+anomalia dados raros
+
 
 
 ## aplicando padronizações / normalização

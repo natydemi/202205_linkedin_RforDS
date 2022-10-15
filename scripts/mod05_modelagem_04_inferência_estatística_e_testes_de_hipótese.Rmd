@@ -1,0 +1,31 @@
+---
+title: "Inferência Estatística"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# ...
+
+Poderiamos ter este script em uma seção chamada prescritiva também
+
+....
+
+# notes
+Ver o material sobre stat no curso do linkedin.
+
+* * Para modelagem estatística a inferencia possui um papel crucial. 
+* of A/B testing, including hypothesis testing, experimental design, and confounding variables
+* understand the underlying population model
+
+
+* Um dos aspectos fundamentais da análise estatística é a inferência, ou o processo de tirar conclusões sobre uma população maior a partir de uma amostra de dados. Embora contra intuitivo, a prática padrão é tentar refutar uma alegação de pesquisa que não é de interesse. Por exemplo, para mostrar que um tratamento médico é melhor que outro, podemos supor que os dois tratamentos levam a taxas de sobrevivência iguais apenas para serem refutadas pelos dados. Além disso, introduzimos a ideia de um valor-p, ou o grau de discordância entre os dados e a hipótese. Também mergulhamos em intervalos de confiança, que medem a magnitude do efeito de interesse (por exemplo, quão melhor um tratamento é do que outro).
+
+Há uma grande sobreposição entre aprendizado de máquina e estatística. De fato, a maioria das técnicas usadas no aprendizado de máquina pode ser colocada em uma estrutura estatística. No entanto, as técnicas de aprendizado de máquina não são as mesmas que as técnicas estatísticas tradicionais.
+Os modelos estatísticos geralmente fazem suposições fortes sobre os dados e, com base nessas suposições, fazem declarações fortes sobre os resultados. No entanto, se os pressupostos forem falhos, a validade do modelo torna-se questionável. Por outro lado, os métodos de aprendizado de máquina normalmente fazem suposições fracas sobre os dados. Como resultado, o aprendizado de máquina geralmente não pode fazer declarações tão fortes sobre os resultados. No entanto, o aprendizado de máquina pode produzir resultados muito bons, independentemente dos dados.
+Os métodos estatísticos tradicionais, em geral, requerem muita interação do usuário para validar a correção de um modelo. Como resultado, os métodos estatísticos podem ser difíceis de automatizar. Os métodos estatísticos baseiam-se em testar hipóteses ou encontrar correlações com base em amostras menores e representativas de uma população maior.
+Menos interação do usuário e menos conhecimento dos dados são necessários para o aprendizado de máquina. O usuário não precisa massagear os dados para garantir que um método seja válido para um determinado conjunto de dados. As técnicas do Oracle Machine Learning são mais fáceis de automatizar do que as técnicas estatísticas tradicionais.
+
+Testes

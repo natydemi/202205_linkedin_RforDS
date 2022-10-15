@@ -1,0 +1,96 @@
+---
+title: "Considerações Finais "
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+# Programação Funcional
+
+```{r, warning=FALSE}
+library(tidyverse)
+```
+
+Como ferramenta transversal a todas as etapas do workflow de análise, temos a programação funcional, que permite a criação de códigos mais rápidos, simples e reproduzíveis. No contexto do `tidyverse` a biblioteca `purrr` disponibiliza de uma série de funcionalidades visando aprimorar a programação funcional no R. Como principal função temos o `map()`, transformando a sua entrada por meio da aplicação de uma função a cada elemento, e retornando uma lista com o mesmo comprimento que a entrada:
+
+
+```{r}
+#exemplo: , contabilização de tal identificação de dados faltantes por coluna, 
+  starwars %>% 
+    map(is.na) %>% #identificação de quais elementos, de cada coluna, são NA's
+    map(sum) %>% #contabilização dos dados faltantes por coluna  
+    glimpse() #sumarização do resultado
+
+#outras opções de sintaxe para obter o mesmo resultado
+  #starwars %>% map(~sum(is.na(.)))
+  #starwars %>% map( function(x) sum(is.na(x)) )
+```
+
+O `map()` retorna listas por default, para que o resultado tenha outra estrutura/classe, podemos utilizar funções como: `map_dbl` que retorna um vetor número, `map_dfc` para um data.frame que combina os resultados por coluna, entre outras opções. Adicionalmente temos recursos como:
+
+  - `walk()` - similar ao `map`, porém sem ter o retorno da lista no console 
+  - `pmap()` - aplica uma função a um grupo de elementos de um grupo de listas
+  - `append()` - adiciona valores ao fim de uma lista
+
+
+```{r, eval=F, warning = F}
+#exemplo: para visulizar todos os arquivos de um dado diretório
+  list.files("\diretório", pattern='*.xlsx') %>% 
+    map(read_excel) %>% 
+    walk(glimpse)
+```
+
+
+
+# Dicas de pacotes em temas variados
+
+Além dos conteúdos citados no fim da parte de modelagem, seguem
+
+- interoperabilidade R e Python: [reticulate](https://rstudio.github.io/reticulate/) 
+- criar mapas: [leaflet](https://rstudio.github.io/leaflet/)
+- gerar memes: [memer](https://github.com/sctyner/memer)
+- trabalhar com deep learning: [torch](https://torch.mlverse.org/packages/)
+- automatizar processos: [usethis](https://github.com/r-lib/usethis)
+- modelagem bayesiana: [tidybayes](http://mjskay.github.io/tidybayes/)
+- analisar texto: [tidytext](https://github.com/juliasilge/tidytext)
+- desenvolver pacotes: [devtools](https://github.com/r-lib/devtools)
+- gerenciar dependências do R: [renv](https://rstudio.github.io/renv/articles/renv.html)
+- testar códigos: [testthat](https://testthat.r-lib.org/)
+- deploy de modelos: [vetiver](https://github.com/rstudio/vetiver-r)
+- gerenciar e analisar dados com o Hadoop: [RHadoop](https://github.com/RevolutionAnalytics/RHadoop/wiki) 
+
+
+
+# Referências
+Além das soluções e bibliotecas aqui comentados, é importante lembrar que o R oferece muitas formas de completar uma mesma atividade. Sendo assim, é sempre recomendado que procure opções para otimizar sua rotina. Seguem abaixo as algumas referências open-source para o aprofundamento dos pontos aqui listados:
+
+- R for data science: https://r4ds.had.co.nz/introduction.html
+- Advanced R: http://adv-r.had.co.nz/
+- Hands-On Programming with R: https://rstudio-education.github.io/hopr/
+- Curso-R: https://www.curso-r.com/material/
+- Zen do R - https://lnkd.in/dZG4pb2
+•	Livro que passa por praticamente tudo o que vimos aqui, porem em inglês:
+https://worldpece.org/sites/default/files/datastyle.pdf   
+
+- github - Happy Git and GitHub for the useR: https://happygitwithr.com/index.html
+
+Seguir #rstats nas redes sociais, ou participar de grupos como: R-Ladies, R-Brasil no Telegram, ou ainda se manter ligado em eventos como: ventos
+		○ rstudio::conf(2021) - https://rstudio.com/conference/
+		○ SatRday - https://satrdays.org/ 
+		○ TidyTuesday
+		○ Cheat Sheets RStudio: https://rstudio.com/resources/cheatsheets/
+		○ Rstudio - https://education.rstudio.com/
+
+-  kaggle
+- páginas do Rstudio
+- #rstats
+
+A grande dica é: saiba que existe um mundo de coisa para aprender, e que por um lado é ótimo acompanhar páginas e pessoas de referencia na áreas, para seguir ampliando o seu horizonte de possibilidades, mas aplicar os conhecimentos, fazer pesquisas sobre novas maneiras de resolver algum desafio, aumente a sua produtividade!  
+ 
+ 
+# Até a próxima!

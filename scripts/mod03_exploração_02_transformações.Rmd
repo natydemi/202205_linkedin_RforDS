@@ -14,12 +14,16 @@ library(tidyverse)
 ```
 
 
-dplyrassisstent
+# Intro 
+
+Neste módulo falaremos mais sobre as ações de transformação, manuseio e limpeza de dados que os pacotes `dplyr` e `tidyr` possibilitam. Iniciando pelo `dplyr`, que tem um enfoque maior na aplicação de transformações, seguido pelo `tidyr`, que tem como maior objetivo oferecer ferramentas para facilitar a passagem dos dados para o formato tidy. Por vezes tais etapas são conhecidas como
+
+
 
     
-# Manuseando Colunas 
+# Dplyr
 
-A próxima etapa no processo de análise é a manipulação da base visando desde o entendimento de suas variáveis, considerando tabulações e estatísticas, até a criação de novas variáveis. Para tal, trabalharemos com o pacote `dplyr`, com recursos para:
+Aqui falaremos desde seleções até criação de novas variáveis e sumarizações estatísticas. 
 
 Limpeza, data cleaning 
 
@@ -205,8 +209,8 @@ billboard_longer %>%
 
 ```{r}
 #exemplo: passando linhas para colunas
-  table4a_new %>% 
-    spread(ano, valores) 
+  # table4a_new %>% 
+  #   spread(ano, valores) 
 ```
 
 
@@ -299,4 +303,5 @@ Até aqui o tidyverse apresenta o seu ponto forte em termos de legibilidade do c
 
 # HANDS-ON
 
+Se você estiver trabalhando com uma versão mais recente do RStudio, verá uma aba chamada Tutorial entre os paineis que estão na parte superior à direita da sua IDE. Nela você vai encontrar várias opções de manuais interativos, recomendo particularmente: `Filter observations`, `Create new variables` e `Summarise Tables`. Uma última observação: para voltar para sair de algum dos tutoriais você precisa apertar o botão `stop` uma bolinha vermelha que aparece no canto superior esquerdo da própria aba Tutorial ;)
 

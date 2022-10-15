@@ -389,7 +389,7 @@ trabalharemos com o pacote <code>dplyr</code>, com recursos para:</p>
 <p>Limpeza, data cleaning</p>
 <div id="selecionando-colunas" class="section level2">
 <h2>selecionando colunas</h2>
-<p>Por nome ou por posição</p>
+<p>Podemos selecionar por nome ou por posição</p>
 <p>Ou ainda linhas, observações, que não se refiram ao nosso objetivo de
 estudo</p>
 <pre><code>- `select()` - seleciona variáveis, permitindo o uso de recursos como:
@@ -447,12 +447,12 @@ entrada</li>
   iris %&gt;% 
     sample_n(10) %&gt;% 
     sample_frac(0.5) 
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
-## 1          6.5         3.0          5.2         2.0 virginica
-## 2          7.7         2.8          6.7         2.0 virginica
-## 3          4.6         3.2          1.4         0.2    setosa
-## 4          6.2         2.8          4.8         1.8 virginica
-## 5          6.0         3.0          4.8         1.8 virginica</code></pre>
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1          5.4         3.0          4.5         1.5 versicolor
+## 2          6.3         2.9          5.6         1.8  virginica
+## 3          6.2         2.2          4.5         1.5 versicolor
+## 4          5.6         2.8          4.9         2.0  virginica
+## 5          6.3         2.5          4.9         1.5 versicolor</code></pre>
 </div>
 <div id="alterando-e-criando-novas-colunas" class="section level2">
 <h2>alterando e criando novas colunas</h2>
@@ -571,36 +571,79 @@ informações de interesse, aqui denominada agregação.</p>
 <div id="de-colunas-para-linhas" class="section level3">
 <h3>de colunas para linhas</h3>
 <ul>
-<li><code>gather()</code> - reorganiza os dados, combinando as colunas
-especificadas na coluna parâmetro <code>key</code>, e seus valores na
-coluna parâmetro <code>value</code>. Com tal tipo de ajuste podemos
-organizar os dados de modo a consultar várias colunas de interesse de
-uma única vez, algo útil para a aplicação de loops, funções e gráficos,
-conforme veremos na seção <code>Visualização</code>.</li>
+<li><code>pivot_longer()</code> - reorganiza os dados, combinando as
+colunas especificadas na coluna parâmetro <code>key</code>, e seus
+valores na coluna parâmetro <code>value</code>. Com tal tipo de ajuste
+podemos organizar os dados de modo a consultar várias colunas de
+interesse de uma única vez, algo útil para a aplicação de loops, funções
+e gráficos.</li>
 </ul>
 <pre class="r"><code>#base para exemplo
-  table4a
-## # A tibble: 3 × 3
-##   country     `1999` `2000`
-## * &lt;chr&gt;        &lt;int&gt;  &lt;int&gt;
-## 1 Afghanistan    745   2666
-## 2 Brazil       37737  80488
-## 3 China       212258 213766
+data(&quot;billboard&quot;)
 
-#exemplo: passando as colunas para linhas
-  table4a_new &lt;- table4a %&gt;% 
-    gather(`1999`, `2000`, key = &quot;ano&quot;, value = &quot;valores&quot;) 
-  
-  table4a_new
-## # A tibble: 6 × 3
-##   country     ano   valores
-##   &lt;chr&gt;       &lt;chr&gt;   &lt;int&gt;
-## 1 Afghanistan 1999      745
-## 2 Brazil      1999    37737
-## 3 China       1999   212258
-## 4 Afghanistan 2000     2666
-## 5 Brazil      2000    80488
-## 6 China       2000   213766</code></pre>
+billboard %&gt;% head()
+## # A tibble: 6 × 79
+##   artist      track date.entered   wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8
+##   &lt;chr&gt;       &lt;chr&gt; &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 2 Pac       Baby… 2000-02-26      87    82    72    77    87    94    99    NA
+## 2 2Ge+her     The … 2000-09-02      91    87    92    NA    NA    NA    NA    NA
+## 3 3 Doors Do… Kryp… 2000-04-08      81    70    68    67    66    57    54    53
+## 4 3 Doors Do… Loser 2000-10-21      76    76    72    69    67    65    55    59
+## 5 504 Boyz    Wobb… 2000-04-15      57    34    25    17    17    31    36    49
+## 6 98^0        Give… 2000-08-19      51    39    34    26    26    19     2     2
+## # … with 68 more variables: wk9 &lt;dbl&gt;, wk10 &lt;dbl&gt;, wk11 &lt;dbl&gt;, wk12 &lt;dbl&gt;,
+## #   wk13 &lt;dbl&gt;, wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;, wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;, wk18 &lt;dbl&gt;,
+## #   wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, wk22 &lt;dbl&gt;, wk23 &lt;dbl&gt;, wk24 &lt;dbl&gt;,
+## #   wk25 &lt;dbl&gt;, wk26 &lt;dbl&gt;, wk27 &lt;dbl&gt;, wk28 &lt;dbl&gt;, wk29 &lt;dbl&gt;, wk30 &lt;dbl&gt;,
+## #   wk31 &lt;dbl&gt;, wk32 &lt;dbl&gt;, wk33 &lt;dbl&gt;, wk34 &lt;dbl&gt;, wk35 &lt;dbl&gt;, wk36 &lt;dbl&gt;,
+## #   wk37 &lt;dbl&gt;, wk38 &lt;dbl&gt;, wk39 &lt;dbl&gt;, wk40 &lt;dbl&gt;, wk41 &lt;dbl&gt;, wk42 &lt;dbl&gt;,
+## #   wk43 &lt;dbl&gt;, wk44 &lt;dbl&gt;, wk45 &lt;dbl&gt;, wk46 &lt;dbl&gt;, wk47 &lt;dbl&gt;, wk48 &lt;dbl&gt;, …</code></pre>
+<pre class="r"><code>billboard_longer &lt;- billboard %&gt;% 
+  pivot_longer(cols = starts_with(&quot;wk&quot;),
+               names_to = &quot;week&quot;,
+               names_prefix = &quot;wk&quot;,
+               values_to = &quot;rank&quot;,
+               values_drop_na = TRUE)
+
+billboard_longer %&gt;% head()
+## # A tibble: 6 × 5
+##   artist track                   date.entered week   rank
+##   &lt;chr&gt;  &lt;chr&gt;                   &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;
+## 1 2 Pac  Baby Don&#39;t Cry (Keep... 2000-02-26   1        87
+## 2 2 Pac  Baby Don&#39;t Cry (Keep... 2000-02-26   2        82
+## 3 2 Pac  Baby Don&#39;t Cry (Keep... 2000-02-26   3        72
+## 4 2 Pac  Baby Don&#39;t Cry (Keep... 2000-02-26   4        77
+## 5 2 Pac  Baby Don&#39;t Cry (Keep... 2000-02-26   5        87
+## 6 2 Pac  Baby Don&#39;t Cry (Keep... 2000-02-26   6        94</code></pre>
+<pre class="r"><code>billboard_longer %&gt;% 
+  group_by(track, artist) %&gt;% 
+  summarise(n_week = n(), rank_mean = mean(rank)) %&gt;% 
+  filter(n_week&gt;30) %&gt;% 
+  arrange(desc(n_week)) 
+## `summarise()` has grouped output by &#39;track&#39;. You can override using the
+## `.groups` argument.
+## # A tibble: 18 × 4
+## # Groups:   track [18]
+##    track                   artist           n_week rank_mean
+##    &lt;chr&gt;                   &lt;chr&gt;             &lt;int&gt;     &lt;dbl&gt;
+##  1 Higher                  Creed                57      36.9
+##  2 Amazed                  Lonestar             55      26.7
+##  3 Breathe                 Hill, Faith          53      23.0
+##  4 Kryptonite              3 Doors Down         53      26.5
+##  5 With Arms Wide Open     Creed                47      33.8
+##  6 I Wanna Know            Joe                  44      21.2
+##  7 Everything You Want     Vertical Horizon     41      21.4
+##  8 Bent                    matchbox twenty      39      18.6
+##  9 He Wasn&#39;t Man Enough    Braxton, Toni        37      21  
+## 10 (Hot S**t) Country G... Nelly                34      30.9
+## 11 I Knew I Loved You      Savage Garden        33      17.4
+## 12 Get It On.. Tonite      Jordan, Montell      32      28.4
+## 13 Jumpin&#39; Jumpin&#39;         Destiny&#39;s Child      32      22.9
+## 14 Say My Name             Destiny&#39;s Child      32      20.9
+## 15 There U Go              Pink                 32      18.6
+## 16 Try Again               Aaliyah              32      16.7
+## 17 You Sang To Me          Anthony, Marc        32      23.5
+## 18 Back Here               BBMak                31      30.6</code></pre>
 </div>
 <div id="de-linhas-para-colunas" class="section level3">
 <h3>de linhas para colunas</h3>
@@ -609,14 +652,8 @@ conforme veremos na seção <code>Visualização</code>.</li>
 podemos expandir linhas em colunas:</li>
 </ul>
 <pre class="r"><code>#exemplo: passando linhas para colunas
-  table4a_new %&gt;% 
-    spread(ano, valores) 
-## # A tibble: 3 × 3
-##   country     `1999` `2000`
-##   &lt;chr&gt;        &lt;int&gt;  &lt;int&gt;
-## 1 Afghanistan    745   2666
-## 2 Brazil       37737  80488
-## 3 China       212258 213766</code></pre>
+  # table4a_new %&gt;% 
+  #   spread(ano, valores) </code></pre>
 </div>
 </div>
 <div id="combinando-colunas" class="section level2">

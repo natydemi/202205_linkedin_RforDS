@@ -1,0 +1,44 @@
+---
+title: "Considerações Finais"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# ...
+
+Ufa, muita coisa né? Sim, e aqui é só o começo
+
+
+- dados desbalanceados
+- unfairness / viés amostral / bias 
+  - este particularmente importante [Algorithmic Fairness](https://arxiv.org/pdf/2001.09784.pdf)    
+- interpretabibilidade dos modelos
+- Privacidade de dados e LGPD
+
+
+Com um olhar mais próximo do universo computacional:
+
+- deep learning
+- reinforced learning
+- dados não estruturados
+  - text mining
+  - NLP
+  - Visão Computacional
+
+
+- Series Temporais
+- Modelos bayesianos
+- Análise de Sobrevivência
+- métodos não paramêtricos
+
+
+Além de tópicos que irão ajudar a entender :
+- Otimização
+- Amostragem
+- Probabilidade 
+
+....
+

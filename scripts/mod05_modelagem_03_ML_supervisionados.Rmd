@@ -1,5 +1,5 @@
 ---
-title: "Dataprep"
+title: "ML - modelos supervisionados"
 output: html_document
 ---
 
@@ -8,6 +8,31 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # ...
+
+hiperparametros
+
+
+
+# O que precisamos ter noção 
+
+queremos minimizar o erro da predição
+
+cada método tem o seu dataprep obrigatório, assim como recursos de dataprep e feature engineering que podem não ser mandatórios mas que podem ser extremamente benefcos para o seu 
+
+
+precisamos escolher qual o melhor método, e depende do objetivo, e nos modelos supervisionados segmentamos o objetivo em duas classes: 
+
+
+# Classificação
+
+
+## avaliação
+sensibilidade, especificidade, erro tipo I e II, ...
+
+
+# Regressão
+
+mostrar o Addin do tidymodels
 
 
 ....

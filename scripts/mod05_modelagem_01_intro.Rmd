@@ -14,32 +14,59 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 library(tidyverse)
 ```
 
+Modelos são simplificações da realidade, algo que nós, humanos, naturalmente fazemos, mas nem sempre de maneira transparente, estruturada, e/ou em escala. E são estes os ganhos! 
 
-# Modelagem 
 
-Após um entendimento mais profundo sobre os dados, seu comportamento, natureza e especificidades, podemos passar para a fase de modelagem. Assim, tendo as perguntas bem especificadas, podemos utilizar um modelo para respondê-las. No `tidyverse` a biblioteca `broom` é direcionada para esta etapa da análise, porém de um ponto de vista de integração. Isto porque tem como finalidade transformar resultados de modelos estatísticos e de machine learning em objetos com formato *tidy*, facilitando desde o entendimento e comunicação resultado, visto a integração com as muitas ferramentas do `tidyverse`, quanto a comparação entre   diferentes modelos. O R possui como uma de suas bibliotecas default o `stats`, contemplando uma série de funções estatísticas, como, por exemplo, para o ajuste de um modelo de regressão linear simples:
 
-```{r}
-#exemplo: regressão linear simples
-  fit <- lm(Sepal.Width ~ Petal.Length + Petal.Width, data = iris)
-#e ao invés de visulizar os dados com os comandos abaixo 
-  fit
-  summary(fit)
-  
-#podemos utilizar um dos comandos da biblioteca `broom`   
-  broom::tidy(fit)
-```
 
-Em relação à modelagem em si, visto ser algo que demanda conhecimentos prévios, não iremos nos aprofundar. Contudo segue uma lista com opções de bibliotecas para algumas metodologias/áreas:
 
-- Árvore de Decisão - `part` e `rpart`
-- Clusterização - `stats`, `cluster` e `fpc`
-- Deep Learning - `keras`
-- Random Forest - `randomForest`
-- Redes Neurais - `nnet`, `neuralnet` e `RSNNS`
-- Regressões - `stats`, `nlme` e  `gbm`
-- Séries Temporais - `forest` e `dtw`
-- Text Mining - `tm` e `wordcloud`
-- Validação Cruzada - `caret`
+Existem muitos algoritmos e modelos importantes para ciencia de dados, de 
+
+Veremos aqui alguns dos mais usuais/recorrentes para que você possa iniciar a sua carreira nesta área. Mas antes vamos comentar sobre alguns dor principais termos da área, pois os nomes e definições tendem a ser confusos.
+
+
+* IA
+* modelagem estatística 
+* aprendizagem de máquina
+
+modelagem == aprendizado? Em termos práticos acredito que sim, culturalmente, não. Pois se por um lado é usual ver a aplicação de ambos os termos de forma intercambiável, é comum também que profissionais com determinadas formações utilizem mais um termo do que o outro, isto em decorrência das diferenças culturais de cada área, e das diferentes ideias que cada domínio prioriza ao falar de análise de dados. No caso da aprendizagem de máquina, termo vindo da Inteligência Artificial, e, portanto, mais frequente entre profissionais com viés computacional, têm-se como um dos principais focos a aprendizagem de regras nos dados conhecidos visando a aplicação de tais experiências em novos dados, ou seja, um foco preditivo. Ao passo que modelagem, palavra mais comum no universo da estatística, existe a intenção de garantir conclusões sobre a população a partir das amostras disponíveis, e, portanto, uma preocupação maior em modelar o fenômeno, isto é, um enfoque inferencial. Porém, apesar destas diferenças, o fato de muitas tecnicas serem comuns às duas abordagens, além da afinidade entre os objetivos, justifica o uso dos termos de forma permutável.
+
+P.S.: principal ref para essas ideias: https://lnkd.in/dVDaawt9
+
+Dito tudo isto, como este capitulo esta dividido: teremos este módulo dividido da seguinte forma um primeiro momento em que discutiremos modelagem segundo a perspectiva de machine learning, particularmente em relação aos algoritmos supervisionados e não supervisionados, seguido de uma discussão mais voltada à inferência e modelagem estatística
+
+
+
+
+# Exemplos de aplicações
+
+
+# Lógica por trás 
+
+É mais simples que parece, pois conforme comentado, não é nada assim tão diferente do que fazemos no nosso dia a dia, por exemplo: XXX
+
+A questão é que 
+
+Após um entendimento mais profundo sobre os dados, seu comportamento, natureza e especificidades, podemos passar para a fase de modelagem. Assim, tendo as perguntas bem especificadas, podemos utilizar um modelo para respondê-las. 
+
+
+# Possibilidades de abordagem
+
+## Inferência vs. Predição
+
+
+artigo
+
+
+## Algoritmos de ML
+
+
+
+
+
+# Refs
+
+o An introduction, e o AME
+
 
 
