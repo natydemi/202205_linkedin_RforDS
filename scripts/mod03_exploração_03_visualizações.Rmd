@@ -21,6 +21,18 @@ library(tidyverse)
 A etapa de visualização possui um papel importantíssimo no contexto de análise de dados, Ben Shneiderman, um importante nome da ciência da computação: "Visualização nos dá resposta para perguntas que nós não sabiamos que tinhamos". 
 
 
+
+
+O ggplot2 é um pacote de visualização de dados. Elefoi criado por Hadley Wickham em 2005, baseado no livro Grammar of Graphics, de Leland Wilkinson. A ideia principal é criar um gráfico como se fosse uma frase de uma língua, onde casa elemento do gráfico seria uma palavra. Isto nos permite construir gráficos tão complexos quanto quisermos. Os gráficos criados com esta ferramenta são, em geral, mais bonitos do que os gráficos tradicionais do R. Entretanto, esta versatilidade tem dois custos associados:
+
+A curva de aprendizagem do ggplot2 é maior do que das funções gráficas tradicionais do R (por exemplo, plot, boxplot e hist)
+
+É uma ferramenta mais lenta para exibir os resultados dos gráficos criados
+
+Veja, por exemplo, veja o gráfico a seguir. É o resultado de um estudo onde 18 sujeitos tiveram seu sono restrito a apenas 3 horas por dia a partir do dia 1. A variável resposta é o tempo de reação médio destes sujeitos a uma série de testes aplicados a cada dia do experimento.
+
+
+
 # O pacote ggplot2
 E no R, apesar de existirem muitos recursos default para a visualização de dados, como as funções: `plot()`, `hist()` e `boxplot()`, é quando começamos a trabalhar com as bibliotecas de visualização do R, que o recurso gráfico é realmente potencializado. E sem dúvida o principal pacote para visualização no R, é o `ggplot2`. Neste, trabalhamos com a lógica do *Grammar of Graphics*, uma abstração lógica em que o gráfico é visto como um mapeamento feito por camadas, são elas:
 
@@ -154,6 +166,9 @@ No mais vale comentar também que o ggplot trabalha com o encadeamento de funç�
 
 
 ## demais camadas 
+
+
+FAZER ALGUMAS COISAS SIMPLES!!! 
 
 
 <https://ggplot2.tidyverse.org/reference/>

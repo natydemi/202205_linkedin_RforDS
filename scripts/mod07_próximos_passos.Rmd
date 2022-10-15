@@ -41,10 +41,13 @@ Por fim procure construir um mapa mental dos tópicos que você for tendo conhec
 - analisar texto: [tidytext](https://github.com/juliasilge/tidytext)
 - desenvolver pacotes: [devtools](https://github.com/r-lib/devtools)
 - gerenciar dependências do R: [renv](https://rstudio.github.io/renv/articles/renv.html)
+- criar pipelines: [target](https://cran.r-project.org/web/packages/targets/vignettes/overview.html)
 - testar códigos: [testthat](https://testthat.r-lib.org/)
 - deploy de modelos: [vetiver](https://github.com/rstudio/vetiver-r)
 - gerenciar e analisar dados com o Hadoop: [RHadoop](https://github.com/RevolutionAnalytics/RHadoop/wiki) 
 
+
+Quando estava compartilhando essa lista com alguns colegas, comentaram também do pac ``
 
 
 # Referências

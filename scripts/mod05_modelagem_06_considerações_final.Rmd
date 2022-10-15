@@ -16,6 +16,7 @@ Ufa, muita coisa né? Sim, e aqui é só o começo
 # Tópicos relacionados ao processo de modelagem
 
 ### de modo direto
+- pé-processamento dos dados
 - dados desbalanceados
 - interpretabibilidade dos modelos 
 
@@ -30,12 +31,13 @@ Ufa, muita coisa né? Sim, e aqui é só o começo
 
 ### Com um olhar mais próximo do universo da computação
 
-- deep learning
+- Deep Learning
 - Reinforcement Learning
-- dados não estruturados
-  - text mining
-  - NLP
-  - Visão Computacional
+- Dados Não Estruturados
+  - áudio
+  - texto (processamento de linguagem natural)
+  - imagem (visão computacional)
+  
 
 ### Com um olhar mais próximo do universo da estatística
 

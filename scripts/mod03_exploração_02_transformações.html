@@ -388,24 +388,54 @@ tem um enfoque maior na aplicação de transformações, seguido pelo
 <code>tidyr</code>, que tem como maior objetivo oferecer ferramentas
 para facilitar a passagem dos dados para o formato tidy. Por vezes tais
 etapas são conhecidas como</p>
+<p>A disputa de dados é onde pegamos um conjunto de dados bruto e o
+transformamos em um formato adequado para diferentes tarefas</p>
+<p>Simplesmente é como preparar uma refeição, onde preparamos os dados
+para fazer o prato principal (neste caso, pode ser um modelo ou
+visualização)</p>
+<p>Existem vários pacotes que podem ajudar na disputa de dados, mas por
+hoje estaríamos arranhando a superfície do pacote dplyr no ecossistema
+do cleanverse.</p>
 </div>
 <div id="dplyr" class="section level1">
 <h1>Dplyr</h1>
 <p>Aqui falaremos desde seleções até criação de novas variáveis e
 sumarizações estatísticas.</p>
 <p>Limpeza, data cleaning</p>
-<div id="selecionando-colunas" class="section level2">
-<h2>selecionando colunas</h2>
+<div id="selecionar" class="section level2">
+<h2>selecionar</h2>
+<p>O comando select nos ajuda a selecionar as colunas que queremos, e
+podemos dar um intervalo de colunas ou mesmo as colunas que não queremos
+ter.</p>
+<p>A função de seleção funciona da seguinte forma.</p>
+<p>O primeiro argumento é o tibble ou data frame, neste caso nós
+canalizamos o dataset spotify usando o operador pipe. O resto dos
+argumentos são as diferentes maneiras de selecionar as variáveis. Por
+exemplo, se quisermos selecionar a colunaA do tibble t, diríamos
+select(t,A). Da mesma forma, se quisermos selecionar tudo, exceto a
+coluna B de tibble t, diríamos select(t,-B). você pode até usar um
+conjunto de funções chamadas seletores arrumados para selecionar colunas
+com base em como o nome começa ou termina (por exemplo,
+select(t,starts_with(“LKR_”)))) Agora você sabe como selecionar as
+linhas superiores de um tibble com a função head, então se você
+conseguir organizar as faixas por sua popularidade em ordem crescente,
+então está tudo pronto!</p>
+<div id="colunas" class="section level3">
+<h3>colunas</h3>
 <p>Podemos selecionar por nome ou por posição</p>
 <p>Ou ainda linhas, observações, que não se refiram ao nosso objetivo de
 estudo</p>
-<pre><code>- `select()` - seleciona variáveis, permitindo o uso de recursos como:
+<pre><code>- `select()` - seleciona as colunas, permitindo o uso de recursos como:
     - `starts_with()`, `matches()`, `num_range()`, ou `everything()`  
     
-    </code></pre>
+
+- `arrange()` - ordena as linhas de acordo com as colunas especificadas
+      Precisamos de uma função que possa classificar as linhas com base em uma ou mais colunas. É aqui que a função de arranjo entra em ação. A função de organização usa um tibble como a primeira entrada e um conjunto de colunas para ordenar por ordem crescente ou decrescente. Espere algo não está certo, isso não está em ordem decrescente! Temos que dizer à função de organização para classificá-los em ordem decrescente.
+- `distinct()` - remove as linhas duplicadas para determinado atributo
+        Uma faixa pode estar em várias listas de reprodução! É por isso! Agora o que fazemos? Vamos selecionar apenas as linhas distintas ou exclusivas. Para isso, podemos usar a função distinct. A função distinct recebe um tibble como primeiro argumento e depois um conjunto de colunas para encontrar linhas distintas ou usa todas as colunas se nenhum argumento for fornecido. Você pode ver o padrão aqui certo?</code></pre>
 </div>
-<div id="selecionando-linhas" class="section level2">
-<h2>selecionando linhas</h2>
+<div id="linhas" class="section level3">
+<h3>linhas</h3>
 <p>por posição pelo valor</p>
 <ul>
 <li><p>filter for particular observations, arrange the observations in a
@@ -417,12 +447,18 @@ critérios lógicos (retorno <code>TRUE</code>/<code>FALSE</code>)</li>
 ordinais</li>
 <li><code>top_n()</code> - ordena as primeiras <code>n</code>
 observações das colunas listadas</li>
-<li><code>arrange()</code> - ordena as linhas de acordo com as colunas
-especificadas</li>
-<li><code>distinct()</code> - remove as linhas duplicadas de uma dada
-entrada</li>
 </ul></li>
 </ul>
+<p>A função de filtro pode ser usada para obter uma parte de um conjunto
+de dados que marca as caixas de um conjunto de uma ou mais condições
+lógicas. Basicamente, qualquer condição lógica que forneça um vetor
+lógico correspondente ao comprimento do conjunto de dados pode ser usada
+para filtrar as linhas de que você precisa.</p>
+<p>É como um filtro real onde as barreiras são as linhas com FALSE.</p>
+<p>Vamos usar a função de filtro para filtrar as linhas que precisamos.
+Temos uma condição lógica como argumento para filtrar e você pode
+combinar diferentes condições usando operadores lógicos como &amp;,|, ~
+etc.</p>
 <pre class="r"><code>#exemplo: seleção segundo padrão de nomenclatura + filtro e ordenação
   iris %&gt;% 
     select(starts_with(&quot;Petal&quot;)) %&gt;%
@@ -455,18 +491,24 @@ entrada</li>
     sample_n(10) %&gt;% 
     sample_frac(0.5) 
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 1          7.3         2.9          6.3         1.8  virginica
-## 2          5.9         3.0          4.2         1.5 versicolor
-## 3          4.6         3.4          1.4         0.3     setosa
-## 4          7.7         2.8          6.7         2.0  virginica
-## 5          6.7         2.5          5.8         1.8  virginica</code></pre>
+## 1          6.0         2.9          4.5         1.5 versicolor
+## 2          4.9         3.6          1.4         0.1     setosa
+## 3          5.2         3.4          1.4         0.2     setosa
+## 4          5.1         3.3          1.7         0.5     setosa
+## 5          5.1         3.5          1.4         0.3     setosa</code></pre>
+</div>
 </div>
 <div id="alterando-e-criando-novas-colunas" class="section level2">
 <h2>alterando e criando novas colunas</h2>
 <p>excluindo</p>
 <pre><code>- `mutate()` - cria/modifica variáveis
-- `rename()` - renomeia variáveis</code></pre>
-<p><code>arrange()</code> - renomeia variáveis</p>
+- `rename()` - renomeia variáveis
+  A função renomear recebe pares de argumentos na forma de</code></pre>
+<p>nome_novo = nome_antigo</p>
+<p>para que possamos renomear as colunas que queremos com essa
+função.</p>
+<p>Isso é um acréscimo ao primeiro argumento de um tibble para fazer
+tudo isso. - <code>arrange()</code> - também pode renomear variáveis</p>
 <p>convertendo dados!</p>
 <pre class="r"><code>#base exemplo
   iris[1:5,] %&gt;% as_tibble()
@@ -497,7 +539,21 @@ entrada</li>
 </div>
 <div id="criando-sumarizações" class="section level2">
 <h2>criando sumarizações</h2>
-<pre><code>- `summarise()` - calcula resumos de uma tabela conforme especificação</code></pre>
+<p>Do we really have to call distinct again like this? Or is there an
+easier way than having to group_by -&gt; mutate -&gt; select -&gt;
+distinct?our supervisor noticed what you were typing on your laptop and
+gave a tip to Google up on the function summarize to make the code more
+readable and safer.</p>
+<p>And now after digging on the summarize function, you realize that by
+simply replacing mutate with summarize your code now looks like this.
+And it automatically ungroups the outermost group after giving the
+summary statistics.</p>
+<pre><code>- `summarise()` - calcula resumos de uma tabela conforme especificação
+
+
+group_by ajuda a agrupar o conjunto de dados em grupos com base nos valores de uma coluna</code></pre>
+<p>resumir ajuda a fazer um resumo de um conjunto de dados
+agrupado/desagrupado para obter estatísticas resumidas</p>
 <p>o Media o Quantil</p>
 <pre class="r"><code>#exemplo: calculo da quantidade de observações de cada categoria, e 
 # média para a variável Petal.Length considerando a visão por Species
@@ -517,8 +573,9 @@ entrada</li>
 <pre><code>- `group_by()` - manipula a base de dados segmentando por cada &quot;grupo&quot; da variável especificada e, posteriormente, combina os resultados, considerando os comandos seguintes dados.</code></pre>
 </div>
 </div>
-<div id="redimensionando-os-dados-dados-tidy" class="section level1">
-<h1>Redimensionando os dados (dados tidy)</h1>
+<div id="tidyr" class="section level1">
+<h1>Tidyr</h1>
+<p>Redimensionando os dados (dados tidy)</p>
 <p>função que ajuda : <a href="https://r-rudra.github.io/tidycells/" class="uri">https://r-rudra.github.io/tidycells/</a></p>
 <p># A filosofia tidy, é uma forma de vincular a estrutura de um<br />
 # conjunto de dados (seu layout físico) com sua semântica (seu
@@ -732,8 +789,10 @@ função que combina várias colunas.</li>
 ## 6 China        2000 213766/1280428583</code></pre>
 </div>
 </div>
-<div id="combinando-bases" class="section level1">
-<h1>Combinando Bases</h1>
+<div id="recursos-avançados" class="section level1">
+<h1>Recursos avançados</h1>
+<div id="combinando-bases-joinmerge" class="section level2">
+<h2>Combinando Bases (join/merge)</h2>
 <pre><code>- `inner_join()` - retorna todas as linhas da base à esquerda que possuem valores correspondentes na base à direita. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
 - `left_join()` - retorna todas as linhas de x e todas as colunas de x e y. Linhas em x sem correspondência em y terão valores de NA nas novas colunas. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
 - `full_join()` - retorna todas as linhas e todas as colunas de xe y. Onde não há valores correspondentes, retorna NA para o ausente.</code></pre>
@@ -772,8 +831,8 @@ função que combina várias colunas.</li>
 ## $ band  &lt;chr&gt; &quot;Stones&quot;, &quot;Beatles&quot;, &quot;Beatles&quot;
 ## $ plays &lt;chr&gt; NA, &quot;guitar&quot;, &quot;bass&quot;</code></pre>
 </div>
-<div id="recursos-avançados" class="section level1">
-<h1>Recursos avançados</h1>
+<div id="across" class="section level2">
+<h2>across()</h2>
 <p>O dplyr é o pacote mais útil para realizar transformação de dados,
 aliando simplicidade e eficiência de uma forma elegante. Os scripts em R
 que fazem uso inteligente dos verbos dplyr e as facilidades do operador
@@ -820,8 +879,9 @@ avengers %&gt;% summarise(across(contains(“Death”), ~ sum(is.na(.x))))
 %&gt;% glimpse # avengers %&gt;% summarise(across(contains(“Death”),
 function(x) sum(is.na(x)))) %&gt;% glimpse</li>
 </ul>
-<div id="programação-funcional" class="section level2">
-<h2>Programação Funcional</h2>
+</div>
+<div id="programação-funcional-purrr" class="section level2">
+<h2>Programação Funcional (purrr)</h2>
 <p>Como ferramenta transversal a todas as etapas do workflow de análise,
 temos a programação funcional, que permite a criação de códigos mais
 rápidos, simples e reproduzíveis. No contexto do <code>tidyverse</code>
