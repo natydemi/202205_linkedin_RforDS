@@ -352,6 +352,53 @@ Até aqui o tidyverse apresenta o seu ponto forte em termos de legibilidade do c
 
 
 
+```{r}
+covid19brazil::brazil_state %>% head() %>% glimpse()
+```
+
+
+```{r}
+covid19brazil_epidWeek <- covid19brazil::brazil_state %>% 
+  group_by(region, state, coduf, epidWeek, population) %>%  
+  summarise(across(where(is.integer), ~sum(.))) %>%
+  ungroup() %>% 
+  glimpse() 
+```
+
+
+```{r}
+
+covid19brazil_epidWeek %>% 
+  group_by(region) %>% 
+  
+  ggplot(aes(epidWeek, newCases)) + 
+  geom_bar() 
+
+covid19brazil_epidWeek
+
+```
+
+
+
+```{r}
+covid19brazil_epidWeek %>% 
+  ggplot(aes(population, newCases)) + 
+  geom_point() + 
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Programação Funcional (purrr)
 
 Como ferramenta transversal a todas as etapas do workflow de análise, temos a programação funcional, que permite a criação de códigos mais rápidos, simples e reproduzíveis. No contexto do `tidyverse` a biblioteca `purrr` disponibiliza de uma série de funcionalidades visando aprimorar a programação funcional no R. Como principal função temos o `map()`, transformando a sua entrada por meio da aplicação de uma função a cada elemento, e retornando uma lista com o mesmo comprimento que a entrada:
@@ -391,4 +438,10 @@ O `map()` retorna listas por default, para que o resultado tenha outra estrutura
 Se você estiver trabalhando com uma versão mais recente do RStudio, verá uma aba chamada Tutorial entre os paineis que estão na parte superior à direita da sua IDE. Nela você vai encontrar várias opções de manuais interativos, recomendo particularmente: `Filter observations`, `Create new variables` e `Summarise Tables`. Uma última observação: para voltar para sair de algum dos tutoriais você precisa apertar o botão `stop` uma bolinha vermelha que aparece no canto superior esquerdo da própria aba Tutorial ;)
 
 
- [cheatsheets do R-Studio](https://www.rstudio.com/resources/cheatsheets/)
+ [cheatsheets do R-Studio](https://www.rstudio.com/resources/cheatsheets/) 
+ 
+ 
+ 
+ - Rladies: 
+ https://beatrizmilz.github.io/2019-02-R-Interm-R-LadiesSP/#117
+ 

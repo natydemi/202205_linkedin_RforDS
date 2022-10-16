@@ -72,6 +72,7 @@ Escrever:
 > Ex R
 
 
+
 ### Aplicar padronizações
 
 Previne escalas diferentes
@@ -83,6 +84,60 @@ Escrever:
  -- Dados extremos
  
 > Ex R
+
+```{r}
+dados::casas %>% 
+  select(where(is.numeric)) %>% 
+  glimpse()
+```
+
+```{r}
+dados_porao <- dados::casas %>% 
+  select(lote_area, venda_valor, acima_solo_num_comodos, alvenaria_area) 
+
+
+p1 <- dados_porao %>% 
+  pivot_longer(everything()) %>% 
+  ggplot(aes(value, name, color = name)) +
+  geom_boxplot() +
+  theme_minimal() +
+  theme(legend.position = "bottom", legend.title=element_blank()) +
+  labs(x = "", y = "") 
+
+
+p2 <- dados_porao %>% 
+  scale() %>% 
+  as_tibble() %>% 
+  pivot_longer(everything()) %>% 
+  ggplot(aes(name, value, color = name)) +
+  geom_boxplot() +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(x = "", y = "") +
+  ggtitle("Standardization Z-Score") +
+  guides(x = "none")
+
+
+p3 <- dados_porao %>% 
+  mutate(across(everything(), ~scales::rescale(.x, to = c(0, 1)))) %>% 
+  pivot_longer(everything()) %>% 
+  ggplot(aes(name, value, color = name)) +
+  geom_boxplot() +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(x = "", y = "") +
+  ggtitle("Min-Max Scaling") +
+  guides(x = "none")
+```
+
+```{r warning=FALSE, fig.width = 7, fig.height = 5}
+library(patchwork)
+
+p1 / (p2 + p3) + 
+  plot_annotation(title = 'Features Numéricas')
+```
+
+
 
 
 ### Tratar dados faltantes (missing)
@@ -104,13 +159,16 @@ Tendo que, para cada uma dessas, é requerido algum grau de investigação e dec
 
 Vamos agora comentar um pouco sobre o ferramental relacionado aos valores faltantes:
 
-#### codificação
+
+
+#### no R
 
 Uma vez que você conhece a fonte de origem dos valores faltantes, pode concluir que substitui-los é o melhor caminho. Por exemplo, você pode saber que todos os valores de "N/A", "NA" e "Não disponível" ou -99 ou -1 devem estar ausentes.
 
 
 
 #### pacote tidyr
+
 Comentando um pouco sobre o ferramental, o pacote `tidyr` possui algumas funções para tratar missing data, são elas:
 
   - `drop_na()` - excluí todas as linhas que apresentam elementos faltantes. 
@@ -364,9 +422,9 @@ starwars %>%
 
 Visto existirem muitos termos que são relacionados aos temas discutidos neste módulo, montei um pequeno resumo que espero que ajude.
 
-- Pré-processamento trata de: representação, qualidade e limpeza. Tem como termos próximos, isto é, termos que possuem objetivos próximos, e/ou que irão retornar discussões importantes relacionadas ao tema: Data Wrangling, Data Munging, Data Cleaning, Cleansing  e Data Integrity.
+- **Pré-processamento** trata de: representação, qualidade e limpeza. Tem como termos próximos, isto é, termos que possuem objetivos próximos, e/ou que irão retornar discussões importantes relacionadas ao tema: Data Wrangling, Data Munging, Data Cleaning, Cleansing  e Data Integrity.
 
-- Engenharia de Atributos: Eloquência, Interpretabilidade, e Otimização de processamento. E tem como termos próximos, seguindo a mesma lógica do tópico anterior: Feature Engineering, Feature Extraction, Feature Selection e Data Transformation.
+- **Engenharia de Atributos**: Eloquência, Interpretabilidade, e Otimização de processamento. E tem como termos próximos, seguindo a mesma lógica do tópico anterior: Feature Engineering, Feature Extraction, Feature Selection e Data Transformation.
 
 
 Sempre vale lembrar sobre como termos em inglês retornam mais resultados para estes temas, "engenharia de atributos" por exemplo soa até estranho para os ouvidos, pois o mais usual é a denominação "Feature Engineering".

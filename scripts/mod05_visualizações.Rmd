@@ -43,34 +43,25 @@ Mas nem tudo são flores, temos um contra importante aqui: Curva de aprendizado 
 
 No ggplot o gráfico é visto como um mapeamento de elementos, feito por camadas, são elas:
 
-
 ```{r, eval=F}
-  dados %>% 
-    ggplot(aesthetic) +
-      geometries(statistics) +
-      facets() +
-      coord()
-      themes()
+dados %>% 
+  ggplot(aesthetic) +
+    geometries(statistics) +
+    facets() +
+    themes() +
+    coord() +
+    scales()
 ```
 
-
-Como expressamos o visual em palavras?
-- {data} - Dados que serão visualizados
-- {aesthetic mappings} - Mapeamentos estéticos dos dados para componentes visuais
-- Objetos geométricos que aparecem na plotagem
-- As estatísticas transformam os dados no caminho para a visualização
-- As coordenadas organizam a localização de objetos geométricos
-- As escalas definem o intervalo de valores para a estética
-- {facet} - As facetas agrupam-se em subtramas
-
-How do we express visuals in words?
-Data to be visualized
-Geometric objects that appear on the plot
-Aesthetic mappings from data to visual component
-Statistics transform data on the way to visualization
-Coordinates organize location of geometric objects
-Scales define the range of values for aesthetics
-Facets group into subplots
+Traduzindo, temos: 
+- {data} - Dados que serão utilizados no gráfico
+- {aesthetic} - Mapeamentos estéticos dos dados para os componentes visuais (eixo x, y, cores, etc)
+- {geometries} - Objetos geométricos que irão aparecer no gráfico
+- {facets} - Apresenta as visualizações segundo subgrupos, segmentações  
+- {themes} - Redefine o layout do gráfico
+- {scales} - Especifica o intervalo de variação que será considerado para os mapeamentos estéticos
+- {coord} - Organiza as coordenadas/eixos em que objetos geométricos irão aparecer
+- {statistics} - Transforma os dados considerando sumarizações estatísticas
 
 Contudo apenas três destas são obrigatórias: dados,  atributos estéticos (aesthetic), e objetos geométricos (geometries: pontos, barras, linhas, etc). Vamos começar por eles.
 
@@ -86,78 +77,92 @@ Para as camadas obrigatórias, temos um layout similar a este:
 ```
 
 
-
 E para entender melhor do que se tratam, vamos adicioná-los um a um. Vamos utilizar aqui a base `drinks`, e no que ao aplicar o ggplot apenas, temos um painel em branco, com isto podemos entender que esta função tem como papel inicializar o gráfico:
 
 ```{r}
-drinks <- fivethirtyeight::drinks
-drinks %>% head()
+gapminder <- dados::dados_gapminder %>% glimpse()
 ```
 
 
 ```{r}
-drinks %>% 
+gapminder %>% 
   ggplot() 
 ```
 Passamos agora para o elemento `aesthetic`, no R esta função é representada de maneira abreviada, `aes()`. E por ser uma função, podemos pesquisar sobre, e então teremos que este "mapeamento estético" descreve como as variáveis dos dados serão mapeadas para propriedades visuais (estéticas) de geometrias. Não ajudou muito né? Mas traduzindo, o que estamos dizendo é que no `aes()` você indicará qual variável será mapeada no gráfico. Um mapeamente usual trata do eixo x e eixo y:
 
 
 ```{r}
-drinks %>% 
-  ggplot(aes(x = beer_servings, y = wine_servings)) 
+gapminder %>% 
+  ggplot(aes(x = pib_per_capita, y = expectativa_de_vida)) 
 ```
 
 Note que agora o gráfico passou a apresentar as variáveis nos eixos, mas nada além disto, por quê? Pois não indicamos como gostariamos que este gráfico apresentasse estes eixos. E para isto temos o nosso terceiro elemento obrigatório, as geometrias:
 
 
 ```{r}
-drinks %>% 
-  ggplot(aes(x = beer_servings, y = wine_servings)) +
+gapminder %>% 
+  ggplot(aes(x = pib_per_capita, y = expectativa_de_vida))  +
   geom_point()
 ```
 E poderíamos trabalhar com outra geometria. Qualquer uma? Não. Precisaria ser uma geometria que trabalhasse com dois eixos, sendo ambos numéricos, dado as variáveis escolhidas:
 
 ```{r}
-drinks %>% 
-  ggplot(aes(x = beer_servings, y = wine_servings)) +
-    #geom_point()
-    #geom_area() +
-    #geom_bin_2d() +
-    #geom_jitter()
-    geom_rug()
+gapminder %>% 
+  ggplot(aes(x = pib_per_capita, y = expectativa_de_vida, color = continente))  +
+    geom_point() 
 ```
+
 
 Inclusive podemos usar mais de um layer, e fazendo ajustes nas geometrias de forma independente:
 
 ```{r}
-drinks %>% 
-  ggplot(aes(x = beer_servings, y = wine_servings)) +
-    geom_point(aes(color = total_litres_of_pure_alcohol)) +
-    #geom_area()
-    #geom_bin_2d() +
-    #geom_jitter()
-    geom_rug(alpha = 0.2)
+gapminder %>% 
+  ggplot(aes(x = pib_per_capita, y = expectativa_de_vida, color = continente))  +
+    geom_point() +
+    geom_text(data = . %>% filter(pib_per_capita>60000), aes(label = pais))
 ```
+
+
+```{r}
+gapminder %>% 
+  ggplot(aes(x = pib_per_capita, y = expectativa_de_vida, color = continente))  +
+    geom_point() +
+    ggrepel::geom_text_repel(data = . %>% filter(pib_per_capita>60000), aes(label = pais))
+```
+
+Faz mais sentido trabalhar com os dados no tempo:
+
+```{r}
+gapminder %>% 
+  ggplot(aes(x = ano, y = expectativa_de_vida, color = continente))  +
+    geom_point() 
+```
+
+```{r}
+gapminder %>% 
+  ggplot(aes(x = ano, y = expectativa_de_vida, color = continente))  +
+    geom_point() +
+    geom_line(aes(group = pais))
+```
+
+
+
+
+```{r}
+gapminder %>% 
+  ggplot(aes(x = pib_per_capita, y = expectativa_de_vida, color = continente))  +
+    geom_point(alpha = 0.3) +
+  geom_line(aes(group = pais)) 
+
+```
+
+
+
+
 
 Mas quem são esses? 
 
-```{r}
-drinks %>% 
-  ggplot(aes(x = beer_servings, y = wine_servings, color = total_litres_of_pure_alcohol)) +
-    geom_point() +
-    geom_text(aes(label = country))
-```
-
-
 Ruim de ler? 
-
-
-```{r}
-drinks %>% 
-  ggplot(aes(x = beer_servings, y = wine_servings, color = total_litres_of_pure_alcohol)) +
-    geom_point(alpha = 0.1) +
-    geom_text(data = . %>% filter( total_litres_of_pure_alcohol > 10), aes(label = country))
-```
 
 
 ```{r}
@@ -475,6 +480,15 @@ drinks_tidy %>%
   scale_fill_brewer(palette = "Pastel1")
 
 ```
+
+
+
+
+# testes panelr::nlsy
+
+
+
+
 
 # Explanação: próximos passos! 
 
