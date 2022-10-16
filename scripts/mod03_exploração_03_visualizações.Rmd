@@ -54,6 +54,15 @@ No ggplot o gráfico é visto como um mapeamento de elementos, feito por camadas
 ```
 
 
+Como expressamos o visual em palavras?
+- {data} - Dados que serão visualizados
+- {aesthetic mappings} - Mapeamentos estéticos dos dados para componentes visuais
+- Objetos geométricos que aparecem na plotagem
+- As estatísticas transformam os dados no caminho para a visualização
+- As coordenadas organizam a localização de objetos geométricos
+- As escalas definem o intervalo de valores para a estética
+- {facet} - As facetas agrupam-se em subtramas
+
 How do we express visuals in words?
 Data to be visualized
 Geometric objects that appear on the plot
@@ -62,15 +71,6 @@ Statistics transform data on the way to visualization
 Coordinates organize location of geometric objects
 Scales define the range of values for aesthetics
 Facets group into subplots
-
-Como expressamos o visual em palavras?
-Dados a serem visualizados
-Objetos geométricos que aparecem na plotagem
-Mapeamentos estéticos de dados para componentes visuais
-As estatísticas transformam os dados no caminho para a visualização
-Coordenadas organizam a localização de objetos geométricos
-As escalas definem o intervalo de valores para a estética
-As facetas agrupam-se em subtramas
 
 Contudo apenas três destas são obrigatórias: dados,  atributos estéticos (aesthetic), e objetos geométricos (geometries: pontos, barras, linhas, etc). Vamos começar por eles.
 

@@ -13,22 +13,28 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 library(tidyverse)
 ```
 
+# Intro
+
+
 
 # Dataprep
 
-Data wrangling ou data cleaning, não é uma tarefa pontual, mas sim algo que deverá 
+Dataprep, 
+ Limpeza
+
+Data wrangling ou limpeza de dados, é uma tarefa que costuma , mas sim algo que você precisa lidar durante todo o processo de análise -- sendo 
 formatação incorreta
 
 
-Completude 
-Uniformidade
-  Abreviação de Dados
-  Espaços extras
-Conformidade com o mundo real
-  Fora da escala
-  Erro de medida e/ou representação
+- Uniformidade
+  - Abreviação de Dados
+  - Espaços extras
+- Conformidade com o mundo real
+  - Fora da escala
+  - Erro de medida e/ou representação
+   
 
-## lidando com dados duplicados
+
 
 
 ## tratando dados faltantes (missing)
@@ -58,12 +64,10 @@ Pacote tidy possue algumas funções interessantes
 
 Mas existem pacotes mais robustos, como é o exemplo do pacote naniar 
 
-## diferentes encode
+
+## codificação das variáveis 
 
 
-
-## identificando valores extremos (outliers)
-anomalia dados raros
 
 
 
@@ -75,6 +79,20 @@ previnir escalar diferentes
 
 
 # Feature Engineering
+
+
+Evolução ~ cálculo de tendência, sazonalidade e calendário
+- coef. angular, média móvel, dia da semana, 
+
+Representação ~ ajuste de unidades de medida
+	- Recencia, contagem, proporção, etc
+
+Relações funcionais ~ descrição por meio de funções matemáticas
+- Box-cox, splines, etc
+
+Referências ~ informações relacionadas a área de estudo 
+- Conhecimento externo
+
 
 
 ## strings
@@ -264,10 +282,8 @@ starwars %>%
     geom_boxplot()
 ```
 
-# Referência
-
-- [Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/)
-
 # HANDS-ON
+
+- O livro [Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/) é uma das minhas referências preferidas, visto os excelentes cases e discussões que apresenta. Nos ajudando a desenvolver não apenas em termos técnicos, mas também com a intuição do que as ferramentas oferecem. A sugestão aqui é que você o consulte para evoluir nos conteúdos deste capítulo, particularmente: dados faltantes no capítulo 8 e encoding no capítulo 5.
 
 
