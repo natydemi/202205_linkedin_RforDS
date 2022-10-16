@@ -20,7 +20,7 @@ Neste arquivo ...
 
 # Pré-processamento
 
-A etapa de pré processamento faz uso de todos os recursos que utilizamos até aqui, contudo tendo como enfoque a qualidade do dado, algumas das ações que podemos relacionar a esta etapa, organizadas por grupos:
+A etapa de pré-processamento faz uso de todos os recursos que utilizamos até aqui. Tendo como enfoque a qualidade do dado, algumas das ações que podemos relacionar a esta etapa, organizadas por grupos, são:
 
 - Importação
   - Identificar unidade de análise 
@@ -53,12 +53,12 @@ Note que se tratam de ajustes que podem fazer a diferença entre o sucesso e o f
    
 ## E no R? 
 
-Aqui o desafio é mais investigativo e julgamental do que em termos de ferramenta. Com o que vimos nos módulos anteriores, você será capaz de avaliar as questões e endereçar soluções. Com certeza existem pacotes que se mostrão mais práticos para determinados estudos, como por exemplo `codemeta` que nos auxiliar com a criação de metadados, ou o pacote `naniar` que nos auxilia com dados faltantes (falaremos dele logo mais). Mas é importante ressaltar que, em última estância, é uma questão de pesquisar `library R missing data`, por exemplo -- DICA: pesquisas em inglês tendem a ser mais efetivas ;). O verdadeiro conhecimento nesta etapa é ter um horizonte sobre O QUE precisa ser feito, mais do que o COMO. 
+Aqui o desafio é mais investigativo e julgamental do que em termos de ferramenta. Com o que vimos nos módulos anteriores, você será capaz de avaliar as questões e endereçar soluções. Com certeza existem pacotes que se mostram mais práticos para determinados estudos, como por exemplo `codemeta` que nos auxiliar com a criação de metadados, ou o pacote `naniar` que nos auxilia com dados faltantes (falaremos dele logo mais). Mas é importante ressaltar que, em última instância, é uma questão de pesquisar `library R missing data`, por exemplo -- DICA: pesquisas em inglês tendem a ser mais efetivas ;). O verdadeiro conhecimento nesta etapa é ter um horizonte sobre O QUE precisa ser feito, mais do que o COMO. 
 
 
 ## Ajustes pré modelagem (dataprep)
 
-Apesar dos comentários acima existe um grupo em particular que comentaremos um pouco mais, no caso, o grupo que denominamos `Ajustes pré modelagem`, ou ainda dataprep. Tais pré-processamentos são particularmente importantes pois a depender da técnica de modelagem que você deseje aplicar, estes ajustes podem ser obrigatórios -- dado que algumas técnicas não aceitam valores faltantes ou features categóricas como entrada. Sendo assim, teremos uma breve discussão sobre o que envolve cada um dos `dataprep` citados. No caso dos dados faltantes, visto a sua relevância, daremos uma profundidade maior na discussão.
+Apesar dos comentários acima, existe um grupo em particular que comentaremos um pouco mais. No caso, o grupo que denominamos `Ajustes pré modelagem`, ou ainda dataprep. Tais pré-processamentos são particularmente importantes pois, a depender da técnica de modelagem que você deseje aplicar, estes ajustes podem ser obrigatórios -- dado que algumas técnicas não aceitam valores faltantes ou features categóricas como entrada. Sendo assim, teremos uma breve discussão sobre o que envolve cada um dos `dataprep` citados. No caso dos dados faltantes, visto a sua relevância, daremos uma profundidade maior à discussão.
 
 
 ### Aplicar codificações  
@@ -87,26 +87,26 @@ Escrever:
 
 ### Tratar dados faltantes (missing)
 
-Aqui nosso objetivo primário deve ser entender qual o mecanismo que causou a ausência dos dados, tendo como referência a discussão feita no [Capítulo 08 do livro Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/handling-missing-data.html), temos como três principais fontes de  :
+Aqui, nosso objetivo primário deve ser entender qual o mecanismo que causou a ausência dos dados. Tendo como referência a discussão feita no [Capítulo 08 do livro Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/handling-missing-data.html), temos como três principais causas de ausência de dados:
 
 
-- **Deficiência Estrutural** : um componente do preditor que foi excluído dos dados. Por exemplo, para uma feature que caracteriza um componente que não existe na maioria das observações, poderia se usada uma categoria para indicar sua inexistência 
-- **Ocorrências Aleatórias** : quando não é possível identificar uma causa específica para a ausência dos dados.
+- **Deficiência Estrutural** : um nível da variável que foi excluído dos dados. Por exemplo, para uma feature que caracteriza um componente que não existe na maioria das observações, poderia se usada uma categoria para indicar sua inexistência
 - **Causas Específicas** : há ocorrência de evento específico que gera a falta de dados, como quando um paciente interrompe sua participação em um estudo clínico devido a um efeito adverso ou morte.
+- **Ocorrências Aleatórias** : quando não é possível identificar uma causa específica para a ausência dos dados.
 
-E em termos de endereçamento, existem diferentes modos de atuar, podemos
+Em termos de endereçamento, existem diferentes modos de atuar. Podemos:
 
 - Deleter a coluna  
 - Imputar valores 
 - Criar uma nova categoria
 
-Tendo que para cada uma dessas envolvem algum grau de investigação e decisão, como por exemplo: qual será o valor da imputação? A média da coluna? A mediana? Utilizaremos alguma técnica baseada em modelos? Cada caso será um caso.
+Tendo que, para cada uma dessas, é requerido algum grau de investigação e decisão, como por exemplo: qual será o valor da imputação? A média da coluna? A mediana? Utilizaremos alguma técnica baseada em modelos? Cada caso será um caso.
 
 Vamos agora comentar um pouco sobre o ferramental relacionado aos valores faltantes:
 
 #### codificação
 
-Uma vez que você conhece a fonte de origem dos valores faltantes, pode concluir que a substitui-los é o melhor caminho. Por exemplo, você pode saber que todos os valores de "N/A", "NA" e "Não disponível" ou -99 ou -1 devem estar ausentes.
+Uma vez que você conhece a fonte de origem dos valores faltantes, pode concluir que substitui-los é o melhor caminho. Por exemplo, você pode saber que todos os valores de "N/A", "NA" e "Não disponível" ou -99 ou -1 devem estar ausentes.
 
 
 
@@ -115,7 +115,7 @@ Comentando um pouco sobre o ferramental, o pacote `tidyr` possui algumas funçõ
 
   - `drop_na()` - excluí todas as linhas que apresentam elementos faltantes. 
   - `fill()` - substituí os dados faltantes pelo valor mais recente da referida coluna.
-  - `replace_na()` - substituí os dados faltantes por um valor pré especificado.
+  - `replace_na()` - substituí os dados faltantes por um valor especificado.
   
 Alguns exemplos simples
 ```{r}
@@ -160,7 +160,7 @@ naniar::gg_miss_var(airquality, facet = Month)
 
 # Feature Engineering
 
-Na wikipedia a definição de Feature Engineering, o que em português seria algo como Engenharia de Features é: "descoberta de variáveis, é o processo de usar o conhecimento da área de negócio, para extrair features (características, propriedades, atributos)". E é exatamente disto que se trata, de traduzir o conhecimento existe em features, de modo que o fênomeno que estamos estudando esteja melhor representado. Gosto muito de pensar na palavra eloquente aqui :) 
+Na wikipedia, a definição de Feature Engineering, o que em português seria algo como Engenharia de Atributos é: "descoberta de variáveis, é o processo de usar o conhecimento da área de negócio, para extrair features (características, propriedades, atributos)". E é exatamente disto que se trata, de traduzir o conhecimento existente em features, de modo que o fênomeno que estamos estudando esteja melhor representado. Gosto muito de pensar na palavra eloquente aqui :) 
 
 E como isto tende a ficar muito abstrato, organizei alguns grupos que podem nos ajudar a dar um horizonte maior do que é possível:
 
@@ -174,11 +174,11 @@ E como isto tende a ficar muito abstrato, organizei alguns grupos que podem nos 
 - **Relações funcionais** ~ descrição por meio de funções matemáticas
   - Transformação Box-cox, splines, etc
 
-- **Referências** ~ informações relacionadas a área de estudo 
+- **Referências** ~ informações relacionadas à área de estudo 
 - Conhecimento externo
 
 
-E em termos ferramentais aqui estamos novamente no contexto em que saber o que fazer é a parte mais desafiadora. Ainda assim, construir features pode ter suas dificuldades, particularmente se estivermos tratando de dados menos usuais: como textos, datas e fatores. Seguem alguns exemplos destas classes de objetos, considerando os respectivos pacotes do tidyverse.
+Em termos ferramentais, aqui estamos novamente no contexto em que saber o que fazer é a parte mais desafiadora. Ainda assim, construir features pode ter suas dificuldades, particularmente se estivermos tratando de dados menos usuais: como textos, datas e fatores. Seguem alguns exemplos destas classes de objetos, considerando os respectivos pacotes do tidyverse.
 
 
 ## textos (stringr)
@@ -220,10 +220,7 @@ starwars %>%
 ```
 
 Exercício: criar uma coluna com as skin_color unicas
-    - `str_detect()` - identificar a presença de padrões em uma string
-    - `str_count()` - contabiliza o número de vezes que um padrão é encontrado
-    - `str_replace()` - substitui um dado padrão em uma string 
-    - `str_to_lower()` - converter strings maiúsculas e minúsculas
+
 
 ```{r}
 #base para exemplo
@@ -331,9 +328,6 @@ fct_count() - conta o número de valores de cada nível;
 fct_relevel() - reordenar os níveis dos fatores;
 fct_explicit_na() - adicionar o NA como um dos níveis
 
-    - `fct_count()` - conta o número de valores de cada nível
-    - `fct_relevel()` - reordenar os níveis dos fatores
-    - `fct_explicit_na()` - adicionar o `NA` como um dos níveis
 
 ```{r}
 #base para exemplo
@@ -368,11 +362,11 @@ starwars %>%
 
 # Considerações Finais
 
-Visto existirem muitos termos que são relacionados aos temas discutidos neste módulo, montei um pequeno resumo que espero que ajude 
+Visto existirem muitos termos que são relacionados aos temas discutidos neste módulo, montei um pequeno resumo que espero que ajude.
 
-- Pré-processamento trata de: representação, qualidade e limpeza. E tem como termos próximos, isto é, termos que possuem objetivos próximos, e/ou que irão retornar discussões importantes relacionadas ao tema: Data Wrangling, Data Munging, Data Cleaning, Cleansing  e Data Integrity.
+- Pré-processamento trata de: representação, qualidade e limpeza. Tem como termos próximos, isto é, termos que possuem objetivos próximos, e/ou que irão retornar discussões importantes relacionadas ao tema: Data Wrangling, Data Munging, Data Cleaning, Cleansing  e Data Integrity.
 
-- Engenharia de Feature: Eloquência, Interpretabilidade, e Otimização de processamento. E tem como termos próximos, seguindo a mesma lógica do tópico anterior: Feature Engineering, Feature Extraction, Feature Selection e Data Transformation.
+- Engenharia de Atributos: Eloquência, Interpretabilidade, e Otimização de processamento. E tem como termos próximos, seguindo a mesma lógica do tópico anterior: Feature Engineering, Feature Extraction, Feature Selection e Data Transformation.
 
 
 Sempre vale lembrar sobre como termos em inglês retornam mais resultados para estes temas, "engenharia de atributos" por exemplo soa até estranho para os ouvidos, pois o mais usual é a denominação "Feature Engineering".
@@ -394,6 +388,6 @@ naniar::oceanbuoys %>%
 Considerando o output gráfico, você diria que estamos lidando com qual tipo de missing aqui? Parece ser o caso de dados faltantes aleatórios? 
 
 
-- O livro [Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/) é uma das minhas referências preferidas! Não apenaspelos excelentes cases e discussões, mas por procurar desenvolver o (a) leitor (a) não apenas em termos técnicos, mas também com a intuição das técnicas. A tarefa aqui é: leia a seção de introdução de cada um dos  aqui é que você o consulte para evoluir nos assuntos deste capítulo. Recomendo particularmente a leitura sobre encoding, do capítulo 5.
+- O livro [Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/) é uma das minhas referências preferidas! Não apenas pelos excelentes cases e discussões, mas por procurar desenvolver o(a) leitor(a) não apenas em termos técnicos, mas também com a intuição das técnicas. A tarefa aqui é: leia a seção de introdução de cada um dos capítulos para evoluir nos assuntos aqui abordados. Recomendo particularmente a leitura sobre encoding, do capítulo 5.
 
 
