@@ -89,9 +89,10 @@ Escrever:
 
 Aqui nosso objetivo primário deve ser entender qual o mecanismo que causou a ausência dos dados, tendo como referência a discussão feita no [Capítulo 08 do livro Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/handling-missing-data.html), temos como três principais fontes de  :
 
-- Estrutural : 
-- Aleatório : 
-- Específico : 
+
+- **Deficiência Estrutural** : um componente do preditor que foi excluído dos dados. Por exemplo, para uma feature que caracteriza um componente que não existe na maioria das observações, poderia se usada uma categoria para indicar sua inexistência 
+- **Ocorrências Aleatórias** : quando não é possível identificar uma causa específica para a ausência dos dados.
+- **Causas Específicas** : há ocorrência de evento específico que gera a falta de dados, como quando um paciente interrompe sua participação em um estudo clínico devido a um efeito adverso ou morte.
 
 E em termos de endereçamento, existem diferentes modos de atuar, podemos
 
@@ -159,30 +160,28 @@ naniar::gg_miss_var(airquality, facet = Month)
 
 # Feature Engineering
 
-Na wikipedia a definição de Feature Engineering, o que em português seria algo como Engenharia de Features é: "descoberta de variáveis, é o processo de usar o conhecimento da área de negócio, para extrair features (características, propriedades, atributos)". 
+Na wikipedia a definição de Feature Engineering, o que em português seria algo como Engenharia de Features é: "descoberta de variáveis, é o processo de usar o conhecimento da área de negócio, para extrair features (características, propriedades, atributos)". E é exatamente disto que se trata, de traduzir o conhecimento existe em features, de modo que o fênomeno que estamos estudando esteja melhor representado. Gosto muito de pensar na palavra eloquente aqui :) 
+
+E como isto tende a ficar muito abstrato, organizei alguns grupos que podem nos ajudar a dar um horizonte maior do que é possível:
 
 
+- **Evolução** ~ cálculo de tendência, sazonalidade e calendário
+  - coeficiente angular, média móvel, dia da semana, etc.
 
-
-Evolução ~ cálculo de tendência, sazonalidade e calendário
-- coef. angular, média móvel, dia da semana, 
-
-Representação ~ ajuste de unidades de medida
+- **Representação** ~ ajuste de unidades de medida
 	- Recencia, contagem, proporção, etc
 
-Relações funcionais ~ descrição por meio de funções matemáticas
-- Box-cox, splines, etc
+- **Relações funcionais** ~ descrição por meio de funções matemáticas
+  - Transformação Box-cox, splines, etc
 
-Referências ~ informações relacionadas a área de estudo 
+- **Referências** ~ informações relacionadas a área de estudo 
 - Conhecimento externo
 
 
+E em termos ferramentais aqui estamos novamente no contexto em que saber o que fazer é a parte mais desafiadora. Ainda assim, construir features pode ter suas dificuldades, particularmente se estivermos tratando de dados menos usuais: como textos, datas e fatores. Seguem alguns exemplos destas classes de objetos, considerando os respectivos pacotes do tidyverse.
 
-## strings
 
-
-Pacotes úteis para feature engineer
-Vamos avaliar algumas bibliotecas importantes do tidyverse, que nos ajudam particularmente a fazer feature engineer:
+## textos (stringr)
 
 stringr::
 Variáveis de texto são muito comuns nos bancos de dados e, geralmente, dão bastante trabalho para serem manipuladas.
@@ -320,7 +319,7 @@ rm(temp1, temp2, temp3)
 ```
 
 
-## fatores
+## fatores (forcats)
 forcats::
 Grande parte da frustração associada ao uso de fatores no R existe por conta da falta de algumas ferramentas úteis no pacote base.
 
@@ -365,6 +364,8 @@ starwars %>%
     geom_boxplot()
 ```
 
+
+
 # Considerações Finais
 
 Visto existirem muitos termos que são relacionados aos temas discutidos neste módulo, montei um pequeno resumo que espero que ajude 
@@ -377,8 +378,6 @@ Visto existirem muitos termos que são relacionados aos temas discutidos neste m
 Sempre vale lembrar sobre como termos em inglês retornam mais resultados para estes temas, "engenharia de atributos" por exemplo soa até estranho para os ouvidos, pois o mais usual é a denominação "Feature Engineering".
  
  
- 
-
 
 # HANDS-ON
 
