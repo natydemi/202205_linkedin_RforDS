@@ -1,8 +1,11 @@
 
-# Módulo 01 - Revisão - Linguagem R e RStudio
+# Pocket - Linguagem R e RStudio
 
+# Introdução
 # Neste script você irá encontrar uma revisão sobre o R, considerando a 
-# apresentação do ambiente RStudio, e aspectos estruturais da linguagem. 
+# apresentação do ambiente RStudio, e aspectos estruturais da linguagem.
+# De maneira complementar (e opcional), são apresentados alguns recursos
+# mais avançados da linguagem.
 
 
 # ----- Instalação -----
@@ -71,81 +74,81 @@
         # execute a instalação como se estivesse fazendo pela primeira vez
         # Pronto! O seu Rstudio está atualizado! 
 
-  # Para fazer o update do R, você pode seguir a mesma dinâmica, mas 
-  # baixando a versão mais atualizada do R. 
-      
-  # No caso do windowns, existe ainda a opção de fazer o update via bibliotecas 
-  # como o installlr::updateR(). No caso do Mac, a biblioteca seria updateR.
+# Para fazer o update do R, você pode seguir a mesma dinâmica, mas 
+# baixando a versão mais atualizada do R. 
 
-  # ATENÇÃO: Ao atualizar o R, por default, você irá “perder” as bibliotecas 
-  # que estiverem instaladas no seu computador, sendo necessário fazer a 
-  # instalação destas novamente. Isto porque não há garantia que as bibliotecas 
-  # funcionem com a nova versão do R – um comportamento usual para qualquer 
-  # linguagem de programação. Para consultar a versão dos seus pacotes: 
-    #sessionInfo()
+# No caso do windowns, existe ainda a opção de fazer o update via bibliotecas 
+# como o installlr::updateR(). No caso do Mac, a biblioteca seria updateR.
+
+# ATENÇÃO: Ao atualizar o R, por default, você irá “perder” as bibliotecas 
+# que estiverem instaladas no seu computador, sendo necessário fazer a 
+# instalação destas novamente. Isto porque não há garantia que as bibliotecas 
+# funcionem com a nova versão do R – um comportamento usual para qualquer 
+# linguagem de programação. Para consultar a versão dos seus pacotes: 
+#sessionInfo()
 
 
 # Alternativa às instalações físicas ----- 
 
-  #De maneira alternativa à instalação você pode consirar o RStudio Cloud,
-  # um serviço gratuito oferecido pelo RStudio que permite que os usuários R 
-  # tenham acesso a todo o ambiente RStudio via web, de maneira on-line, 
-  # inclusive permitindo colaboração, através do site do RStudio Cloud:
+#De maneira alternativa à instalação você pode consirar o RStudio Cloud,
+# um serviço gratuito oferecido pelo RStudio que permite que os usuários R 
+# tenham acesso a todo o ambiente RStudio via web, de maneira on-line, 
+# inclusive permitindo colaboração, através do site do RStudio Cloud:
 
-    #https://rstudio.cloud/
+#https://rstudio.cloud/
 
 
 # ----- Um tour pela IDE Rstudio  -----
 
-  #O RStudio possui uma série de recursos que otimizam a análise de dados, 
-  # sendo a própria interface, a principal vantagem, visto os seus paines:
-  
-  #*Console - painel onde os comandos são executados interativamente, 
-  # permitindo opções como autocompletar e consultas por meio da tecla ‘Tab’, 
-  # ou o acesso aos comandos já digitados via a tecla ‘Seta para cima’
-  
-  #*Source - onde são abertos os scripts do R, ou seja, onde você irá 
-  # escrever o código - sendo necessário enviá-lo manualmente para o Console,
-  # isto é, para execução, quando desejado. Para criar um script podemos  
-  # utilizar o point-and-click ‘File > New File > R Script’ 
-  # ou por meio do atalho Ctrl+Shift+N
-  
-  #*Environment - lista dos objetos carregados e/ou criados ao longo da sessão
-  
-  #*History - consulta do histórico de comandos
-  
-  #*Files - acesso às pastas e arquivos do computador
-  
-  #*Plots - visualização dos gráficos gerados
-  
-  #*Packages - gerenciamento das bibliotecas instaladas
-  
-  #*Help - menu de ajuda e visualização das documentações consultadas
-  
-  #*Viewer - visualização dos relatórios e aplicativos criados
-  
-  #*Connections - ferramentas para conexão com diferentes bancos de dados 
-  
-  #*Tutorial - tutoriais de aprendizado -- disponível apenas em versões mais 
-  # recentes da IDE RStudio
-  
-  
-  #Todos os painéis possuem uma série de funcionalidades próprias, 
-  # sendo interessante que, conforme avance na sua utilização do R, volte a 
-  # explorar tais opções, como as abas Git e Jobs.
-  
-  #A mesma dica de investigação vale para a barra de ferramentas do RStudio, 
-  # onde é possível encontrar desde recursos de codificação, como busca e 
-  # substituição, desenvolvimento de pacotes, ou Debug de código. 
-  
-  #DICA: Um recurso interessante do RStudio é a personalização da interface: 
-  # acesse na barra superior a opção  `Tools > Global Options’, dentre
-  # as alternativas, recomendo a sessão `Appearance` e `Pane Layout`.
-  
+#O RStudio possui uma série de recursos que otimizam a análise de dados, 
+# sendo a própria interface, a principal vantagem, visto os seus paines:
+
+#*Console - painel onde os comandos são executados interativamente, 
+# permitindo opções como autocompletar e consultas por meio da tecla ‘Tab’, 
+# ou o acesso aos comandos já digitados via a tecla ‘Seta para cima’
+
+#*Source - onde são abertos os scripts do R, ou seja, onde você irá 
+# escrever o código - sendo necessário enviá-lo manualmente para o Console,
+# isto é, para execução, quando desejado. Para criar um script podemos  
+# utilizar o point-and-click ‘File > New File > R Script’ 
+# ou por meio do atalho Ctrl+Shift+N
+
+#*Environment - lista dos objetos carregados e/ou criados ao longo da sessão
+
+#*History - consulta do histórico de comandos
+
+#*Files - acesso às pastas e arquivos do computador
+
+#*Plots - visualização dos gráficos gerados
+
+#*Packages - gerenciamento das bibliotecas instaladas
+
+#*Help - menu de ajuda e visualização das documentações consultadas
+
+#*Viewer - visualização dos relatórios e aplicativos criados
+
+#*Connections - ferramentas para conexão com diferentes bancos de dados 
+
+#*Tutorial - tutoriais de aprendizado -- disponível apenas em versões mais 
+# recentes da IDE RStudio
+
+
+#Todos os painéis possuem uma série de funcionalidades próprias, 
+# sendo interessante que, conforme avance na sua utilização do R, volte a 
+# explorar tais opções, como as abas Git e Jobs.
+
+#A mesma dica de investigação vale para a barra de ferramentas do RStudio, 
+# onde é possível encontrar desde recursos de codificação, como busca e 
+# substituição, desenvolvimento de pacotes, ou Debug de código. 
+
+#DICA: Um recurso interessante do RStudio é a personalização da interface: 
+# acesse na barra superior a opção  `Tools > Global Options’, dentre
+# as alternativas, recomendo a sessão `Appearance` e `Pane Layout`.
+
 # ----- Programação R -----
 
 # Organização dos scripts  -----
-
+  
   #Textos precedidos por # são comentários (note a mudança na cor do texto),
   # vale comentar que a indentação no R não é um pré requisito, mas sim
   # uma boa prática, visto auxiliar na organização do código.
@@ -156,7 +159,7 @@
   # Para conhecer digite: crtl + shift + R, e teste você mesmo! Você 
   # pode acessar tais seções na parte superior direita do script, 
   # ou na parte inferior esquerda.
-
+  
 
 
 # R como calculadora  -----
@@ -204,7 +207,7 @@
 
 
 # Operadores lógicos -----
-  
+
   #Considerando operadores lógicos, tendo como saída TRUE ou FALSE, temos:
   
   #maior/menor
@@ -234,7 +237,7 @@
 
 
 # Acessando Funções  -----
-
+  
   #Uma função no R é um conjunto de instruções organizadas e parametrizadas,
   # visando a execução de uma tarefa.
   
@@ -269,10 +272,10 @@
   #Note que não foi necessário especificar o nome do primeiro argumento da 
   # função em nenhum dos casos (`log(x=10)`).
   
-
+  
 
 # Criando objetos  -----
-
+  
   #Objetos no R são elementos que podem ser armazenados em variáveis, 
   # como, por exemplo, dados ou funções. E podemos criar tais objetos 
   # utilizando os sinais de atribuição `<-`, `=` ou até `->`.
@@ -300,7 +303,7 @@
   sqrt(Objeto) 
 
 # Manuseando objetos  -----
-
+  
   #Podemos fazer operações entre elementos e objetos
   #atribuindo um elemento diretamente
   a <- 2; a
@@ -552,7 +555,7 @@
 
 
 # Tratamento de exceções -----
- 
+  
   # Chamamos de exceção qualquer condição anormal que possa aparecer quando 
   # estamos executando um programa de computador. Normalmente, esses erros 
   # acontecem por fatores externos do ponto de vista do código, como valores
@@ -565,7 +568,7 @@
   # não apresente erros abruptos ou até mesmo continue a partir do ponto em que 
   # o erro ocorreu. O tratamento de exceções em R é feito utilizando a função 
   # `tryCatch.` A sintaxe da função é:
-    
+  
   result = tryCatch(
     {
       #Código a ser executado
@@ -584,7 +587,7 @@
   
   # Por exemplo, vamos escrever um código que retorna para uma variável as 
   # linhas de um arquivo lido de uma url:
-    
+  
   arquivo <- function(url) {
     linhas <- tryCatch(
       {
@@ -608,7 +611,7 @@
     )    
     return(linhas)
   }
-
+  
   
   # Caso o arquivo consiga ser lido, a última linha do primeiro bloco ( o 
   # resultado de readLines ) será retornado. Se ocorrer um erro, as mensagens 
@@ -622,12 +625,8 @@
   # além de melhorar a legibilidade e diminuir o tempo gasto para correção 
   # desses erros e problemas.
 
-  
-  # ----- HANDS-ON -----
+
+# ----- HANDS-ON -----
   #No RStudio Learn Primers: #https://rstudio.cloud/learn/primers 
   # você encontrará materiais para praticar e seguir evoluindo na linguagem 
 
-
-
-# ----- REFERÊNCIAS -----
-  

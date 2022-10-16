@@ -14,7 +14,7 @@ library(tidyverse)
 ```
 
 
-# Intro 
+# Introdução
 
 Neste módulo falaremos mais sobre as ações de transformação, manuseio e limpeza de dados que os pacotes `dplyr` e `tidyr` possibilitam. Iniciando pelo `dplyr`, que tem um enfoque maior na aplicação de transformações, seguido pelo `tidyr`, que tem como maior objetivo oferecer ferramentas para facilitar a passagem dos dados para o formato tidy. Por vezes tais etapas são conhecidas como
 

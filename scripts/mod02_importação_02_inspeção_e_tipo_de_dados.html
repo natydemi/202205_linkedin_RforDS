@@ -379,15 +379,24 @@ pre code {
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
+<div id="introdução" class="section level1">
+<h1>Introdução</h1>
+<p>Neste arquivo, conheceremos algumas funções que nos auxiliam nas
+investigações iniciais poteriores a importação de uma base de dados, no
+caso: inspeção de volumetrias, suas dimensões (linhas e colunas), e como
+tais informações estão sendo entendidas pela linguagem. Em relação a
+este último veremos também o conceito de <code>Classes do R</code>, como
+se relacionam com o conceito estatístico de
+<code>Tipos de Variáveis</code>, e algumas das principais
+características das <code>Estruturas de Dados</code> existentes no
+R.</p>
+</div>
 <div id="inspeções-iniciais" class="section level1">
 <h1>Inspeções iniciais</h1>
-<p>Após fazer a importação de uma base de dados, é importante que o
-objeto seja minimamente examinado, em termos de volumetrias, contadores
-únicos, suas dimensões (linhas e colunas), e como tais informações estão
-sendo entendidas pela linguagem. Vamos iniciar discutindo sobre tais
-verificações considerando dados dos filmes da Pixar, que podem ser
-consultados por meio do pacote <code>pixarfilms</code>, ou na sua versão
-traduzida para português, disponível no pacote <code>dados</code>:</p>
+<p>Vamos iniciar a discussão sobre as verificações considerando dados
+dos filmes da Pixar, que podem ser consultados por meio do pacote
+<code>pixarfilms</code>, ou na sua versão traduzida para português,
+disponível no pacote <code>dados</code>:</p>
 <pre class="r"><code>pixar_filmes &lt;- dados::pixar_filmes
 pixar_filmes
 ## # A tibble: 27 × 5
@@ -422,18 +431,19 @@ funções <code>tail(pixar_filmes)</code> ou:</p>
 ## 6 6                Os Incríveis         2004-11-05          115 Orientação pare…</code></pre>
 <div id="linhas-colunas-e-suas-nomenclaturas" class="section level2">
 <h2>Linhas, colunas e suas nomenclaturas</h2>
-<p>Antes de seguirmos gostaria de alertar que é relativamente comum
+<p>Antes de seguirmos vale pontuar de alertar que é relativamente comum
 encontrar diferentes nomenclaturas para as mesmas “entidades” no
-contexto de análise de dados, o que pode ser particularmente confuso
-para quem está iniciando na área. E não se preocupe, a área possui uma
-natureza multidiciplinar, tais variações são naturais. Neste curso, em
-que vamos trabalhar basicamente com dados tabulares, iremos nos referir
-às linhas das bases como observações ou unidades observacionais, e as
-colunas como: Variáveis, Características, Atributos ou ainda Features
-(este último sendo mais usual no contexto de modelagem, que veremos mais
-à frente). Por fim, para fazer referência à intersecção entre variáveis
-e observações, utilizaremos o termo “elementos da tabela” ou “célula da
-tabela”.</p>
+contexto de análise de dados, algo particularmente confuso para quem
+está iniciando na área. E não se preocupe, a área possui uma natureza
+multidiciplinar, tais variações são naturais. Neste curso, em que vamos
+trabalhar basicamente com dados tabulares, iremos nos referir aos dados
+como: tabelas, dataset, ou base de dados Em relação as linhas das bases,
+trataremos como unidades observacionais, ou simplesmente observações. Já
+para as colunas, utilizaremos os termos: variáveis, características,
+atributos ou ainda features (este último sendo mais usual no contexto de
+modelagem, que veremos mais à frente). Por fim, para fazer referência à
+intersecção entre variáveis e observações, utilizaremos o termo
+“elementos da tabela” ou “célula da tabela”.</p>
 <p>Para examinarmos as quantidades de observações e variáveis da base de
 dados, podemos trabalhar com funções como:</p>
 <pre class="r"><code>#linhas
@@ -447,7 +457,8 @@ pixar_filmes %&gt;% ncol()
 #ou ambas
 pixar_filmes %&gt;% dim()
 ## [1] 27  5</code></pre>
-<p>Para o caso de desejarmos checar o nome dos atributos da tabela:</p>
+<p>Para o caso de termos interesse em consultar o nome dos atributos da
+tabela:</p>
 <pre class="r"><code>pixar_filmes %&gt;% names()
 ## [1] &quot;ordem_lancamento&quot;         &quot;filme&quot;                   
 ## [3] &quot;data_lancamento&quot;          &quot;duracao&quot;                 
@@ -473,14 +484,15 @@ variável:</p>
 primeiro contato com um dos conceitos mais fundamentais no contexto de
 análise de dados: as classes das colunas de um dataset. Considerando a
 base <code>pixar_filmes</code> podemos observar as classes: character (
-&lt;chr&gt; ), indicando as coluna que possuem strings, ou seja,
-palavras; double ( &lt;dbl&gt; ), isto é, números; e date ( &lt;date&gt;
-), basicamente, datas. Saber sobre a classe de cada coluna é
-extremamente importante, pois nos permite identificar o tipo do dado, um
-conceito matemático que nos guia sobre quais cálculos que fazem ou não
-sentido de serem aplicados. Por exemplo, observe o exemplo abaixo e
-reflita: sendo a coluna <code>filme</code> uma palavra, faria sentido
-termos o cálculo de média?</p>
+&lt;chr&gt; ), indicando que existem colunas que possuem strings, ou
+seja, palavras; double ( &lt;dbl&gt; ), isto é, números; e date (
+&lt;date&gt; ), basicamente, datas. Saber sobre a classe de cada coluna
+é extremamente importante, pois nos permite identificar o tipo do dado,
+um conceito estatístico que nos guia sobre as características lógicas da
+variável, inclusive sobre quais cálculos que fazem ou não sentido de
+serem aplicados. Por exemplo, observe o resultado abaixo e reflita:
+sendo a coluna <code>filme</code> uma palavra, faria sentido termos o
+cálculo de média?</p>
 <pre class="r"><code>pixar_filmes %&gt;% summary()
 ##  ordem_lancamento      filme           data_lancamento         duracao     
 ##  Length:27          Length:27          Min.   :1995-11-22   Min.   : 81.0  
@@ -498,14 +510,15 @@ termos o cálculo de média?</p>
 ##                          
 ##                          
 ## </code></pre>
-<p>Você pode se perguntar como o R identifica as classes das variáveis,
-e em geral é por meio de regras lógicas, por exemplo: se tivermos uma
-string, uma letra, em uma coluna, não tem como esta variável ser
-numérica, certo? Bem, quase. Pois se tivermos uma coluna com valores
-monetários, por exemplo, é possível que o número esteja precedido pelo
-simbolo de <code>R$</code>. O ponto é que esta string precisa ser
-devidamente indicada para que o R entenda que se trata de um número, e
-não de uma palavra.</p>
+<p>Aqui você pode se perguntar: como o R identifica as classes das
+variáveis? E em geral é por meio de regras lógicas, por exemplo: se
+tivermos uma string, uma letra, em uma coluna, não tem como esta
+variável ser numérica, certo? Bem, quase. Pois se tivermos uma coluna
+com valores monetários, por exemplo, é possível que o número esteja
+precedido pelo simbolo de <code>R$</code>. E este exemplo é justo para
+pontuar que se, de alguma maneira, não dermos esta informação para o R
+(que a coluna é numérica), não será possível aplicar calculos numéricos
+à coluna.</p>
 <pre class="r"><code>(exemplo &lt;- &quot;R$ 1.00&quot;)
 ## [1] &quot;R$ 1.00&quot;
 class(exemplo)
@@ -520,15 +533,14 @@ class(exemplo)
 </div>
 <div id="alterando-a-classe-de-uma-coluna" class="section level2">
 <h2>Alterando a classe de uma coluna</h2>
-<p>Se o mapeamento de uma variável não estiver correto, o computador irá
+<p>Se o mapeamento de uma variável estiver incorreto, o computador irá
 interpretar os dados de maneira incoerente com a informação que a
-variável se propõe a representar. Sendo importante ajustar tais
-interpretações que serão feitas pela máquina, no caso, fazemos isto por
-meio do ajuste das classes. Como exemplo temos a
+variável se propõe a representar. Sendo importante ajustar as
+interpretações feitas pela máquina, no caso, fazemos isto por meio da
+alteração da classe da coluna. Como exemplo temos a
 <code>ordem_lancamento</code>, em que faria sentido aplicar cálculos
-como mínimo, ou máximo, mas que não conseguimos por esta característica
-estar sendo indevidamente interpretada como uma variável da classe
-<code>character</code>:</p>
+como mínimo, ou máximo, certo? Mas por estar sendo mapeada como
+<code>character</code>, não permite tais estatísticas:</p>
 <pre class="r"><code>dados::pixar_filmes %&gt;% 
   select(ordem_lancamento) %&gt;% 
   summary()
@@ -574,28 +586,28 @@ tabela:</p>
 <ul>
 <li>variáveis qualitativas (categóricas)
 <ul>
-<li>nominal (<code>character</code>, <code>&lt;chr&gt;</code> ou
-<code>factor</code>, <code>&lt;fct&gt;</code>)</li>
-<li>ordinal (<code>ordered</code>, <code>&lt;ord&gt;</code>)</li>
+<li>nominal (<code>character</code>/ <code>&lt;chr&gt;</code> ou
+<code>factor</code>/ <code>&lt;fct&gt;</code>)</li>
+<li>ordinal (<code>ordered</code>/ <code>&lt;ord&gt;</code>)</li>
 </ul></li>
 <li>variáveis quantitativas (numéricas)
 <ul>
-<li>discretas (<code>integer</code>, <code>&lt;int&gt;</code>)</li>
-<li>contínuas (<code>double</code>, <code>&lt;dbl&gt;</code>)</li>
+<li>discretas (<code>integer</code>/ <code>&lt;int&gt;</code>)</li>
+<li>contínuas (<code>double</code>/ <code>&lt;dbl&gt;</code>)</li>
 </ul></li>
 </ul>
-<p>Importante comentar que, nesta organização, casos como variáveis
-lógicas, do tipo TRUE/FALSE
-(<code>logical</code>,<code>&lt;lgl&gt;</code>), ou ainda datas, do tipo
-ano, mês, dia, etc (<code>date</code>,<code>&lt;date&gt;</code>), apesar
-de poderem ser entendidas como subcasos da organização acima, por
-possuírem muitas características próprias, possuem suas próprias classes
-no R.</p>
+<p>Importante comentar que nesta organização, alguns casos, como
+variáveis lógicas, do tipo <code>TRUE</code>/<code>FALSE</code>, ou
+ainda datas, como células do tipo dia-mês-ano, apesar de poderem ser
+entendidas como subcasos da organização acima, por possuírem muitas
+características próprias, possuem suas próprias classes no R, no caso
+<code>logical</code>/<code>&lt;lgl&gt;</code> e
+<code>date</code>/<code>&lt;date&gt;</code>, respectivamente.</p>
 <div id="construindo-um-exemplo" class="section level2">
 <h2>construindo um exemplo</h2>
 <p>Para apresentar as principais classes do R, iremos construir uma base
-de dados, visando um exemplo que contemple os tipos de dados mais usuais
-para uma análise de dados:</p>
+de dados, visando um exemplo que contemple os tipos de dados mais
+usualmente encontrados em uma análise de dados:</p>
 <pre class="r"><code>(dados_pixar &lt;- dados::pixar_filmes %&gt;% 
   left_join(dados::pixar_avalicao_publico) %&gt;% 
   select(-ordem_lancamento, -nota_metacritic, -nota_critics_choice) %&gt;% 
@@ -607,6 +619,9 @@ para uma análise de dados:</p>
   relocate(classificacao_indicativa, .after = filme) %&gt;% 
   relocate(where(is.numeric), .after = nota_cinema_score) %&gt;% 
   glimpse())
+## Warning in gzfile(file, mode): não foi possível abrir o arquivo comprimido &#39;C:/
+## Users/natyd/AppData/Local/Temp/RtmpQTxN1D\file10a0fc916e1&#39;, motivo provável &#39;No
+## such file or directory&#39;
 ## Joining, by = &quot;filme&quot;
 ## Rows: 27
 ## Columns: 7
@@ -632,64 +647,70 @@ para uma análise de dados:</p>
 ## 10 Up - Altas Aventu… Orientação pare… A+                    96               98
 ## # … with 17 more rows, and 2 more variables: data_lancamento &lt;date&gt;,
 ## #   classificacao_livre &lt;lgl&gt;</code></pre>
-<p>Ao utilizar a função <code>class()</code> teremos a informação de
-qual a estrutura do dado, no caso:</p>
-<pre class="r"><code>class(dados_pixar) 
-## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
-<p>Já ao consultar uma coluna em especifico, teremos a sua classe no
-sentido que foi discutido até aqui:</p>
+<p>Ao consultar uma coluna em especifico, teremos a sua classe:</p>
 <pre class="r"><code>class(dados_pixar$data_lancamento) 
 ## [1] &quot;Date&quot;
 
 #ou, alternativamente:
 dados_pixar %&gt;% pull(data_lancamento) %&gt;% class()
 ## [1] &quot;Date&quot;</code></pre>
+<p>Enquanto que ao utilizar a função <code>class()</code> para toda a
+base, teremos uma informação ainda não comentada, no caso: qual a
+<code>Estrutura de Dados</code> da tabela:</p>
+<pre class="r"><code>class(dados_pixar) 
+## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
 </div>
 </div>
 <div id="estruturas-de-dados-no-r" class="section level1">
 <h1>Estruturas de Dados no R</h1>
 <p>No R, chamamos de <code>Estruturas de Dados</code> a maneira como as
 informações são organizadas. Aqui vamos citar as três estruturas mais
-usuais no contexto de análise de dados:</p>
+recorrentes no contexto de análise de dados:</p>
 <ul>
-<li><p>Vetores atômicos: estrutura mais básica do R, se caracterizam por
-uma única dimensão e guardam objetos da mesma classe – por isso o nome
-atômico.</p></li>
+<li><p>Vetores atômicos: estrutura mais básica do R, se caracteriza por
+uma única dimensão e só armazena objetos de uma mesma classe – por isso
+o nome atômico.</p></li>
 <li><p>Data Frame: estruturas bidimensionais que permitem que cada
-coluna possa ter sua própria classe – em termos práticos, cada coluna é
+coluna possua a sua própria classe – em termos práticos, cada coluna é
 um vetor atômico.</p></li>
 <li><p>Listas: a estrutura mais genérica que temos no R, pois permite
 que diferentes classes sejam guardadas em um único objeto.
-Adicionalmente possuem uma propriedade recursiva, isto é, uma lista pode
-conter outras listas, de diferentes tamanhos.</p></li>
+Adicionalmente, as Listas possuem uma propriedade recursiva, isto é, uma
+lista pode conter outras listas, de diferentes tamanhos.</p></li>
 </ul>
-<p>Adicionalmente a estas, temos as matrizes e arrays, que possuem a
-mesma natureza atômica que os vetores, porém com mais dimensões.</p>
+<p>Além destes três casos, existem também as estruras do tipo:
+<code>matrix</code> e <code>array</code>, que possuem a mesma natureza
+atômica dos vetores, porém com mais dimensões.</p>
 <p>Apesar de estarmos trabalhando majoritariamente com os
 <code>data.frame</code> (no contexto do tidyverse, temos o
 <code>tibble</code> como uma versão melhorada do data.frame), uma
 estrutura de duas dimensões, em que as linhas são necessariamente de uma
-mesma classe. Ter alguma visibilidade sobre as outras estruturas, te
-ajudará a evoluir na linguagem de maneira mais consistente.</p>
-<p>Para saber a classe de um objeto, basta utilizar a função
-<code>class()</code> salvo quando a estrutura do dado for um vetor,
-neste caso, teremos a informação da classe de fato, ou seja, se a
-informação guardada por aquele vetor se trata de um número, uma string,
-ou uma data, por exemplo.</p>
-<pre class="r"><code>ex_estrutura = data.frame(a = c(1L, 2L, 3L), b = c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;))
+mesma classe. Ter alguma visibilidade sobre e existencia das outras
+estruturas, te ajudará a evoluir na linguagem de maneira mais
+consistente.</p>
+<div id="class-retorna-a-classe-ou-a-estrura" class="section level2">
+<h2>class() retorna a classe ou a estrura?</h2>
+<p>Bem, os dois. Se você fizer a consulta para qualquer dado com uma
+estrutura superior a 1 dimensão, ou seja qualquer estrutura que não um
+vetor, você terá como output a estrutura do dado. Enquanto que a
+consulta para vetores, teremos a informação da classe de fato, ou seja,
+se a informação guardada por aquele vetor se trata de um número, uma
+string, ou uma data, por exemplo.</p>
+<pre class="r"><code>ex_estrutura = data.frame(a = c(1L, 2L, 3L), b = c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;), c = c(TRUE, FALSE, TRUE))
 class(ex_estrutura)
 ## [1] &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>ex_vetor = c(1L, 2L, 3L)
 class(ex_vetor)
 ## [1] &quot;integer&quot;</code></pre>
+</div>
 <div id="vetores-e-a-hierarquia-de-coerção" class="section level2">
 <h2>vetores e a hierarquia de coerção</h2>
 <p>Sabe a propriedade de que o vetor precisa ter a mesma classe? Pois
-bem, isto é levadoa a sério pelo vetor, de modo que se você misturar
-classes em um único vetor, o R irá transformar tudo em uma classe só.
+bem, isto é levadoa a sério no R, pois se você misturar classes
+diferentes em um único vetor, o R irá transformar tudo em uma classe só.
 Para esta coerção, são consideradas não as classes em si, mas sim a
 maneira como tais informações são armazenadas internamente pelo R, algo
-um pouco mais low code. Abaixo consta a a hierarquia de coerção:</p>
+um pouco mais low code. Abaixo consta a hierarquia de coerção:</p>
 <ul>
 <li><code>character</code> &gt; <code>complex</code> &gt;
 <code>double</code> &gt; <code>integer</code> &gt; <code>logical</code>
@@ -719,22 +740,25 @@ class(ex2)
 class(ex2)
 ## [1] &quot;numeric&quot;</code></pre>
 <p>Temos ainda que algumas funções aplicam estas coerções de maneira
-independente:</p>
+automática:</p>
 <pre class="r"><code>sum(c(TRUE, FALSE, TRUE))
 ## [1] 2</code></pre>
 <p>Note que a característica de coerção faz sentido no contexto de
-análise de dados, mas que também pode te dar muita dor de cabeça, pois
-basta que uma célula da tabela tenha sido digitada errada para que toda
-a coluna seja desconfigurada.</p>
+análise de dados – afinal sem ela como iriamos calcular a média de uma
+coluna que possue números em algumas linhas, e palavras em outras? Ainda
+assim este ponto pode te dar muita dor de cabeça, pois basta que uma
+célula da tabela tenha sido digitada errada, para que toda a coluna seja
+desconfigurada.</p>
 </div>
 </div>
 <div id="hands-on" class="section level1">
 <h1>HANDS-ON</h1>
 <p>Aqui iniciamos a discussão sobre classes do R, mas existe toda uma
-teoria que envolve esta abstração. E no script sobre tipos e estruturas
-de dados, você terá uma visão mais detalhada sobre este conceito, a
-relação entre funções como: <code>typeof()</code>, <code>class()</code>
-e <code>attributes()</code>. Que tal ler o que tem por lá?</p>
+teoria que envolve esta abstração. E no script auxiliar, sobre tipos e
+estruturas de dados, você terá uma visão mais detalhada sobre este
+conceito, bem como sobre a relação entre funções como:
+<code>typeof()</code>, <code>class()</code> e <code>attributes()</code>.
+Que tal ler o que tem por lá?</p>
 </div>
 
 

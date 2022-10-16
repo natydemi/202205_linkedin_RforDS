@@ -1,5 +1,5 @@
 ---
-title: "Exemplo de arquivo Rmarkdown (extensão .Rmd)"
+title: "Pocket - Utilizando arquivos Rmarkdown (extensão .Rmd)"
 output: html_document
 date: '1988-03-25'
 ---
@@ -9,7 +9,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Introdução
+Neste arquivo contextualizamos os arquivos de extensão .Rmd, bem como algumas das suas funcionalidades básicas.
 
+# O Rmarkdown
 Rmarkdown é um formato (.Rmd) que nos possibilita trabalhar com códigos, assim como um script .R usual, mas também com os outputs dos códigos e textos, de forma mais interativa. Permite, assim, uma maior praticidade durante a análise, bem como a criação de relatórios dos resultados. Para saber mais, acesse: [rmarkdown.rstudio.com](https://rmarkdown.rstudio.com/).
 
 Um documento R Markdown pode ser compilado em diferentes formatos, incluindo documentos HTML , PDFs, Word, slides, entre outros, Isso permite que você foque no conteúdo, enquanto o R Markdown garante o output. 
@@ -73,9 +75,9 @@ Pois é, isto também é possível! Se quisermos, por exemplo, saber a quantidad
 
 É importante saber que ao trabalhar com o Rmarkdown você precisará ter em vista que está trabalhando com um ambiente apartado do seu console. De modo que o que você rodar no console não estará valendo para o seu Rmarkdown.
 
-Outro ponto importante é que a cada vez que você compilar o documento, você irá rodar o seu .Rmd desde o início. Se qualquer chunk tiver qualquer tipo de problema, o documento não será gerado -- mas não se desespere! Usualmente a mensagem de erro já te dará uma boa dica da origem do problema. Uma questão comum, é a utilização de alguma função sem ter, antes, realizado o carregamento da respectiva biblioteca.
+Outro ponto que vale comentar é que a cada vez que você compilar o documento, você irá rodar o seu .Rmd desde o início. Se qualquer chunk tiver qualquer tipo de problema, o documento não será gerado -- mas não se desespere! Usualmente a mensagem de erro já te dará uma boa dica da origem do problema. Uma questão comum, é a utilização de alguma função sem ter, antes, realizado o carregamento da respectiva biblioteca.
 
-Vou adicionar aqui um exemplo, em que chamamos a base de dados `construction`, que faz parte da biblioteca `tidyr` -- lembrando que, caso você nunca tenha instalado esta biblioteca, será necessário fazer a instalação por meio do `install.packages("tidyr")` no Console, ou via point-and-click na aba `Packages`. Como teste, inverta os comandos, ou seja, carregue a biblioteca **após** chamar a base, note que na aba `Render` você terá uma mensagem com a frase "objeto não encontrado".
+Vou adicionar aqui um exemplo, em que chamamos a base de dados `construction`, que faz parte da biblioteca `tidyr` -- lembrando que, caso você nunca tenha instalado esta biblioteca, será necessário fazer a instalação por meio do `install.packages("tidyr")` no Console, ou via point-and-click na aba `Packages`. Como teste, inverta os comandos, ou seja, carregue a biblioteca **após** chamar a base, e compile o documento (botão `Knit` ou pelo atalho que comentamos anteriormente). Note que na aba `Render` você terá uma mensagem com a frase "objeto não encontrado".
 
 ```{r}
 library(tidyr)
@@ -85,7 +87,7 @@ us_rent_income
 
 # Como trabalhar com o texto
 
-Vamos falar um pouco sobre as opções de textos no Rmarkdown, que apesar de ser muito similar a editores de texto usuais, aqui existe também a possibilidade de trabalhar com formatação de textos, como:
+Vamos falar um pouco sobre as opções de textos no Rmarkdown -- basicamente a parte `Markdown` do documento, que apesar de ser muito similar a editores de texto usuais, aqui existe também a possibilidade de trabalhar com formatação de textos, como:
 
 -   bullets
 
@@ -95,17 +97,18 @@ Vamos falar um pouco sobre as opções de textos no Rmarkdown, que apesar de ser
 
 -   `código`
 
-Ou ainda para acesso a links, como esta excelente referência:
+Ou ainda para acesso a links, como estas excelentes referências de consulta:
 
-1.  aba Help \> CheatSheet:
+1. Aba `Help \> CheatSheet`:
 
-    -    cheatsheet Rmarkdown
+    -   cheatsheet Rmarkdown
 
     -   Reference guide
 
-2.  <https://rmarkdown.rstudio.com/>
+2. <https://rmarkdown.rstudio.com/>
 
-3.  [hiperlink em texto](https://rmarkdown.rstudio.com/)
+3. Canal no youtube da Fernanda Peres – [R Markdown: Gerando relatórios usando o R (Parte1), ](https://www.youtube.com/watch?v=obxa5VH4WvY)  
+
 
 Uma última dica aqui é explorar a opção "Visual" do Rmarkdown (disponível em versões mais recentes), que nos permite trabalhar com uma interface com menos código, e mais opções point-and-click.
 
@@ -116,9 +119,3 @@ Uma última dica aqui é explorar a opção "Visual" do Rmarkdown (disponível e
 Que tal repassar os scripts deste módulo para um Rmarkdown? Você pode fazer uma curadoria do que é importante para você, possibilitando um material para consulta melhor formatado, inclusive com os seus próprios comentários :)
 
 
-
-# REFERÊNCIAS
-
-- <https://rmarkdown.rstudio.com/>
-
-- Canal no youtube da Fernanda Peres – [R Markdown: Gerando relatórios usando o R (Parte1), ](https://www.youtube.com/watch?v=obxa5VH4WvY)  

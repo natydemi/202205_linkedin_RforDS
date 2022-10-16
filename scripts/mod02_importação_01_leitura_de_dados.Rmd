@@ -1,5 +1,5 @@
 ---
-title: "Importação de Dados externos para o Ambiente R"
+title: "Importação e Exportação de Dados no Ambiente R"
 output: html_document
 ---
 
@@ -12,6 +12,11 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 ```{r}
 library(tidyverse)
 ```
+
+
+# Introdução
+
+Neste material iremos passar pelos principais pontos relacionados a importação e exportação de dados no R. Adicionalmente teremos uma breve discussão sobre a dinâmica de diretórios, quais os pontos de atenção que devemos ter sobre as diferenças de comportamento entre os arquivos .R e .Rmd. E, por fim, como projetos podem e devem ser utilizados como uma ferramenta de reprodutibilidade.
 
 
 # Importação
@@ -56,13 +61,23 @@ Assim, sabendo onde está o arquivo, o seu diretório, ou ainda o seu `path`, po
 path <- readr_example("mtcars.csv")
 read_csv(path)
 ```
-Durante o capítulo de exportação vamos discutir um pouco mais sobre diretórios, mas note que o importante aqui é saber onde o seu arquivo se encontra, e indicar esta informação como parâmetro da função.
+Durante o capítulo de exportação vamos discutir um pouco mais sobre diretórios, mas o é importante de saber aqui é saber onde o seu arquivo se encontra, e indicar esta informação como parâmetro da função.
+
+## Salvando o objeto (atribuição)
+
+Na etapa anterior fizemos a leitura do arquivo, mas este não foi salvo, se você avaliar a aba `Environment` do seu RStudio, notará que a base `path` não consta lá. Para que a base conste no seu ambiente, e para que você possa carrega-la em outros momentos da análise, ou mesmo exportá-la, é necessário criar um objeto que receba a leitura:
+
+```{r}
+nossa_base <- read_csv(path)
+```
+
+Agora sim! Podemos seguir :) 
 
 
 
 ## Dados de diferentes extensões
 
-O  R dispõe de uma larga gama de bibliotecas relacionadas à leitura de dados nos mais diferentes contextos, abaixo temos algumas destas opções:
+O  R dispõe de uma larga gama de bibliotecas relacionadas à leitura de dados nos mais variados formatos e contextos, abaixo temos algumas destas opções:
 
 - `readxl`: arquivos .xls e .xlsx.
 - `googlesheets4`: planilhas do google sheets
@@ -79,7 +94,7 @@ Apesar de não haver a intenção de ser extensiva aqui, gostaria de comentar ta
 
 ## Dados dos pacotes do R
 
-No R, existe também a opção de trabalhar com as bases de dados disponíveis pela própria linguagem.. Para consultar as opções default, podemos utilizar a função `data()`. Porém, não para por aí, pois existem muitas bases que acompanham as bibliotecas, de modo que para cada biblioteca instalada/carregada, teremos uma atualização nesta lista, compare:
+No R, existe também a opção de trabalhar com as bases de dados disponíveis pela própria linguagem. Para consultar as opções default, podemos utilizar a função `data()`. Porém, não para por aí, pois existem muitas bases que acompanham as milhares de bibliotecas, de modo que para cada biblioteca instalada/carregada, teremos uma atualização nesta lista, compare:
 
 ```{r}
 #data()
@@ -89,14 +104,14 @@ No R, existe também a opção de trabalhar com as bases de dados disponíveis p
 #data()
 ```
 
-As bases de dados que constam aqui, podem ser diretamente acessadas:
+As bases built-in do R, assim como as bases pertencentes a bibliotecas que *esteja carregadas*, podem ser diretamente acessadas:
 
 ```{r}
 AirPassengers
 ```
 
 
-Mas para que os dados constem na janela de Environment, precisamos carregá-las por meio da função `data("AirPassengers") ` ou :
+Mas para que os dados constem na janela de `Environment`, precisamos carregá-las, por meio da função `data("AirPassengers") ` ou :
 
 ```{r}
 AirPassengers <- AirPassengers
@@ -141,15 +156,15 @@ Seguem algumas opções de sites em que você poderá pesquisar por bases de dad
 
 ## Via código, para o seu diretório de trabalho
 
-Para exportar um objeto do R, como uma tabela por exemplo, é necessário especificar o nome que o objeto possui no seu environment, seguido do que chamamos de `path`, no caso mais simples, o path será apenas o nome que você pretende dar ao arquivo, e a extensão desejada, por exemplo:
+Para exportar um objeto do R, como uma base de dados, ou um gráfico, é necessário especificar o nome que o objeto possui no seu environment - por exemplo a `nossa_base` que foi criada inicialmente, seguido do que chamamos de `path`, no caso mais simples, o `path` será apenas o nome que você pretende dar ao arquivo, e a extensão desejada para o arquivo, por exemplo:
 
 ```{r}
 #exporte os dados em um arquivo .csv
-write_csv(mtcars, "base_exportada.csv")
+write_csv(nossa_base, "base_exportada.csv")
 ```
 
 
-Mas onde o arquivo `base_exportada.csv`, criado acima se encontra no seu computador? Onde o arquivo foi salvo? A resposta é: no seu diretório de trabalho, basicamente a pasta do seu computador que está sendo entendida pelo R como a sua pasta raiz, a sua pasta de referência.  
+Mas onde o arquivo `base_exportada.csv`, criado acima se encontra no seu computador? Em qual pasta o arquivo foi salvo? A resposta é: no seu diretório de trabalho, basicamente a pasta do seu computador que está sendo entendida pelo R como a sua pasta raiz, a sua pasta de referência.  
 
 E para saber qual o seu diretório de trabalho atual, utilizamos o comando `getwd()` (*get working directory*), que retornará algo como "C:/Users/Documents". Avalie qual o seu com o comando abaixo:
 
@@ -157,69 +172,78 @@ E para saber qual o seu diretório de trabalho atual, utilizamos o comando `getw
 #getwd()
 ```
 
-Em termos práticos, o diretório vai te ajudar a trabalhar de uma maneira mais prática e organizada. No caso de você ter interesse em alterar o diretório de trabalho, temos a função `setwd()` (*set working directory*), em que é possível passar especificações como: `setwd("C:/Users/Desktop")`.
+No caso de você ter interesse em alterar o diretório de trabalho, temos a função `setwd()` (*set working directory*), em que é possível passar especificações como: `setwd("C:/Users/Desktop")`, e alterar o seu diretório de referência.
 
 
 ```{r}
-#C:\\Users\\natyd\\Desktop
-setwd("C:/Users/natyd/Desktop")
+# Faça um teste você mesmo! Coloque um endereço (`path`) do seu computador, 
+# e veja se o getwd() será alterado.
+# Você vai precisar de algo similar aos exemplos abaixo:
+   setwd("C:/Users/natyd/Desktop")
+  # setwd("C:\\Users\\natyd\\Desktop")
 ```
+Notou a mensagem de warning, ela é bem importante! Está nos dizendo que a mudança realizada só valerá dentro deste bloco de código, para os demais voltaremos ao diretório que você havia consultado antes. Este é um comportamento exclusivo dos arquivos `.Rmd`, ou seja, para código em .R, este tipo de alteração será perene ao longo do código. Mais a frente falaremos um pouco mais sobre este ponto.
 
-Como alternativa às funções comentadas, você pode explorar a aba `File` do RStudio, onde encontrará algumas opções point-and-click para navegar e manusear pelos diretórios. 
-
-Note que com o comando abaixo, caso você não tenha alterado o seu diretório de trabalho, podemos importar a base anteriormente exportada. 
+Sendo assim, com o comando abaixo podemos importar a base anteriormente exportada. 
 
 ```{r}
-base_exportada <- read_csv("base_exportada.csv")
-base_exportada
+nossa_base_exportada <- read_csv("base_exportada.csv")
+nossa_base_exportada
 ```
+
+
+De maneira alternativa às funções comentadas, você pode explorar a aba `File` do RStudio, onde encontrará algumas opções point-and-click para navegar pelos diretórios do seu computador. 
+
 
 
 # E quando os arquivos não estão no diretório de trabalho? 
 
-Você só precisa passar o endereço completo, similar ao que foi feito aqui: `readr_example("mtcars.csv")`. Basicamente o nome do arquivo deve ser precedido pelo diretório de origem, tanto para o caso de importação, quanto para exportação, algo como: `write_delim(mtcars, file = "C:/Users/mtcars.txt")` por exemplo. Ah, uma dica: dependendo do seu sistema opracional, ou se existir algum caracter especial no seu path, você pode ter que trabalhar com: barras simples (`/`), barras invertidas (`\`) ou barras duplas (`\\`).
+Lembra quando comentei no início da seção de exportação: "no caso mais simples, o `path` será apenas o nome que você pretende dar ao arquivo", pois bem, estava chamando de simples o caso em que o arquivo que você deseja importar está no seu diretório de trabalho. No caso em que não estiver, você vai precisa passar o endereço completo, similar ao que foi feito aqui: `r readr_example("mtcars.csv")`. Basicamente o nome do arquivo deve ser precedido pelo diretório de origem, tanto para o caso de importação, quanto para exportação, algo como: `write_delim(mtcars, file = "C:/Users/mtcars.txt")` por exemplo. Ah, uma dica: dependendo do seu sistema operacional, ou se existir algum caracter especial no seu path, você pode ter que trabalhar com: barras simples (`/`), barras invertidas (`\`) ou barras duplas (`\\`).
 
 
 
 # Trabalhe com Projetos! 
 
-Conforme já comentado, para importar/exportar arquivos que não se encontram no seu diretório de trabalho atual, é possível especificar o endereço (`path`) de origem do arquivo (algo como "diretorio/arquivo.extensão"), ou mudar o diretório de trabalho em si (`setwd()`). Contudo nenhuma destas são práticas recomendadas, visto tornar o seu trabalho não reprodutível por outras pessoas, ou mesmo por você em outros ambientes. Como a melhhor alternativa podemos trabalhar com a opção de projetos do RStudio (`.RProj`). Nesta, o diretório em que o arquivo .RProj estiver salvo, passa a ser a pasta raiz das análises, como se fosse um `setwd()` automático. De modo que se você garantir que todos as pastas e arquivos que estão sendo utilizados estejam na mesma pasta, ou nas subpastas, do .Rproj, será possível reproduzir as suas análises em outros contextos, sem que seja necessário corrigir nenhum dos paths. Legal né? 
+Conforme já comentado, para importar/exportar arquivos que não se encontram no seu diretório de trabalho, é possível especificar o endereço (`path`) de origem do arquivo (algo como "diretorio/arquivo.extensão"), ou mudar o diretório de todo o documento (no caso de arquivos .R) e apenas do chunk (no caso de arquivos .Rmd) em si (`setwd()`). Contudo nenhuma destas são práticas são recomendadas, visto tornar o seu trabalho não reprodutível por outras pessoas, ou mesmo por você em outros ambientes (outro computadores). Como alternativa é extremamente recomendado trabalhar com a opção de projetos do RStudio ( arquivos com extensão `.RProj`). Nestes, o local (diretório) em que o arquivo `.RProj` estiver salvo, passa a ser a pasta raiz das análises, como se fosse um `setwd()` automático. De modo que se você manter todas as pastas e arquivos importantes para a sua análise na mesma pasta, ou em subpastas do `.Rproj`, será possível reproduzir as suas análises em outros contextos, sem que seja necessário corrigir nenhum dos endereços Legal né? 
 
 
-> Para ilustrar um pouco melhor, sem trabalhar com projetos, se você me enviar uma pasta com a sua análise, e a primeira linha de um dos scripts for algo como `setwd("C:/Users/seu_nome/Desktop")`, para que eu consiga rodar na minha máquina, vou precisar alterar o código para algo como `setwd("C:/Users/meu_nome/Desktop")`. Enquanto que ao trabalhar com projetos, os códigos já teriam como referência o local em que eu tiver salvo a pasta recebida. 
+> Para ilustrar um pouco melhor, sem trabalhar com projetos, se você resolver me enviar agora uma pasta com a sua análise, e a primeira linha dos seus scripts for algo como `setwd("C:/Users/SEU_nome/Desktop")`. Para que eu consiga rodar na minha máquina, vou precisar alterar o código para algo como `setwd("C:/Users/MEU_nome/Desktop")`. Enquanto que ao trabalhar com projetos, bastaria que você me enviasse a pasta dos códigos, tendo o `.Rproj` na pasta raiz, que então os diretórios seriam automaticamente ajustados para o diretório em que eu tiver salvo a pasta recebida. 
 
-Então seja para que outras pessoas consigam executar o seu código, seja para que você mesmo (a) possa trocar de ambiente sem se preocupar de atualizar todos os endereços de especificação de arquivos, scripts, e etc, basta enviar a pasta dos arquivos necessários, o `.Rproj` na raiz, e os paths construidos de maneira relativa e voilà, todos os seus códigos estarão reprodutíveis! E aqui vale comentar que replicabilidade é um dos princípios básicos do método científico, e se estamos falando de **ciência** de dados, nada mais justo, certo? ;)
+Então seja para que outras pessoas consigam executar o seu código, seja para que você mesmo (a) possa trocar de ambiente sem se preocupar de atualizar todos os endereços de especificação de leitura de arquivos, de script, e etc, basta enviar a pasta com os arquivos necessários, o `.Rproj` na raiz, e os paths construídos considerando sempre que o local do seu projeto é a sua pasta de referência (o que significa trabalhar com paths relativos, falaremos mais a frente sobre isto) e voilà! Todos os seus códigos estarão reprodutíveis! E aqui vale comentar que replicabilidade é um dos princípios básicos do método científico, e se estamos falando de **ciência** de dados, nada mais justo, certo? ;)
 
 
-E como criar esse tal `.Rproj`, é simples: b
+E como criar esse tal `.Rproj`? A maneira mais tradicional é:
 
 1. Clique no ícone azul que consta no canto superior direito do RStudio
-2. Clique em “Novo Diretório”. Digite um nome para esta nova pasta (ou “diretório”), por exemplo, “Meu projeto R”, e escolha um local conveniente para ela. Este será seu diretório de trabalho
+2. Clique em “Novo Diretório”. Digite um nome para esta nova pasta, por exemplo, “Curso_Intro_R”, e escolha um local conveniente para ela. 
 3. Clique no botão “Criar Projeto"
 
-Vamos testar? Saia do RStudio, e navegue até o diretório onde você criou um projeto no Task 01. Clique duas vezes no arquivo `.Rproj` deste diretório, e pronto! Se você quiser fechar ou trocar de projeto, você pode fazer a alteração no canto superior direito da tela :)
+E pronto! Vamos testar se está tudo funcionando? Feche o RStudio, navegue até o diretório onde você criou o projeto, e clique duas vezes no arquivo `.Rproj`, e ... e aí? Funcionou? Não? Dá uma repassada nos passos de criação, se seguir tendo problemas, envia uma mensagem aqui para gente. Sim? \o/ 
 
-
+Ah, se você quiser fechar ou trocar de projeto, você pode fazer a alteração no mesmo canto superior direito da tela :)
 
 
 ## Estrutura de pastas e organização de arquivos
 
-Para que os seus projetos sejam ainda mais efetivos, é interessante que você adote algumas boas práticas para estruturação de pastas para a organização dos arquivos, o que irá facilitar a evolução e o compartilhamento do seu trabalho.
+Para que os seus projetos sejam ainda mais efetivos, é interessante que você adote algumas boas práticas para estruturação de pastas, e, consequentemente, para a organização dos seus arquivos. Com isto você irá facilitar a evolução, produtividade, e compartilhamento do seu trabalho.
 
 
 ## caminho relativo
-Camihos relativos são aqueles que tem início no diretório de trabalho da sua sessão. Assim, se você quiser acessar determinado arquivo que esteja em uma subpasta chamada dados, por exemplo, você precisaria apenas adicionar `dados/nome_do_arquivo.extensão`. Note que somando caminhos relativos aos projetos do RStudio, nos incentiva a colocar todos os arquivos da análise dentro da pasta do projeto. Assim, se você usar apenas caminhos relativos e compartilhar a pasta do projeto com alguém, todos os caminhos existentes nos códigos continuarão a funcionar em qualquer computador!
+Camihos relativos são aqueles que tem início no diretório de trabalho da sua sessão. Assim, se você quiser acessar determinado arquivo que esteja em uma subpasta, chamada dados, por exemplo, você precisaria apenas adicionar `dados/nome_do_arquivo.extensão`. É como se tudo o que precede a pasta `/dados` não precisasse ser especificado. Note que adicionar a pratica de caminhos relativos aos projetos do RStudio, nos incentiva a colocar todos os arquivos da análise dentro da pasta do projeto. Assim, você pode compartilhar a pasta do projeto com qualquer pessoa (alô galera do git!), e todas as importações e exportações serão mantidas!
 (texto baseado no material <https://livro.curso-r.com/5-1-caminhos.html> )
 
 
-## arquivos .Rmd vs .R
-Um ponto importante de comentar é que ao trabalhar com arquivos .Rmd, mesmo trabalhando com projetos, o diretório default é atualizado para onde o .Rmd estiver. Desta forma, e apesar disso não impactar muito a sua rotina, é importante que tenha isto em mente quando estiver indicando a origem do seu arquivo. Considerando o que falamos sobre caminho relativo, no caso do seu .Rmd estar numa subpasta chamada `/códigos`, e você tivesse interesse em ler um arquivo que esteja em uma pasta `/dados`, a leitura seria feita da seguinte forma: `../dados/nome_do_arquivo.extensão`, isto porque o  `../` antes do nome da pasta, indica que o computador deve voltar um passo na hierarquia de pastas.
+## .Rmd e .R : deferentes comportamentos para  termos de diretórios 
+Existem diferenças importantes entre o comportamento dos arquivos .Rmd e .R em relação a maneira com que lidam com o diretório de trabalho. No caso dos arquivos .R, caso não estivermos trabalhando com projetos, terá como diretório default o último diretório específicado na sessão -- no caso de nenhuma específicação ter sido realizada, a sessão irá utilizar um diretório padrão, usualmente os "Meus Documentos" ("C:/Users/natyd/Documents"), ou algo similar. Já para o .Rmd o diretório padrão será o local em que o arquivo Rmarkdown estiver, mesmo se estivermos trabalhando com projetos. Deste modo, mesmo trabalhando com projetos, será importante que você tenha o cuidado de trabalhar com os caminhos relativos ao .Rmd e não ao .Rproj, ou então que você faça a alteração desta configuração no seu RStudio (`Tools > Global Options > R Markdown > Evaluate chunks in directory` e mude de `Document` para `Project`). 
 
+Considerando o que falamos sobre caminho relativo, no caso do seu .Rmd estar em uma subpasta chamada `/códigos`, por exemplo, e você tivesse interesse em ler um arquivo que estivesse em uma pasta denominada `/dados`, a leitura poderia ser feita da seguinte forma: `../dados/nome_do_arquivo.extensão`, isto porque o  `../` do início do path, indica que o computador deve voltar um passo na hierarquia de pastas.
 
 
 
 # HANDS-ON
 
-Que tal conhecer um pouco mais sobre as opções de funções do pacote `readr`? Uma forma bacana de fazer isso é por meio do help com duas interrogações: `??readr::read_` e `??readr::write_`.
+1. Que tal conhecer um pouco mais sobre as opções de funções do pacote `readr`? Uma forma bacana de fazer isso é por meio do help com duas interrogações: `??readr::read_` e `??readr::write_`.
 
-Crie um projeto com o nome do nosso curso, e salve todos os scripts por lá. Se quiser testar algo mais prático, recomendo qie explore o pacote `usethis`, particularmente a função `usethis::create_project()`, que cria um projeto junto com toda a estrutura de pastas para você organizar os seus arquivos.
+2. Crie um projeto com o nome do nosso curso, e salve todos os scripts por lá. Se quiser testar algo mais prático, recomendo que explore o pacote `usethis`, particularmente a função `usethis::create_project()`, que cria um projeto junto com toda a estrutura de pastas para você organizar os seus arquivos.
+
+3. Vamos utilizar algumas bases do pacote `dados::` que tal você escolher uma base de dados de lá e salvar em formato `.csv` em uma pasta chamada dados?

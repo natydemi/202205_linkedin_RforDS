@@ -22,6 +22,10 @@ Por fim procure construir um mapa mental dos tópicos que você for tendo conhec
 
 
 
+Você pode evoluir como especialista, ou como generalista
+
+a área é multidiciplinar, as pessoas não
+
 # Dicas de pacotes R  
 
 ### Ponto de Partida
@@ -35,7 +39,7 @@ Por fim procure construir um mapa mental dos tópicos que você for tendo conhec
 - interoperabilidade R e Python: [reticulate](https://rstudio.github.io/reticulate/) 
 - criar mapas: [leaflet](https://rstudio.github.io/leaflet/)
 - gerar memes: [memer](https://github.com/sctyner/memer)
-- trabalhar com deep learning: [torch](https://torch.mlverse.org/packages/)
+- trabalhar com deep learning e dados não estruturados: [torch](https://torch.mlverse.org/packages/)
 - automatizar processos: [usethis](https://github.com/r-lib/usethis)
 - modelagem bayesiana: [tidybayes](http://mjskay.github.io/tidybayes/)
 - analisar texto: [tidytext](https://github.com/juliasilge/tidytext)

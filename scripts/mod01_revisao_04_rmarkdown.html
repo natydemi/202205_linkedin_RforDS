@@ -371,14 +371,19 @@ pre code {
 
 <div id="introdução" class="section level1">
 <h1>Introdução</h1>
+<p>Neste arquivo contextualizamos os arquivos de extensão .Rmd, bem como
+algumas das suas funcionalidades básicas.</p>
+</div>
+<div id="o-rmarkdown" class="section level1">
+<h1>O Rmarkdown</h1>
 <p>Rmarkdown é um formato (.Rmd) que nos possibilita trabalhar com
 códigos, assim como um script .R usual, mas também com os outputs dos
-códigos e textos, de forma mais interativa. Permitindo uma maior
+códigos e textos, de forma mais interativa. Permite, assim, uma maior
 praticidade durante a análise, bem como a criação de relatórios dos
 resultados. Para saber mais, acesse: <a href="https://rmarkdown.rstudio.com/">rmarkdown.rstudio.com</a>.</p>
 <p>Um documento R Markdown pode ser compilado em diferentes formatos,
 incluindo documentos HTML , PDFs, Word, slides, entre outros, Isso
-permite que você foque na conteúdo, enquanto o R Markdown garante o
+permite que você foque no conteúdo, enquanto o R Markdown garante o
 output.</p>
 <p>Vamos agora ver algumas das funcionalidades básicas do Rstudio:</p>
 </div>
@@ -467,9 +472,9 @@ final da linha, à direita, na seta verde.</p>
 ## 48    24   93
 ## 49    24  120
 ## 50    25   85</code></pre>
-<p>Fica bacana o output da tabela no script né? Super interativa! :) Mas
-não fica tão bonita no documento final, visto esta base ter muitas
-linhas, mas existem bibliotecas específicas para tornar a tabela
+<p>Fica bacana o output da tabela no script, né? Super interativa! :)
+Mas não fica tão bonita no documento final, devido a esta base ter
+muitas linhas. Mas existem bibliotecas específicas para tornar a tabela
 interativa por lá também :)</p>
 <p>Vamos ver agora um exemplo de output gráfico:</p>
 <pre class="r"><code>plot(cars)</code></pre>
@@ -490,7 +495,7 @@ base de dados cars é: 50.</p>
 ter em vista que está trabalhando com um ambiente apartado do seu
 console. De modo que o que você rodar no console não estará valendo para
 o seu Rmarkdown.</p>
-<p>Outro ponto importante é que a cada vez que você compilar o
+<p>Outro ponto que vale comentar é que a cada vez que você compilar o
 documento, você irá rodar o seu .Rmd desde o início. Se qualquer chunk
 tiver qualquer tipo de problema, o documento não será gerado – mas não
 se desespere! Usualmente a mensagem de erro já te dará uma boa dica da
@@ -498,13 +503,14 @@ origem do problema. Uma questão comum, é a utilização de alguma função
 sem ter, antes, realizado o carregamento da respectiva biblioteca.</p>
 <p>Vou adicionar aqui um exemplo, em que chamamos a base de dados
 <code>construction</code>, que faz parte da biblioteca
-<code>tidyr</code> – lembrando que caso você nunca tenha instalado esta
+<code>tidyr</code> – lembrando que, caso você nunca tenha instalado esta
 biblioteca, será necessário fazer a instalação por meio do
 <code>install.packages(&quot;tidyr&quot;)</code> no Console, ou via
 point-and-click na aba <code>Packages</code>. Como teste, inverta os
 comandos, ou seja, carregue a biblioteca <strong>após</strong> chamar a
-base, note que na aba <code>Render</code> você terá uma mensagem com a
-frase “objeto não encontrado”.</p>
+base, e compile o documento (botão <code>Knit</code> ou pelo atalho que
+comentamos anteriormente). Note que na aba <code>Render</code> você terá
+uma mensagem com a frase “objeto não encontrado”.</p>
 <pre class="r"><code>library(tidyr)
 us_rent_income</code></pre>
 <pre><code>## # A tibble: 104 × 5
@@ -525,29 +531,31 @@ us_rent_income</code></pre>
 </div>
 <div id="como-trabalhar-com-o-texto" class="section level1">
 <h1>Como trabalhar com o texto</h1>
-<p>Vamos falar um pouco sobre as opções de textos no Rmarkdown, que
-apesar de ser muito similar a editores de texto usuais, aqui existe
-também a possibilidade de trabalhar com formatação de textos, como:</p>
+<p>Vamos falar um pouco sobre as opções de textos no Rmarkdown –
+basicamente a parte <code>Markdown</code> do documento, que apesar de
+ser muito similar a editores de texto usuais, aqui existe também a
+possibilidade de trabalhar com formatação de textos, como:</p>
 <ul>
 <li><p>bullets</p></li>
 <li><p><strong>negrito</strong></p></li>
 <li><p><em>italico</em></p></li>
 <li><p><code>código</code></p></li>
 </ul>
-<p>Ou ainda para acesso a links, como esta excelente referência:</p>
+<p>Ou ainda para acesso a links, como estas excelentes referências de
+consulta:</p>
 <ol style="list-style-type: decimal">
-<li><p>aba Help &gt; CheatSheet:</p>
+<li><p>Aba <code>Help \&gt; CheatSheet</code>:</p>
 <ul>
 <li><p>cheatsheet Rmarkdown</p></li>
 <li><p>Reference guide</p></li>
 </ul></li>
 <li><p><a href="https://rmarkdown.rstudio.com/" class="uri">https://rmarkdown.rstudio.com/</a></p></li>
-<li><p><a href="https://rmarkdown.rstudio.com/">hiperlink em
-texto</a></p></li>
+<li><p>Canal no youtube da Fernanda Peres – <a href="https://www.youtube.com/watch?v=obxa5VH4WvY">R Markdown: Gerando
+relatórios usando o R (Parte1),</a></p></li>
 </ol>
-<p>Um última dica aqui é explorar a opção “Visual” do Rmarkdown
+<p>Uma última dica aqui é explorar a opção “Visual” do Rmarkdown
 (disponível em versões mais recentes), que nos permite trabalhar com uma
-interface mais visual, em alternativa aos códigos.</p>
+interface com menos código, e mais opções point-and-click.</p>
 </div>
 <div id="hands-on" class="section level1">
 <h1>HANDS-ON</h1>
@@ -555,15 +563,6 @@ interface mais visual, em alternativa aos códigos.</p>
 fazer uma curadoria do que é importante para você, possibilitando um
 material para consulta melhor formatado, inclusive com os seus próprios
 comentários :)</p>
-</div>
-<div id="referências" class="section level1">
-<h1>REFERÊNCIAS</h1>
-<ul>
-<li><p><a href="https://rmarkdown.rstudio.com/" class="uri">https://rmarkdown.rstudio.com/</a></p></li>
-<li><p><a href="https://www.youtube.com/watch?v=obxa5VH4WvY">R Markdown:
-Gerando relatórios usando o R (Parte1), canal da Fernanda
-Peres</a></p></li>
-</ul>
 </div>
 
 
