@@ -13,43 +13,110 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 library(tidyverse)
 ```
 
-# Intro
+
+# Introdução
+Neste arquivo ...
 
 
+# Pré-processamento
 
-# Dataprep
+A etapa de pré processamento faz uso de todos os recursos que utilizamos até aqui, contudo tendo como enfoque a qualidade do dado, algumas das ações que podemos relacionar a esta etapa, organizadas por grupos:
 
-Dataprep, 
- Limpeza
+- Importação
+  - Identificar unidade de análise 
+  - Agregar dados segundo a unidade identificada
+  - Tratar registros inválidos e linhas duplicadas
+  - Tornar únicos os nomes das colunas
+  - Combinar bases de dados
 
-Data wrangling ou limpeza de dados, é uma tarefa que costuma , mas sim algo que você precisa lidar durante todo o processo de análise -- sendo 
-formatação incorreta
+
+- Perfil 
+  - Gerar metadados/metainformação dos dados
+  - Verificar tipos de dados e unidades de medida
+  - Corrigir formatações incorretas
+  - Identificar amostras tendenciosas 
+  
+  
+- Limpeza
+  - Remover colunas irrelevantes
+  - Filtrar observações fora do escopo de interesse
 
 
-- Uniformidade
-  - Abreviação de Dados
-  - Espaços extras
-- Conformidade com o mundo real
-  - Fora da escala
-  - Erro de medida e/ou representação
+- Ajustes pré modelagem (**dataprep**)
+  - Tratar dados faltantes (missing data)
+  - Aplicar codificações
+  - Aplicar padronizações
+
+
+Note que se tratam de ajustes que podem fazer a diferença entre o sucesso e o fracasso da sua análise, e não vou te enganar, isso dá trabalho! Algumas estimativas indicam que até 80% do tempo de uma análise de dados pode se concentrar aqui. Desde abreviações e espaços extras indevidos, até dados faltantes que podem indicar a necessidade de redirecionamento da sua análise, é na etapa de pré-processamento que garantimos que os dados estão aptos a representarem a realidade que esperamos que seja retratada.
+
    
+## E no R? 
+
+Aqui o desafio é mais investigativo e julgamental do que em termos de ferramenta. Com o que vimos nos módulos anteriores, você será capaz de avaliar as questões e endereçar soluções. Com certeza existem pacotes que se mostrão mais práticos para determinados estudos, como por exemplo `codemeta` que nos auxiliar com a criação de metadados, ou o pacote `naniar` que nos auxilia com dados faltantes (falaremos dele logo mais). Mas é importante ressaltar que, em última estância, é uma questão de pesquisar `library R missing data`, por exemplo -- DICA: pesquisas em inglês tendem a ser mais efetivas ;). O verdadeiro conhecimento nesta etapa é ter um horizonte sobre O QUE precisa ser feito, mais do que o COMO. 
+
+
+## Ajustes pré modelagem (dataprep)
+
+Apesar dos comentários acima existe um grupo em particular que comentaremos um pouco mais, no caso, o grupo que denominamos `Ajustes pré modelagem`, ou ainda dataprep. Tais pré-processamentos são particularmente importantes pois a depender da técnica de modelagem que você deseje aplicar, estes ajustes podem ser obrigatórios -- dado que algumas técnicas não aceitam valores faltantes ou features categóricas como entrada. Sendo assim, teremos uma breve discussão sobre o que envolve cada um dos `dataprep` citados. No caso dos dados faltantes, visto a sua relevância, daremos uma profundidade maior na discussão.
+
+
+### Aplicar codificações  
+Codificação de variáveis
+
+Escrever:
+> o que é
+> Porque é importante
+> Algum exemplo do que potencialmente modifica/impacta
+
+> Ex R
+
+
+### Aplicar padronizações
+
+Previne escalas diferentes
+
+Escrever:
+> o que é 
+> Porque é importante
+> Algum exemplo do que potencialmente modifica/impacta
+ -- Dados extremos
+ 
+> Ex R
+
+
+### Tratar dados faltantes (missing)
+
+Aqui nosso objetivo primário deve ser entender qual o mecanismo que causou a ausência dos dados, tendo como referência a discussão feita no [Capítulo 08 do livro Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/handling-missing-data.html), temos como três principais fontes de  :
+
+- Estrutural : 
+- Aleatório : 
+- Específico : 
+
+E em termos de endereçamento, existem diferentes modos de atuar, podemos
+
+- Deleter a coluna  
+- Imputar valores 
+- Criar uma nova categoria
+
+Tendo que para cada uma dessas envolvem algum grau de investigação e decisão, como por exemplo: qual será o valor da imputação? A média da coluna? A mediana? Utilizaremos alguma técnica baseada em modelos? Cada caso será um caso.
+
+Vamos agora comentar um pouco sobre o ferramental relacionado aos valores faltantes:
+
+#### codificação
+
+Uma vez que você conhece a fonte de origem dos valores faltantes, pode concluir que a substitui-los é o melhor caminho. Por exemplo, você pode saber que todos os valores de "N/A", "NA" e "Não disponível" ou -99 ou -1 devem estar ausentes.
 
 
 
-
-## tratando dados faltantes (missing)
-
-Deletar
-• Imputar valores
-• Criação de uma nova categoria
-• Técnicas baseadas em modelos
-
-Pacote tidy possue algumas funções interessantes
+#### pacote tidyr
+Comentando um pouco sobre o ferramental, o pacote `tidyr` possui algumas funções para tratar missing data, são elas:
 
   - `drop_na()` - excluí todas as linhas que apresentam elementos faltantes. 
   - `fill()` - substituí os dados faltantes pelo valor mais recente da referida coluna.
   - `replace_na()` - substituí os dados faltantes por um valor pré especificado.
   
+Alguns exemplos simples
 ```{r}
 #base para exemplo
   airquality[1:5,] 
@@ -62,23 +129,39 @@ Pacote tidy possue algumas funções interessantes
 ```
 
 
-Mas existem pacotes mais robustos, como é o exemplo do pacote naniar 
+Mas existem pacotes mais robustos, como é o exemplo do pacote naniar:
+
+#### pacote naniar
 
 
-## codificação das variáveis 
+```{r}
+ggplot(airquality, 
+       aes(x = Solar.R, 
+           y = Ozone)) + 
+  naniar::geom_miss_point()
+```
+
+
+```{r}
+naniar::gg_miss_var(airquality)
+```
 
 
 
 
+```{r}
+naniar::gg_miss_var(airquality, facet = Month)
+```
 
-## aplicando padronizações / normalização
 
-Dados extremos
-previnir escalar diferentes
 
 
 
 # Feature Engineering
+
+Na wikipedia a definição de Feature Engineering, o que em português seria algo como Engenharia de Features é: "descoberta de variáveis, é o processo de usar o conhecimento da área de negócio, para extrair features (características, propriedades, atributos)". 
+
+
 
 
 Evolução ~ cálculo de tendência, sazonalidade e calendário
@@ -282,8 +365,36 @@ starwars %>%
     geom_boxplot()
 ```
 
+# Considerações Finais
+
+Visto existirem muitos termos que são relacionados aos temas discutidos neste módulo, montei um pequeno resumo que espero que ajude 
+
+- Pré-processamento trata de: representação, qualidade e limpeza. E tem como termos próximos, isto é, termos que possuem objetivos próximos, e/ou que irão retornar discussões importantes relacionadas ao tema: Data Wrangling, Data Munging, Data Cleaning, Cleansing  e Data Integrity.
+
+- Engenharia de Feature: Eloquência, Interpretabilidade, e Otimização de processamento. E tem como termos próximos, seguindo a mesma lógica do tópico anterior: Feature Engineering, Feature Extraction, Feature Selection e Data Transformation.
+
+
+Sempre vale lembrar sobre como termos em inglês retornam mais resultados para estes temas, "engenharia de atributos" por exemplo soa até estranho para os ouvidos, pois o mais usual é a denominação "Feature Engineering".
+ 
+ 
+ 
+
+
 # HANDS-ON
 
-- O livro [Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/) é uma das minhas referências preferidas, visto os excelentes cases e discussões que apresenta. Nos ajudando a desenvolver não apenas em termos técnicos, mas também com a intuição do que as ferramentas oferecem. A sugestão aqui é que você o consulte para evoluir nos conteúdos deste capítulo, particularmente: dados faltantes no capítulo 8 e encoding no capítulo 5.
+- o pacote `naniar` se mostrou uma ferramenta interessante no contexto de `missing data`, mas não exploramos todos os seus recursos. Por exemplo, a sequência de funções nos possibilita avaliar se existe uma mudança na distribuição dos dados faltantes:
+
+```{r}
+naniar::oceanbuoys %>%
+    naniar::bind_shadow() %>%
+    ggplot(aes(x = air_temp_c,
+               fill = humidity_NA)) +
+        geom_histogram()
+```
+
+Considerando o output gráfico, você diria que estamos lidando com qual tipo de missing aqui? Parece ser o caso de dados faltantes aleatórios? 
+
+
+- O livro [Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/) é uma das minhas referências preferidas! Não apenaspelos excelentes cases e discussões, mas por procurar desenvolver o (a) leitor (a) não apenas em termos técnicos, mas também com a intuição das técnicas. A tarefa aqui é: leia a seção de introdução de cada um dos  aqui é que você o consulte para evoluir nos assuntos deste capítulo. Recomendo particularmente a leitura sobre encoding, do capítulo 5.
 
 

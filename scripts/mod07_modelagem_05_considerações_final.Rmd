@@ -7,8 +7,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Outliers, dados faltantes, viés de seleção, desatualizado, mudou ao longo do tempo
 
-# Intro
+
+
+# Introdução
 
 Ufa, muita coisa né? Sim, e aqui é só o começo
 
