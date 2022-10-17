@@ -1,5 +1,5 @@
 
-# Guia de Bolso - Dados Tidy, Pipe (%>%), tidyverse e Dialetos do R
+# Guia de Bolso - tidyverse, Dados Tidy, Pipe (%>%) e Dialetos do R
 
 # Introdução
 # Neste script falaremos sobre o universo tidyverse, contextualizando conceitos 
