@@ -1,5 +1,5 @@
 
-# Pocket - Linguagem R e RStudio
+# Guia de Bolso - Introdução Linguagem R e RStudio
 
 # Introdução
 # Neste script você irá encontrar uma revisão sobre o R, considerando a 

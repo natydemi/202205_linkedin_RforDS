@@ -1,5 +1,5 @@
 ---
-title: "Pocket - Utilizando arquivos Rmarkdown (extensão .Rmd)"
+title: "Guia de Bolso - Intro arquivos Rmarkdown (extensão .Rmd)"
 output: html_document
 date: '1988-03-25'
 ---

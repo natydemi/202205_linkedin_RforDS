@@ -1,10 +1,9 @@
 
-# Pocket - Bibliotecas, Helps e Fontes de Pesquisa no R
+# Guia de Bolso - Bibliotecas, Helps e Fontes de Pesquisa no R
 
 # Introdução
-# Neste script você irá encontrar uma revisão sobre bibliotecas no R,   
-# bem como algumas dicas sobre como endereçar possíveis erros e realizar 
-# pesquisas relacionadas à linguagem. 
+# Este script apresenta uma revisão sobre bibliotecas e dicas 
+# sobre como fazer pesquisas relacionadas à linguagem R. 
 
 # ----- Bibliotecas -----
 
