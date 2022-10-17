@@ -80,8 +80,7 @@ Previne escalas diferentes
 Escrever:
 > o que é 
 > Porque é importante
-> Algum exemplo do que potencialmente modifica/impacta
- -- Dados extremos
+
  
 > Ex R
 

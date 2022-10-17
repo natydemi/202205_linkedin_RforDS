@@ -379,183 +379,148 @@ pre code {
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
-<div id="intro" class="section level1">
-<h1>Intro</h1>
+<div id="introdução" class="section level1">
+<h1>Introdução</h1>
 <p>Neste módulo falaremos mais sobre as ações de transformação, manuseio
 e limpeza de dados que os pacotes <code>dplyr</code> e
 <code>tidyr</code> possibilitam. Iniciando pelo <code>dplyr</code>, que
 tem um enfoque maior na aplicação de transformações, seguido pelo
 <code>tidyr</code>, que tem como maior objetivo oferecer ferramentas
-para facilitar a passagem dos dados para o formato tidy. Por vezes tais
-etapas são conhecidas como</p>
-<p>A disputa de dados é onde pegamos um conjunto de dados bruto e o
-transformamos em um formato adequado para diferentes tarefas</p>
-<p>Simplesmente é como preparar uma refeição, onde preparamos os dados
-para fazer o prato principal (neste caso, pode ser um modelo ou
-visualização)</p>
-<p>Existem vários pacotes que podem ajudar na disputa de dados, mas por
-hoje estaríamos arranhando a superfície do pacote dplyr no ecossistema
-do cleanverse.</p>
+para facilitar a passagem dos dados para o formato tidy.</p>
 </div>
 <div id="dplyr" class="section level1">
 <h1>Dplyr</h1>
-<p>Aqui falaremos desde seleções até criação de novas variáveis e
-sumarizações estatísticas.</p>
-<p>Limpeza, data cleaning</p>
-<div id="selecionar" class="section level2">
-<h2>selecionar</h2>
-<p>O comando select nos ajuda a selecionar as colunas que queremos, e
-podemos dar um intervalo de colunas ou mesmo as colunas que não queremos
-ter.</p>
-<p>A função de seleção funciona da seguinte forma.</p>
-<p>O primeiro argumento é o tibble ou data frame, neste caso nós
-canalizamos o dataset spotify usando o operador pipe. O resto dos
-argumentos são as diferentes maneiras de selecionar as variáveis. Por
-exemplo, se quisermos selecionar a colunaA do tibble t, diríamos
-select(t,A). Da mesma forma, se quisermos selecionar tudo, exceto a
-coluna B de tibble t, diríamos select(t,-B). você pode até usar um
-conjunto de funções chamadas seletores arrumados para selecionar colunas
-com base em como o nome começa ou termina (por exemplo,
-select(t,starts_with(“LKR_”)))) Agora você sabe como selecionar as
-linhas superiores de um tibble com a função head, então se você
-conseguir organizar as faixas por sua popularidade em ordem crescente,
-então está tudo pronto!</p>
-<div id="colunas" class="section level3">
-<h3>colunas</h3>
-<p>Podemos selecionar por nome ou por posição</p>
-<p>Ou ainda linhas, observações, que não se refiram ao nosso objetivo de
-estudo</p>
-<pre><code>- `select()` - seleciona as colunas, permitindo o uso de recursos como:
-    - `starts_with()`, `matches()`, `num_range()`, ou `everything()`  
-    
-
-- `arrange()` - ordena as linhas de acordo com as colunas especificadas
-      Precisamos de uma função que possa classificar as linhas com base em uma ou mais colunas. É aqui que a função de arranjo entra em ação. A função de organização usa um tibble como a primeira entrada e um conjunto de colunas para ordenar por ordem crescente ou decrescente. Espere algo não está certo, isso não está em ordem decrescente! Temos que dizer à função de organização para classificá-los em ordem decrescente.
-- `distinct()` - remove as linhas duplicadas para determinado atributo
-        Uma faixa pode estar em várias listas de reprodução! É por isso! Agora o que fazemos? Vamos selecionar apenas as linhas distintas ou exclusivas. Para isso, podemos usar a função distinct. A função distinct recebe um tibble como primeiro argumento e depois um conjunto de colunas para encontrar linhas distintas ou usa todas as colunas se nenhum argumento for fornecido. Você pode ver o padrão aqui certo?</code></pre>
-</div>
-<div id="linhas" class="section level3">
-<h3>linhas</h3>
-<p>por posição pelo valor</p>
+<p>O dplyr é um dos principais pacotes do tidyverse, visto permitir o
+manuseio e transformações de dados, de maneira simples e eficiente. Os
+scripts em R que fazem uso dos verbos dplyr e as facilidades do operador
+pipe tendem a ficar mais legíveis e organizados:</p>
+<p>As principais funções do dplyr são:</p>
 <ul>
-<li><p>filter for particular observations, arrange the observations in a
-desired order, and mutate to add or change a column.</p>
-<ul>
-<li><code>filter()</code> - filtra linhas da base de dados a partir de
-critérios lógicos (retorno <code>TRUE</code>/<code>FALSE</code>)</li>
-<li><code>slice()</code> - seleciona linhas por suas posições
-ordinais</li>
-<li><code>top_n()</code> - ordena as primeiras <code>n</code>
-observações das colunas listadas</li>
-</ul></li>
+<li>select() - seleciona colunas</li>
+<li>mutate() - cria/modifica colunas</li>
+<li>rename() - renomeia variáveis</li>
+<li>group_by() - agrupa a base de dados</li>
+<li>summarise() - sumariza a base de dados</li>
+<li>filter() - filtra linhas</li>
+<li>arrange() - ordena a base de dados</li>
 </ul>
-<p>A função de filtro pode ser usada para obter uma parte de um conjunto
-de dados que marca as caixas de um conjunto de uma ou mais condições
-lógicas. Basicamente, qualquer condição lógica que forneça um vetor
-lógico correspondente ao comprimento do conjunto de dados pode ser usada
-para filtrar as linhas de que você precisa.</p>
-<p>É como um filtro real onde as barreiras são as linhas com FALSE.</p>
-<p>Vamos usar a função de filtro para filtrar as linhas que precisamos.
-Temos uma condição lógica como argumento para filtrar e você pode
-combinar diferentes condições usando operadores lógicos como &amp;,|, ~
-etc.</p>
-<pre class="r"><code>#exemplo: seleção segundo padrão de nomenclatura + filtro e ordenação
-  iris %&gt;% 
-    select(starts_with(&quot;Petal&quot;)) %&gt;%
-    filter(Petal.Length &gt; 6, Petal.Width &gt; 2) %&gt;% 
-    arrange(Petal.Width)
-##   Petal.Length Petal.Width
-## 1          6.6         2.1
-## 2          6.7         2.2
-## 3          6.9         2.3
-## 4          6.1         2.3
-## 5          6.1         2.5
+<p>Veremos agora um pouco mais sobre cada um destes verbos, e mais
+algumas funções tangentes, considerando as ações:</p>
+<div id="manusear-colunas" class="section level2">
+<h2>manusear colunas</h2>
+<pre><code>- `select()` - este comando seleciona as colunas a partir do nome ou da posição da variável desejada. Permite ainda o uso de recursos para facilitar a indicação da coluna desejada, como: `starts_with()`, `matches()`, `num_range()`, e `everything()`.</code></pre>
+<pre class="r"><code>#?dplyr::select
 
-#exemplo: valor máximo de Sepal.Length para cada specie
-  iris %&gt;% 
-    group_by(Species) %&gt;% 
-    top_n(1, Sepal.Length)
-## # A tibble: 3 × 5
-## # Groups:   Species [3]
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species   
-##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;     
-## 1          5.8         4            1.2         0.2 setosa    
-## 2          7           3.2          4.7         1.4 versicolor
-## 3          7.9         3.8          6.4         2   virginica</code></pre>
-<p>por amostra</p>
-<pre><code>- `sample_n()` - seleciona uma amostra aleatória considerando o número de elementos especificado
-- `sample_frac()` - seleciona uma amostra aleatória considerando a proporção especificada</code></pre>
-<pre class="r"><code>#exemplo: amostra considerando o número de observações desejado 
-# seguido de uma amostra considerando proporção
-  iris %&gt;% 
-    sample_n(10) %&gt;% 
-    sample_frac(0.5) 
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 1          6.0         2.9          4.5         1.5 versicolor
-## 2          4.9         3.6          1.4         0.1     setosa
-## 3          5.2         3.4          1.4         0.2     setosa
-## 4          5.1         3.3          1.7         0.5     setosa
-## 5          5.1         3.5          1.4         0.3     setosa</code></pre>
+iris %&gt;% 
+  select(starts_with(&quot;Petal&quot;)) %&gt;% 
+  head()
+##   Petal.Length Petal.Width
+## 1          1.4         0.2
+## 2          1.4         0.2
+## 3          1.3         0.2
+## 4          1.5         0.2
+## 5          1.4         0.2
+## 6          1.7         0.4</code></pre>
+<pre><code>- `arrange()` - ordena as linhas de acordo com a(s) coluna(s) especificada(s), por default organiza as colunas na ordem crescente, para inverter a ordenação bastante aplicar a função `desc()` na coluna desejada.</code></pre>
+<pre class="r"><code>#?dplyr::arrange
+
+iris %&gt;% 
+  arrange(desc(Petal.Width)) %&gt;% 
+  tail()
+##     Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 145          5.0         3.3          1.4         0.2  setosa
+## 146          4.9         3.1          1.5         0.1  setosa
+## 147          4.8         3.0          1.4         0.1  setosa
+## 148          4.3         3.0          1.1         0.1  setosa
+## 149          5.2         4.1          1.5         0.1  setosa
+## 150          4.9         3.6          1.4         0.1  setosa</code></pre>
+<pre><code>- `distinct()` - remove as linhas duplicadas para os atributos especificados. No caso em que estivermos considerando mais de uma coluna, o distinct irá considerar as combinações das colunas, e não as colunas individualmente.</code></pre>
 </div>
+<div id="manusear-linhas" class="section level2">
+<h2>manusear linhas</h2>
+<pre><code>- `filter()` - permite obter uma parte do conjunto de dados a partir de critérios lógicos aplicados à coluna (isto é, que retornam `TRUE` ou `FALSE`). Sendo possível combinar diferentes condições usando operadores lógicos, como: `==`, `&gt;`, `&gt;=`, `&amp;`, `|`, `!,` `is.na()` e `between()`.</code></pre>
+<pre class="r"><code>#?dplyr::filter
+
+iris %&gt;% 
+  filter(Petal.Length &gt; 6, Petal.Width &gt; 2)
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+## 1          7.6         3.0          6.6         2.1 virginica
+## 2          7.2         3.6          6.1         2.5 virginica
+## 3          7.7         3.8          6.7         2.2 virginica
+## 4          7.7         2.6          6.9         2.3 virginica
+## 5          7.7         3.0          6.1         2.3 virginica</code></pre>
+<pre><code>- `slice()` - seleciona linhas por suas posições ordinais, possuí variações como o `slice_max()` que retorna as linhas referentes aos valores máximos de determinada feature, ou `slice_sample()` que retorna uma amostra aleatória conforme os parâ tamanho ou a proporção específicados, além de: </code></pre>
+<pre class="r"><code>#?dplyr::slice
+
+iris %&gt;% 
+  slice_max(Petal.Width,n=6) 
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+## 1          6.3         3.3          6.0         2.5 virginica
+## 2          7.2         3.6          6.1         2.5 virginica
+## 3          6.7         3.3          5.7         2.5 virginica
+## 4          5.8         2.8          5.1         2.4 virginica
+## 5          6.3         3.4          5.6         2.4 virginica
+## 6          6.7         3.1          5.6         2.4 virginica</code></pre>
+<pre><code>- `sample_n()` - seleciona uma amostra aleatória considerando o número de elementos desejados, enquanto que `sample_frac()` seleciona a amostraconsiderando a proporção desejada</code></pre>
+<pre class="r"><code>#?dplyr::sample_
+
+iris %&gt;% 
+  sample_n(10) %&gt;% 
+  sample_frac(0.5) 
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1          6.3         3.3          4.7         1.6 versicolor
+## 2          5.0         3.5          1.6         0.6     setosa
+## 3          4.3         3.0          1.1         0.1     setosa
+## 4          6.3         2.9          5.6         1.8  virginica
+## 5          5.4         3.4          1.5         0.4     setosa</code></pre>
 </div>
 <div id="alterando-e-criando-novas-colunas" class="section level2">
 <h2>alterando e criando novas colunas</h2>
-<p>excluindo</p>
-<pre><code>- `mutate()` - cria/modifica variáveis
-- `rename()` - renomeia variáveis
-  A função renomear recebe pares de argumentos na forma de</code></pre>
-<p>nome_novo = nome_antigo</p>
-<p>para que possamos renomear as colunas que queremos com essa
-função.</p>
-<p>Isso é um acréscimo ao primeiro argumento de um tibble para fazer
-tudo isso. - <code>arrange()</code> - também pode renomear variáveis</p>
-<p>convertendo dados!</p>
-<pre class="r"><code>#base exemplo
-  iris[1:5,] %&gt;% as_tibble()
-## # A tibble: 5 × 5
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
-## 1          5.1         3.5          1.4         0.2 setosa 
-## 2          4.9         3            1.4         0.2 setosa 
-## 3          4.7         3.2          1.3         0.2 setosa 
-## 4          4.6         3.1          1.5         0.2 setosa 
-## 5          5           3.6          1.4         0.2 setosa
+<pre><code>- `mutate()` - cria novas colunas, bem como modifica variáveis já existentes, inclsuive para converter a classe dos dados. As funções `ifelse` e `case_when` são particularmente interessantes de serem utilizadas de modo combinado ao mutate, visto que permitem regras mais elaboradas.</code></pre>
+<pre class="r"><code>#?dplyr::mutate()
+
+iris %&gt;% 
+  mutate(Petal.Sum = Petal.Length + Petal.Width,
+            Indicador_virginica = ifelse(Species == &quot;virginica&quot;, 1, 0)) %&gt;% 
+  slice_head()
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species Petal.Sum
+## 1          5.1         3.5          1.4         0.2  setosa       1.6
+##   Indicador_virginica
+## 1                   0</code></pre>
+<pre><code>- `rename()` - renomeia variáveis por meio de pares de argumentos na forma de `nome_novo = nome_antigo`</code></pre>
+<pre class="r"><code>#?dplyr::rename()
 
 #exemplo: seleção, mudança de nome, e definição de uma nova variável 
   iris[1:5,] %&gt;% 
     as_tibble() %&gt;% 
-    select(Sepal.Length) %&gt;% 
     rename(variavel_original = Sepal.Length) %&gt;% 
     mutate(variavel_original_normalizada =  variavel_original %&gt;% scale)
-## # A tibble: 5 × 2
-##   variavel_original variavel_original_normalizada[,1]
-##               &lt;dbl&gt;                             &lt;dbl&gt;
-## 1               5.1                             1.16 
-## 2               4.9                             0.193
-## 3               4.7                            -0.772
-## 4               4.6                            -1.25 
-## 5               5                               0.675</code></pre>
-<p>• ifelse, case_when</p>
+## # A tibble: 5 × 6
+##   variavel_origin… Sepal.Width Petal.Length Petal.Width Species variavel_origin…
+##              &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;              &lt;dbl&gt;
+## 1              5.1         3.5          1.4         0.2 setosa             1.16 
+## 2              4.9         3            1.4         0.2 setosa             0.193
+## 3              4.7         3.2          1.3         0.2 setosa            -0.772
+## 4              4.6         3.1          1.5         0.2 setosa            -1.25 
+## 5              5           3.6          1.4         0.2 setosa             0.675</code></pre>
 </div>
 <div id="criando-sumarizações" class="section level2">
 <h2>criando sumarizações</h2>
-<p>Do we really have to call distinct again like this? Or is there an
-easier way than having to group_by -&gt; mutate -&gt; select -&gt;
-distinct?our supervisor noticed what you were typing on your laptop and
-gave a tip to Google up on the function summarize to make the code more
-readable and safer.</p>
-<p>And now after digging on the summarize function, you realize that by
-simply replacing mutate with summarize your code now looks like this.
-And it automatically ungroups the outermost group after giving the
-summary statistics.</p>
-<pre><code>- `summarise()` - calcula resumos de uma tabela conforme especificação
+<pre><code>- `summarise()` - calcula resumos estatísticos de uma tabela conforme especificação, quando na presença do group_by, faz os resumos respeitando os agrupamentos especificados</code></pre>
+<pre class="r"><code>#?dplyr::summarise()
 
+iris %&gt;% 
+  summarise(Petal_1stQ = quantile(Sepal.Length,0.25),
+            Petal_3rdQ = quantile(Sepal.Length,0.75))
+##   Petal_1stQ Petal_3rdQ
+## 1        5.1        6.4</code></pre>
+</div>
+<div id="criando-sumarizações-por-grupo" class="section level2">
+<h2>criando sumarizações por grupo</h2>
+<pre><code>- `group_by()` - manipula a base de dados segmentando por cada &quot;grupo&quot; da variável especificada e, posteriormente, combina os resultados, considerando os comandos seguintes dados.</code></pre>
+<pre class="r"><code>#?dplyr::group_by()
 
-group_by ajuda a agrupar o conjunto de dados em grupos com base nos valores de uma coluna</code></pre>
-<p>resumir ajuda a fazer um resumo de um conjunto de dados
-agrupado/desagrupado para obter estatísticas resumidas</p>
-<p>o Media o Quantil</p>
-<pre class="r"><code>#exemplo: calculo da quantidade de observações de cada categoria, e 
+#exemplo: calculo da quantidade de observações de cada categoria, e 
 # média para a variável Petal.Length considerando a visão por Species
   iris %&gt;% 
     group_by(Species) %&gt;% 
@@ -568,70 +533,26 @@ agrupado/desagrupado para obter estatísticas resumidas</p>
 ## 2 versicolor    50              4.26
 ## 3 virginica     50              5.55</code></pre>
 </div>
-<div id="criando-sumarizações-por-grupo" class="section level2">
-<h2>criando sumarizações por grupo</h2>
-<pre><code>- `group_by()` - manipula a base de dados segmentando por cada &quot;grupo&quot; da variável especificada e, posteriormente, combina os resultados, considerando os comandos seguintes dados.</code></pre>
-</div>
 </div>
 <div id="tidyr" class="section level1">
 <h1>Tidyr</h1>
-<p>Redimensionando os dados (dados tidy)</p>
-<p>função que ajuda : <a href="https://r-rudra.github.io/tidycells/" class="uri">https://r-rudra.github.io/tidycells/</a></p>
-<p># A filosofia tidy, é uma forma de vincular a estrutura de um<br />
-# conjunto de dados (seu layout físico) com sua semântica (seu
-significado).<br />
-# Para tal, temos que, independente da origem, características,
-problemas e # layout dos dados, estes precisam ser organizados
+<p>Nesta etapa teremos como enfoque fazer os ajustes necessários para
+garantir que os dados estejam organizados de uma forma
+<code>tidy</code>, um conceito chave dentro do universo do tidyverse.
+Lembrando que a filosofia tidy, é uma forma de vincular a estrutura de
+um conjunto de dados (seu layout físico) com sua semântica (seu
+significado). E para tal, temos que os dados precisam ser organizados
 garantindo que:</p>
-<pre><code># cada variável/informação tenha a sua própria coluna;
-# cada observação/unidade de análise tenha a sua própria linha; e
-# que cada valor tenha a sua própria célula.</code></pre>
-<p># Apesar da simplicidade das premissas, respeitá-las permite um
-grande ganho # em termos de produtividade de análise. Contudo, nem
-sempre é trivial obter<br />
-# esta estrutura. Ponto este, que o próprio ecossistema de pacotes do
-tidyverse<br />
-# nos auxilia, oferecendo uma série de recursos para a obtenção e
-manutenção # de uma estrutura tidy.</p>
-<p>Vamos agora retornar em um conceito importante para Após a importação
-dos dados, passamos para a etapa de tidy dos dados, também chamada de
-<em>tidying data</em>. Para isto iremos primeiramente visualizar os
-dados. No R, existem várias funções <em>built-in</em> para isto, como a
-função <code>names()</code>, que retorna o nome das colunas, ou
-<code>str()</code>, que permite a visualização da estrutura de um objeto
-arbitrário.</p>
-<p>Todas as funções citadas serão igualmente úteis e utilizadas no
-contexto do <code>tidyverse</code>, mas, com o pacote
-<code>dplyr</code>, passamos a ter também a opção
-<code>glimpse()</code>. Nesta, de modo similar ao <code>str()</code>,
-temos o número de observações (linhas) e variáveis (colunas) dos dados,
-porém com a quantidade de observações ajustadas ao display do
-Console.</p>
-<pre class="r"><code>#exemplo: função `glimpse` para visualização 
-  mtcars %&gt;% glimpse()
-## Rows: 32
-## Columns: 11
-## $ mpg  &lt;dbl&gt; 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8,…
-## $ cyl  &lt;dbl&gt; 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8,…
-## $ disp &lt;dbl&gt; 160.0, 160.0, 108.0, 258.0, 360.0, 225.0, 360.0, 146.7, 140.8, 16…
-## $ hp   &lt;dbl&gt; 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180…
-## $ drat &lt;dbl&gt; 3.90, 3.90, 3.85, 3.08, 3.15, 2.76, 3.21, 3.69, 3.92, 3.92, 3.92,…
-## $ wt   &lt;dbl&gt; 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150, 3.…
-## $ qsec &lt;dbl&gt; 16.46, 17.02, 18.61, 19.44, 17.02, 20.22, 15.84, 20.00, 22.90, 18…
-## $ vs   &lt;dbl&gt; 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0,…
-## $ am   &lt;dbl&gt; 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,…
-## $ gear &lt;dbl&gt; 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3,…
-## $ carb &lt;dbl&gt; 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1, 2,…</code></pre>
-<p>A partir da visualização, começamos a fazer os ajustes necessários
-para garantir que os dados estejam organizados de uma forma
-<code>tidy</code>, tendo como principal ferramenta a biblioteca
-<code>tidyr</code>. Seguem as principais funções deste pacote,
-utilizando bases disponíveis pela própria biblioteca:</p>
+<ul>
+<li>cada variável/informação tenha a sua própria coluna;</li>
+<li>cada observação/unidade de análise tenha a sua própria linha; e</li>
+<li>que cada valor tenha a sua própria célula.</li>
+</ul>
+<p>Tendo como principal ferramenta para este redimensionamento a
+biblioteca <code>tidyr</code>.</p>
 <div id="pivotando" class="section level2">
 <h2>pivotando</h2>
-<p>Uma outra ação comum, diz respeito a necessidade de combinar
-diferentes bases de dados visando obter uma fonte única, com todas as
-informações de interesse, aqui denominada agregação.</p>
+<p>aqui denominada agregação.</p>
 <div id="de-colunas-para-linhas" class="section level3">
 <h3>de colunas para linhas</h3>
 <ul>
@@ -684,6 +605,9 @@ billboard_longer %&gt;% head()
   summarise(n_week = n(), rank_mean = mean(rank)) %&gt;% 
   filter(n_week&gt;30) %&gt;% 
   arrange(desc(n_week)) 
+## Warning in gzfile(file, mode): não foi possível abrir o arquivo comprimido &#39;C:/
+## Users/natyd/AppData/Local/Temp/Rtmp6DjtgT\file6bf4334b35b8&#39;, motivo provável &#39;No
+## such file or directory&#39;
 ## `summarise()` has grouped output by &#39;track&#39;. You can override using the
 ## `.groups` argument.
 ## # A tibble: 18 × 4
@@ -793,6 +717,9 @@ função que combina várias colunas.</li>
 <h1>Recursos avançados</h1>
 <div id="combinando-bases-joinmerge" class="section level2">
 <h2>Combinando Bases (join/merge)</h2>
+<p>Uma ação usual para o redirecionamento dos dados diz respeito a
+necessidade de combinar diferentes bases de dados visando obter uma
+fonte única, com todas as informações de interesse.</p>
 <pre><code>- `inner_join()` - retorna todas as linhas da base à esquerda que possuem valores correspondentes na base à direita. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
 - `left_join()` - retorna todas as linhas de x e todas as colunas de x e y. Linhas em x sem correspondência em y terão valores de NA nas novas colunas. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
 - `full_join()` - retorna todas as linhas e todas as colunas de xe y. Onde não há valores correspondentes, retorna NA para o ausente.</code></pre>
@@ -831,20 +758,15 @@ função que combina várias colunas.</li>
 ## $ band  &lt;chr&gt; &quot;Stones&quot;, &quot;Beatles&quot;, &quot;Beatles&quot;
 ## $ plays &lt;chr&gt; NA, &quot;guitar&quot;, &quot;bass&quot;</code></pre>
 </div>
-<div id="across" class="section level2">
-<h2>across()</h2>
-<p>O dplyr é o pacote mais útil para realizar transformação de dados,
-aliando simplicidade e eficiência de uma forma elegante. Os scripts em R
-que fazem uso inteligente dos verbos dplyr e as facilidades do operador
-pipe tendem a ficar mais legíveis e organizados sem perder velocidade de
-execução.</p>
-<p>As principais funções do dplyr são:</p>
-<p>select() - seleciona colunas mutate() - cria/modifica colunas
-rename() - renomeia variáveis group_by() - agrupa a base summarise() -
-sumariza a base filter() - filtra linhas arrange() - ordena a base</p>
-<p>Com a nova versão 1.0 do pacote dplyr, surgiu uma nova função
-across(), que nos ajuda a aplicar cálculos de forma simultânea a
-multiplas colunas.</p>
+<div id="função-across" class="section level2">
+<h2>Função across()</h2>
+<p>Até aqui o tidyverse apresenta o seu ponto forte em termos de
+legibilidade do código, aproximação com a maneira com que pensamos as
+ações que gostariamos de aplicar nos dados. Mas são nos recursos
+avançados que vemos ganhos consideráveis em termos de produtividade. Um
+excelente exemplo é a função <code>across()</code> disponível a partir
+da versão 1.0 do pacote <code>dplyr</code>. Esta função nos permite
+aplicar cálculos de forma simultânea a multiplas colunas.</p>
 <pre class="r"><code>starwars %&gt;% 
     summarise(across(is.numeric, mean, na.rm = T))
 ## Warning: Predicate functions must be wrapped in `where()`.
@@ -862,26 +784,15 @@ multiplas colunas.</p>
 ##    &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
 ## 1   174.  97.3       87.6
 
-
 starwars %&gt;% 
     summarise(across(contains(&quot;_color&quot;), n_distinct))
 ## # A tibble: 1 × 3
 ##   hair_color skin_color eye_color
 ##        &lt;int&gt;      &lt;int&gt;     &lt;int&gt;
 ## 1         13         31        15</code></pre>
-<p>Até aqui o tidyverse apresenta o seu ponto forte em termos de
-legibilidade do código, aproximação com a maneira com que pensamos as
-ações que gostariamos de aplicar nos dados. Mas são nos recursos
-avançados que vemos ganhos consideráveis em termos de produtividade.</p>
-<ul>
-<li>across, relocate #adicionar exemplos de formas de definir funções #
-avengers %&gt;% summarise(across(contains(“Death”), ~ sum(is.na(.x))))
-%&gt;% glimpse # avengers %&gt;% summarise(across(contains(“Death”),
-function(x) sum(is.na(x)))) %&gt;% glimpse</li>
-</ul>
 </div>
-<div id="programação-funcional-purrr" class="section level2">
-<h2>Programação Funcional (purrr)</h2>
+<div id="bônus-programação-funcional-purrr" class="section level2">
+<h2>Bônus: Programação Funcional (purrr)</h2>
 <p>Como ferramenta transversal a todas as etapas do workflow de análise,
 temos a programação funcional, que permite a criação de códigos mais
 rápidos, simples e reproduzíveis. No contexto do <code>tidyverse</code>
@@ -934,17 +845,36 @@ um grupo de listas</li>
 </div>
 <div id="hands-on" class="section level1">
 <h1>HANDS-ON</h1>
-<p>Se você estiver trabalhando com uma versão mais recente do RStudio,
-verá uma aba chamada Tutorial entre os paineis que estão na parte
-superior à direita da sua IDE. Nela você vai encontrar várias opções de
-manuais interativos, recomendo particularmente:
+<ul>
+<li><p>Se você estiver trabalhando com uma versão mais recente do
+RStudio, verá uma aba chamada Tutorial entre os paineis que estão na
+parte superior à direita da sua IDE. Nela você vai encontrar várias
+opções de manuais interativos, recomendo particularmente:
 <code>Filter observations</code>, <code>Create new variables</code> e
 <code>Summarise Tables</code>. Uma última observação: para voltar para
 sair de algum dos tutoriais você precisa apertar o botão
 <code>stop</code> uma bolinha vermelha que aparece no canto superior
-esquerdo da própria aba Tutorial ;)</p>
-<p><a href="https://www.rstudio.com/resources/cheatsheets/">cheatsheets
-do R-Studio</a></p>
+esquerdo da própria aba Tutorial ;)</p></li>
+<li><p>Avalie a página <a href="https://www.rstudio.com/resources/cheatsheets/">RStudio
+Cheatsheets</a>, localize as folhas de dicas relacionadas aos pacotes
+<code>dplyr()</code> e <code>tidyr()</code>, quais são os textos
+introdutórios de cada uma das cheatsheets?</p></li>
+<li><p>garantir dados tidy pode ser particularmente desafiador no
+contexto do excel, que tal explorar o pacote <a href="https://r-rudra.github.io/tidycells/">tidycells</a>, e entender
+como ele pode te ajudar neste tipo de tarefa.</p></li>
+<li><p>revise os códigos da apresentação do <a href="Rladies:%20https://beatrizmilz.github.io/2019-02-R-Interm-R-LadiesSP/#117">R
+Intermediário, feita pelas R-Ladies São Paulo</a></p></li>
+<li><p>como um case de uso da função across(), a partir do código
+abaixo, identifique qual o estado com o maior número de casos da
+<code>epidWeek</code> 1 e na <code>epidWeek</code> mais recente do
+histórico</p></li>
+</ul>
+<pre class="r"><code>covid19brazil::brazil_state %&gt;% head() %&gt;% glimpse()
+
+covid19brazil_epidWeek &lt;- covid19brazil::brazil_state %&gt;% 
+  group_by(region, state, coduf, epidWeek, population) %&gt;%  
+  summarise(across(where(is.integer), ~sum(.))) %&gt;%
+  glimpse() </code></pre>
 </div>
 
 
