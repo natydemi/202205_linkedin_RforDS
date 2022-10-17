@@ -284,7 +284,7 @@ starwars %>%
 ```
 
 
-## Bônus: Programação Funcional (purrr)
+## Programação Funcional (purrr)
 
 Como ferramenta transversal a todas as etapas do workflow de análise, temos a programação funcional, que permite a criação de códigos mais rápidos, simples e reproduzíveis. No contexto do `tidyverse` a biblioteca `purrr` disponibiliza de uma série de funcionalidades visando aprimorar a programação funcional no R. Como principal função temos o `map()`, transformando a sua entrada por meio da aplicação de uma função a cada elemento, e retornando uma lista com o mesmo comprimento que a entrada:
 

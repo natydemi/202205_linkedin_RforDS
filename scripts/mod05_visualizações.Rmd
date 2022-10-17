@@ -63,12 +63,7 @@ Traduzindo, temos:
 - {coord} - Organiza as coordenadas/eixos em que objetos geométricos irão aparecer
 - {statistics} - Transforma os dados considerando sumarizações estatísticas
 
-Contudo apenas três destas são obrigatórias: dados,  atributos estéticos (aesthetic), e objetos geométricos (geometries: pontos, barras, linhas, etc). Vamos começar por eles.
-
-
-## camadas obrigatórias
-
-Para as camadas obrigatórias, temos um layout similar a este:
+Contudo apenas as três destas camadas são obrigatórias: dados (data),  mapeamentos estéticos (aesthetic), e objetos geométricos (geometries). No caso,
 
 ```{r, eval=F}
   dados %>% 
@@ -77,12 +72,18 @@ Para as camadas obrigatórias, temos um layout similar a este:
 ```
 
 
-E para entender melhor do que se tratam, vamos adicioná-los um a um. Vamos utilizar aqui a base `drinks`, e no que ao aplicar o ggplot apenas, temos um painel em branco, com isto podemos entender que esta função tem como papel inicializar o gráfico:
+Vamos começar por eles:
+
+
+## camadas obrigatórias
+
+E para entender melhor do que se tratam, vamos conhece-los um a um. Para tal, utilizeramos a base `gapmider` do pacote `dados`:
 
 ```{r}
 gapminder <- dados::dados_gapminder %>% glimpse()
 ```
 
+E aplicar a base no ggplot apenas, sem as demais camadas, temos um painel em branco, com isto podemos entender que a função `ggplot` tem como papel inicializar o gráfico:
 
 ```{r}
 gapminder %>% 
@@ -104,39 +105,35 @@ gapminder %>%
   ggplot(aes(x = pib_per_capita, y = expectativa_de_vida))  +
   geom_point()
 ```
-E poderíamos trabalhar com outra geometria. Qualquer uma? Não. Precisaria ser uma geometria que trabalhasse com dois eixos, sendo ambos numéricos, dado as variáveis escolhidas:
+E poderíamos trabalhar com outra geometria. Qualquer uma? Não. Precisaria ser uma geometria que trabalhasse com dois eixos, sendo ambos numéricos, dado as variáveis escolhidas. Podemos ainda adicionar novos atributos, bem como novas camadas geométricas:
 
 ```{r}
 gapminder %>% 
   ggplot(aes(x = pib_per_capita, y = expectativa_de_vida, color = continente))  +
-    geom_point() 
+    geom_point() + 
+    geom_smooth()
 ```
 
-
-Inclusive podemos usar mais de um layer, e fazendo ajustes nas geometrias de forma independente:
-
-```{r}
-gapminder %>% 
-  ggplot(aes(x = pib_per_capita, y = expectativa_de_vida, color = continente))  +
-    geom_point() +
-    geom_text(data = . %>% filter(pib_per_capita>60000), aes(label = pais))
-```
-
+É importante comentar que algumas geometrias demandam estéticas específicas, caso do `geom_text()` que necessita da informação de qual atributo que será utilizo como texto:
 
 ```{r}
 gapminder %>% 
   ggplot(aes(x = pib_per_capita, y = expectativa_de_vida, color = continente))  +
     geom_point() +
-    ggrepel::geom_text_repel(data = . %>% filter(pib_per_capita>60000), aes(label = pais))
+    geom_text(aes(label = pais))
+    #está ruim de ler? Que tal trocar o geom_text por esse que está comentando e ver o que é alterado no gráfico?
+    #geom_text(data = . %>% filter(pib_per_capita>60000), aes(label = pais))
 ```
 
-Faz mais sentido trabalhar com os dados no tempo:
+Avaliando o resultado faria mais sentido se estivessemos trabalhando com a informação distribuida pelos anos:
 
 ```{r}
 gapminder %>% 
   ggplot(aes(x = ano, y = expectativa_de_vida, color = continente))  +
     geom_point() 
 ```
+
+As linhas estão conectando pontos que não necessariamente fazem sentido, para isto podemos utilizar passar a informação de pais como um mapeamente estético: 
 
 ```{r}
 gapminder %>% 
@@ -146,31 +143,36 @@ gapminder %>%
 ```
 
 
+O gráfico está sobrecarregado, e se mantivessemos apenas as retas ajustadas coloridas? 
+Note a diferença entre a posição do color para cada uma das camadas:
 
 
 ```{r}
 gapminder %>% 
-  ggplot(aes(x = pib_per_capita, y = expectativa_de_vida, color = continente))  +
-    geom_point(alpha = 0.3) +
-  geom_line(aes(group = pais)) 
-
+  ggplot(aes(x = ano, y = expectativa_de_vida, color = continente))  +
+    geom_point(color = "gray") +
+    geom_line(aes(group = pais), color = "gray") +
+    geom_smooth()
 ```
 
+## demais camadas 
 
-
-
-
-Mas quem são esses? 
-
-Ruim de ler? 
+O que poderiamos ter aqui de interessante?
 
 
 ```{r}
-drinks %>% 
-  ggplot(aes(x = beer_servings, y = wine_servings, color = total_litres_of_pure_alcohol)) +
-    geom_point(alpha = 0.1) +
-    ggrepel::geom_text_repel(data = . %>% filter( total_litres_of_pure_alcohol > 10), aes(label = country))
+gapminder %>% 
+  ggplot(aes(x = ano, y = expectativa_de_vida, color = continente))  +
+    geom_point(color = "gray") +
+    geom_line(aes(group = pais), color = "gray") +
+    geom_smooth() + 
+    theme_minimal() +
+    facet_grid( continente ~ .)
 ```
+
+
+
+
 
 Aqui já estamos utilizando recursos avançados, mas o meu ponto era justo mostrar o quanto a dificuldade não é o código. Mas não se preocupe pois vamos passar por recursos suficientes para que você possa evoluir neste pacote ;)
 
@@ -178,7 +180,6 @@ No mais vale comentar também que o ggplot trabalha com o encadeamento de funç�
 
 
 
-## demais camadas 
 
 
 FAZER ALGUMAS COISAS SIMPLES!!! 
@@ -375,122 +376,7 @@ isso além de todos as demais camadas
 https://r4ds.had.co.nz/graphics-for-communication.html 
 
 
-## demais layers do ggplot)
-
-Respondendo: qual país bebe mais? 
-
-### gráfico de barra
-
-```{r}
-paises <- c(paises <- c( "Argentina", "Brazil", "Uruguay", "Chile"))
-
-# Colocando a base no formato tidy
-drinks_tidy <- drinks %>%
-  select(country,
-         beer = beer_servings,
-         spirit = spirit_servings,
-         wine = wine_servings) %>%
-  pivot_longer(beer:wine,
-               names_to = "type",
-               values_to = "servings") %>%
-  filter(country %in% paises & type == "beer") %>%
-  arrange(country, desc(servings))
-
-# Grafico
-
-drinks_tidy %>%
-  ggplot(mapping = aes(x = reorder(country, servings), y = servings))+
-  geom_col(position = "dodge", fill = "lightblue", width = 0.8, alpha = 0.8)+
-  labs(x = "",
-       y = "Servings per person (2010)",
-       title = "Where Do People Drink The Most Beer?",
-       caption = "Source: World Health Organization (FiveThirtyEight)")+
-  scale_y_continuous(limits = c(0,260), expand = c(0, 0))+
-  theme_minimal()+
-  theme(panel.grid.major.y =element_blank(),
-        panel.grid.minor.x = element_blank(),
-        plot.caption = element_text(hjust = 0, vjust = -0.5,size = 8))+
-  coord_flip()
-```
-
-
-### dot plot
-
-```{r}
-# Selecionando os paises
-top20 <- drinks %>%
-  select(country,
-         beer = beer_servings,
-         spirit = spirit_servings,
-         wine = wine_servings) %>%
-  pivot_longer(beer:wine,
-               names_to = "type",
-               values_to = "servings") %>%
-  filter(type == "beer") %>%
-  arrange(country, desc(servings)) %>%
-  top_n(20, servings)
-
-# Grafico 
-
-top20 %>%
-  ggplot(mapping = aes(x = servings, y = reorder(country, servings)))+
-  geom_point(col = "darkgreen", size = 3)+
-  labs(x = "Servings per person (2010)",
-       y = "",
-       title = "Where Do People Drink The Most Beer? (Top 20)",
-       caption = "Source: World Health Organization (FiveThirtyEight)")+
-  scale_x_continuous(limits = c(250,380),expand = c(0, 0))+
-  theme_minimal()+
-  theme(plot.caption = element_text(hjust = 0, vjust = -0.5,size = 8))
-```
-
-
-### barra agrupada
-
-```{r}
-paises <- c(paises <- c("China", "Italy", "Saudi Arabia", "USA"))
-drinks_tidy <- drinks %>%
-  select(country,
-         beer = beer_servings,
-         spirit = spirit_servings,
-         wine = wine_servings) %>%
-  pivot_longer(beer:wine,
-               names_to = "type",
-               values_to = "servings") %>%
-  filter(country %in% paises) %>%
-  arrange(type, desc(servings))
-
-# Gráfico
-
-drinks_tidy %>%
-  ggplot(mapping = aes(x = country, y = servings, fill = type))+
-  geom_col(position = "dodge")+
-  geom_text(aes(label = ifelse(servings == 0, "", servings)),
-            position = position_dodge(width = 1),
-            vjust = -0.5, size = 3) +
-  scale_y_continuous(limits = c(0,260), expand = c(0, 0))+
-  labs(x = "", y = "", fill = "Type",
-       title = "Who Drinks The Most Beer, Spirits and Wine?",
-       subtitle = "Servings Per Person (2010)",
-       caption = "Source: World Health Organization (FiveThirtyEight)")+
-  theme_minimal()+
-  theme(axis.line=element_blank(), panel.border =element_blank(), panel.grid.major.x =element_blank(),
-        panel.grid.minor.y = element_blank(),
-        plot.caption = element_text(hjust = 0, vjust = 7,size = 8))+
-  scale_fill_brewer(palette = "Pastel1")
-
-```
-
-
-
-
-# testes panelr::nlsy
-
-
-
-
-
-# Explanação: próximos passos! 
+## bibliotecas tangentes ao ggplot)
 
 Existem mais de 350 pacotes relacionados ao pacote ggplot2, oferecendo recursos 
 
@@ -519,17 +405,17 @@ Pacotes úteis (em ordem alfabética):
 {rayshader} — mapas sombreados em 2D e 3D
 {systemfonts} — use fontes personalizadas (substitui {extrafont} e {showtext})
 
-olçha até onde podemos chegar!  [ggplot Wizardry](https://www.cedricscherer.com/slides/OutlierConf2021_ggplot-wizardry.pdf)
+olha até onde podemos chegar!  [ggplot Wizardry](https://www.cedricscherer.com/slides/OutlierConf2021_ggplot-wizardry.pdf)
+
 
 
 # Bônus: Tabelas
 
 Por fim gostaria de comentar de uma entidade tão importante quanto o gráfico em si: as tabelas. Eu tenho um amigo, que costuma dizer que "por tras de todo grande gráfico temos uma grande tabela". O que faz sentido, inclusive, se você reparar para vários dos nossos exemplos foi necessário fazer algum ajuste nos dados antes de chegar no gráfico:
 
-## DT
-Default do knitr
+## DT (função default do pacote `knitr`)
 ```{r}
-drinks %>% DT::datatable()
+gapminder %>% DT::datatable()
 ```
 
 ## Outras opções de bibliotecas
@@ -541,7 +427,7 @@ drinks %>% DT::datatable()
 
 # Hands-on
 
-No RStudio Learn Primers: https://rstudio.cloud/learn/primers, faça os exercícios propostos na aba Visualize Data,  https://rstudio.cloud/learn/primers/3 
+- No RStudio Learn Primers: https://rstudio.cloud/learn/primers, faça os exercícios propostos na aba Visualize Data,  https://rstudio.cloud/learn/primers/3 
 
 
 
