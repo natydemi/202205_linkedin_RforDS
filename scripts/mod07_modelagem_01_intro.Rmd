@@ -18,8 +18,6 @@ Modelos são simplificações da realidade, algo que nós, humanos, naturalmente
 
 
 
-
-
 Existem muitos algoritmos e modelos importantes para ciencia de dados, de 
 
 Veremos aqui alguns dos mais usuais/recorrentes para que você possa iniciar a sua carreira nesta área. Mas antes vamos comentar sobre alguns dor principais termos da área, pois os nomes e definições tendem a ser confusos.

@@ -11,7 +11,7 @@
 
 
 
-<title>Análise Exploratória de Dados - Exploratory Data Analysis (EDA)</title>
+<title>Análise Exploratória de Dados</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -348,8 +348,8 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Análise Exploratória de Dados - Exploratory
-Data Analysis (EDA)</h1>
+<h1 class="title toc-ignore">Análise Exploratória de Dados</h1>
+<h3 class="subtitle">Exploratory Data Analysis (EDA)</h3>
 
 </div>
 
@@ -373,36 +373,36 @@ bibliotecas uteis do R para este fim. Posteriormente aprofundaremos
 sobre quais pontos devem ser considerados em uma análise descritiva,
 considerando o ferramental disponibilizado pela estatística.</p>
 </div>
-<div id="eda" class="section level1">
-<h1>EDA</h1>
+<div id="o-que-é-eda" class="section level1">
+<h1>O que é EDA?</h1>
 <p>EDA, do inglês Exploratory Data Analysis, e em português Análise
-Exploratória de Dados, é o processo de explorar os dados, o que
-tipicamente inclui desde examinar a estrutura do dataset, algo que
+Exploratória de Dados, trata o processo de explorar os dados. O que,
+tipicamente, inclui desde examinar a estrutura do dataset — que
 iniciamos no módulo anterior, até o entendimento mais profundo sobre o
 comportamento das variáveis — nosso foco neste módulo. A EDA nos
 permite:</p>
 <ul>
-<li>Observar padrões não necessariamente conhecidos a priori</li>
-<li>Identificar se há algum problema com o seu conjunto de dados</li>
-<li>Determinar se a pergunta que você está fazendo pode ser respondida
-pelos dados que você possui</li>
-<li>Desenvolver um esboço de resposta para hipóteses levantadas, por
-vezes respondê-las</li>
+<li>Observar padrões não necessariamente conhecidos a priori;</li>
+<li>Identificar se há alguma inconsistência no conjunto de dados
+analisado;</li>
+<li>Determinar se as perguntas relacionadas aos dados podem ser
+respondidas pelas informações disponíveis; e</li>
+<li>Desenvolver um esboço de resposta para as hipóteses levantadas, por
+vezes respondê-las.</li>
 </ul>
-<p>Aqui, é possível, tanto ir em uma linha de exploração mais
-descritiva, por meio de volumetrias, estatísticas e visualizações,
-quanto utilizar uma abordagem mais diagnóstica, investigando
-comportamentos mais complexos, como padrões de associação, por exemplo.
-Em linhas gerais, é nesta etapa que <em>aprendemos</em> e damos
-<em>sentido</em> aos dados!</p>
+<p>Aqui é podemos tanto ir em uma linha de exploração descritiva, por
+meio de volumetrias, estatísticas e visualizações, quanto utilizar uma
+abordagem mais diagnóstica, investigando comportamentos mais complexos,
+como padrões de associação, por exemplo. Em linhas gerais, é nesta etapa
+que <em>aprendemos</em> e damos <em>sentido</em> aos dados!</p>
 </div>
-<div id="dados" class="section level1">
-<h1>Dados</h1>
+<div id="base-de-dados-super-bowl-americano" class="section level1">
+<h1>Base de Dados: Super Bowl Americano</h1>
 <p>Vamos trabalhar com uma base de comerciais do Super Bowl Americano,
-considerando os anúncios das 10 marcas que mais veicularam nos neste
-evento nos últimos anos, tendo, para cada comercial, uma classificação
-binária relacionada a critérios pré-especificados. Para mais informações
-sobre o levantamento e a base de dados acesse:</p>
+considerando os anúncios das 10 marcas que mais veicularam neste evento
+nos últimos anos, tendo, para cada comercial, uma classificação binária
+relacionada a critérios pré-especificados. Para mais informações sobre o
+levantamento e/ou os dados acesse:</p>
 <ul>
 <li><p><a href="https://projects.fivethirtyeight.com/super-bowl-ads/" class="uri">https://projects.fivethirtyeight.com/super-bowl-ads/</a></p></li>
 <li><p><a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md" class="uri">https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md</a></p></li>
@@ -418,7 +418,11 @@ sobre o levantamento e a base de dados acesse:</p>
 ## dttm  (1): published_at
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+#caso não tenha acesso a internet, pelo código abaixo, a base foi salva e, na sequencia, pode ser novamente lida a partir do arquivo .csv salvo na pasta dados
+  #readr::write_csv(youtube, &quot;..\\dados\\youtube.csv&quot;)
+  #youtube &lt;- readr::read_csv(&quot;..\\dados\\youtube.csv&quot;)</code></pre>
 <pre class="r"><code>youtube %&gt;% glimpse()
 ## Rows: 247
 ## Columns: 25

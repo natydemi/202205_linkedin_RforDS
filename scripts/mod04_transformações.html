@@ -367,28 +367,21 @@ display: none;
 </div>
 <div id="introdução" class="section level1">
 <h1>Introdução</h1>
-<p>Uma parte fundamental da análise e trabalhar com dados confiáveis e
-que estejam em boa qualidade. Sabemos que essa nem sempre (quase nunca!)
-é a realidade, por isso precisamos aprender a arrumar os dados e ter
-certeza que não há nenhuma inconsistência antes de fazer qualquer
-inferência.</p>
-<p>Além disso, muitas vezes é necessário transformar uma base de dados
-inicial, derivando diferentes tabelas que ajudrão em análises mais
-aprofundadas, ou ainda gráficos e visualizações para que você ou sua
-audiência a entendam as informações contidas ali.</p>
-<p>Neste módulo falaremos mais sobre as ações de transformação, manuseio
-e limpeza de dados que os pacotes <code>dplyr</code> e
-<code>tidyr</code> possibilitam. O primeiro, <code>dplyr</code>, foca na
-transformação dos dados, enquanto o <code>tidyr</code> ajuda a
-arrumá-los na <a href="https://r4ds.had.co.nz/tidy-data.html">estrutura
-tidy</a> que vocês já viram no módulo 1.</p>
+<p>Uma parte fundamental da análise de dados é o manuseio da informação,
+o que implica em ser capaz de aplicar transformações, e reformatar a
+estrutura dos dados. Neste módulo, falaremos sobre tais ações por meio
+dos pacotes <code>dplyr</code> e <code>tidyr</code>. O primeiro,
+<code>dplyr</code>, tendo como enfoque a transformação das informações,
+enquanto o <code>tidyr</code> nos possibilita novas estruturas,
+garantindo dados em uma <a href="https://r4ds.had.co.nz/tidy-data.html">estrutura tidy</a> –
+conforme discutido no primeiro módulo do curso.</p>
 </div>
 <div id="a-gramática-do-dplyr" class="section level1">
 <h1>A gramática do dplyr</h1>
 <p>Na descrição do pacote, o <code>dplyr</code> é definido como a
 gramática para transformação de dados, e esse nome não é à toa. Ele
 possui vários verbos que definem ações específicas para lidar com bases
-de dados, visando modificá-los de forma simples e eficiente.</p>
+de dados, visando modificá-las de forma simples e eficiente.</p>
 <p>As principais funções do dplyr são:</p>
 <ul>
 <li><code>select()</code> - seleciona colunas;</li>
@@ -396,17 +389,17 @@ de dados, visando modificá-los de forma simples e eficiente.</p>
 <li><code>arrange()</code> - ordena as linhas da base de dados;</li>
 <li><code>mutate()</code> - cria/modifica colunas;</li>
 <li><code>rename()</code> - renomeia variáveis;</li>
-<li><code>group_by()</code> - agrupa a base de dados;</li>
+<li><code>group_by()</code> - agrupa linhas da base de dados;</li>
 <li><code>summarise()</code> - resume a base de dados em menos
 linhas.</li>
 </ul>
-<p>Juntando essas principais funções com o pipe, que você também viu no
+<p>Juntando essas principais funções com o pipe – conforme comentado no
 módulo 1, conseguimos praticamente dividir em passos o que precisa ser
-feito com o dataset, deixando os scripts mais legíveis e
+feito com a base de dados, deixando os scripts mais legíveis e
 organizados.</p>
 <p>Por exemplo, se você precisa descobrir <strong>quais voos da
-companhia American Airlines tiveram o maior tempo de atraso</strong>,
-consegue separar essa pergunta em diferentes etapas:</p>
+companhia American Airlines tiveram o maior tempo de atraso</strong>, é
+possível separar essa pergunta em diferentes etapas:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>quais voos da companhia American Airlines</strong>:
 filtrar voos da AA;</p></li>
@@ -420,23 +413,41 @@ responder para analisar o conjunto de dados.</p>
 <code>dados</code></a>, criado colaborativamente para traduzir conjuntos
 de dados inicialmente disponibilizados em inglês para o português. Todos
 os conjuntos aqui são utilizados também como exemplo no livro <a href="https://r4ds.had.co.nz/">R para Data Science</a>.</p>
+<pre class="r"><code>voos &lt;- dados::voos %&gt;% glimpse()
+## Rows: 336,776
+## Columns: 19
+## $ ano              &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013,…
+## $ mes              &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+## $ dia              &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+## $ horario_saida    &lt;int&gt; 517, 533, 542, 544, 554, 554, 555, 557, 557, 558, 558…
+## $ saida_programada &lt;int&gt; 515, 529, 540, 545, 600, 558, 600, 600, 600, 600, 600…
+## $ atraso_saida     &lt;dbl&gt; 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, -2, …
+## $ horario_chegada  &lt;int&gt; 830, 850, 923, 1004, 812, 740, 913, 709, 838, 753, 84…
+## $ chegada_prevista &lt;int&gt; 819, 830, 850, 1022, 837, 728, 854, 723, 846, 745, 85…
+## $ atraso_chegada   &lt;dbl&gt; 11, 20, 33, -18, -25, 12, 19, -14, -8, 8, -2, -3, 7, …
+## $ companhia_aerea  &lt;chr&gt; &quot;UA&quot;, &quot;UA&quot;, &quot;AA&quot;, &quot;B6&quot;, &quot;DL&quot;, &quot;UA&quot;, &quot;B6&quot;, &quot;EV&quot;, &quot;B6&quot;,…
+## $ voo              &lt;int&gt; 1545, 1714, 1141, 725, 461, 1696, 507, 5708, 79, 301,…
+## $ cauda            &lt;chr&gt; &quot;N14228&quot;, &quot;N24211&quot;, &quot;N619AA&quot;, &quot;N804JB&quot;, &quot;N668DN&quot;, &quot;N3…
+## $ origem           &lt;chr&gt; &quot;EWR&quot;, &quot;LGA&quot;, &quot;JFK&quot;, &quot;JFK&quot;, &quot;LGA&quot;, &quot;EWR&quot;, &quot;EWR&quot;, &quot;LGA…
+## $ destino          &lt;chr&gt; &quot;IAH&quot;, &quot;IAH&quot;, &quot;MIA&quot;, &quot;BQN&quot;, &quot;ATL&quot;, &quot;ORD&quot;, &quot;FLL&quot;, &quot;IAD…
+## $ tempo_voo        &lt;dbl&gt; 227, 227, 160, 183, 116, 150, 158, 53, 140, 138, 149,…
+## $ distancia        &lt;dbl&gt; 1400, 1416, 1089, 1576, 762, 719, 1065, 229, 944, 733…
+## $ hora             &lt;dbl&gt; 5, 5, 5, 5, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6,…
+## $ minuto           &lt;dbl&gt; 15, 29, 40, 45, 0, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59,…
+## $ data_hora        &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-01…</code></pre>
 <div id="manuseando-colunas" class="section level2">
 <h2>Manuseando colunas</h2>
 <p>Aqui, vamos aprender como lidar com as colunas do seu conjunto de
-dados, seja selecionando ou ordenando.</p>
+dados, seja selecionando ou ordenando a informação.</p>
 <div id="select" class="section level3">
 <h3><code>select()</code></h3>
 <p>Como falamos acima, o <code>select()</code> seleciona as colunas a
 partir do nome ou da posição da variável desejada. Junto com as funções
-de apoio no <a href="https://tidyselect.r-lib.org/reference/index.html">tidyselect</a>
+de apoio no <a href="https://tidyselect.r-lib.org/reference/index.html">tidyselect</a>,
 você também consegue indicar a(s) coluna(s) desejada(s) de forma
 dinâmica, como: <code>starts_with()</code>, <code>matches()</code>,
 <code>num_range()</code>, e <code>everything()</code>.</p>
-<pre class="r"><code>library(dados) #carrega o pacote dados
-
-voos &lt;- dados::voos # carrega o dataset
-
-voos %&gt;% 
+<pre class="r"><code>voos %&gt;% 
   select(contains(&quot;horario&quot;)) %&gt;% 
   head()
 ## # A tibble: 6 × 2
@@ -451,10 +462,10 @@ voos %&gt;%
 </div>
 <div id="arrange" class="section level3">
 <h3><code>arrange()</code></h3>
-<p>No <code>arrange()</code>, conseguimos ordenar as linhas de acordo
+<p>Com <code>arrange()</code>, conseguimos ordenar as linhas de acordo
 com a(s) coluna(s) especificada(s). Por padrão, ele organiza as colunas
-na ordem crescente, mas é possível inverter para a ordem decrescente com
-a função <code>desc()</code>.</p>
+na ordem crescente, mas é possível inverter para a ordem com a função
+<code>desc()</code>.</p>
 <pre class="r"><code>voos %&gt;% 
   select(companhia_aerea, voo, atraso_chegada) %&gt;%
   arrange(atraso_chegada) %&gt;% 
@@ -556,19 +567,18 @@ dessa amostra, ou seja, 5 voos.</p>
 ## # A tibble: 5 × 4
 ##   companhia_aerea   voo atraso_saida atraso_chegada
 ##   &lt;chr&gt;           &lt;int&gt;        &lt;dbl&gt;          &lt;dbl&gt;
-## 1 EV               4636           69             58
-## 2 MQ               3351           -7             -9
-## 3 EV               4193           66             61
-## 4 EV               4152          102            123
-## 5 MQ               3709           -4             -4</code></pre>
+## 1 UA                887           -2            -12
+## 2 WN               3297            6             19
+## 3 UA                866           -1            -29
+## 4 DL               1435            0            -27
+## 5 DL               1619          338            314</code></pre>
 </div>
 <div id="distinct" class="section level3">
 <h3><code>distinct()</code></h3>
 <p>Bem útil quando você tem linhas iguais, o <code>distinct()</code>
 remove valores duplicados para as colunas selecionadas. Se você não
 selecionar nenhuma coluna, ele olha para o conjunto de dados inteiro,
-mas você pode tanto especificar uma coluna quanto combinar de
-várias.</p>
+mas você pode tanto especificar uma coluna quanto combinar várias.</p>
 <p>Neste último caso, ele considera os valores únicos combinados para
 essas colunas, e não elas individualmente. Neste exemplo, selecionamos
 as origens e destinos únicos para cada companhia aérea.</p>
@@ -626,10 +636,11 @@ regras mais elaboradas na transformação dos dados.</p>
 adiantados comparando a chegada com o horário previsto na nova coluna
 <code>status_horario</code>. Veja:</p>
 <pre class="r"><code>voos_atrasados &lt;- voos %&gt;% 
-  mutate(status_horario = case_when(horario_chegada &lt; chegada_prevista ~ &quot;Adiantado&quot;,
-                                    horario_chegada &gt; chegada_prevista ~ &quot;Atrasado&quot;,
-                                    horario_chegada == chegada_prevista ~ &quot;No horário&quot;,
-                                    TRUE ~ &quot;Indefinido&quot;))
+  mutate(status_horario = case_when(
+    horario_chegada &lt; chegada_prevista ~ &quot;Adiantado&quot;,
+    horario_chegada &gt; chegada_prevista ~ &quot;Atrasado&quot;,
+    horario_chegada == chegada_prevista ~ &quot;No horário&quot;,
+    TRUE ~ &quot;Indefinido&quot;))
 
 voos_atrasados %&gt;%
   select(voo, chegada_prevista, horario_chegada, atraso_chegada, status_horario)
@@ -649,10 +660,10 @@ voos_atrasados %&gt;%
 ## # … with 336,766 more rows</code></pre>
 <p>Note que o <code>case_when()</code> tem uma sintaxe bem específica.
 Mais detalhes podem ser vistos <a href="https://dplyr.tidyverse.org/reference/case_when.html">na
-documentação</a>, mas em suma, você precisa passar uma expressão lógica
-e, caso ela seja atendida, o valor a ser escrito após o <code>~</code>.
-O último argumento serve para atribuir um valor caso nenhuma condição
-seja satisfeita.</p>
+documentação</a>. Em suma, você precisa passar uma expressão lógica e,
+caso ela seja atendida, o valor a ser escrito após o <code>~</code> é
+atribuído. O último argumento serve para atribuir um valor caso nenhuma
+condição seja satisfeita.</p>
 </div>
 <div id="rename" class="section level3">
 <h3><code>rename()</code></h3>
@@ -704,8 +715,8 @@ km, entre aeroportos.</p>
 <code>group_by()</code> cria grupos a partir das colunas especificadas
 para manipular o conjunto de dados. Ele não modifica a tabela em si, mas
 combina os resultados de acordo com as operações escritas.</p>
-<p>Aqui, vamos usar o conjunto <code>voos_atrasados</code> criados a
-partir do <code>mutate()</code> para identificar os status de horário
+<p>Aqui, vamos usar o conjunto <code>voos_atrasados</code>, criado a
+partir do <code>mutate()</code>, para identificar os status de horário
 mais comuns no nosso conjunto de dados.</p>
 <pre class="r"><code>voos_atrasados %&gt;%
   group_by(status_horario) %&gt;% # agrupando pelo status de horário
@@ -723,8 +734,8 @@ exatamente no horário previsto (5 mil).</p>
 </div>
 </div>
 </div>
-<div id="usando-o-tidyr" class="section level1">
-<h1>Usando o tidyr</h1>
+<div id="os-recursos-do-tidyr" class="section level1">
+<h1>Os recursos do tidyr</h1>
 <p>Com os principais verbos do <code>dplyr</code> na manga, agora é hora
 de explorar o <code>tidyr</code> que, lembrando, serve para transformar
 o conjunto de dados.</p>
@@ -739,14 +750,14 @@ tal, os dados precisam ser organizados garantindo que:</p>
 <li>cada observação/unidade de análise tenha a sua própria linha; e</li>
 <li>que cada valor tenha a sua própria célula.</li>
 </ul>
-<p>A biblioteca <code>tidyr</code> tem o propósito de ajudar nessa
-função, caso o conjunto de dados não siga esse formato.</p>
-<div id="transformando-os-dados" class="section level2">
-<h2>Transformando os dados</h2>
-<p>A nossa sorte é que que o conjunto <code>voos</code> já está
-organizado, portanto agora vamos mudar os dados de exemplo para o
-conjunto <code>billboard</code>, que lista os rankings de música na
-Billboard top 100 durante o ano 2000.</p>
+<p>A biblioteca <code>tidyr</code> tem o propósito de ajudar neste
+processo, caso o conjunto de dados ainda não esteja neste formato.</p>
+<div id="reformatando-os-dados" class="section level2">
+<h2>Reformatando os dados</h2>
+<p>Como a base de dados <code>voos</code> já está no formato tidy, vamos
+trabalhar com outro dataset, no caso, o conjunto <code>billboard</code>,
+que lista os rankings de música na Billboard top 100 durante o ano
+2000.</p>
 <pre class="r"><code>data(&quot;billboard&quot;)
 
 billboard %&gt;% head()
@@ -773,7 +784,7 @@ billboard %&gt;% head()
 <p>Como o nome descreve, o <code>pivot_longer()</code> “gira” o eixo dos
 dados para o formato longo (ou comprido), normalmente dentro do padrão
 <code>tidy</code>.</p>
-<p>Para isso, ele as colunas especificadas na coluna parâmetro
+<p>Para isso, ele usa as colunas especificadas na coluna parâmetro
 <code>key</code>, e seus valores na coluna parâmetro <code>value</code>.
 Assim conseguimos tratar os dados como nos exemplos acima, seja
 filtrando, escrevendo novas variáveis, transformando as já existentes, e
@@ -845,9 +856,9 @@ ficou na posição 36.</p>
 <h3>De linhas para colunas</h3>
 <div id="pivot_wider" class="section level4">
 <h4><code>pivot_wider()</code></h4>
-<p>Como o inverso da anterior, a <code>pivot_wider()</code> transforma o
-conjunto de dados em um formato largo, ou seja, onde o número de colunas
-aumenta e o de linhas diminui.</p>
+<p>Como o inverso da função anterior, <code>pivot_wider()</code>
+transforma o conjunto de dados em um formato largo, ou seja, onde o
+número de colunas aumenta e o de linhas diminui.</p>
 <p>Ao contrário da <code>pivot_longer()</code>, que recebe texto como
 input, esta recebe as colunas para transformar em formato longo. Vamos
 reverter o que acabamos de fazer, voltando a <code>week</code> para nome
@@ -885,9 +896,8 @@ de coluna e o <code>rank</code> como valor de cada uma, usando o prefixo
 exemplo, vamos voltar para o conjunto de dados de <code>voos</code>.</p>
 <div id="separate" class="section level3">
 <h3><code>separate()</code></h3>
-<p>Esta função divide uma única coluna em várias colunas, similarmente a
-opção <code>separate_rows()</code>, que faz a mesma coisa para
-linhas.</p>
+<p>Esta função divide uma única coluna em várias colunas. Similarmente,
+a opção <code>separate_rows()</code> faz a mesma coisa para linhas.</p>
 <p>Por exemplo, no conjunto <code>voos</code>, o
 <code>horario_saida</code> é escrito em horário local no formato
 <code>HHMM</code> ou <code>HMM</code>, onde <code>517</code> indica 5:17
@@ -949,7 +959,7 @@ partir de um separador. Por exemplo, podemos criar a coluna
 </div>
 <div id="recursos-avançados" class="section level1">
 <h1>Recursos avançados</h1>
-<p>Agora que já aprendemos o essencial do <code>dplyr</code> e
+<p>Agora, que já aprendemos o essencial do <code>dplyr</code> e
 <code>tidyr</code>, podemos nos aprofundar em funções que vão
 potencializar ainda mais a transformação e arrumação de dados.</p>
 <div id="combinando-bases-joinmerge" class="section level2">
@@ -968,12 +978,12 @@ colunas de x e y. Linhas em x sem correspondência em y terão valores de
 NA nas novas colunas. Se houver várias correspondências entre x e y,
 todas as combinações das correspondências serão retornadas;</li>
 <li><code>full_join()</code>: retorna todas as linhas e todas as colunas
-de xe y. Onde não há valores correspondentes, retorna NA para o
+de x e y. Onde não há valores correspondentes, retorna NA para o
 ausente.</li>
 </ul>
-<p>Ainda nos dados de <code>voos</code> como exemplo, podemos pegar
-outro conjunto do mesmo pacote chamado <code>companhias_aereas</code>.
-Assim, saber quais são exatamente as companhias aéreas de cada voo
+<p>Ainda nos dados de <code>voos</code> como exemplo, vamos pegar outro
+conjunto do mesmo pacote chamado <code>companhias_aereas</code>. Assim,
+podemos saber quais são exatamente as companhias aéreas de cada voo
 registrado no dataset.</p>
 <pre class="r"><code>voos_completo &lt;- voos %&gt;%
   left_join(dados::companhias_aereas, by = &quot;companhia_aerea&quot;)
@@ -1027,10 +1037,10 @@ chegada.</p>
 <p>Até aqui, o tidyverse tem como ponto forte a legibilidade do código,
 se aproximando com a maneira com que pensamos as ações que gostariamos
 de aplicar nos dados. Nos recursos avançados, nem sempre isso é regra,
-mas a troca se faz necessária pela produtividade do código.</p>
+mas a perda é compensada pela produtividade do código.</p>
 <p>Na função <code>across()</code>, disponível a partir da versão 1.0 do
 pacote <code>dplyr</code>, é possível aplicar cálculos a multiplas
-colunas de uma vez só.</p>
+colunas de uma única vez.</p>
 <p>Ou seja, em vez de tirar a média de <code>atraso_saida</code> e
 <code>atraso_chegada</code> de forma separada, como as duas colunas
 possuem um padrão, é possível usar o <code>across()</code> para
@@ -1049,22 +1059,30 @@ operá-las:</p>
 ##   atraso_saida atraso_chegada
 ##          &lt;dbl&gt;          &lt;dbl&gt;
 ## 1         12.6           6.90</code></pre>
-<p>Pode parecer besta com só duas colunas, mas quando você tem centenas,
-ou tem variáveis dinâmicas que podem ser adicionadas ou removidas do
-conjunto de dados no futuro, essa função é extremamente útil.</p>
+<p>Pode parecer algo simples, mas quando você tem: - muitas colunas que
+respeitam determinada regra – seja de nomenclatura, tipo de dados, ou
+qualquer característica que possa ser transcrita segundo um padrão
+lógico; ou</p>
+<ul>
+<li>variáveis dinâmicas que podem ser adicionadas, alteradas ou
+removidas do conjunto de dados</li>
+</ul>
+<p>a função <code>across()</code> torna-se um recurso extremamente útil
+para garantir não apenas a eficiência da análise, mas também a
+replicabilidade do código.</p>
 </div>
 </div>
 <div id="programação-funcional-purrr" class="section level2">
 <h2>Programação funcional (<code>purrr</code>)</h2>
 <p>Como ferramenta transversal a todas as etapas do workflow de análise,
 temos a programação funcional, que permite a criação de códigos mais
-rápidos, simples e reproduzíveis.</p>
-<p>No contexto do <code>tidyverse</code> a biblioteca <code>purrr</code>
-disponibiliza uma série de funcionalidades visando facilitar a
-programação funcional no R. Como principal função temos o
-<code>map()</code>, transformando a sua entrada por meio da aplicação de
-uma função a cada elemento, e retornando uma lista com o mesmo
-comprimento que a entrada:</p>
+concisos.</p>
+<p>No contexto do <code>tidyverse</code>, a biblioteca
+<code>purrr</code> disponibiliza uma série de funcionalidades visando
+facilitar a aplicação da programação funcional no R. Como principal
+função temos o <code>map()</code>, transformando a sua entrada por meio
+da aplicação de uma função a cada elemento, e retornando uma lista com o
+mesmo comprimento que a entrada:</p>
 <p>Abaixo, exemplificamos a identificação de quais colunas no conjunto
 <code>voos</code> tem dados faltantes, ou seja, em <code>NA</code>:</p>
 <pre class="r"><code>voos %&gt;% 
@@ -1091,11 +1109,21 @@ comprimento que a entrada:</p>
 ##  $ hora            : int 0
 ##  $ minuto          : int 0
 ##  $ data_hora       : int 0</code></pre>
+<p>Visto as bibliotecas que já estudamos, a aplicação da função
+<code>is.na()</code> não se apresenta tão crítica. Contudo é importante
+lembrar que você pode construir funções no R – conforme apresentado no
+módulo 1 do curso, inclusive como uma maneira de automatizar uma
+sequencia de ações – uma função que identifica as observações faltantes
+e endereça a solução a depender de determinadas características dos
+dados, por exemplos (comentaremos mais sobre este tipo de situação). De
+modo que ter os recursos do pacote <code>purrr</code> disponíveis, irá
+garantir que tais ajustes sejam aplicáveis considerando uma semântica
+mais simples.</p>
 <p>Por padrão, o <code>map()</code> retorna listas para que o resultado
 tenha outra estrutura/classe, mas podemos utilizar funções como:
-<code>map_dbl</code> que retorna um vetor número, <code>map_dfc</code>
-para um data.frame que combina os resultados por coluna, entre outras
-opções. Adicionalmente temos recursos como:</p>
+<code>map_dbl</code> que retorna um vetor numérico, o
+<code>map_dfc</code> para um data.frame que combina os resultados por
+coluna, entre outras opções. Adicionalmente temos recursos como:</p>
 <ul>
 <li><code>walk()</code>: similar ao <code>map</code>, porém sem ter o
 retorno da lista no console</li>
@@ -1103,6 +1131,11 @@ retorno da lista no console</li>
 grupo de listas</li>
 <li><code>append()</code>: adiciona valores ao fim de uma lista</li>
 </ul>
+<p>Como um último exemplo do poder prático deste pacote, segue um
+exemplo fictício em que lemos todos os arquivos de extensão
+<code>.xlsx</code> que estão salvos em um mesmo <code>\diretório</code>
+e, na sequência, aplicamos a função <code>glimpse()</code> a cada um dos
+resultados:</p>
 <pre class="r"><code>#exemplo: para visulizar todos os arquivos de um dado diretório
   list.files(&quot;\diretório&quot;, pattern=&#39;*.xlsx&#39;) %&gt;% 
     map(read_excel) %&gt;% 
@@ -1114,13 +1147,13 @@ grupo de listas</li>
 <ul>
 <li><p>Se você estiver trabalhando com uma versão mais recente do
 RStudio, verá uma aba chamada Tutorial entre os paineis que estão na
-parte superior à direita da sua IDE. Nela você vai encontrar várias
+parte superior, à direita da sua IDE. Nela, você vai encontrar várias
 opções de manuais interativos, recomendo particularmente:
 <code>Filter observations</code>, <code>Create new variables</code> e
-<code>Summarise Tables</code>. Uma última observação: para voltar para
-sair de algum dos tutoriais você precisa apertar o botão
-<code>stop</code> uma bolinha vermelha que aparece no canto superior
-esquerdo da própria aba Tutorial ;)</p></li>
+<code>Summarise Tables</code>. Uma última observação: para sair de
+alguns dos tutoriais você precisa apertar o botão <code>stop</code> uma
+bolinha vermelha que aparece no canto superior esquerdo da própria aba
+Tutorial ;)</p></li>
 <li><p>Avalie a página <a href="https://www.rstudio.com/resources/cheatsheets/">RStudio
 Cheatsheets</a>, localize as folhas de dicas relacionadas aos pacotes
 <code>dplyr()</code> e <code>tidyr()</code> e observe quais são os
@@ -1131,7 +1164,7 @@ neste tipo de tarefa.</p></li>
 <li><p>Estude os códigos da apresentação do <a href="Rladies:%20https://beatrizmilz.github.io/2019-02-R-Interm-R-LadiesSP/#1">R
 Intermediário</a>, feita pelas <strong>R-Ladies São
 Paulo</strong>.</p></li>
-<li><p>Como um case de uso da função <code>across()</code>, a partir do
+<li><p>Como um caso de uso da função <code>across()</code>, a partir do
 código abaixo, identifique qual o estado com o maior número de casos da
 <code>epidWeek</code> 1 e na <code>epidWeek</code> mais recente do
 histórico.</p></li>
