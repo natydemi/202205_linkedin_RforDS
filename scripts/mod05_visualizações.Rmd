@@ -17,13 +17,13 @@ library(tidyverse)
 
 # Introdução
 
-Neste material discutimos sobre a importancia da visualização de dados, tanto para análise quanto para comunicar as descobertas após o processo exploratório.
+Neste material, discutimos sobre a importancia da visualização de dados, tanto para análise quanto para comunicar as descobertas após o processo exploratório.
 
 O principal pacote em R para as visualizações é o `ggplot2`, que tem uma lógica gramatical própria, mas seu domínio é fundamental para criar gráficos dos mais simples até os avançados.
 
 # O que é dataviz? É de comer?
 
-Dataviz é abreviação de *Data Visualization*, ou simplesmente **visualização de dados**. Como o nome sugere, é uma forma de explorarmos os dados de forma visual, normalmente por meio de gráficos.
+Dataviz é abreviação de *Data Visualization*, ou simplesmente **visualização de dados**. Como o nome sugere, é uma forma de explorarmos os dados visualmente, normalmente por meio de gráficos.
 
 Esta etapa possui um papel crucial na análise de dados! Citando Ben Shneiderman, um importante nome da ciência da computação: "Visualização nos dá resposta para perguntas que nós não sabiamos que tinhamos".
 
@@ -31,9 +31,9 @@ E no R, apesar de existirem muitos recursos padrão para a visualização de dad
 
 # O pacote `ggplot2`
 
-E dentre os muitos pacotes do R, o `ggplot2` é a maior referência em relação a visualização de dados. Isto porque nele é implementado o *Grammar of Graphics*, uma abstração segundo a qual cada elemento do gráfico é visto como um elemento sintático, ou seja, com uma estrutura própria que pode ser encadeada.
+Dentre os muitos pacotes do R, o `ggplot2` é a maior referência em relação a visualização de dados. Isto porque nele é implementado o *Grammar of Graphics*, uma abstração segundo a qual cada elemento do gráfico é visto como um elemento sintático, ou seja, com uma estrutura própria que pode ser encadeada.
 
-Na prática a explicação faz mais sentido, mas é graças a essa estrutura que a mesma lógica é capaz de construir desde os gráficos mais simples até os mais complexos. Algumas das vantagens de usar o `ggplot2` são:
+Na prática, a explicação faz mais sentido, mas é graças a essa estrutura que a mesma lógica é capaz de construir desde os gráficos mais simples até os mais complexos. Algumas das vantagens de usar o `ggplot2` são:
 
 - Sintaxe única e estruturada
 - Maior controle e versatilidade 
@@ -41,7 +41,7 @@ Na prática a explicação faz mais sentido, mas é graças a essa estrutura que
 - Oferece recursos de design e "embelezamento" dos gráficos
 - Fomenta a análise semântica dos dados 
 - Cada variável é representada de forma única
-- Por ter como base uma linguagem cientifica, que otimiza a reprodutibilidade
+- Ter como base uma linguagem cientifica, que otimiza a reprodutibilidade
 - Ao decodificar gráficos, tornamos a sua comunicação mais clara e intencional
 
 Mas nem tudo são flores, o `ggplot2` tem um contra importante aqui que é a **curva de aprendizado**. Pela sua estrutura própria, leva um tempo para entender como construir os gráficos, mas uma vez entendida, é díficil enxergar visualização de outra maneira.
@@ -49,11 +49,11 @@ Mas nem tudo são flores, o `ggplot2` tem um contra importante aqui que é a **c
 
 ## As camadas do `ggplot2`
 
-Pela função `ggplot()`, o gráfico pode ser construído a partir de um mapeamento de elementos, construídos através é visto como um mapeamento de elementos, feito por camadas. Basta você passar esse mapeamento de elementos para a função inicial, seguindo os parâmetros estabelecidos, que o gráfico é construído.
+Pela função `ggplot()`, o gráfico pode ser construído a partir de um mapeamento de elementos, feito por camadas. Basta você passar esse mapeamento de elementos para a função inicial, seguindo os parâmetros estabelecidos, que o gráfico é construído.
 
-A imagem abaixo ajuda a entender como isso funciona na prática. A partir do conjunto de dados com as colunas `F`, `M` e `A`, é possível construir *geoms* (abreviação para formas geométricas), como a cor ser representada pelos elementos da coluna `F` ou o tamanho ser proporcional aos valores da `A`.
+A imagem abaixo ajuda a entender como isso funciona na prática. A partir do conjunto de dados com as colunas `F`, `M` e `A`, é possível construir *geoms* (abreviação para formas geométricas), como a cor a ser representada pelos elementos da coluna `F` ou o tamanho ser proporcional aos valores da `A`.
 
-Ao juntar com o sistema de coordenadas e passando os eixos `x` e `y`, como `F` e `A`, respectivamente, o resultado é um lindo gráfico (ou ao menos informativo) que ajuda a explicar o conjunto de dados em questão.
+Ao juntar com o sistema de coordenadas e passando os eixos `x` e `y`, como `F` e `A`, respectivamente, o resultado é um lindo gráfico (ou ao menos informativo), que ajuda a explicar o conjunto de dados em questão.
 
 ![Explicação da gramática do ggplot2](resources/gramatica-ggplot2.png)
 
@@ -69,7 +69,7 @@ dados %>%
     scales()
 ```
 
-Os principais elementos do `ggplot2` que dão conta de construir as visualizações são:
+Os principais elementos do `ggplot2`, que dão conta de construir as visualizações, são:
 
 - `{data}`: dados que serão utilizados no gráfico;
 - `{aesthetic}`: mapeamentos estéticos dos dados para os componentes visuais (eixo x, y, cores, etc);
@@ -92,20 +92,20 @@ Vamos começar por elas!
 
 ### Camadas obrigatórias
 
-E para entender melhor do que se tratam, vamos conhece-los um a um. Para tal, utilizeramos a base `gapmider` do pacote `dados`:
+Para entender melhor as camadas obrigatórias, vamos conhece-las uma a uma. Para tal, utilizeramos a base `gapmider` do pacote `dados`:
 
 ```{r}
 gapminder <- dados::dados_gapminder %>% glimpse()
 ```
 
-E aplicar a base no ggplot apenas, sem as demais camadas, temos um painel em branco, com isto podemos entender que a função `ggplot` tem como papel inicializar o gráfico:
+Ao aplicar a base no ggplot apenas, sem as demais camadas, temos um painel em branco, com isto podemos entender que a função `ggplot` tem como papel inicializar o gráfico:
 
 ```{r}
 gapminder %>% 
   ggplot() 
 ```
 
-Passamos agora para o elemento `aesthetic`, no R, representada de maneira abreviada, `aes()`. Essa função entra dentro do `ggplot()`, ainda sem o operador `+`, e descreve como as variáveis dos dados serão mapeadas para as propriedades visuais (estéticas). 
+Passamos agora para o elemento `aesthetic`, no R, representada de maneira abreviada, `aes()`. Essa função é chamada dentro da `ggplot()`, ainda sem o operador `+`, e descreve como as variáveis dos dados serão mapeadas para as propriedades visuais (estéticas). 
 
 Ou seja, com `aes()` você indicará quais variáveis serão mapeadas no gráfico, seja um conjunto ou apenas uma. Um mapeamente usual trata do eixo x e eixo y:
 
@@ -167,7 +167,7 @@ gapminder %>%
     geom_point() 
 ```
 
-As linhas estão conectando pontos que não necessariamente fazem sentido, para isto podemos utilizar passar a informação de `país` como um mapeamento estético: 
+As linhas estão conectando pontos que não necessariamente fazem sentido, para isto podemos passar a informação de `país` como um mapeamento estético: 
 
 ```{r}
 gapminder %>% 
@@ -177,7 +177,7 @@ gapminder %>%
 ```
 
 
-O gráfico está sobrecarregado, e se mantivessemos apenas as retas ajustadas coloridas? Note a diferença entre a posição do `color` para cada uma das camadas:
+O gráfico está sobrecarregado. E se mantivessemos apenas as retas ajustadas coloridas? Note a diferença entre a posição do `color` para cada uma das camadas:
 
 
 ```{r}
@@ -208,7 +208,7 @@ Talvez já tenha ficado avançado demais, mas o meu ponto era justo mostrar o qu
 
 Lembrando que o `ggplot2` também usa o encadeamento de funções, mas a dinâmica aqui é um pouco diferente do `%>%` e por isso trabalhamos com o operador `+`.
 
-Retornando a totalidade da camadas não obrigatórias, temos ainda os níveis em que podemos fazer: a divisão de gráficos (faceting), sistemas de coordenadas (coord), temas de fundo (themes), e sumarizações estatísticas (statistics).
+Retornando à totalidade da camadas não obrigatórias, temos ainda os níveis em que podemos fazer: a divisão de gráficos (faceting), sistemas de coordenadas (coord), temas de fundo (themes), e sumarizações estatísticas (statistics).
 
 
 ```{r, eval=F}
@@ -221,7 +221,7 @@ Retornando a totalidade da camadas não obrigatórias, temos ainda os níveis em
 ```
 
 
-E aqui vale dar uma checada na *cheat sheet* do ggplot, pois ela nos dá dicas valiosas sobre quais geometrias você pode ou não aplicar a depender do tipo da variável, além de exemplificar demais camadas e de forma visual: 
+E aqui vale dar uma checada na *cheat sheet* do ggplot, pois ela nos dá dicas valiosas sobre quais geometrias você pode ou não aplicar a depender do tipo da variável, além de exemplificar demais camadas, e de forma visual: 
 
 ```{r , echo=FALSE, fig.align = "center", fig.cap="CheatSheet ggplot2 (folha 01)"}
 knitr::include_graphics('https://i.pinimg.com/originals/5d/f0/dd/5df0dd5a1c5751f039b8db8ad9267cb5.jpg')
@@ -260,7 +260,7 @@ O primeiro passo para decidir qual visualização usar é entender como você qu
 
 ## Explorando possibilidades
 
-Vamos ver algumas possíbilidades, agora com o conjunto de dados `titanic`, que reúne dados dos sobreviventes dos passageiros do Titanic.
+Vamos ver algumas possibilidades, agora com o conjunto de dados `titanic`, que reúne dados dos passageiros sobreviventes do Titanic.
 
 ### Distribuição 
 
@@ -326,7 +326,7 @@ titanic %>%
 
 ### Relação
 
-Agora com o conjunto de dados `diamante`, que lista informações de preço de quase 54 mil diamantes em seus diferentes tipos (cor, quilate, corte, etc).
+Agora, com o conjunto de dados `diamante`, que lista informações de preço de quase 54 mil diamantes em seus diferentes tipos (cor, quilate, corte, etc).
 
 ```{r, message=F}
 diamante <- dados::diamante
@@ -363,7 +363,7 @@ Aqui, nosso interesse é entender a distribuição da variável `cut` em relaç�
 
 ### Evolução
 
-Por fim segue um exemplo de dados temporais em que, em conjunto com as funções do `tidyr` e `dplyr`, remodelamos a base de dados `economics` visando obter a visualização das variáveis `psavert` e `uempmed` desde `1990`:
+Por fim segue um exemplo de dados temporais em que, em conjunto com as funções do `tidyr` e `dplyr`, remodelamos a base de dados `economics`, visando obter a visualização das variáveis `psavert` e `uempmed` desde `1990`:
 
 ```{r}
 economics %>%  glimpse()
