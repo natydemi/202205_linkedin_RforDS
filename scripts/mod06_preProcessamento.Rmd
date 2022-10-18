@@ -426,7 +426,7 @@ Sempre vale lembrar sobre como termos em inglês retornam mais resultados para e
  
  
 
-# HANDS-ON
+# MÃO NA MASSA!
 
 - o pacote `naniar` se mostrou uma ferramenta interessante no contexto de `missing data`, mas não exploramos todos os seus recursos. Por exemplo, a sequência de funções nos possibilita avaliar se existe uma mudança na distribuição dos dados faltantes:
 

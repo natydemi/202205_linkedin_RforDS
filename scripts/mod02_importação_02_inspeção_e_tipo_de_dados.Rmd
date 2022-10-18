@@ -234,7 +234,7 @@ Note que a característica de coerção faz sentido no contexto de análise de d
 
 
 
-# HANDS-ON
+# MÃO NA MASSA!
 
 Aqui iniciamos a discussão sobre classes do R, mas existe toda uma teoria que envolve esta abstração. E no script auxiliar, sobre tipos e estruturas de dados, você terá uma visão mais detalhada sobre este conceito, bem como sobre a relação entre funções como: `typeof()`,  `class()` e `attributes()`. Que tal ler o que tem por lá? 
 

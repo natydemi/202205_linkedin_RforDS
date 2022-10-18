@@ -430,7 +430,7 @@ gapminder %>% DT::datatable()
 - [flextable](https://ardata-fr.github.io/flextable-book/)
 
 
-# Hands-on
+# MÃO NA MASSA!
 
 - No RStudio Learn Primers: https://rstudio.cloud/learn/primers, faça os exercícios propostos na aba Visualize Data,  https://rstudio.cloud/learn/primers/3 
 

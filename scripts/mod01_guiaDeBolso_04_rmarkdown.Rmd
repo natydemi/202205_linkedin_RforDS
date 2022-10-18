@@ -126,7 +126,7 @@ Uma última dica aqui é explorar a opção "Visual" do Rmarkdown (disponível e
 
 
 
-# > MÃO NA MASSA!
+# MÃO NA MASSA!
 
 Que tal repassar os scripts deste módulo para um Rmarkdown? Você pode fazer uma curadoria do que é importante para você, possibilitando um material para consulta melhor formatado, inclusive com os seus próprios comentários :)
 

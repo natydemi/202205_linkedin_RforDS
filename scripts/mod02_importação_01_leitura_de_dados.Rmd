@@ -240,7 +240,7 @@ Considerando o que falamos sobre caminho relativo, no caso do seu .Rmd estar em 
 
 
 
-# HANDS-ON
+# MÃO NA MASSA!
 
 1. Que tal conhecer um pouco mais sobre as opções de funções do pacote `readr`? Uma forma bacana de fazer isso é por meio do help com duas interrogações: `??readr::read_` e `??readr::write_`.
 

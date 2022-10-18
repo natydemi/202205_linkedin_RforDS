@@ -323,7 +323,7 @@ Até lá ;)
 
 
 
-# HANDS-ON
+# MÃO NA MASSA!
 
 - No R você irá encontrar dezenas de pacotes com o objetivo de "facilitar" a sua visão, particularmente para a exploração descritiva de dados. Bibliotecas como: `visdat`, `naniar`, `DataExplorer`, entre tantas outras. Que tal explorar um pouco estes pacotes?
 
