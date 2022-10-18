@@ -1,5 +1,5 @@
 ---
-title: "MAchine Learning e o tidymodels"
+title: "Machine Learning e o tidymodels"
 output: html_document
 ---
 

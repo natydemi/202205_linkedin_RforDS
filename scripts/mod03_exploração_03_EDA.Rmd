@@ -16,22 +16,22 @@ library(tidyverse)
 # Introdução
 Neste arquivo serão apresentados conceitos de EDA, bem como bibliotecas uteis do R para este fim. Posteriormente aprofundaremos sobre quais pontos devem ser considerados em uma análise descritiva, considerando o ferramental disponibilizado pela estatística.
 
-# EDA
+# O que é EDA?
 
-EDA, do inglês Exploratory Data Analysis, e em português Análise Exploratória de Dados, é o processo de explorar os dados, o que tipicamente inclui desde examinar a estrutura do dataset, algo que iniciamos no módulo anterior, até o entendimento mais profundo sobre o comportamento das variáveis — nosso foco neste módulo. A EDA nos permite:
+EDA, do inglês Exploratory Data Analysis, e em português Análise Exploratória de Dados, trata o processo de explorar os dados. O que, tipicamente, inclui desde examinar a estrutura do dataset — que iniciamos no módulo anterior, até o entendimento mais profundo sobre o comportamento das variáveis — nosso foco neste módulo. A EDA nos permite:
 
-- Observar padrões não necessariamente conhecidos a priori
-- Identificar se há algum problema com o seu conjunto de dados
-- Determinar se a pergunta que você está fazendo pode ser respondida pelos dados que você possui
-- Desenvolver um esboço de resposta para hipóteses levantadas, por vezes respondê-las 
+- Observar padrões não necessariamente conhecidos a priori;
+- Identificar se há alguma inconsistência no conjunto de dados analisado; 
+- Determinar se as perguntas relacionadas aos dados podem ser respondidas pelas informações disponíveis; e
+- Desenvolver um esboço de resposta para as hipóteses levantadas, por vezes respondê-las.
 
-Aqui, é possível, tanto ir em uma linha de exploração mais descritiva, por meio de volumetrias, estatísticas e visualizações, quanto utilizar uma abordagem mais diagnóstica, investigando comportamentos mais complexos, como padrões de associação, por exemplo. Em linhas gerais, é nesta etapa que *aprendemos* e damos *sentido* aos dados! 
+Aqui é podemos tanto ir em uma linha de exploração descritiva, por meio de volumetrias, estatísticas e visualizações, quanto utilizar uma abordagem mais diagnóstica, investigando comportamentos mais complexos, como padrões de associação, por exemplo. Em linhas gerais, é nesta etapa que *aprendemos* e damos *sentido* aos dados! 
 
 
 
-# Dados
+# Base de Dados: Super Bowl Americano
 
-Vamos trabalhar com uma base de comerciais do Super Bowl Americano, considerando os anúncios das 10 marcas que mais veicularam nos neste evento nos últimos anos, tendo, para cada comercial, uma classificação binária relacionada a critérios pré-especificados. Para mais informações sobre o levantamento e a base de dados acesse:
+Vamos trabalhar com uma base de comerciais do Super Bowl Americano, considerando os anúncios das 10 marcas que mais veicularam neste evento nos últimos anos, tendo, para cada comercial, uma classificação binária relacionada a critérios pré-especificados. Para mais informações sobre o levantamento e/ou os dados acesse:
 
 - <https://projects.fivethirtyeight.com/super-bowl-ads/>
 
@@ -41,6 +41,11 @@ Vamos trabalhar com uma base de comerciais do Super Bowl Americano, considerando
 ```{r}
 youtube <- readr::read_csv(
   'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
+
+#caso não tenha acesso a internet, pelo código abaixo, a base foi salva e, na sequencia, pode ser novamente lida a partir do arquivo .csv salvo na pasta dados
+  #readr::write_csv(youtube, "..\\dados\\youtube.csv")
+  #youtube <- readr::read_csv("..\\dados\\youtube.csv")
+
 ```
 
 

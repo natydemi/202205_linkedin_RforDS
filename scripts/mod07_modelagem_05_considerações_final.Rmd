@@ -19,7 +19,7 @@ Ufa, muita coisa né? Sim, e aqui é só o começo
 # Tópicos relacionados ao processo de modelagem
 
 ### de modo direto
-- pé-processamento dos dados
+- pré-processamento dos dados
 - dados desbalanceados
 - interpretabibilidade dos modelos 
 
