@@ -16,173 +16,234 @@ library(tidyverse)
 
 # Introdução
 
-Neste módulo falaremos mais sobre as ações de transformação, manuseio e limpeza de dados que os pacotes `dplyr` e `tidyr` possibilitam. Iniciando pelo `dplyr`, que tem um enfoque maior na aplicação de transformações, seguido pelo `tidyr`, que tem como maior objetivo oferecer ferramentas para facilitar a passagem dos dados para o formato tidy. 
+Uma parte fundamental da análise e trabalhar com dados confiáveis e que estejam em boa qualidade. Sabemos que essa nem sempre (quase nunca!) é a realidade, por isso precisamos aprender a arrumar os dados e ter certeza que não há nenhuma inconsistência antes de fazer qualquer inferência.
 
+Além disso, muitas vezes é necessário transformar uma base de dados inicial, derivando diferentes tabelas que ajudrão em análises mais aprofundadas, ou ainda gráficos e visualizações para que você ou sua audiência a entendam as informações contidas ali.
 
+Neste módulo falaremos mais sobre as ações de transformação, manuseio e limpeza de dados que os pacotes `dplyr` e `tidyr` possibilitam. O primeiro, `dplyr`, foca na transformação dos dados, enquanto o `tidyr` ajuda a arrumá-los na [estrutura tidy](https://r4ds.had.co.nz/tidy-data.html) que vocês já viram no módulo 1.
 
-# Dplyr 
+# A gramática do dplyr
 
-O dplyr é um dos principais pacotes do tidyverse, visto permitir o manuseio e transformações de dados, de maneira simples e eficiente. Os scripts em R que fazem uso dos verbos dplyr e as facilidades do operador pipe tendem a ficar mais legíveis e organizados:
+Na descrição do pacote, o `dplyr` é definido como a gramática para transformação de dados, e esse nome não é à toa. Ele possui vários verbos que definem ações específicas para lidar com bases de dados, visando modificá-los de forma simples e eficiente.
 
 As principais funções do dplyr são:
 
-- select() - seleciona colunas 
-- mutate() - cria/modifica colunas 
-- rename() - renomeia variáveis 
-- group_by() - agrupa a base de dados 
-- summarise() - sumariza a base de dados
-- filter() - filtra linhas 
-- arrange() - ordena a base de dados
+- `select()` - seleciona colunas;
+- `filter()` - filtra linhas a partir de valores;
+- `arrange()` - ordena as linhas da base de dados;
+- `mutate()` - cria/modifica colunas;
+- `rename()` - renomeia variáveis;
+- `group_by()` - agrupa a base de dados;
+- `summarise()` - resume a base de dados em menos linhas.
 
-Veremos agora um pouco mais sobre cada um destes verbos, e mais algumas funções tangentes, considerando as ações:
+Juntando essas principais funções com o pipe, que você também viu no módulo 1, conseguimos praticamente dividir em passos o que precisa ser feito com o dataset, deixando os scripts mais legíveis e organizados.
 
-## manusear colunas
+Por exemplo, se você precisa descobrir **quais voos da companhia American Airlines tiveram o maior tempo de atraso**, consegue separar essa pergunta em diferentes etapas:
 
-    - `select()` - este comando seleciona as colunas a partir do nome ou da posição da variável desejada. Permite ainda o uso de recursos para facilitar a indicação da coluna desejada, como: `starts_with()`, `matches()`, `num_range()`, e `everything()`.
+1. **quais voos da companhia American Airlines**: filtrar voos da AA;
+
+2. **tiveram o maior tempo de atraso**: ordenar pelo tempo de atraso.
+
+Um bom exercício nas etapas de tranformação de dados é encaixar os diferentes verbos do dplyr nas diversas perguntas que você precisa responder para analisar o conjunto de dados.
+
+Vale apontar que nos exemplos desta aula vamos usar o [pacote `dados`](https://github.com/cienciadedatos/dados), criado colaborativamente para traduzir conjuntos de dados inicialmente disponibilizados em inglês para o português. Todos os conjuntos aqui são utilizados também como exemplo no livro [R para Data Science](https://r4ds.had.co.nz/).
+
+## Manuseando colunas
+
+Aqui, vamos aprender como lidar com as colunas do seu conjunto de dados, seja selecionando ou ordenando.
+
+### `select()`
+
+Como falamos acima, o `select()` seleciona as colunas a partir do nome ou da posição da variável desejada. Junto com as funções de apoio no [tidyselect](https://tidyselect.r-lib.org/reference/index.html) você também consegue indicar a(s) coluna(s) desejada(s) de forma dinâmica, como: `starts_with()`, `matches()`, `num_range()`, e `everything()`.
 
 ```{r}
-#?dplyr::select
+library(dados) #carrega o pacote dados
 
-iris %>% 
-  select(starts_with("Petal")) %>% 
+voos <- dados::voos # carrega o dataset
+
+voos %>% 
+  select(contains("horario")) %>% 
   head()
 ```
 
-    - `arrange()` - ordena as linhas de acordo com a(s) coluna(s) especificada(s), por default organiza as colunas na ordem crescente, para inverter a ordenação bastante aplicar a função `desc()` na coluna desejada.
+### `arrange()`
+
+No `arrange()`, conseguimos ordenar as linhas de acordo com a(s) coluna(s) especificada(s). Por padrão, ele organiza as colunas na ordem crescente, mas é possível inverter para a ordem decrescente com a função `desc()`.
     
 ```{r}
-#?dplyr::arrange
-
-iris %>% 
-  arrange(desc(Petal.Width)) %>% 
-  tail()
+voos %>% 
+  select(companhia_aerea, voo, atraso_chegada) %>%
+  arrange(atraso_chegada) %>% 
+  head()
 ```
-    
-    
-    - `distinct()` - remove as linhas duplicadas para os atributos especificados. No caso em que estivermos considerando mais de uma coluna, o distinct irá considerar as combinações das colunas, e não as colunas individualmente.
-
-
-        
-## manusear linhas
-
-    - `filter()` - permite obter uma parte do conjunto de dados a partir de critérios lógicos aplicados à coluna (isto é, que retornam `TRUE` ou `FALSE`). Sendo possível combinar diferentes condições usando operadores lógicos, como: `==`, `>`, `>=`, `&`, `|`, `!,` `is.na()` e `between()`.
+No exemplo acima, o voo VX 193 chegou com 86 minutos adiantado, uau! E abaixo, o voo HA 51, chegou com 1.272 minutos (ou 21 horas) de atraso. Imagina o desespero dos parentes...
 
 ```{r}
-#?dplyr::filter
-
-iris %>% 
-  filter(Petal.Length > 6, Petal.Width > 2)
+voos %>% 
+  select(companhia_aerea, voo, atraso_chegada) %>%
+  arrange(desc(atraso_chegada)) %>% 
+  head()
 ```
 
-    
-    - `slice()` - seleciona linhas por suas posições ordinais, possuí variações como o `slice_max()` que retorna as linhas referentes aos valores máximos de determinada feature, ou `slice_sample()` que retorna uma amostra aleatória conforme os parâ tamanho ou a proporção específicados, além de: 
-    
-```{r}
-#?dplyr::slice
+## Manuseando linhas
 
-iris %>% 
-  slice_max(Petal.Width,n=6) 
+Além das colunas, você também pode fazer transformações nas linhas do conjunto de dados. Os verbos abaixo são bem úteis:
+
+### `filter()`
+
+Como o nome sugere, o `filter()` permite obter uma parte do conjunto de dados a partir de critérios lógicos aplicados à coluna (ou seja, que retornam `TRUE` ou `FALSE`). Você pode combinar diferentes condições usando operadores como: `==`, `>`, `>=`, `&`, `|`, `!,` `is.na()` e `between()`.
+
+Por exemplo, para descobrir os voos que atrasaram na saída (vamos dizer com mais de 15 min de atraso), mas não atrasaram na chegada, é só escrever:
+
+```{r}
+voos %>%
+  filter(atraso_saida >= 15 & atraso_chegada <= 0) %>%
+  select(companhia_aerea, voo, atraso_saida, atraso_chegada)
 ```
 
-    - `sample_n()` - seleciona uma amostra aleatória considerando o número de elementos desejados, enquanto que `sample_frac()` seleciona a amostraconsiderando a proporção desejada
+Alguns até chegaram adiantados! :O
+
+### `slice()`
+
+    
+Parecido com o `filter()`, o `slice()` seleciona linhas, mas em vez de operadores lógicos, usa suas posições ordinais, como um índice. Também tem variações como o `slice_max()` que retorna as linhas referentes aos valores máximos da coluna; ou `slice_sample()`, que retorna uma amostra aleatória conforme os parâmetros especificados.
+
+Neste exemplo, selecionamos os 3 voos com maior atraso de saída.
+    
+```{r}
+voos %>%
+  slice_max(atraso_saida, n = 3) %>%
+  select(companhia_aerea, voo, atraso_saida, atraso_chegada)
+```
+
+### `sample_n()`
+
+Enquanto o `slice()` seleciona posições ordinais, o `sample_n()` resulta uma amostra aleatória considerando o número de elementos desejados. Já o  `sample_frac()` seleciona a amostra considerando a proporção desejada baseado no número de observações.
+
+No exemplo, pegamos 10 voos aleatórios, e depois selecionamos 50% dessa amostra, ou seja, 5 voos.
 
 ```{r}
-#?dplyr::sample_
-
-iris %>% 
+voos %>% 
   sample_n(10) %>% 
-  sample_frac(0.5) 
+  sample_frac(0.5) %>%
+  select(companhia_aerea, voo, atraso_saida, atraso_chegada)
 ```
 
+### `distinct()`
 
+Bem útil quando você tem linhas iguais, o `distinct()` remove valores duplicados para as colunas selecionadas. Se você não selecionar nenhuma coluna, ele olha para o conjunto de dados inteiro, mas você pode tanto especificar uma coluna quanto combinar de várias.
 
-## alterando e criando novas colunas
+Neste último caso, ele considera os valores únicos combinados para essas colunas, e não elas individualmente. Neste exemplo, selecionamos as origens e destinos únicos para cada companhia aérea.
 
-    - `mutate()` - cria novas colunas, bem como modifica variáveis já existentes, inclsuive para converter a classe dos dados. As funções `ifelse` e `case_when` são particularmente interessantes de serem utilizadas de modo combinado ao mutate, visto que permitem regras mais elaboradas.
+```{r}
+voos %>%
+  distinct(companhia_aerea, origem, destino)
+```
+
+Sem o `distinct()`, e apenas com o `select()`, teríamos um número maior de linhas, e a maioria, duplicada.
+
+```{r}
+voos %>%
+  select(companhia_aerea, origem, destino)
+```
+
+## Alterando e criando novas colunas
+
+Agora que aprendemos a ler o conjunto de dados a partir de linhas e colunas, vamos ver como alterar valores ou criar novas colunas a partir do que já conseguimos especificar.
+
+### `mutate()`
+
+Um dos verbos mais poderosos do `dplyr`, o `mutate()` consegue criar novas colunas e modificar variáveis já existentes, inclusive alterando a classe dos dados quando necessário (de texto para número, por exemplo).
+
+Ele pode ser combinado com outras funções igualmente eficientes como `ifelse()` e `case_when()`, que possibilitam regras mais elaboradas na transformação dos dados.
+
+Por exemplo, podemos categorizar os voos que atrasaram ou chegaram adiantados comparando a chegada com o horário previsto na nova coluna `status_horario`. Veja:
     
 ```{r}
-#?dplyr::mutate()
+voos_atrasados <- voos %>% 
+  mutate(status_horario = case_when(horario_chegada < chegada_prevista ~ "Adiantado",
+                                    horario_chegada > chegada_prevista ~ "Atrasado",
+                                    horario_chegada == chegada_prevista ~ "No horário",
+                                    TRUE ~ "Indefinido"))
 
-iris %>% 
-  mutate(Petal.Sum = Petal.Length + Petal.Width,
-            Indicador_virginica = ifelse(Species == "virginica", 1, 0)) %>% 
-  slice_head()
-  
+voos_atrasados %>%
+  select(voo, chegada_prevista, horario_chegada, atraso_chegada, status_horario)
 ```
 
+Note que o `case_when()` tem uma sintaxe bem específica. Mais detalhes podem ser vistos [na documentação](https://dplyr.tidyverse.org/reference/case_when.html), mas em suma, você precisa passar uma expressão lógica e, caso ela seja atendida, o valor a ser escrito após o `~`. O último argumento serve para atribuir um valor caso nenhuma condição seja satisfeita.
 
-    - `rename()` - renomeia variáveis por meio de pares de argumentos na forma de `nome_novo = nome_antigo`
+### `rename()`
+
+Mais simples, mas ainda útil, o `rename()` é capaz de renomear colunas pelo argumento `nome_novo = nome_antigo`. Aqui, renomeamos a coluna `voo` para `numero_voo`.
     
 ```{r}
-#?dplyr::rename()
-
-#exemplo: seleção, mudança de nome, e definição de uma nova variável 
-  iris[1:5,] %>% 
-    as_tibble() %>% 
-    rename(variavel_original = Sepal.Length) %>% 
-    mutate(variavel_original_normalizada =  variavel_original %>% scale)
+voos %>%
+  rename(numero_voo = voo) %>%
+  select(companhia_aerea, numero_voo)
 ```
 
+## Resumindo os dados
 
+Por fim, a serem combinados com as transformações, existem os verbos `group_by()` e `summarise()` que ajudam a resumir o conjunto de dados em linhas menores. Aqui o que cada um faz:
 
-## criando sumarizações
+### `summarise()`
 
-    - `summarise()` - calcula resumos estatísticos de uma tabela conforme especificação, quando na presença do group_by, faz os resumos respeitando os agrupamentos especificados
+É capaz de calcular resumos estatísticos de uma tabela com a medida de sua escolha. Por exemplo, aqui conseguimos saber a mediana da distância entre os aeroportos nos voos do nosso conjunto de dados.
 
 ```{r}
-#?dplyr::summarise()
-
-iris %>% 
-  summarise(Petal_1stQ = quantile(Sepal.Length,0.25),
-            Petal_3rdQ = quantile(Sepal.Length,0.75))
+voos %>% 
+  summarise(mediana_distancia = median(distancia))
   
 ```
+Em média, os voos deste conjunto percorrem 872 milhas, ou seja, 1.400 km, entre aeroportos.
 
+### `group_by()`
 
-## criando sumarizações por grupo
+Mais poderoso quando combinado com o `summarise()`, o `group_by()` cria grupos a partir das colunas especificadas para manipular o conjunto de dados. Ele não modifica a tabela em si, mas combina os resultados de acordo com as operações escritas.
 
-    - `group_by()` - manipula a base de dados segmentando por cada "grupo" da variável especificada e, posteriormente, combina os resultados, considerando os comandos seguintes dados.
+Aqui, vamos usar o conjunto `voos_atrasados` criados a partir do `mutate()` para identificar os status de horário mais comuns no nosso conjunto de dados.
 
 ```{r}
-#?dplyr::group_by()
-
-#exemplo: calculo da quantidade de observações de cada categoria, e 
-# média para a variável Petal.Length considerando a visão por Species
-  iris %>% 
-    group_by(Species) %>% 
-    summarise(N = n(),
-              PetalLength_media = mean(Petal.Length))
+voos_atrasados %>%
+  group_by(status_horario) %>% # agrupando pelo status de horário
+  summarise(n = n()) # o número de linhas em cada grupo
 ``` 
 
+Ou seja, vemos que é mais comum os voos chegarem antes do horário programado (194 mil ocorrências) do que depois (127 mil). Poucos chegam exatamente no horário previsto (5 mil).
 
+# Usando o tidyr
 
+Com os principais verbos do `dplyr` na manga, agora é hora de explorar o `tidyr` que, lembrando, serve para transformar o conjunto de dados. 
 
-# Tidyr
-
-Nesta etapa teremos como enfoque fazer os ajustes necessários para garantir que os dados estejam organizados de uma forma `tidy`, um conceito chave dentro do universo do tidyverse. Lembrando que a filosofia tidy, é uma forma de vincular a estrutura de um conjunto de dados (seu layout físico) com sua semântica (seu significado). E para tal, temos que os dados precisam ser organizados garantindo que:
+Isso significa fazer os ajustes necessários para garantir que os dados estejam organizados de uma forma `tidy`, que baseia toda a lógica do `tidyverse`. Lembrando que a filosofia `tidy` é uma forma de vincular a estrutura de um conjunto de dados (seu layout físico) com sua semântica (seu significado). E para tal, os dados precisam ser organizados garantindo que:
 
 - cada variável/informação tenha a sua própria coluna;
 - cada observação/unidade de análise tenha a sua própria linha; e
 - que cada valor tenha a sua própria célula.
 
-Tendo como principal ferramenta para este redimensionamento a biblioteca `tidyr`. 
+A biblioteca `tidyr` tem o propósito de ajudar nessa função, caso o conjunto de dados não siga esse formato.
 
-## pivotando 
+## Transformando os dados
 
-aqui denominada agregação.
-
-### de colunas para linhas 
-
-  - `pivot_longer()` - reorganiza os dados, combinando as colunas especificadas na coluna parâmetro `key`, e seus valores na coluna parâmetro `value`. Com tal tipo de ajuste podemos organizar os dados de modo a consultar várias colunas de interesse de uma única vez, algo útil para a aplicação de loops, funções e gráficos.
-
+A nossa sorte é que que o conjunto `voos` já está organizado, portanto agora vamos mudar os dados de exemplo para o conjunto `billboard`, que lista os rankings de música na Billboard top 100 durante o ano 2000.
 
 ```{r}
-#base para exemplo
 data("billboard")
 
 billboard %>% head()
 ```
 
+### De colunas para linhas 
+
+#### `pivot_longer()`
+
+Como o nome descreve, o `pivot_longer()` "gira" o eixo dos dados para o formato longo (ou comprido), normalmente dentro do padrão `tidy`.
+
+Para isso, ele as colunas especificadas na coluna parâmetro `key`, e seus valores na coluna parâmetro `value`. Assim conseguimos tratar os dados como nos exemplos acima, seja filtrando, escrevendo novas variáveis, transformando as já existentes, e mais.
+
+Como vemos no conjunto `billboard`, as colunas começando com `wk` definem qual a posição da música no ranking a partir da semana que entraram e vai desde o 1 até o 76. No entanto, não é possível rodar a maioria das funções que aprendemos acima porque a informação das semanas está em **colunas** e não em **linhas**.
+
+Para resolver isso, precisamos transformá-la em formato longo, criando a variável `week`. Vamos selecionar todas as colunas que começam com `wk` e os valores atribuídos a elas estarão em uma nova coluna chamada `rank`.
 
 ```{r}
 billboard_longer <- billboard %>% 
@@ -195,117 +256,140 @@ billboard_longer <- billboard %>%
 billboard_longer %>% head()
 ```
 
+Viu? Agora ficou muito mais fácil de analisar. Por exemplo, aqui vemos as faixas que ficaram por mais de 30 semanas no ranking da Billboard, organizada pela média de ranking. A faixa *Higher* apareceu na Billboard por 57 semanas (não consecutivas) e, em média, ficou na posição 36.
 
 ```{r}
 billboard_longer %>% 
   group_by(track, artist) %>% 
   summarise(n_week = n(), rank_mean = mean(rank)) %>% 
-  filter(n_week>30) %>% 
+  filter(n_week > 30) %>% 
   arrange(desc(n_week)) 
 ```
 
+### De linhas para colunas
 
+#### `pivot_wider()`
 
-### de linhas para colunas
+Como o inverso da anterior, a `pivot_wider()` transforma o conjunto de dados em um formato largo, ou seja, onde o número de colunas aumenta e o de linhas diminui.
 
-- `spread()` - de maneira oposta a função anterior, aqui podemos expandir linhas em colunas:
+Ao contrário da `pivot_longer()`, que recebe texto como input, esta recebe as colunas para transformar em formato longo. Vamos reverter o que acabamos de fazer, voltando a `week` para nome de coluna e o `rank` como valor de cada uma, usando o prefixo `wk`.
 
 ```{r}
-#exemplo: passando linhas para colunas
-  # table4a_new %>% 
-  #   spread(ano, valores) 
+billboard_longer %>%
+  pivot_wider(names_from = week, values_from = rank,
+              names_prefix = "wk")
 ```
 
 
-## combinando colunas  
+## Separando e combinando colunas  
 
+Também podemos combinar ou dividir os valores de cada coluna. Como exemplo, vamos voltar para o conjunto de dados de `voos`.
 
-  - `separate()` - divide uma única coluna em várias colunas, similarmente a opção `separate_rows()`, que faz a mesma coisa para linhas.
+### `separate()`
+
+Esta função divide uma única coluna em várias colunas, similarmente a opção `separate_rows()`, que faz a mesma coisa para linhas.
+
+Por exemplo, no conjunto `voos`, o `horario_saida` é escrito em horário local no formato `HHMM` ou `HMM`, onde `517` indica 5:17 AM. Podemos separá-lo em `horario_saida_h` e `horario_saida_m` para obter o horário e minuto de saída em diferentes colunas.
+
+Para a separação não ficar muito complicada, primeiro vamos pegar os horários com três dígitos, que provalmente o primeiro caractere indica a hora e os dois últimos, os minutos.
+
 ```{r}
-#base para exemplo
-  table3
-
-#exemplo: dividindo colunas
-  table3 %>% separate(rate, into = c("cases","pop"))
+voos %>%
+  filter(nchar(horario_saida) == 3) %>%
+  separate(horario_saida,
+           into = c("horario_saida_h",
+                    "horario_saida_m"),
+           sep = 1, remove = FALSE) %>%
+  select(ano:horario_saida_m)
+```
   
-#exemplo: dividindo linhas
-  table3 %>% separate_rows(rate)
-```
-  
-  - `unite()` - e de maneira oposta as separações, temos a função que combina várias colunas.
+### `unite()` 
+
+De maneira oposta, o `unite()` é capaz de unir colunas a partir de um separador. Por exemplo, podemos criar a coluna `numero_voo` juntando a `companhia_aerea` com o `voo` de forma fácil, separando com o espaço:
 
 ```{r}
-#base para exemplo
-  table3_separate <- table3 %>% separate(rate, into = c("cases", "pop"))
-
-#exemplo: separando a coluna rate em duas
-  table3_separate %>%
-    unite(cases, pop, col = "rate", sep = "/")
+voos %>%
+  unite(companhia_aerea, voo,
+        col = "numero_voo",
+        sep = " ", remove = FALSE) %>% 
+  select(companhia_aerea, voo, numero_voo)
 ```
-
 
 # Recursos avançados
 
-## Combinando Bases (join/merge)
+Agora que já aprendemos o essencial do `dplyr` e `tidyr`, podemos nos aprofundar em funções que vão potencializar ainda mais a transformação e arrumação de dados.
+
+## Combinando bases (join/merge)
 
 Uma ação usual para o redirecionamento dos dados diz respeito a necessidade de combinar diferentes bases de dados visando obter uma fonte única, com todas as informações de interesse.
 
-    - `inner_join()` - retorna todas as linhas da base à esquerda que possuem valores correspondentes na base à direita. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
-    - `left_join()` - retorna todas as linhas de x e todas as colunas de x e y. Linhas em x sem correspondência em y terão valores de NA nas novas colunas. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas.
-    - `full_join()` - retorna todas as linhas e todas as colunas de xe y. Onde não há valores correspondentes, retorna NA para o ausente.
+Aqui algumas, mas não todas, possibilidades de combinação:
+
+- `inner_join()`: retorna todas as linhas da base à esquerda que possuem valores correspondentes na base à direita. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas;
+- `left_join()`: retorna todas as linhas de x e todas as colunas de x e y. Linhas em x sem correspondência em y terão valores de NA nas novas colunas. Se houver várias correspondências entre x e y, todas as combinações das correspondências serão retornadas;
+- `full_join()`: retorna todas as linhas e todas as colunas de xe y. Onde não há valores correspondentes, retorna NA para o ausente.
+
+Ainda nos dados de `voos` como exemplo, podemos pegar outro conjunto do mesmo pacote chamado `companhias_aereas`. Assim, saber quais são exatamente as companhias aéreas de cada voo registrado no dataset.
     
-```{r, collapse = T}
-#bases para exemplo
-  band_members %>% glimpse()
-  band_instruments %>% glimpse()
-  band_instruments2 %>% glimpse()
+```{r}
+voos_completo <- voos %>%
+  left_join(dados::companhias_aereas, by = "companhia_aerea")
 
-#exemplo: em que as variáveis para join possuem nomes iguais
-  left_join(band_members, band_instruments) %>% glimpse()
+voos_completo %>% select(companhia_aerea, voo, nome)
+```
+Isso possibilita análises mais direcionadas, como a lista das companhias aéreas com o valor máximo de atraso registrado na chegada.
 
-#exemplo: em que as variáveis para join possuem nomes diferentes
-  left_join(band_members, band_instruments2, by = c("name"="artist")) %>%
+```{r}
+voos_completo %>%
+  group_by(nome) %>%
+  summarise(maior_atraso = max(atraso_chegada, na.rm = TRUE)) %>%
+  arrange(desc(maior_atraso))
+```
+
+## Lidando com múltiplas colunas
+
+### `across()`
+
+Até aqui, o tidyverse tem como ponto forte a legibilidade do código, se aproximando com a maneira com que pensamos as ações que gostariamos de aplicar nos dados. Nos recursos avançados, nem sempre isso é regra, mas a troca se faz necessária pela produtividade do código.
+
+Na função `across()`, disponível a partir da versão 1.0 do pacote `dplyr`, é possível aplicar cálculos a multiplas colunas de uma vez só.
+
+Ou seja, em vez de tirar a média de `atraso_saida` e `atraso_chegada` de forma separada, como as duas colunas possuem um padrão, é possível usar o `across()` para operá-las:
+
+
+```{r}
+voos %>% 
+    summarise(across(starts_with("atraso_"), mean, na.rm = T))
+```
+Tem o mesmo resultado de:
+
+```{r}
+voos %>%
+  summarise(atraso_saida = mean(atraso_saida, na.rm = T),
+            atraso_chegada = mean(atraso_chegada, na.rm = T))
+```
+Pode parecer besta com só duas colunas, mas quando você tem centenas, ou tem variáveis dinâmicas que podem ser adicionadas ou removidas do conjunto de dados no futuro, essa função é extremamente útil.
+
+## Programação funcional (`purrr`)
+
+Como ferramenta transversal a todas as etapas do workflow de análise, temos a programação funcional, que permite a criação de códigos mais rápidos, simples e reproduzíveis.
+
+No contexto do `tidyverse` a biblioteca `purrr` disponibiliza uma série de funcionalidades visando facilitar a programação funcional no R. Como principal função temos o `map()`, transformando a sua entrada por meio da aplicação de uma função a cada elemento, e retornando uma lista com o mesmo comprimento que a entrada:
+
+Abaixo, exemplificamos a identificação de quais colunas no conjunto `voos` tem dados faltantes, ou seja, em `NA`:
+
+```{r}
+voos %>% 
+    map(is.na) %>%
+    map(sum) %>%
     glimpse()
 ```
 
+Por padrão, o `map()` retorna listas para que o resultado tenha outra estrutura/classe, mas podemos utilizar funções como: `map_dbl` que retorna um vetor número, `map_dfc` para um data.frame que combina os resultados por coluna, entre outras opções. Adicionalmente temos recursos como:
 
-
-## Função across()
-
-Até aqui o tidyverse apresenta o seu ponto forte em termos de legibilidade do código, aproximação com a maneira com que pensamos as ações que gostariamos de aplicar nos dados. Mas são nos recursos avançados que vemos ganhos consideráveis em termos de produtividade. Um excelente exemplo é a função `across()` disponível a partir da versão 1.0 do pacote `dplyr`. Esta função nos permite aplicar cálculos de forma simultânea a multiplas colunas.
-
-
-```{r}
-starwars %>% 
-    summarise(across(is.numeric, mean, na.rm = T))
-
-starwars %>% 
-    summarise(across(contains("_color"), n_distinct))
-```
-
-
-## Programação Funcional (purrr)
-
-Como ferramenta transversal a todas as etapas do workflow de análise, temos a programação funcional, que permite a criação de códigos mais rápidos, simples e reproduzíveis. No contexto do `tidyverse` a biblioteca `purrr` disponibiliza de uma série de funcionalidades visando aprimorar a programação funcional no R. Como principal função temos o `map()`, transformando a sua entrada por meio da aplicação de uma função a cada elemento, e retornando uma lista com o mesmo comprimento que a entrada:
-
-
-```{r}
-#exemplo: , contabilização de tal identificação de dados faltantes por coluna, 
-  starwars %>% 
-    map(is.na) %>% #identificação de quais elementos, de cada coluna, são NA's
-    map(sum) %>% #contabilização dos dados faltantes por coluna  
-    glimpse() #sumarização do resultado
-
-#outras opções de sintaxe para obter o mesmo resultado
-  #starwars %>% map(~sum(is.na(.)))
-  #starwars %>% map( function(x) sum(is.na(x)) )
-```
-
-O `map()` retorna listas por default, para que o resultado tenha outra estrutura/classe, podemos utilizar funções como: `map_dbl` que retorna um vetor número, `map_dfc` para um data.frame que combina os resultados por coluna, entre outras opções. Adicionalmente temos recursos como:
-
-  - `walk()` - similar ao `map`, porém sem ter o retorno da lista no console 
-  - `pmap()` - aplica uma função a um grupo de elementos de um grupo de listas
-  - `append()` - adiciona valores ao fim de uma lista
+  - `walk()`: similar ao `map`, porém sem ter o retorno da lista no console 
+  - `pmap()`: aplica uma função a um grupo de elementos de um grupo de listas
+  - `append()`: adiciona valores ao fim de uma lista
 
 
 ```{r, eval=F, warning = F}
@@ -315,23 +399,19 @@ O `map()` retorna listas por default, para que o resultado tenha outra estrutura
     walk(glimpse)
 ```
 
-
-
-
-# HANDS-ON
+# Mão na massa!
 
 - Se você estiver trabalhando com uma versão mais recente do RStudio, verá uma aba chamada Tutorial entre os paineis que estão na parte superior à direita da sua IDE. Nela você vai encontrar várias opções de manuais interativos, recomendo particularmente: `Filter observations`, `Create new variables` e `Summarise Tables`. Uma última observação: para voltar para sair de algum dos tutoriais você precisa apertar o botão `stop` uma bolinha vermelha que aparece no canto superior esquerdo da própria aba Tutorial ;)
 
 
- - Avalie a página [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/), localize as folhas de dicas relacionadas aos pacotes `dplyr()` e `tidyr()`, quais são os textos introdutórios de cada uma das cheatsheets?  
+ - Avalie a página [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/), localize as folhas de dicas relacionadas aos pacotes `dplyr()` e `tidyr()` e observe quais são os textos introdutórios de cada uma das cheatsheets.
  
- - garantir dados tidy pode ser particularmente desafiador no contexto do excel, que tal explorar o pacote [tidycells](https://r-rudra.github.io/tidycells/), e entender como ele pode te ajudar neste tipo de tarefa.
+ - Garantir dados tidy pode ser particularmente desafiador no contexto do Excel, mas o pacote [tidycells](https://r-rudra.github.io/tidycells/) pode te ajudar neste tipo de tarefa.
  
- - revise os códigos da apresentação do [R Intermediário, feita pelas R-Ladies São Paulo](Rladies: 
- https://beatrizmilz.github.io/2019-02-R-Interm-R-LadiesSP/#117) 
+ - Estude os códigos da apresentação do [R Intermediário](Rladies: 
+ https://beatrizmilz.github.io/2019-02-R-Interm-R-LadiesSP/#1), feita pelas **R-Ladies São Paulo**.
  
- 
- - como um case de uso da função across(), a partir do código abaixo, identifique qual o estado com o maior número de casos da `epidWeek` 1 e na `epidWeek` mais recente do histórico
+ - Como um case de uso da função `across()`, a partir do código abaixo, identifique qual o estado com o maior número de casos da `epidWeek` 1 e na `epidWeek` mais recente do histórico.
  
 ```{r, eval=FALSE}
 covid19brazil::brazil_state %>% head() %>% glimpse()
