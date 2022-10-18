@@ -50,6 +50,8 @@ A etapa de pré-processamento faz uso de todos os recursos que utilizamos até a
 
 Note que se tratam de ajustes que podem fazer a diferença entre o sucesso e o fracasso da sua análise, e não vou te enganar, isso dá trabalho! Algumas estimativas indicam que até 80% do tempo de uma análise de dados pode se concentrar aqui. Desde abreviações e espaços extras indevidos, até dados faltantes que podem indicar a necessidade de redirecionamento da sua análise, é na etapa de pré-processamento que garantimos que os dados estão aptos a representarem a realidade que esperamos que seja retratada.
 
+- falar de outliers: Valores extremos, também conhecidos como outliers, ou valores aberrantes, são características facilmente encontradas em bases de dados reais, e com alto potencial de influência nas análises. Neste video iremos discutir sobre a importancia de identificar tais características, e formas de endereça-las.
+
    
 ## E no R? 
 

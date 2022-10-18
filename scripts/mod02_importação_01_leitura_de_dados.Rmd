@@ -1,5 +1,5 @@
 ---
-title: "Importação e Exportação de Dados no Ambiente R"
+title: "Importação e Exportação de Dados no Ambiente R e RStudio"
 output: html_document
 ---
 
@@ -179,7 +179,7 @@ No caso de você ter interesse em alterar o diretório de trabalho, temos a fun�
 # Faça um teste você mesmo! Coloque um endereço (`path`) do seu computador, 
 # e veja se o getwd() será alterado.
 # Você vai precisar de algo similar aos exemplos abaixo:
-   setwd("C:/Users/natyd/Desktop")
+  # setwd("C:/Users/natyd/Desktop")
   # setwd("C:\\Users\\natyd\\Desktop")
 ```
 Notou a mensagem de warning, ela é bem importante! Está nos dizendo que a mudança realizada só valerá dentro deste bloco de código, para os demais voltaremos ao diretório que você havia consultado antes. Este é um comportamento exclusivo dos arquivos `.Rmd`, ou seja, para código em .R, este tipo de alteração será perene ao longo do código. Mais a frente falaremos um pouco mais sobre este ponto.
@@ -228,15 +228,26 @@ Ah, se você quiser fechar ou trocar de projeto, você pode fazer a alteração 
 Para que os seus projetos sejam ainda mais efetivos, é interessante que você adote algumas boas práticas para estruturação de pastas, e, consequentemente, para a organização dos seus arquivos. Com isto você irá facilitar a evolução, produtividade, e compartilhamento do seu trabalho.
 
 
-## caminho relativo
-Camihos relativos são aqueles que tem início no diretório de trabalho da sua sessão. Assim, se você quiser acessar determinado arquivo que esteja em uma subpasta, chamada dados, por exemplo, você precisaria apenas adicionar `dados/nome_do_arquivo.extensão`. É como se tudo o que precede a pasta `/dados` não precisasse ser especificado. Note que adicionar a pratica de caminhos relativos aos projetos do RStudio, nos incentiva a colocar todos os arquivos da análise dentro da pasta do projeto. Assim, você pode compartilhar a pasta do projeto com qualquer pessoa (alô galera do git!), e todas as importações e exportações serão mantidas!
+## Caminho relativo vs. absoluto
+Camihos relativos são aqueles que tem início no diretório de trabalho da sua sessão. Assim, se você quiser acessar determinado arquivo que esteja em uma subpasta, chamada dados, por exemplo, você precisaria apenas adicionar `dados/nome_do_arquivo.extensão`. É como se tudo o que precede a pasta `/dados` não precisasse ser especificado. 
+Note que adicionar a pratica de caminhos relativos aos projetos do RStudio, nos incentiva a colocar todos os arquivos da análise dentro da pasta do projeto. Assim, você pode compartilhar a pasta do projeto com qualquer pessoa (alô galera do git!), e todas as importações e exportações serão mantidas!
 (texto baseado no material <https://livro.curso-r.com/5-1-caminhos.html> )
 
 
-## .Rmd e .R : deferentes comportamentos para  termos de diretórios 
+
+
+
+
+## .Rmd e .R : diferentes comportamentos para  termos de diretórios 
 Existem diferenças importantes entre o comportamento dos arquivos .Rmd e .R em relação a maneira com que lidam com o diretório de trabalho. No caso dos arquivos .R, caso não estivermos trabalhando com projetos, terá como diretório default o último diretório específicado na sessão — no caso de nenhuma específicação ter sido realizada, a sessão irá utilizar um diretório padrão, usualmente os "Meus Documentos" ("C:/Users/natyd/Documents"), ou algo similar. Já para o .Rmd o diretório padrão será o local em que o arquivo Rmarkdown estiver, mesmo se estivermos trabalhando com projetos. Deste modo, mesmo trabalhando com projetos, será importante que você tenha o cuidado de trabalhar com os caminhos relativos ao .Rmd e não ao .Rproj, ou então que você faça a alteração desta configuração no seu RStudio (`Tools > Global Options > R Markdown > Evaluate chunks in directory` e mude de `Document` para `Project`). 
 
-Considerando o que falamos sobre caminho relativo, no caso do seu .Rmd estar em uma subpasta chamada `/códigos`, por exemplo, e você tivesse interesse em ler um arquivo que estivesse em uma pasta denominada `/dados`, a leitura poderia ser feita da seguinte forma: `../dados/nome_do_arquivo.extensão`, isto porque o  `../` do início do path, indica que o computador deve voltar um passo na hierarquia de pastas.
+Considerando o que falamos sobre caminho relativo, no caso do seu .Rmd estar em uma subpasta chamada `/códigos`, por exemplo, e você tivesse interesse em ler um arquivo que estivesse em uma pasta denominada `/dados`, a leitura poderia ser feita da seguinte forma: `../dados/nome_do_arquivo.extensão`, isto porque o  `../` do início do path, indica que o computador deve voltar um passo na hierarquia de pastas. Por exemplo:
+
+
+```{r}
+#exporte os dados em um arquivo .csv
+write_csv(nossa_base, "..\\dados\\base_exportada.csv")
+```
 
 
 
