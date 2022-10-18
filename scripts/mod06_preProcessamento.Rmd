@@ -61,13 +61,13 @@ Aqui o desafio é mais investigativo e julgamental do que em termos de ferrament
 Apesar dos comentários acima, existe um grupo em particular que comentaremos um pouco mais. No caso, o grupo que denominamos `Ajustes pré modelagem`, ou ainda dataprep. Tais pré-processamentos são particularmente importantes pois, a depender da técnica de modelagem que você deseje aplicar, estes ajustes podem ser obrigatórios -- dado que algumas técnicas não aceitam valores faltantes ou features categóricas como entrada. Sendo assim, teremos uma breve discussão sobre o que envolve cada um dos `dataprep` citados. No caso dos dados faltantes, visto a sua relevância, daremos uma profundidade maior à discussão.
 
 
-### Aplicar codificações  
-Codificação de variáveis
+### Aplicar codificações
 
-Escrever:
-> o que é
-> Porque é importante
-> Algum exemplo do que potencialmente modifica/impacta
+De forma geral as técnicas de modelagem utilizadas no contexto de análise de dados são capazes de lidar apenas com valores numéricos. Mas, se temos em uma base de dados variáveis como nível de escolaridade, em que os  valores podem ser "fundamental", "médio" ou "superior" ou estado de nascimento, nos quais podemos ter 27 categorias, não é razoável que a gente simplesmente deixe de usar essas informações, pois podem ser de grande importância na explicação do problema. Assim, para que esses dados não sejam disperdiçados utilizamos técnicas de Codificação de Variáveis, que nada mais é do que o processo de transformar variáveis categóricas em  númericas, logo, adequadas às técnicas de modelagem.
+Existem várias estratégias para fazer isso e, em geral, o desafio é saber qual é a mais adequada para cada contexto. Algumas estratégias comuns são:
+- One Hot Encoding: cria-se uma nova variável para cada categoria da variável original
+- Label Encoding: cada categoria passa a ser representada por um número
+- Frequency Encoding: O valor numérico atribuído a cada categoria é a quantidade de vezes em que ela aparece na base
 
 > Ex R
 
@@ -75,11 +75,7 @@ Escrever:
 
 ### Aplicar padronizações
 
-Previne escalas diferentes
-
-Escrever:
-> o que é 
-> Porque é importante
+Como comentei anteriormente, as técnicas de modelagem lidam, em geral, com valores numéricos e não sabem exatamente o que eles representam. Quando temos variáveis com magnitudes e variações muito diferentes como, por exemplo, idade e salário, o modelo pode assumir que a variável de maior magnitude é mais relevante, o que muitas vezes não é verdade, e dar um peso maior para ela. Por isso utilizamos técnicas de padronização, que são métodos para fazer com que as variáveis tenham uma escala parecida e, muitas vezes, fixa. Com isso garantimos que cada variável tenha uma contribuição parecida no modelo e, em alguns casos, essa técnica também torna o processo de modelagem mais rápido.
 
  
 > Ex R
