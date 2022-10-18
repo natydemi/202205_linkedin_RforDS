@@ -75,11 +75,7 @@ Existem várias estratégias para fazer isso e, em geral, o desafio é saber qua
 
 ### Aplicar padronizações
 
-Previne escalas diferentes
-
-Escrever:
-> o que é 
-> Porque é importante
+Como comentei anteriormente, as técnicas de modelagem lidam, em geral, com valores numéricos e não sabem exatamente o que eles representam. Quando temos variáveis com magnitudes e variações muito diferentes como, por exemplo, idade e salário, o modelo pode assumir que a variável de maior magnitude é mais relevante, o que muitas vezes não é verdade, e dar um peso maior para ela. Por isso utilizamos técnicas de padronização, que são métodos para fazer com que as variáveis tenham uma escala parecida e, muitas vezes, fixa. Com isso garantimos que cada variável tenha uma contribuição parecida no modelo e, em alguns casos, essa técnica também torna o processo de modelagem mais rápido.
 
  
 > Ex R
