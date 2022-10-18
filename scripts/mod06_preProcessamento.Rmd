@@ -53,12 +53,12 @@ Note que se tratam de ajustes que podem fazer a diferença entre o sucesso e o f
    
 ## E no R? 
 
-Aqui o desafio é mais investigativo e julgamental do que em termos de ferramenta. Com o que vimos nos módulos anteriores, você será capaz de avaliar as questões e endereçar soluções. Com certeza existem pacotes que se mostram mais práticos para determinados estudos, como por exemplo `codemeta` que nos auxiliar com a criação de metadados, ou o pacote `naniar` que nos auxilia com dados faltantes (falaremos dele logo mais). Mas é importante ressaltar que, em última instância, é uma questão de pesquisar `library R missing data`, por exemplo -- DICA: pesquisas em inglês tendem a ser mais efetivas ;). O verdadeiro conhecimento nesta etapa é ter um horizonte sobre O QUE precisa ser feito, mais do que o COMO. 
+Aqui o desafio é mais investigativo e julgamental do que em termos de ferramenta. Com o que vimos nos módulos anteriores, você será capaz de avaliar as questões e endereçar soluções. Com certeza existem pacotes que se mostram mais práticos para determinados estudos, como por exemplo `codemeta` que nos auxiliar com a criação de metadados, ou o pacote `naniar` que nos auxilia com dados faltantes (falaremos dele logo mais). Mas é importante ressaltar que, em última instância, é uma questão de pesquisar `library R missing data`, por exemplo — DICA: pesquisas em inglês tendem a ser mais efetivas ;). O verdadeiro conhecimento nesta etapa é ter um horizonte sobre O QUE precisa ser feito, mais do que o COMO. 
 
 
 ## Ajustes pré modelagem (dataprep)
 
-Apesar dos comentários acima, existe um grupo em particular que comentaremos um pouco mais. No caso, o grupo que denominamos `Ajustes pré modelagem`, ou ainda dataprep. Tais pré-processamentos são particularmente importantes pois, a depender da técnica de modelagem que você deseje aplicar, estes ajustes podem ser obrigatórios -- dado que algumas técnicas não aceitam valores faltantes ou features categóricas como entrada. Sendo assim, teremos uma breve discussão sobre o que envolve cada um dos `dataprep` citados. No caso dos dados faltantes, visto a sua relevância, daremos uma profundidade maior à discussão.
+Apesar dos comentários acima, existe um grupo em particular que comentaremos um pouco mais. No caso, o grupo que denominamos `Ajustes pré modelagem`, ou ainda dataprep. Tais pré-processamentos são particularmente importantes pois, a depender da técnica de modelagem que você deseje aplicar, estes ajustes podem ser obrigatórios — dado que algumas técnicas não aceitam valores faltantes ou features categóricas como entrada. Sendo assim, teremos uma breve discussão sobre o que envolve cada um dos `dataprep` citados. No caso dos dados faltantes, visto a sua relevância, daremos uma profundidade maior à discussão.
 
 
 ### Aplicar codificações

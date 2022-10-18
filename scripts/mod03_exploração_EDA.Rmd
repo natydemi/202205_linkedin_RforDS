@@ -18,7 +18,7 @@ Neste arquivo serão apresentados conceitos de EDA, bem como bibliotecas uteis d
 
 # EDA
 
-EDA, do inglês Exploratory Data Analysis, e em português Análise Exploratória de Dados, é o processo de explorar os dados, o que tipicamente inclui desde examinar a estrutura do dataset, algo que iniciamos no módulo anterior, até o entendimento mais profundo sobre o comportamento das variáveis -- nosso foco neste módulo. A EDA nos permite:
+EDA, do inglês Exploratory Data Analysis, e em português Análise Exploratória de Dados, é o processo de explorar os dados, o que tipicamente inclui desde examinar a estrutura do dataset, algo que iniciamos no módulo anterior, até o entendimento mais profundo sobre o comportamento das variáveis — nosso foco neste módulo. A EDA nos permite:
 
 - Observar padrões não necessariamente conhecidos a priori
 - Identificar se há algum problema com o seu conjunto de dados
@@ -64,7 +64,7 @@ O pacote `janitor`, algo como `faxineiro` em inglês, disponibiliza algumas fun�
 - `janitor::get_dupes()` para a identificação de linhas duplicadas; e
 - `janitor::round_half_up()` para arredondar resultados numéricos.
 
-Ah, tem uma função MUITO legal, `janitor::clean_names()` que limpa o nome das colunas -- facilmente uma das minha top5 funções preferidas. Para a base do SuperBow ela não se faz necessária, visto que os nomes da coluna já estão em um ótimo formato. Mas mais para frente passaremos por um exemplo em que esta função será super útil. Apenas para ilustrar o seu uso, segue uma aplicação desta função considerando uma das suas possíveis variações (via alteração do parâmetro `case`), para a modição do estilo das colunas : 
+Ah, tem uma função MUITO legal, `janitor::clean_names()` que limpa o nome das colunas — facilmente uma das minha top5 funções preferidas. Para a base do SuperBow ela não se faz necessária, visto que os nomes da coluna já estão em um ótimo formato. Mas mais para frente passaremos por um exemplo em que esta função será super útil. Apenas para ilustrar o seu uso, segue uma aplicação desta função considerando uma das suas possíveis variações (via alteração do parâmetro `case`), para a modição do estilo das colunas : 
   
 ```{r}
 #janitor::
@@ -86,7 +86,7 @@ youtube %>%
   janitor::adorn_pct_formatting()
 ```
 
-Essa mesma função funciona também para visualizar duas variáveis de modo combinado -- este tipo de tabela é usualmente conhecido como `Tabela de Contingência`:
+Essa mesma função funciona também para visualizar duas variáveis de modo combinado — este tipo de tabela é usualmente conhecido como `Tabela de Contingência`:
 
 ```{r}
 youtube %>% 

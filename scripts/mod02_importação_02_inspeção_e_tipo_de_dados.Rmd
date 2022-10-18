@@ -230,7 +230,7 @@ Temos ainda que algumas funções aplicam estas coerções de maneira automátic
 sum(c(TRUE, FALSE, TRUE))
 ```
 
-Note que a característica de coerção faz sentido no contexto de análise de dados -- afinal sem ela como iriamos calcular a média de uma coluna que possue números em algumas linhas, e palavras em outras? Ainda assim este ponto pode te dar muita dor de cabeça, pois basta que uma célula da tabela tenha sido digitada errada, para que toda a coluna seja desconfigurada.
+Note que a característica de coerção faz sentido no contexto de análise de dados — afinal sem ela como iriamos calcular a média de uma coluna que possue números em algumas linhas, e palavras em outras? Ainda assim este ponto pode te dar muita dor de cabeça, pois basta que uma célula da tabela tenha sido digitada errada, para que toda a coluna seja desconfigurada.
 
 
 

@@ -114,7 +114,8 @@ x %>%
 # do R para versões mais recentes. Tendo apenas uma alteração de layout:
 #  |> ao invés de %>%
 # Mas para utilizar tal recurso built-in no RStudio, é necessário indicar o 
-# interesse nas configurações da IDE (ao menos até a versão RStudio 2022.07.1)
+# interesse nas configurações da IDE (ao menos na versão que estou utilizando
+# hoje, que é a RStudio 2022.07)
 # Para tal acesse: `Tools > Global Options > Code` e dê o check na opção
 # `use native pipe operator |>`, note que para tal é necessário que você 
 # esteja utilizando o R na versão 4.1 ou maior.
@@ -259,7 +260,7 @@ library(data.table)
 # disposição para poder seguir evoluindo na linguagem R :)
 
 
-# ----- (avançado) -----
+# ----- > TÓPICOS AVANÇADO -----
 # Comparando as sintaxes: Rbase, tidyverse e data.table -----
 
 # A partir daqui serão listados alguns dos comandos mais usuais relacionados
@@ -431,23 +432,25 @@ dados_data_table[ , .(col5 = sum(col1)), by = col2 ]
 # a compartilhar uma visão inicial sobre cada uma das sintaxes.
 
 
-# ----- HANDS-ON -----
+# ----- > MÃO NA MASSA! -----
 
-# Uma das difereças ao se trabalhar com o universo tidyverse é que temos o  
-# tibble como alternativa ao data.frame. Vamos entender um pouco mais sobre 
-# os ganhos? Aproveita e salva essa referência! A galera da curso-R constrói
-# materiais incríveis, vale muito a pena mante-los no radar ;)
-
-# No repositório abaixo temos a comparação entre os dialetos:
-# https://github.com/mayer79/data_preparation_r
-# que tal passar lá e dar uma revisada? 
-
-# data.table + tidyverse (dplyr)
-# existe um pacote chamado dtplyr que fornece um backend data.table para
-# o pacote tidyverse -- mais especificamente para o pacote dplyr do tidyverse.  
-# Deste modo podemos escrever um código dplyr e este será traduzido para  
-# o código data.table. Garantindo os ganhos de legibilidade 
-# do dplyr, com a superioridade de performance do data.table. 
-# A tarefa aqui é: baixar este pacote e rodar alguns dos exemplos do link
-# https://dtplyr.tidyverse.org/
-
+  # Uma das difereças ao se trabalhar com o universo tidyverse é que temos o  
+  # tibble como alternativa ao data.frame. Vamos entender um pouco mais sobre 
+  # os ganhos? 
+    #link: https://livro.curso-r.com/7-1-tibbles.html 
+  # Aproveita e salva essa referência! A galera da curso-R constrói
+  # materiais incríveis, vale muito a pena mante-los no radar ;)
+  
+  # No repositório abaixo temos a comparação entre os dialetos:
+  # https://github.com/mayer79/data_preparation_r
+  # que tal passar lá e dar uma revisada? 
+  
+  # data.table + tidyverse (dplyr)
+  # existe um pacote chamado dtplyr que fornece um backend data.table para
+  # o pacote tidyverse — mais especificamente para o pacote dplyr do tidyverse.  
+  # Deste modo podemos escrever um código dplyr e este será traduzido para  
+  # o código data.table. Garantindo os ganhos de legibilidade 
+  # do dplyr, com a superioridade de performance do data.table. 
+  # A tarefa aqui é: baixar este pacote e rodar alguns dos exemplos do link
+  # https://dtplyr.tidyverse.org/
+  

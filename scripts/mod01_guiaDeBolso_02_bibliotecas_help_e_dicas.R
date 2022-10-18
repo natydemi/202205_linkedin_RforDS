@@ -70,10 +70,10 @@
     
     #instalação a partir do git (versão mais recente da biblioteca)
     devtools::install_github("tidyverse/dplyr")
-      #é comum que as versões mais recentes das bibliotecas do CRAN, mas que  
-      # ainda estão em fase de testes, sejam disponibilizadas via github.
-      # -- O CRAN possui um processo de submissão e atualização de bibliotecas 
-      # -- bastante rigoroso!
+      #é comum que as versões mais recentes das bibliotecas oficiais (ou seja,
+      # disponíveis no CRAN), mas ainda estão em fase de testes, ou que (ainda)  
+      # não tenham passado por todos os prerequisitos para entrar no CRAN (os 
+      # testes são bem rigorosos!), sejam disponibilizadas via github.
     
     #instalação a partir de um arquivo .zip
     install.packages("C:/Users/dplyr.zip", repos = NULL)
@@ -94,7 +94,7 @@
   # programação. Para consultar a versão dos seus pacotes: sessionInfo()
   
 
-# ----- Helps, pedindo Socorro!  -----     
+# ----- Helps, como pedir Socorro!  -----     
 
 # Como pesquisar funções -----
 
@@ -136,12 +136,13 @@
   # de algumas sugestões de onde encontrar ajuda: https://www.tidyverse.org/help/#reprex 
     
 
-# ----- HANDS-ON -----
+# ----- > MÃO NA MASSA -----
     
   #Para aumentar o seu leque de bibliotecas e funções: vá na página de 
   # cheatsheets do RStudio, lá você encontrará uma excelente curadoria!
     # https://www.rstudio.com/resources/cheatsheets/ 
-  #Ah, algumas das cheatsheets podem ser encontradas no `Help` do menu do RStudio.
+  #Ah, algumas das cheatsheets podem ser encontradas pela IDE da RStudio
+  #na opção `Help` da barra de tarefas do menu superior.
   
   #Para praticar: investigue a aba `Tutorial` na IDE do RStudio
     # Note que ao iniciar algum dos tutoriais a aba `Jobs`ficará ocupada,
@@ -151,7 +152,9 @@
     # você encontrará o RStudio primers, com vários tutoriais interativos: 
     # https://rstudio.cloud/learn/primers
     
-  #Existe um conceito muito bacana no R, são os addins: leia sobre neste post 
-  # da curso-R, mas mais que isso, instale a seguinte biblioteca: 
-    #install.packages("packagefinder")
-  # e então consulte os resultados no Menu `Addins`
+  #Existe um conceito muito bacana no R, são os addins: 
+  # leia mais sobre neste post da curso-R:
+    # https://livro.curso-r.com/2-6-addins.html
+  #mas melhor que isso, instale a seguinte biblioteca: 
+    # install.packages("packagefinder")
+  # e então consulte os resultados no Menu `Addins`.

@@ -39,7 +39,7 @@ E dentre os muitos pacotes do R, o `ggplot2` é a maior referência em relação
 Mas nem tudo são flores, temos um contra importante aqui: Curva de aprendizado inicialmente íngreme. Mas uma vez entendida a gramática que envolve a construção de um gráfico, é díficil enxergar visualização de outra maneira.
 
 
-## as camadas do ggplot2
+## camadas do ggplot2
 
 No ggplot o gráfico é visto como um mapeamento de elementos, feito por camadas, são elas:
 
@@ -56,12 +56,17 @@ dados %>%
 Traduzindo, temos: 
 - {data} - Dados que serão utilizados no gráfico
 - {aesthetic} - Mapeamentos estéticos dos dados para os componentes visuais (eixo x, y, cores, etc)
+  shape, size and color
 - {geometries} - Objetos geométricos que irão aparecer no gráfico
-- {facets} - Apresenta as visualizações segundo subgrupos, segmentações  
+- {facets} - Apresenta as visualizações segundo subgrupos, segmentações 
+  small-multiple plots. The facet approach partitions a plot into a matrix of panels. Each panel shows a different subset of the data.This is an optional element.
 - {themes} - Redefine o layout do gráfico
+  Themes are used to change the appearance of non-data elements. Themes enable you to design with a particular visual identity using fonts, colours and other design elements.This is an optional element.
 - {scales} - Especifica o intervalo de variação que será considerado para os mapeamentos estéticos
 - {coord} - Organiza as coordenadas/eixos em que objetos geométricos irão aparecer
+  This refers to the space on which the data is plotted (E.g., Cartesian coordinates). Most popular graphs such as line and bar charts are drawn using Cartesian coordinates.This is an optional element.
 - {statistics} - Transforma os dados considerando sumarizações estatísticas
+  This refers to representing statistical information about the data, such as mean and variance, to help in understanding the data.This is an optional element.
 
 Contudo apenas as três destas camadas são obrigatórias: dados (data),  mapeamentos estéticos (aesthetic), e objetos geométricos (geometries). No caso,
 
@@ -75,7 +80,7 @@ Contudo apenas as três destas camadas são obrigatórias: dados (data),  mapeam
 Vamos começar por eles:
 
 
-## camadas obrigatórias
+### camadas obrigatórias
 
 E para entender melhor do que se tratam, vamos conhece-los um a um. Para tal, utilizeramos a base `gapmider` do pacote `dados`:
 
@@ -155,9 +160,9 @@ gapminder %>%
     geom_smooth()
 ```
 
-## demais camadas 
+### camadas não obrigatórias 
 
-O que poderiamos ter aqui de interessante?
+E considerando as demais camadas, o que poderiamos ter aqui de interessante?
 
 
 ```{r}

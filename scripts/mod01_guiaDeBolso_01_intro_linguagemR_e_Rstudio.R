@@ -129,7 +129,7 @@
 
 #*Connections - ferramentas para conexão com diferentes bancos de dados 
 
-#*Tutorial - tutoriais de aprendizado -- disponível apenas em versões mais 
+#*Tutorial - tutoriais de aprendizado — disponível apenas em versões mais 
 # recentes da IDE RStudio
 
 
@@ -377,7 +377,7 @@
   mtcars <- mtcars
 
 
-# ----- (avançado) -----
+# ----- > TÓPICOS AVANÇADOS -----
 # Um pouco mais sobre a linguagem R ----- 
   #A partir daqui serão apresentados alguns recursos da linguagem R.
   # Não será algo que utilizaremos de maneira direta no curso, 
@@ -626,7 +626,15 @@
   # desses erros e problemas.
 
 
-# ----- HANDS-ON -----
+# ----- > MÃO NA MASSA -----
   #No RStudio Learn Primers: #https://rstudio.cloud/learn/primers 
-  # você encontrará materiais para praticar e seguir evoluindo na linguagem 
+  # você encontrará materiais para praticar e seguir evoluindo na linguagem R!
+  # ao longo dos módulos vamos fazer referências a alguns materiais daqui ;)
+  
+  #Se você nunca tiver programado em R recomendo dar uma olhada na apresentação 
+  # "Curso Básico de R" das R-Ladies São Paulo:
+    # https://beatrizmilz.github.io/2020-R-Ladies-SP-Basico/#1
+  #e se já tiver visto algo sobre o R, então talvez seja mais prático ir direto
+  # no módulo "The Basics - Programming basics", do RStudio Learn Primers:
+    #https://rstudio.cloud/learn/primers/1.2
 
