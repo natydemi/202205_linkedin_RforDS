@@ -1,5 +1,5 @@
 ---
-title: "EDA - Exploratory Data Analysis (Análise Exploratória de Dados)"
+title: "Análise Exploratória de Dados - Exploratory Data Analysis (EDA)"
 output: html_document
 ---
 
