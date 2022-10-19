@@ -14,13 +14,12 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 library(tidyverse)
 ```
 
-Modelos são simplificações da realidade, algo que nós, humanos, naturalmente fazemos, mas nem sempre de maneira transparente, estruturada, e/ou em escala. E são estes os ganhos! 
+Modelos são simplificações da realidade. Uma descrição que considera apenas seus aspectos mais importantes de forma a permitir que um determinado evento seja analisado, entendido e generalizado. Perceba que isso é algo que nós, seres humanos, fazemos naturalmente, pois nos permite navegar de forma mais simples e fluída no mundo cada vez mais complexo que nos cerca. Porém, em geral fazemos isso de forma intuitiva e inconsciente. Em nosso rotina do dia a dia isso é mais do que suficiente, mas quando precisamos tomar decisões de alto impacto ou explicar problemas complexos isso pode ser insuficiente. Quando utilizamos técnicas estatísticas para modelar a realidade nos tornamos capazes de garantir, até certo ponto, que nosso modelo seja feito de forma estruturada, transparente, consciente, reprodutível e, em mutios casos, escalável. São ganhos que não podemos desprezar!
 
+Em ciência de dados existem muitos modelos e algoritmos importantes. Que são selecionados, escolhidos e testados de acordo com a natureza do problema que estamos tentando modelar e, também, do objetivo que queremos alcançar. Num primeiro nível podemos pensar em duas formas de separar as técnicas de modelagem. Quanto a natureza dos dado podemos pensar em modelos **Supervisionados** e **Não Supervisionados**. Modelos Supervisionados são aqueles em que existe uma pergunta clara a ser respondida, como "Qual é o valor de aluguel de uma casa?" ou "Esse e-mail é spam ou não?". Já os Modelos Não supervisionados não tem uma pergunta fechada, mas buscam organizar dos dados de maneira que seja possível tirar conclusões práticas. Eles podem ser usados, por exemplo, para segmentação de clientes. Quanto ao objetivo, num nível inicial, podemos dividir em duas classes: Modelos **Inferencias** e **Preditivos**. No primeiro caso, os modelos inferenciais, o que buscamos é ententer o *porquê* e o *como* de algo, por exemplo, podemos tentar entender porque o produto A passou a vender mais do que um outro produto B ou então analisar uma base de dados para entener qual é a melhor oferta de produtos para um segmento específico de clientes. Já os modelos preditivos buscam através identificar padrões que permitam *prever* resultados futuros ou desconhecidos. Podem ser usados para prever o valor de aluguel de uma casa, a previsão do tempo ou o resultado de exames médicos.
 
+Caso essa divisão entre modelos Supervisionados e Não Supervisionados, ou Inferenciais e Preditivos, não esteja muito clara, não se preocupe, esse será o tema de boa parte dessa seção. Ao longo das próximas seções veremos exemplos, aplicações e conheceremos os modelos mais utilizados em Ciência de Dados para que você seja capaz de iniciar a sua carreira na área. Antes, porém, vamos comentar sobre alguns termos fundamentais da área, pois de partida, vários nomes e definições podem ser bastante a ser bem confusos e é importante que estejamos confortáveis com eles para seguir com confiança para os próximos passos. Alguns termos que vale a pena termos claro:
 
-Existem muitos algoritmos e modelos importantes para ciencia de dados, de 
-
-Veremos aqui alguns dos mais usuais/recorrentes para que você possa iniciar a sua carreira nesta área. Mas antes vamos comentar sobre alguns dor principais termos da área, pois os nomes e definições tendem a ser confusos.
 
 
 * IA
@@ -56,7 +55,7 @@ Após um entendimento mais profundo sobre os dados, seu comportamento, natureza 
 artigo
 
 
-## Algoritmos de ML
+## Algoritmos d
 
 
 
