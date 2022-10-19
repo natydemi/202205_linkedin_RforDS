@@ -61,3 +61,7 @@ Ufa, muita coisa né? Sim, e aqui é só o começo
 # Referência
 
 No fim do curso passaremos por algumas dicas mais gerais, mas aqui gostaria de deixar uma em particular: o canal no youtube do [Stat Quest](https://www.youtube.com/c/joshstarmer), do Josh Starmer. É simplesmente incrível, te ajuda a entender conceitos complexos de uma maneira muito acessível. Ah, ele mantem também um blog, como prefira: <https://statquest.org/>
+
+Aprendizado de Máquina: uma abordagem estatística (AME): http://www.rizbicki.ufscar.br/AME.pdf
+An Introduction to Statistical Learning: https://hastie.su.domains/ISLR2/ISLRv2_website.pdf
+
