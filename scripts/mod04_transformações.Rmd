@@ -1,5 +1,5 @@
 ---
-title: "Arrumação e Transformação de Dados"
+title: "Transformação e Arrumação de Dados"
 output: html_document
 ---
 
@@ -19,31 +19,27 @@ library(tidyverse)
 Uma parte fundamental da análise de dados é o manuseio da informação, o que implica em ser capaz de aplicar transformações, e reformatar a estrutura dos dados. Neste módulo, falaremos sobre tais ações por meio dos pacotes `dplyr` e `tidyr`. O primeiro, `dplyr`, tendo como enfoque a transformação das informações, enquanto o `tidyr` nos possibilita novas estruturas, garantindo dados em uma [estrutura tidy](https://r4ds.had.co.nz/tidy-data.html) – conforme discutido no primeiro módulo do curso.
 
 
-# A gramática do dplyr
+# Transformando dados com a gramática do dplyr
 
-Na descrição do pacote, o `dplyr` é definido como a gramática para transformação de dados, e esse nome não é à toa. Ele possui vários verbos que definem ações específicas para lidar com bases de dados, visando modificá-las de forma simples e eficiente.
-
-As principais funções do dplyr são:
+Na descrição do pacote, o `dplyr` é definido como a gramática para transformação de dados, e esse nome não é à toa. Ele possui vários verbos que definem ações específicas para lidar com bases de dados, visando modificá-las de forma simples e eficiente. Algumas das principais funções do dplyr são:
 
 - `select()` - seleciona colunas;
-- `filter()` - filtra linhas a partir de valores;
+- `filter()` - filtra linhas a partir de regras lógicas;
 - `arrange()` - ordena as linhas da base de dados;
 - `mutate()` - cria/modifica colunas;
-- `rename()` - renomeia variáveis;
 - `group_by()` - agrupa linhas da base de dados;
 - `summarise()` - resume a base de dados em menos linhas.
 
-Juntando essas principais funções com o pipe – conforme comentado no módulo 1, conseguimos praticamente dividir em passos o que precisa ser feito com a base de dados, deixando os scripts mais legíveis e organizados.
+De modo que em conjunto com o operador pipe – comentado no módulo 1, é possível segmentar o que precisa ser feito com a base de dados em passos, deixando os scripts mais legíveis e organizados.
 
-Por exemplo, se você precisa descobrir **quais voos da companhia American Airlines tiveram o maior tempo de atraso**, é possível separar essa pergunta em diferentes etapas:
+Por exemplo, se você precisa descobrir **quais voos da companhia American Airlines tiveram o maior tempo de atraso**, é possível separar esta pergunta em etapas:
 
 1. **quais voos da companhia American Airlines**: filtrar voos da AA;
 
 2. **tiveram o maior tempo de atraso**: ordenar pelo tempo de atraso.
 
-Um bom exercício nas etapas de tranformação de dados é encaixar os diferentes verbos do dplyr nas diversas perguntas que você precisa responder para analisar o conjunto de dados.
+Um bom exercício nas etapas de transformação de dados é encaixar os diferentes verbos do dplyr nas diversas perguntas que você precisa responder para analisar o conjunto de dados. Vamos ao exemplo:
 
-Vale apontar que nos exemplos desta aula vamos usar o [pacote `dados`](https://github.com/cienciadedatos/dados), criado colaborativamente para traduzir conjuntos de dados inicialmente disponibilizados em inglês para o português. Todos os conjuntos aqui são utilizados também como exemplo no livro [R para Data Science](https://r4ds.had.co.nz/).
 
 ```{r}
 voos <- dados::voos %>% glimpse()
@@ -95,11 +91,16 @@ Por exemplo, para descobrir os voos que atrasaram na saída (vamos dizer com mai
 
 ```{r}
 voos %>%
-  filter(atraso_saida >= 15 & atraso_chegada <= 0) %>%
+  #filter(atraso_saida >= 15 | atraso_chegada <= 0) %>%
+  filter(atraso_saida %in% c(15, 16)) %>% 
   select(companhia_aerea, voo, atraso_saida, atraso_chegada)
 ```
 
 Alguns até chegaram adiantados! :O
+
+
+> Um ponto importante ao trabalhar com filtros no R, é que para aplicar um filtro para um único valor, utilizamos o operador lógico `==` enquanto que para trabalhar com mais de um valor, precisamos trabalhar com `%in%`. Isto porque no primeiro caso o R faz uma comparação dos elementos da coluna selecionada com os valores que desejamos filtrar de maneira alternada, de modo que alguns casos acabam sendo desconsiderados no filtro. Já com o operador `%in%`, garantimos que todos os elementos da coluna de interesse sejam comparados com todos os elementos que desejamos considerar no filtro. [Neste post do stackoverflow](https://stackoverflow.com/questions/15358006/what-is-the-difference-between-in-and) você encontrará mais detalhes sobre ;)
+
 
 ### `slice()`
 
@@ -110,7 +111,8 @@ Neste exemplo, selecionamos os 3 voos com maior atraso de saída.
     
 ```{r}
 voos %>%
-  slice_max(atraso_saida, n = 3) %>%
+  #slice_max(atraso_saida, n = 3) %>%
+  slice_sample(prop = 0.05) %>% 
   select(companhia_aerea, voo, atraso_saida, atraso_chegada)
 ```
 
@@ -122,10 +124,13 @@ No exemplo, pegamos 10 voos aleatórios, e depois selecionamos 50% dessa amostra
 
 ```{r}
 voos %>% 
-  sample_n(10) %>% 
+  slice_sample( n = 10) %>% 
   sample_frac(0.5) %>%
   select(companhia_aerea, voo, atraso_saida, atraso_chegada)
 ```
+
+> As funções `sample_frac()` e `sample_n()` estão sendo substituidas pela função `slice_sample()`, no caso, com os parâmetros `slice_sample(frac = *)` e `slice_sample(n = *)`, respectivamente.
+
 
 ### `distinct()`
 
@@ -135,7 +140,8 @@ Neste último caso, ele considera os valores únicos combinados para essas colun
 
 ```{r}
 voos %>%
-  distinct(companhia_aerea, origem, destino)
+  distinct(companhia_aerea, origem, destino) %>% 
+  arrange(companhia_aerea)
 ```
 
 Sem o `distinct()`, e apenas com o `select()`, teríamos um número maior de linhas, e a maioria, duplicada.
@@ -152,6 +158,14 @@ Agora que aprendemos a ler o conjunto de dados a partir de linhas e colunas, vam
 ### `mutate()`
 
 Um dos verbos mais poderosos do `dplyr`, o `mutate()` consegue criar novas colunas e modificar variáveis já existentes, inclusive alterando a classe dos dados quando necessário (de texto para número, por exemplo).
+
+```{r}
+voos %>% 
+  mutate(atraso_saida = as.integer(atraso_saida)) %>% 
+  mutate(atraso_saida_index = ifelse(atraso_saida > 0 , TRUE, FALSE)) %>% 
+  glimpse()
+```
+
 
 Ele pode ser combinado com outras funções igualmente eficientes como `ifelse()` e `case_when()`, que possibilitam regras mais elaboradas na transformação dos dados.
 
@@ -191,8 +205,9 @@ Por fim, a serem combinados com as transformações, existem os verbos `group_by
 
 ```{r}
 voos %>% 
-  summarise(mediana_distancia = median(distancia))
-  
+  summarise(mean_distancia = mean(distancia),
+            mediana_distancia = quantile(distancia, 0.5)) %>% 
+  mutate(mediana_distancia_km = mediana_distancia*1.609)
 ```
 Em média, os voos deste conjunto percorrem 872 milhas, ou seja, 1.400 km, entre aeroportos.
 
@@ -200,19 +215,31 @@ Em média, os voos deste conjunto percorrem 872 milhas, ou seja, 1.400 km, entre
 
 Mais poderoso quando combinado com o `summarise()`, o `group_by()` cria grupos a partir das colunas especificadas para manipular o conjunto de dados. Ele não modifica a tabela em si, mas combina os resultados de acordo com as operações escritas.
 
+```{r}
+voos %>%
+  group_by(mes) %>% 
+  summarise(tempo_voo_mean = mean(tempo_voo, na.rm = T))  %>% 
+  arrange(-tempo_voo_mean)
+``` 
+
+
 Aqui, vamos usar o conjunto `voos_atrasados`, criado a partir do `mutate()`, para identificar os status de horário mais comuns no nosso conjunto de dados.
+
+
 
 ```{r}
 voos_atrasados %>%
   group_by(status_horario) %>% # agrupando pelo status de horário
-  summarise(n = n()) # o número de linhas em cada grupo
+  summarise(n = n(),
+            mean_distancia = mean(distancia)) # o número de linhas em cada grupo
 ``` 
 
 Ou seja, vemos que é mais comum os voos chegarem antes do horário programado (194 mil ocorrências) do que depois (127 mil). Poucos chegam exatamente no horário previsto (5 mil).
 
 
 
-# Os recursos do tidyr
+
+# Alcançando a estrutura tidy com o tidyr
 
 Com os principais verbos do `dplyr` na manga, agora é hora de explorar o `tidyr` que, lembrando, serve para transformar o conjunto de dados. 
 
@@ -415,7 +442,6 @@ Como um último exemplo do poder prático deste pacote, segue um exemplo fictíc
 # Mão na massa!
 
 - Se você estiver trabalhando com uma versão mais recente do RStudio, verá uma aba chamada Tutorial entre os paineis que estão na parte superior, à direita da sua IDE. Nela, você vai encontrar várias opções de manuais interativos, recomendo particularmente: `Filter observations`, `Create new variables` e `Summarise Tables`. Uma última observação: para sair de alguns dos tutoriais você precisa apertar o botão `stop` uma bolinha vermelha que aparece no canto superior esquerdo da própria aba Tutorial ;)
-
 
  - Avalie a página [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/), localize as folhas de dicas relacionadas aos pacotes `dplyr()` e `tidyr()` e observe quais são os textos introdutórios de cada uma das cheatsheets.
  

@@ -11,7 +11,7 @@
 
 
 
-<title>Arrumação e Transformação de Dados</title>
+<title>Transformação e Arrumação de Dados</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -348,7 +348,7 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Arrumação e Transformação de Dados</h1>
+<h1 class="title toc-ignore">Transformação e Arrumação de Dados</h1>
 
 </div>
 
@@ -376,43 +376,38 @@ enquanto o <code>tidyr</code> nos possibilita novas estruturas,
 garantindo dados em uma <a href="https://r4ds.had.co.nz/tidy-data.html">estrutura tidy</a> –
 conforme discutido no primeiro módulo do curso.</p>
 </div>
-<div id="a-gramática-do-dplyr" class="section level1">
-<h1>A gramática do dplyr</h1>
+<div id="transformando-dados-com-a-gramática-do-dplyr" class="section level1">
+<h1>Transformando dados com a gramática do dplyr</h1>
 <p>Na descrição do pacote, o <code>dplyr</code> é definido como a
 gramática para transformação de dados, e esse nome não é à toa. Ele
 possui vários verbos que definem ações específicas para lidar com bases
-de dados, visando modificá-las de forma simples e eficiente.</p>
-<p>As principais funções do dplyr são:</p>
+de dados, visando modificá-las de forma simples e eficiente. Algumas das
+principais funções do dplyr são:</p>
 <ul>
 <li><code>select()</code> - seleciona colunas;</li>
-<li><code>filter()</code> - filtra linhas a partir de valores;</li>
+<li><code>filter()</code> - filtra linhas a partir de regras
+lógicas;</li>
 <li><code>arrange()</code> - ordena as linhas da base de dados;</li>
 <li><code>mutate()</code> - cria/modifica colunas;</li>
-<li><code>rename()</code> - renomeia variáveis;</li>
 <li><code>group_by()</code> - agrupa linhas da base de dados;</li>
 <li><code>summarise()</code> - resume a base de dados em menos
 linhas.</li>
 </ul>
-<p>Juntando essas principais funções com o pipe – conforme comentado no
-módulo 1, conseguimos praticamente dividir em passos o que precisa ser
-feito com a base de dados, deixando os scripts mais legíveis e
-organizados.</p>
+<p>De modo que em conjunto com o operador pipe – comentado no módulo 1,
+é possível segmentar o que precisa ser feito com a base de dados em
+passos, deixando os scripts mais legíveis e organizados.</p>
 <p>Por exemplo, se você precisa descobrir <strong>quais voos da
 companhia American Airlines tiveram o maior tempo de atraso</strong>, é
-possível separar essa pergunta em diferentes etapas:</p>
+possível separar esta pergunta em etapas:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>quais voos da companhia American Airlines</strong>:
 filtrar voos da AA;</p></li>
 <li><p><strong>tiveram o maior tempo de atraso</strong>: ordenar pelo
 tempo de atraso.</p></li>
 </ol>
-<p>Um bom exercício nas etapas de tranformação de dados é encaixar os
+<p>Um bom exercício nas etapas de transformação de dados é encaixar os
 diferentes verbos do dplyr nas diversas perguntas que você precisa
-responder para analisar o conjunto de dados.</p>
-<p>Vale apontar que nos exemplos desta aula vamos usar o <a href="https://github.com/cienciadedatos/dados">pacote
-<code>dados</code></a>, criado colaborativamente para traduzir conjuntos
-de dados inicialmente disponibilizados em inglês para o português. Todos
-os conjuntos aqui são utilizados também como exemplo no livro <a href="https://r4ds.had.co.nz/">R para Data Science</a>.</p>
+responder para analisar o conjunto de dados. Vamos ao exemplo:</p>
 <pre class="r"><code>voos &lt;- dados::voos %&gt;% glimpse()
 ## Rows: 336,776
 ## Columns: 19
@@ -514,23 +509,37 @@ e <code>between()</code>.</p>
 dizer com mais de 15 min de atraso), mas não atrasaram na chegada, é só
 escrever:</p>
 <pre class="r"><code>voos %&gt;%
-  filter(atraso_saida &gt;= 15 &amp; atraso_chegada &lt;= 0) %&gt;%
+  #filter(atraso_saida &gt;= 15 | atraso_chegada &lt;= 0) %&gt;%
+  filter(atraso_saida %in% c(15, 16)) %&gt;% 
   select(companhia_aerea, voo, atraso_saida, atraso_chegada)
-## # A tibble: 4,969 × 4
+## # A tibble: 4,225 × 4
 ##    companhia_aerea   voo atraso_saida atraso_chegada
 ##    &lt;chr&gt;           &lt;int&gt;        &lt;dbl&gt;          &lt;dbl&gt;
-##  1 UA                501           34             -4
+##  1 B6               1305           15             14
 ##  2 UA                779           16             -6
-##  3 B6                 91           15            -15
-##  4 B6                165           23             -1
-##  5 B6                677           27             -5
-##  6 UA                277           42             -4
-##  7 B6                715           15              0
-##  8 B6                679           19             -7
-##  9 UA               1702           16              0
-## 10 UA               1552           30             -2
-## # … with 4,959 more rows</code></pre>
+##  3 WN               2335           16             26
+##  4 WN               2081           16             19
+##  5 EV               3272           16             12
+##  6 DL               1939           15             18
+##  7 UA                638           16             11
+##  8 AA               1611           16              2
+##  9 B6                 91           15            -15
+## 10 US               1491           15             15
+## # … with 4,215 more rows</code></pre>
 <p>Alguns até chegaram adiantados! :O</p>
+<blockquote>
+<p>Um ponto importante ao trabalhar com filtros no R, é que para aplicar
+um filtro para um único valor, utilizamos o operador lógico
+<code>==</code> enquanto que para trabalhar com mais de um valor,
+precisamos trabalhar com <code>%in%</code>. Isto porque no primeiro caso
+o R faz uma comparação dos elementos da coluna selecionada com os
+valores que desejamos filtrar de maneira alternada, de modo que alguns
+casos acabam sendo desconsiderados no filtro. Já com o operador
+<code>%in%</code>, garantimos que todos os elementos da coluna de
+interesse sejam comparados com todos os elementos que desejamos
+considerar no filtro. <a href="https://stackoverflow.com/questions/15358006/what-is-the-difference-between-in-and">Neste
+post do stackoverflow</a> você encontrará mais detalhes sobre ;)</p>
+</blockquote>
 </div>
 <div id="slice" class="section level3">
 <h3><code>slice()</code></h3>
@@ -567,11 +576,11 @@ dessa amostra, ou seja, 5 voos.</p>
 ## # A tibble: 5 × 4
 ##   companhia_aerea   voo atraso_saida atraso_chegada
 ##   &lt;chr&gt;           &lt;int&gt;        &lt;dbl&gt;          &lt;dbl&gt;
-## 1 UA                887           -2            -12
-## 2 WN               3297            6             19
-## 3 UA                866           -1            -29
-## 4 DL               1435            0            -27
-## 5 DL               1619          338            314</code></pre>
+## 1 EV               4175           -8            -10
+## 2 EV               5451          -10            -15
+## 3 UA               1154            1            -20
+## 4 B6               2280           -9             -5
+## 5 AA                 85           -5            -33</code></pre>
 </div>
 <div id="distinct" class="section level3">
 <h3><code>distinct()</code></h3>
@@ -734,8 +743,8 @@ exatamente no horário previsto (5 mil).</p>
 </div>
 </div>
 </div>
-<div id="os-recursos-do-tidyr" class="section level1">
-<h1>Os recursos do tidyr</h1>
+<div id="alcançando-a-estrutura-tidy-com-o-tidyr" class="section level1">
+<h1>Alcançando a estrutura tidy com o tidyr</h1>
 <p>Com os principais verbos do <code>dplyr</code> na manga, agora é hora
 de explorar o <code>tidyr</code> que, lembrando, serve para transformar
 o conjunto de dados.</p>

@@ -57,7 +57,7 @@ Ao juntar com o sistema de coordenadas e passando os eixos `x` e `y`, como `F` e
 
 ![Explicação da gramática do ggplot2](resources/gramatica-ggplot2.png)
 
-Para construir isso na prática, basta ver a estrutura de código abaixo. Observe que, depois de passar o conjunto de dados pelo pipe (`%>%`), a função `ggplot()` encadeia os elementos pelo operador `+`.
+Para construir isso na prática, basta ver a estrutura de código abaixo:
 
 ```{r, eval=F}
 dados %>% 
@@ -68,6 +68,8 @@ dados %>%
     coord() +
     scales()
 ```
+
+> Note que, depois de passar o conjunto de dados pelo pipe (`%>%`), a função `ggplot()` encadeia os elementos pelo operador `+`.
 
 Os principais elementos do `ggplot2`, que dão conta de construir as visualizações, são:
 
@@ -294,36 +296,6 @@ titanic %>%
 ```
 
 
-```{r, message=F}
-titanic %>%
-  ggplot(aes(x = Age, y = ..count..)) +
-  geom_density(data = select(titanic, -Sex),
-               aes(fill = "a"),
-               color = "transparent",
-               alpha = 0.6)+
-  geom_density(aes(fill = Sex),
-               color = "transparent")+
-  scale_x_continuous(name = "age (years)",
-                     limits = c(0, 85),
-                     expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0, 25),
-                     name = "scaled density",
-                     expand = c(0, 0))+
-  scale_fill_manual(breaks = c("a", "female", "male"),
-                    values = c("gray", "#D55E00", "#0072B2"),
-                    labels=c("all","female","male"),
-                    name = "")+
-  facet_wrap(~Sex)+
-  theme_minimal()+
-  theme(panel.grid.minor.y =element_blank(),
-        panel.grid.major.x = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        legend.position = "bottom",
-        legend.justification = "right",
-        strip.text.x = element_blank())+
-  ggtitle("Titanic Passengers Age by Sex")
-```
-
 ### Relação
 
 Agora, com o conjunto de dados `diamante`, que lista informações de preço de quase 54 mil diamantes em seus diferentes tipos (cor, quilate, corte, etc).
@@ -381,17 +353,18 @@ economics %>%
 
 # Explanação: como apresentar? 
 
-Aqui seria uma aula (ou um curso) à parte, mas para começar a entender esse vasto mundo da visualização para comunicação, recomendo o [capítulo 28 de R para Data Science](https://r4ds.had.co.nz/graphics-for-communication.html) que usa o `ggplot2` de exemplo para falar justamente sobre essas possibilidades.
+Aqui seria uma aula (ou um curso) à parte, temas como: teoria das cores e Proportional Ink Principle (algo como "princípio da tinta proporcional"), nos ajudam a direcionar as escolhas em termos de design. Para iniciar o entendimento no tema, tendo o R como pano de fundo, recomendo a [Parte II "Principles of figure design" do livro Fundamentals of Data Visualization, do Claus O. Wilke ](https://clauswilke.com/dataviz/). E como uma alternativa rápida, para ter um primeiro contato com princípios de design: [essa apresentação do Will Chase sobre o "Glamour of Graphics"](https://www.williamrchase.com/slides/assets/player/KeynoteDHTMLPlayer.html#1)    
+
+
 
 ## Bibliotecas tangentes ao ggplot
 
-Existem mais de 350 pacotes relacionados ao pacote ggplot2, oferecendo recursos que complementam as funções iniciais. Poderiam fácil ter mais algumas horas de curso só para falar sobre isto, mas listo aqui algumas funções, em ordem alfabética:
+E como um spoiler do poder de fogo do R no contexto de visualização, segue uma pequena amostra, aem ordem alfabetica, das mais de 350 bibliotecas que complementam o ggplot2:
 
 - `{cowplot}` — arranjos de enredo, temas e anotações
 - `{ggalt}` — coordenadas alternativas, geoms, estatísticas e escalas
 - `{gganimate}` — cria animações
 - `{ggbump}` — geoms para gráficos de colisão
-- `{ggforce}` — vários recursos adicionais interessantes
 - `{ggiraph}` — geoms para visualizações dinâmicas e interativas
 - `{ggmaps}` — acesso aos mapas do Google e Stamen
 - `{ggplotly}` — cria gráficos interativos
@@ -400,7 +373,6 @@ Existem mais de 350 pacotes relacionados ao pacote ggplot2, oferecendo recursos 
 - `{ggridges}` — geoms para plotagens de ridgeline
 - `{ggsankey}` — geoms para diagramas sankey
 - `{ggstream}` — geoms para gráficos de fluxo
-- `{ggtext}` — renderização em rich text
 - `{ggthemes}` — temas, escalas e geometrias adicionais
 - `{hrbrthemes}` — temas mínimos centrados em tipografia
 - `{lemon}` — complementos de eixo e legenda
@@ -408,7 +380,10 @@ Existem mais de 350 pacotes relacionados ao pacote ggplot2, oferecendo recursos 
 - `{rayshader}` — mapas sombreados em 2D e 3D
 - `{systemfonts}` — use fontes personalizadas (substitui - `{extrafont}` e - `{showtext}`)
 
-Olha até onde podemos chegar com o `ggplot2`: [essa apresentação](https://www.cedricscherer.com/slides/OutlierConf2021_ggplot-wizardry.pdf) reúne *bruxarias* feitas em R que viraram gráficos maravilhosos!
+Por fim dá uma olhada até onde podemos chegar com o `ggplot2` [nessa apresentação](https://www.cedricscherer.com/slides/OutlierConf2021_ggplot-wizardry.pdf) que reúne *bruxarias em R*, como descrito pelo próprio autor, resultando em gráficos maravilhosos!
+
+
+
 
 # Bônus: tabelas
 
@@ -430,3 +405,5 @@ gapminder %>% DT::datatable()
 # MÃO NA MASSA!
 
 - No RStudio Learn Primers: https://rstudio.cloud/learn/primers, faça os exercícios propostos na aba Visualize Data,  https://rstudio.cloud/learn/primers/3 
+
+- 

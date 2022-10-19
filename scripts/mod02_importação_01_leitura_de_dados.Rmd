@@ -123,7 +123,7 @@ AirPassengers <- AirPassengers
 
 Conforme comentado, temos datasets que acompanham as bibliotecas, e existem pacotes tendo como enfoque facilitar o acesso aos dados: 
 
-  - `dados::` disponibiliza a tradução para português de algumas das bases de dados mais usuais no contexto de tutorias de análise/ciência de dados.
+  - `dados::` disponibiliza a tradução para português de algumas das bases de dados mais usuais no contexto de tutorias de análise/ciência de dados – [pacote criado colaborativamente pela comunidade R brasileira](https://github.com/cienciadedatos/dados)
 
   - `charlatan::` possibilita a construção de dados falsos a partir de especificações de temas ou de caracteristicas desejadas para as variáveis.
 
