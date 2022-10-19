@@ -18,6 +18,14 @@ Após um entendimento mais profundo sobre os dados, seu comportamento, natureza 
 
 Modelos são simplificações da realidade. Uma descrição que considera apenas seus aspectos mais importantes de forma a permitir que um determinado evento seja analisado, entendido e generalizado. Perceba que isso é algo que nós, seres humanos, fazemos naturalmente, pois nos permite navegar de forma mais simples e fluída no mundo cada vez mais complexo que nos cerca. Porém, em geral fazemos isso de forma intuitiva e inconsciente. Em nosso rotina do dia a dia isso é mais do que suficiente, mas quando precisamos tomar decisões de alto impacto ou explicar problemas complexos isso pode ser insuficiente. Quando utilizamos técnicas estatísticas para modelar a realidade nos tornamos capazes de garantir, até certo ponto, que nosso modelo seja feito de forma estruturada, transparente, consciente, reprodutível e, em mutios casos, escalável. São ganhos que não podemos desprezar!
 
+
+# Lógica por trás 
+
+É mais simples que parece, pois conforme comentado, não é nada assim tão diferente do que fazemos no nosso dia a dia: **aprendemos a partir da frequência de ocorrência de determinados acontecimentos, da relação entre diferentes situações e da generalização das experiências**. Se você pede um café com leite e um pão na chapa na lanchonete da esquina todos os dias pela manhã, a pessoa que faz o atendimento casualmente pode passar a perguntar: “o de sempre?”. Se você sai de casa com um pandeiro, é razoável que ao encontrar com um colega, este possa associar que você toca este instrumento. Ou mesmo ao vermos um grupo de torcedores ou torcedoras uniformizados, por mais que um integrante não esteja com a roupa do time, ainda assim inferimos que aquela pessoa também torça para o mesmo time. E por que isso? Pois aprendemos com repetições, fazemos associações, e inferimos comportamentos por similaridade.   
+A questão é que nós não somos capazes de processar todas as informações a que temos acesso, tampouco ponderamos a importância de cada evento de forma estruturada. Em contraponto, o aprendizado de máquina possibilita justamente a identificação de padrões complexos e o processamento de diferentes fontes de informação, permitindo uma maior transparência em relação a tomada de decisão. 
+
+# Tipos de Modelos
+
 Em ciência de dados existem muitos modelos e algoritmos importantes. Que são selecionados, escolhidos e testados de acordo com a natureza do problema que estamos tentando modelar e, também, do objetivo que queremos alcançar. Num primeiro nível podemos pensar em duas formas de separar as técnicas de modelagem:
 
 - Quanto a natureza dos dado podemos pensar em modelos **Supervisionados** e **Não Supervisionados**.
@@ -28,7 +36,12 @@ Modelos Supervisionados são aqueles em que existe uma pergunta clara a ser resp
 
 No primeiro caso, os modelos inferenciais, o que buscamos é ententer o *porquê* e o *como* de algo, por exemplo, podemos tentar entender porque o produto A passou a vender mais do que um outro produto B ou então analisar uma base de dados para entener qual é a melhor oferta de produtos para um segmento específico de clientes. Já os modelos preditivos buscam através identificar padrões que permitam *prever* resultados futuros ou desconhecidos. Podem ser usados para prever o valor de aluguel de uma casa, a previsão do tempo ou o resultado de exames médicos.
 
-Caso essa divisão entre modelos Supervisionados e Não Supervisionados, ou Inferenciais e Preditivos, não esteja muito clara, não se preocupe, esse será o tema de boa parte dessa seção. Ao longo das próximas seções veremos exemplos, aplicações e conheceremos os modelos mais utilizados em Ciência de Dados para que você seja capaz de iniciar a sua carreira na área. Antes, porém, vamos comentar sobre alguns termos fundamentais da área, pois de partida, vários nomes e definições podem ser bastante a ser bem confusos e é importante que estejamos confortáveis com eles para seguir com confiança para os próximos passos. Alguns termos que vale a pena termos claro:
+Caso essa divisão entre modelos Supervisionados e Não Supervisionados, ou Inferenciais e Preditivos, não esteja muito clara, não se preocupe, esse será o tema de boa parte dessa seção. Ao longo das próximas seções veremos exemplos, aplicações e conheceremos os modelos mais utilizados em Ciência de Dados para que você seja capaz de iniciar a sua carreira na área. Antes, porém, vamos passar por alguns conceitos importantes para o restante de nossa jornada.
+
+
+# Modelagem Estatística e Aprendizado de Máquina
+
+Vamos comentar sobre alguns termos fundamentais da área, pois de partida, vários nomes e definições podem ser bastante confusos. É importante que você esteja confortável com eles para seguir com mais confiança para os próximos tópicos.
 
 
 - Inteligência Artificial (IA)
@@ -56,35 +69,15 @@ P.S.: principal ref para essas ideias: https://lnkd.in/dVDaawt9
 Dito tudo isto, como este capitulo esta dividido: teremos este módulo dividido da seguinte forma um primeiro momento em que discutiremos modelagem segundo a perspectiva de machine learning, particularmente em relação aos algoritmos supervisionados e não supervisionados, seguido de uma discussão mais voltada à inferência e modelagem estatística
 
 
-
-
 # Exemplos de aplicações
-
-
-
-# Lógica por trás 
-
-É mais simples que parece, pois conforme comentado, não é nada assim tão diferente do que fazemos no nosso dia a dia: **aprendemos a partir da frequência de ocorrência de determinados acontecimentos, da relação entre diferentes situações e da generalização das experiências**. Se você pede um café com leite e um pão na chapa na lanchonete da esquina todos os dias pela manhã, a pessoa que faz o atendimento casualmente pode passar a perguntar: “o de sempre?”. Se você sai de casa com um pandeiro, é razoável que ao encontrar com um colega, este possa associar que você toca este instrumento. Ou mesmo ao vermos um grupo de torcedores ou torcedoras uniformizados, por mais que um integrante não esteja com a roupa do time, ainda assim inferimos que aquela pessoa também torça para o mesmo time. E por que isso? Pois aprendemos com repetições, fazemos associações, e inferimos comportamentos por similaridade.   
-A questão é que nós não somos capazes de processar todas as informações a que temos acesso, tampouco ponderamos a importância de cada evento de forma estruturada. Em contraponto, o aprendizado de máquina possibilita justamente a identificação de padrões complexos e o processamento de diferentes fontes de informação, permitindo uma maior transparência em relação a tomada de decisão. 
-
-
-
-
-
-
-
-artigo
-
-
-## Algoritmos d
-
-
-
 
 
 # Refs
 
-o An introduction, e o AME
+Aprendizado de Máquina: uma abordagem estatística (AME): http://www.rizbicki.ufscar.br/AME.pdf
+Statistical Modeling: The Two Cultures: https://lnkd.in/dVDaawt9
+An Introduction to Statistical Learning: https://hastie.su.domains/ISLR2/ISLRv2_website.pdf
+
 
 
 
