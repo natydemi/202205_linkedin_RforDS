@@ -471,12 +471,12 @@ numéricos.</li>
 </ul>
 <p>Ah, tem uma função MUITO legal, <code>janitor::clean_names()</code>
 que limpa o nome das colunas — facilmente uma das minha top5 funções
-preferidas. Para a base do SuperBow ela não se faz necessária, visto que
-os nomes da coluna já estão em um ótimo formato. Mas mais para frente
-passaremos por um exemplo em que esta função será super útil. Apenas
-para ilustrar o seu uso, segue uma aplicação desta função considerando
-uma das suas possíveis variações (via alteração do parâmetro
-<code>case</code>), para a modição do estilo das colunas :</p>
+preferidas. Para a base do Super Bowl ela não se faz necessária, visto
+que os nomes da coluna já estão em um ótimo formato. Mas mais para
+frente passaremos por um exemplo em que esta função será super útil.
+Apenas para ilustrar o seu uso, segue uma aplicação desta função
+considerando uma das suas possíveis variações (via alteração do
+parâmetro <code>case</code>), para a modição do estilo das colunas :</p>
 <pre class="r"><code>#janitor::
 youtube %&gt;% janitor::clean_names(case = &quot;upper_camel&quot;) %&gt;%  glimpse()
 ## Rows: 247
@@ -508,29 +508,18 @@ youtube %&gt;% janitor::clean_names(case = &quot;upper_camel&quot;) %&gt;%  glim
 ## $ CategoryId            &lt;dbl&gt; 1, 27, 17, 22, 24, 1, 24, 2, 24, 24, 24, 24, 24,…</code></pre>
 <p>Este pacote também nos possibilita criar tabelas de frequência
 rapidamente:</p>
-<pre class="r"><code>youtube %&gt;% janitor::tabyl(year) 
-##  year  n    percent
-##  2000  8 0.03238866
-##  2001 13 0.05263158
-##  2002 10 0.04048583
-##  2003 12 0.04858300
-##  2004 11 0.04453441
-##  2005 11 0.04453441
-##  2006  7 0.02834008
-##  2007 14 0.05668016
-##  2008 13 0.05263158
-##  2009 15 0.06072874
-##  2010 14 0.05668016
-##  2011  9 0.03643725
-##  2012 15 0.06072874
-##  2013 15 0.06072874
-##  2014 14 0.05668016
-##  2015 10 0.04048583
-##  2016 13 0.05263158
-##  2017  5 0.02024291
-##  2018 14 0.05668016
-##  2019 15 0.06072874
-##  2020  9 0.03643725</code></pre>
+<pre class="r"><code>youtube %&gt;% janitor::tabyl(brand) 
+##      brand  n    percent
+##  Bud Light 63 0.25506073
+##  Budweiser 43 0.17408907
+##  Coca-Cola 21 0.08502024
+##    Doritos 25 0.10121457
+##    E-Trade 13 0.05263158
+##    Hynudai 22 0.08906883
+##        Kia 13 0.05263158
+##        NFL 11 0.04453441
+##      Pepsi 25 0.10121457
+##     Toyota 11 0.04453441</code></pre>
 <p>E mais, deixar a tabela em um formato bonitinho :)</p>
 <pre class="r"><code>youtube %&gt;% 
   janitor::tabyl(brand) %&gt;%  
@@ -552,54 +541,38 @@ rapidamente:</p>
 modo combinado — este tipo de tabela é usualmente conhecido como
 <code>Tabela de Contingência</code>:</p>
 <pre class="r"><code>youtube %&gt;% 
-  janitor::tabyl(year, brand) %&gt;%  
+  janitor::tabyl(brand, celebrity) %&gt;%  
   janitor::adorn_totals(c(&quot;row&quot;, &quot;col&quot;)) 
-##   year Bud Light Budweiser Coca-Cola Doritos E-Trade Hynudai Kia NFL Pepsi
-##   2000         2         4         0       0       2       0   0   0     0
-##   2001         3         2         0       1       2       0   0   1     4
-##   2002         4         4         0       0       1       0   0   0     1
-##   2003         7         3         0       0       0       0   0   1     1
-##   2004         5         3         0       0       0       0   0   0     2
-##   2005         7         1         0       0       0       0   0   0     3
-##   2006         2         3         0       0       0       0   0   0     2
-##   2007         5         3         2       2       1       0   0   0     0
-##   2008         7         1         2       1       0       1   0   0     1
-##   2009         2         2         3       3       1       2   0   0     2
-##   2010         3         1         0       3       3       2   1   1     0
-##   2011         1         0         2       1       0       3   1   0     1
-##   2012         2         2         3       2       1       1   1   1     1
-##   2013         2         3         0       2       1       4   2   0     1
-##   2014         3         2         2       2       0       2   1   1     0
-##   2015         0         3         1       3       0       0   1   0     1
-##   2016         1         2         1       2       0       3   1   1     1
-##   2017         0         1         0       0       0       1   1   2     0
-##   2018         2         1         3       1       1       1   1   1     1
-##   2019         4         1         1       1       0       1   2   1     2
-##   2020         1         1         1       1       0       1   1   1     1
-##  Total        63        43        21      25      13      22  13  11    25
-##  Toyota Total
-##       0     8
-##       0    13
-##       0    10
-##       0    12
-##       1    11
-##       0    11
-##       0     7
-##       1    14
-##       0    13
-##       0    15
-##       0    14
-##       0     9
-##       1    15
-##       0    15
-##       1    14
-##       1    10
-##       1    13
-##       0     5
-##       2    14
-##       2    15
-##       1     9
-##      11   247</code></pre>
+##      brand FALSE TRUE Total
+##  Bud Light    46   17    63
+##  Budweiser    38    5    43
+##  Coca-Cola    15    6    21
+##    Doritos    21    4    25
+##    E-Trade    13    0    13
+##    Hynudai    16    6    22
+##        Kia     6    7    13
+##        NFL     3    8    11
+##      Pepsi     9   16    25
+##     Toyota     9    2    11
+##      Total   176   71   247</code></pre>
+<pre class="r"><code>youtube %&gt;% 
+  janitor::tabyl(brand, celebrity) %&gt;% 
+  janitor::adorn_totals(c(&quot;row&quot;, &quot;col&quot;)) %&gt;% 
+  janitor::adorn_percentages(&quot;row&quot;) %&gt;% 
+  janitor::adorn_pct_formatting()
+##      brand  FALSE  TRUE  Total
+##  Bud Light  73.0% 27.0% 100.0%
+##  Budweiser  88.4% 11.6% 100.0%
+##  Coca-Cola  71.4% 28.6% 100.0%
+##    Doritos  84.0% 16.0% 100.0%
+##    E-Trade 100.0%  0.0% 100.0%
+##    Hynudai  72.7% 27.3% 100.0%
+##        Kia  46.2% 53.8% 100.0%
+##        NFL  27.3% 72.7% 100.0%
+##      Pepsi  36.0% 64.0% 100.0%
+##     Toyota  81.8% 18.2% 100.0%
+##      Total  71.3% 28.7% 100.0%</code></pre>
+<pre class="r"><code>#janitor::</code></pre>
 </div>
 <div id="inspectdf" class="section level2">
 <h2>inspectdf</h2>
@@ -1158,7 +1131,7 @@ quartíl = q1 e 3º = q3), decis e percentis.</li>
 amplitude interquartil (IQR)</li>
 <li>Medidas de Dispersão (relativa): coeficiente de variação (CV)</li>
 <li>Medidas de Forma: curtose e assimetria</li>
-<li>Medidas de dependência: covariância (cov) e correlação (usualmente r
+<li>Medidas de Dependência: covariância (cov) e correlação (usualmente r
 ou ρ)</li>
 </ul>
 <p>E para discutir melhor estes grupos, vamos considerar as colunas
@@ -1729,6 +1702,12 @@ exemplo. E são estes os temas que veremos na sequência.</p>
 dados. Bibliotecas como: <code>visdat</code>, <code>naniar</code>,
 <code>DataExplorer</code>, entre tantas outras. Que tal explorar um
 pouco estes pacotes?</p></li>
+<li><p>Discutimos sobre distribuições empíricas utilizando o exemplo
+dado na <a href="http://www.feat.engineering/visualizations-for-numeric-data-exploring-train-ridership-data.html">Seção
+4.2.1 do livro Feature Engineering and Selection: A Practical Approach
+for Predictive Models</a>. Neste mesmo capítulo são dados outros
+exemplos excelentes sobre como podemos tirar <em>insights</em> a partir
+da avaliação da distribuição dos dados.</p></li>
 <li><p>E em relação às distribuições de frequências, você já ouviu falar
 da distribuição Normal (Gaussiana)? Ou talvez da distribuição Poisson?
 Exponencial? Já refletiu sobre o porquê estudamos tantas distribuições?
@@ -1738,9 +1717,6 @@ considerando as características que foram citadas sobre a caracterização
 de distribuições, alguma das distribuições apresentadas teriam
 conclusões parecidas em termos de: concentração, dispersão, outliers e
 forma.</p></li>
-<li><p>Por fim gostaria de deixar uma provocação: ao longo do texto
-comentamos que a mediana e o intervalo interquartil são medidas pouco
-impactadas pela presença de outliers.Por quê?</p></li>
 </ul>
 </div>
 

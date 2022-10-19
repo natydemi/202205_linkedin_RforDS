@@ -56,8 +56,6 @@ youtube %>% glimpse()
 
 
 
-
-
 # Bibliotecas para EDA
 
 Vamos iniciar fazendo uso de pacotes que nos ajudam a entender as principais características dos dados:
@@ -70,7 +68,7 @@ O pacote `janitor`, algo como `faxineiro` em inglês, disponibiliza algumas fun�
 - `janitor::get_dupes()` para a identificação de linhas duplicadas; e
 - `janitor::round_half_up()` para arredondar resultados numéricos.
 
-Ah, tem uma função MUITO legal, `janitor::clean_names()` que limpa o nome das colunas — facilmente uma das minha top5 funções preferidas. Para a base do SuperBow ela não se faz necessária, visto que os nomes da coluna já estão em um ótimo formato. Mas mais para frente passaremos por um exemplo em que esta função será super útil. Apenas para ilustrar o seu uso, segue uma aplicação desta função considerando uma das suas possíveis variações (via alteração do parâmetro `case`), para a modição do estilo das colunas : 
+Ah, tem uma função MUITO legal, `janitor::clean_names()` que limpa o nome das colunas — facilmente uma das minha top5 funções preferidas. Para a base do Super Bowl ela não se faz necessária, visto que os nomes da coluna já estão em um ótimo formato. Mas mais para frente passaremos por um exemplo em que esta função será super útil. Apenas para ilustrar o seu uso, segue uma aplicação desta função considerando uma das suas possíveis variações (via alteração do parâmetro `case`), para a modição do estilo das colunas : 
   
 ```{r}
 #janitor::
@@ -80,7 +78,7 @@ youtube %>% janitor::clean_names(case = "upper_camel") %>%  glimpse()
 Este pacote também nos possibilita criar tabelas de frequência rapidamente:
 
 ```{r}
-youtube %>% janitor::tabyl(year) 
+youtube %>% janitor::tabyl(brand) 
 ```
 
 E mais, deixar a tabela em um formato bonitinho :)
@@ -96,9 +94,22 @@ Essa mesma função funciona também para visualizar duas variáveis de modo com
 
 ```{r}
 youtube %>% 
-  janitor::tabyl(year, brand) %>%  
+  janitor::tabyl(brand, celebrity) %>%  
   janitor::adorn_totals(c("row", "col")) 
 ```
+
+```{r}
+youtube %>% 
+  janitor::tabyl(brand, celebrity) %>% 
+  janitor::adorn_totals(c("row", "col")) %>% 
+  janitor::adorn_percentages("row") %>% 
+  janitor::adorn_pct_formatting()
+
+```
+```{r}
+#janitor::
+```
+
 
 ## inspectdf
 
@@ -165,7 +176,7 @@ Aqui temos a essência do que se trata a estatística descritiva: resumir dados.
 - Medidas de Dispersão (absoluta): variância (σ²), desvio padrão (σ) e amplitude interquartil (IQR)
 - Medidas de Dispersão (relativa): coeficiente de variação (CV)
 - Medidas de Forma: curtose e assimetria
-- Medidas de dependência: covariância (cov) e correlação (usualmente r ou ρ)
+- Medidas de Dependência: covariância (cov) e correlação (usualmente r ou ρ)
 
 
 E para discutir melhor estes grupos, vamos considerar as colunas numéricas da base de comerciais do Super Bowl:
@@ -333,9 +344,9 @@ Até lá ;)
 
 - No R você irá encontrar dezenas de pacotes com o objetivo de "facilitar" a sua visão, particularmente para a exploração descritiva de dados. Bibliotecas como: `visdat`, `naniar`, `DataExplorer`, entre tantas outras. Que tal explorar um pouco estes pacotes?
 
+- Discutimos sobre distribuições empíricas utilizando o exemplo dado na [Seção 4.2.1 do livro Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/visualizations-for-numeric-data-exploring-train-ridership-data.html). Neste mesmo capítulo são dados outros exemplos excelentes sobre como podemos tirar *insights* a partir da avaliação da distribuição dos dados.
+
 - E em relação às distribuições de frequências, você já ouviu falar da distribuição Normal (Gaussiana)? Ou talvez da distribuição Poisson? Exponencial? Já refletiu sobre o porquê estudamos tantas distribuições? Para te ajudar a elaborar a resposta, avalie este 
 [Aplicativo Shiny para explorar distribuições de probabilidade](https://antoinesoetewey.shinyapps.io/statistics-101/), e responda: considerando as características que foram citadas sobre a caracterização de distribuições, alguma das distribuições apresentadas teriam conclusões parecidas em termos de: concentração, dispersão, outliers e forma.
-
-- Por fim gostaria de deixar uma provocação: ao longo do texto comentamos que a mediana e o intervalo interquartil são medidas pouco impactadas pela presença de outliers.Por quê?
 
 
