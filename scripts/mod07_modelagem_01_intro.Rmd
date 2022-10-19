@@ -14,57 +14,70 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 library(tidyverse)
 ```
 
-Modelos são simplificações da realidade, algo que nós, humanos, naturalmente fazemos, mas nem sempre de maneira transparente, estruturada, e/ou em escala. E são estes os ganhos! 
+Após um entendimento mais profundo sobre os dados, seu comportamento, natureza e especificidades, podemos passar para a próxima fase: Modelagem. Quando temos os dados prontos e as perguntas bem especificadas, podemos utilizar um modelo para respondê-las e começar a gerar valor. Mas, o que é um modelo?
+
+Modelos são simplificações da realidade. Uma descrição que considera apenas seus aspectos mais importantes de forma a permitir que um determinado evento seja analisado, entendido e generalizado. Perceba que isso é algo que nós, seres humanos, fazemos naturalmente, pois nos permite navegar de forma mais simples e fluída no mundo cada vez mais complexo que nos cerca. Porém, em geral fazemos isso de forma intuitiva e inconsciente. Em nosso rotina do dia a dia isso é mais do que suficiente, mas quando precisamos tomar decisões de alto impacto ou explicar problemas complexos isso pode ser insuficiente. Quando utilizamos técnicas estatísticas para modelar a realidade nos tornamos capazes de garantir, até certo ponto, que nosso modelo seja feito de forma estruturada, transparente, consciente, reprodutível e, em mutios casos, escalável. São ganhos que não podemos desprezar!
 
 
+# Lógica por trás 
 
-Existem muitos algoritmos e modelos importantes para ciencia de dados, de 
+É mais simples que parece, pois conforme comentado, não é nada assim tão diferente do que fazemos no nosso dia a dia: **aprendemos a partir da frequência de ocorrência de determinados acontecimentos, da relação entre diferentes situações e da generalização das experiências**. Se você pede um café com leite e um pão na chapa na lanchonete da esquina todos os dias pela manhã, a pessoa que faz o atendimento casualmente pode passar a perguntar: “o de sempre?”. Se você sai de casa com um pandeiro, é razoável que ao encontrar com um colega, este possa associar que você toca este instrumento. Ou mesmo ao vermos um grupo de torcedores ou torcedoras uniformizados, por mais que um integrante não esteja com a roupa do time, ainda assim inferimos que aquela pessoa também torça para o mesmo time. E por que isso? Pois aprendemos com repetições, fazemos associações, e inferimos comportamentos por similaridade.   
+A questão é que nós não somos capazes de processar todas as informações a que temos acesso, tampouco ponderamos a importância de cada evento de forma estruturada. Em contraponto, o aprendizado de máquina possibilita justamente a identificação de padrões complexos e o processamento de diferentes fontes de informação, permitindo uma maior transparência em relação a tomada de decisão. 
 
-Veremos aqui alguns dos mais usuais/recorrentes para que você possa iniciar a sua carreira nesta área. Mas antes vamos comentar sobre alguns dor principais termos da área, pois os nomes e definições tendem a ser confusos.
+# Tipos de Modelos
+
+Em ciência de dados existem muitos modelos e algoritmos importantes. Que são selecionados, escolhidos e testados de acordo com a natureza do problema que estamos tentando modelar e, também, do objetivo que queremos alcançar. Num primeiro nível podemos pensar em duas formas de separar as técnicas de modelagem:
+
+- Quanto a natureza dos dado podemos pensar em modelos **Supervisionados** e **Não Supervisionados**.
+
+Modelos Supervisionados são aqueles em que existe uma pergunta clara a ser respondida, como "Qual é o valor de aluguel de uma casa?" ou "Esse e-mail é spam ou não?". Já os Modelos Não supervisionados não tem uma pergunta fechada, mas buscam organizar dos dados de maneira que seja possível tirar conclusões práticas. Eles podem ser usados, por exemplo, para segmentação de clientes. 
+
+- Quanto ao objetivo, num nível inicial, podemos dividir em duas classes: Modelos **Inferencias** e **Preditivos**. 
+
+No primeiro caso, os modelos inferenciais, o que buscamos é ententer o *porquê* e o *como* de algo, por exemplo, podemos tentar entender porque o produto A passou a vender mais do que um outro produto B ou então analisar uma base de dados para entener qual é a melhor oferta de produtos para um segmento específico de clientes. Já os modelos preditivos buscam através identificar padrões que permitam *prever* resultados futuros ou desconhecidos. Podem ser usados para prever o valor de aluguel de uma casa, a previsão do tempo ou o resultado de exames médicos.
+
+Caso essa divisão entre modelos Supervisionados e Não Supervisionados, ou Inferenciais e Preditivos, não esteja muito clara, não se preocupe, esse será o tema de boa parte dessa seção. Ao longo das próximas seções veremos exemplos, aplicações e conheceremos os modelos mais utilizados em Ciência de Dados para que você seja capaz de iniciar a sua carreira na área. Antes, porém, vamos passar por alguns conceitos importantes para o restante de nossa jornada.
 
 
-* IA
-* modelagem estatística 
-* aprendizagem de máquina
+# Modelagem Estatística e Aprendizado de Máquina
 
-modelagem == aprendizado? Em termos práticos acredito que sim, culturalmente, não. Pois se por um lado é usual ver a aplicação de ambos os termos de forma intercambiável, é comum também que profissionais com determinadas formações utilizem mais um termo do que o outro, isto em decorrência das diferenças culturais de cada área, e das diferentes ideias que cada domínio prioriza ao falar de análise de dados. No caso da aprendizagem de máquina, termo vindo da Inteligência Artificial, e, portanto, mais frequente entre profissionais com viés computacional, têm-se como um dos principais focos a aprendizagem de regras nos dados conhecidos visando a aplicação de tais experiências em novos dados, ou seja, um foco preditivo. Ao passo que modelagem, palavra mais comum no universo da estatística, existe a intenção de garantir conclusões sobre a população a partir das amostras disponíveis, e, portanto, uma preocupação maior em modelar o fenômeno, isto é, um enfoque inferencial. Porém, apesar destas diferenças, o fato de muitas tecnicas serem comuns às duas abordagens, além da afinidade entre os objetivos, justifica o uso dos termos de forma permutável.
+Vamos comentar sobre alguns termos fundamentais da área, pois de partida, vários nomes e definições podem ser bastante confusos. É importante que você esteja confortável com eles para seguir com mais confiança para os próximos tópicos.
+
+
+- Inteligência Artificial (IA)
+
+Em sua origem Inteligência Artificial (IA) é uma campo da Ciência da Computação que busca desenvolver formas de tornar os computadores e sistemas mais inteligentes, dando a eles a habilidade de realizar tarefas como um ser humano. Coisas relativamente simples para seres humanos, como reconhecer objetos, escrever e compreender textos e caminhar ou dirigir são extremamente difíceis para computadores e estiveram fora do alcance por muito tempo. Ao longo do tempo cientistas utilizaram várias estratégias para desenvolver máquinas mais inteligentes com variados graus de sucesso. Hoje a abordagem de maior sucesso é o que chamamos de Aprendizado de Máquina (Machine Learning, em inglês) 
+
+- Aprendizado de Máquina (Machine Learning)
+
+Aprendizado de Máquina é uma subcampo de IA que tenta fazer com que as máquinas aprendam de forma muito parecida com os seres humanos. Para isso são utilizados algoritmos específicos, fórmulas e programas, e bases de dados. Juntos esses dois ingredientes irão permitir que o computador extraia padrões e regras que poderão ser utilizadas em contextos e desafios parecidos no futuro.
+
+- Modelagem Estatística
+
+Modelagem Estatística é um método de aproximação matemática do mundo. Ela nada mais é do processo de aplicar várias técnicas estatísticas a uma base de dados de forma que, ao final, seja construido um modelo matemático. Esse modelo irá nos permitir compreender melhor os fenômenos em que temos interesse e tirar conclusões sobre suas causas, bem como entender as relações entre as variáveis disponíveis.
+
+** Modelagem e Aprendizado de Máquina são a mesma coisa?**
+
+Em termos práticos acredito que sim, culturalmente, não. Pois se por um lado é usual ver a aplicação de ambos os termos de forma intercambiável, é comum também que profissionais com determinadas formações utilizem mais um termo do que o outro, isto em decorrência das diferenças culturais de cada área, e das diferentes ideias que cada domínio prioriza ao falar de análise de dados. 
+
+No caso da aprendizagem de máquina, que como vimos é um termo vindo da Inteligência Artificial, e, portanto, mais frequente entre profissionais com viés computacional, têm-se como um dos principais focos a aprendizagem de regras nos dados conhecidos visando a aplicação de tais experiências em novos dados, ou seja, um foco preditivo.
+
+Ao passo que modelagem, palavra mais comum no universo da estatística, existe a intenção de garantir conclusões sobre a população a partir das amostras disponíveis, e, portanto, uma preocupação maior em modelar o fenômeno, isto é, um enfoque inferencial. Porém, apesar destas diferenças, o fato de muitas tecnicas serem comuns às duas abordagens, além da afinidade entre os objetivos, justifica o uso dos termos de forma permutável.
 
 P.S.: principal ref para essas ideias: https://lnkd.in/dVDaawt9
 
 Dito tudo isto, como este capitulo esta dividido: teremos este módulo dividido da seguinte forma um primeiro momento em que discutiremos modelagem segundo a perspectiva de machine learning, particularmente em relação aos algoritmos supervisionados e não supervisionados, seguido de uma discussão mais voltada à inferência e modelagem estatística
 
 
-
-
 # Exemplos de aplicações
-
-
-# Lógica por trás 
-
-É mais simples que parece, pois conforme comentado, não é nada assim tão diferente do que fazemos no nosso dia a dia, por exemplo: XXX
-
-A questão é que 
-
-Após um entendimento mais profundo sobre os dados, seu comportamento, natureza e especificidades, podemos passar para a fase de modelagem. Assim, tendo as perguntas bem especificadas, podemos utilizar um modelo para respondê-las. 
-
-
-# Possibilidades de abordagem
-
-## Inferência vs. Predição
-
-
-artigo
-
-
-## Algoritmos de ML
-
-
-
 
 
 # Refs
 
-o An introduction, e o AME
+Aprendizado de Máquina: uma abordagem estatística (AME): http://www.rizbicki.ufscar.br/AME.pdf
+Statistical Modeling: The Two Cultures: https://lnkd.in/dVDaawt9
+An Introduction to Statistical Learning: https://hastie.su.domains/ISLR2/ISLRv2_website.pdf
+
 
 
 
