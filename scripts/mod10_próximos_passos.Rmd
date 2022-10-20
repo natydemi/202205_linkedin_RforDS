@@ -30,10 +30,10 @@ Dito isto, vamos lá!
     -   newsletters são uma boa também, a minha preferida é a [Data Elixir](https://dataelixir.com/)
     -   explorar a página [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/), mesmo que para rever algum pacote que eu já conheça -- mas que talvez só com a minha maturidade atual é que vou identificar uma função que irá mudar a minha vida.
 
-Por fim procure construir um mapa mental dos tópicos que você for tendo conhecimento. A priori você não precisa dominar tudo, mas ter uma noção do que se trata, e ter noção em que contexto que aquilo pode ser útil, é mais que suficiente (e recomendado!).
+Por fim, procure construir um mapa mental dos tópicos que você for tendo conhecimento. A priori, você não precisa dominar tudo, mas ter uma noção do que se trata, e ter noção sobre em que contexto aquilo pode ser útil, é mais que suficiente (e recomendado!).
 
 
-não deixe de compartilhar compartilha a sua jornada de evolução na linguagem!
+Não deixe de compartilhar a sua jornada de evolução na linguagem!
 
 
 # Dicas de pacotes R
@@ -62,13 +62,13 @@ não deixe de compartilhar compartilha a sua jornada de evolução na linguagem!
 
 # Bibliografia recomendada
 
-Além dos links e bibliotecas comentados, é importante lembrar que o R oferece muitas formas de completar uma mesma atividade. Sendo assim, é sempre recomendado que procure opções para otimizar sua rotina. Seguem abaixo as algumas referências open-source para o aprofundamento dos pontos aqui listados:
+Além dos links e bibliotecas comentados, é importante lembrar que o R oferece muitas formas de completar uma mesma atividade. Sendo assim, é sempre recomendado que procure opções para otimizar sua rotina. Seguem abaixo algumas referências open-source para o aprofundamento dos pontos aqui listados:
 
  - [R for data science](https://r4ds.had.co.nz/introduction.html)
  - [Curso-R](https://www.curso-r.com/material/)
  - [Rstudio Education](https://education.rstudio.com/)
 
 
-A grande dica é: Você pode evoluir como generalista ou como especialista, o importante é não querer dominar 100% de tudo (isto é utópico) tampouco subjulgar áreas diferentes da sua (isto é prepotencia). Trabalhe com versões de você mesma (o), para que amanhã saiba um pouco mais do que pensava que sabia ontem. No mais, vai lá e brilha! :)
+A grande dica é: Você pode evoluir como generalista ou como especialista, o importante é não querer dominar 100% de tudo (isto é utopia) tampouco subjulgar áreas diferentes da sua (isto é prepotencia). Trabalhe com versões de você mesma (o), para que amanhã saiba um pouco mais do que pensava que sabia ontem. No mais, vai lá e brilha! :)
 
 # Até a próxima! 😘
