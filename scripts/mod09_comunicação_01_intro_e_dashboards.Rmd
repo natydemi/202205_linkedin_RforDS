@@ -106,22 +106,23 @@ Como uma última sugestão, que tal instalar o pacote `Shiny` e ir em `File >  N
 
 Aqui vou listar algumas formas mais de otimizar a comunicação via o ferramental oferecido pelos pacotes do R: 
 
-- criar um blog online - blogdown ou distill
-- montar currículo - pagedown
-- construir slides - xaringan
-- criar layouts para os slides - 
-- disponibilizar um livro - bookdown
-- produzir tutoriais interativos - learnr
-- produzir artigos cientificos - rticles
+- criar um blog online - [blogdown](https://github.com/rstudio/blogdown) ou [distill](https://github.com/rstudio/distill)
+- montar currículo - [pagedown](https://github.com/rstudio/pagedown)
+- construir slides - [xaringan](https://github.com/yihui/xaringan)
+- disponibilizar um livro - [bookdown](https://github.com/rstudio/bookdown)
+- produzir tutoriais interativos - [learnr](https://github.com/rstudio/learnr)
+- produzir artigos cientificos - [rticles](https://github.com/rstudio/rticles)
 
 
-E não para por aí, tem pacote até para ajudar a mexer no pacote office (officedown)! Além de uma série de bibliotecas voltadas a estilização dos materiais, como: `prettydoc`, `shinydashboard`, e `xaringanthemer`, por exemplo.
+E não para por aí, tem pacote até para ajudar a mexer no pacote office (officedown)! Além de uma série de bibliotecas voltadas a estilização dos materiais, como: [`prettydoc`](https://github.com/yixuan/prettydoc), [`shinydashboard`](https://github.com/rstudio/shinydashboard), e [`xaringanthemer`](https://github.com/gadenbuie/xaringanthemer), por exemplo.
 
 
 # Considerações Finais
 
+Aqui foram apresentadas ferramentas para otimizar a comunicação, mas existem conceitos ainda mais relevantes para garantir isto: uso de estruturas narrativas, identificação de público para adaptação de mensagem, pratica da escuta ativa. Vou deixar aqui como dico um livro que me ajudou muito a ter um olhar mais estruturado sobre comunicação: `TED Talks: O guia oficial do TED para falar em público`, do Chris Anderson – spoiler: uma das discussões é sobre como explicar conceitos complexos para públicos leigos. Ou ainda, como uma referência mais focada em dados: `Effective Data Storytelling`, do Brent Dykes – que compartilha excelentes conteúdos no [LinkedIn](https://www.linkedin.com/in/brentdykes/) inclusive.
 
-Aqui foram apresentadas ferramentas para facilitar a comunicação, mas existem recursos tão importantes quanto: entender sobre estruturas narrativas, identificar o seu público e adaptar a mensagem, praticar a escuta ativa para se comunicar melhor! Vou deixar aqui como dico um livro que me ajudou muito a ter um olhar mais estruturado sobre comunicação: `TED Talks: O guia oficial do TED para falar em público`, do Chris Anderson – spoiler: uma das discussões é sobre como explicar conceitos complexos para públicos leigos, super útil né? :)
+
+Até a próxima ;)
 
 
 
