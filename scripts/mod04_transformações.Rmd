@@ -51,13 +51,34 @@ Aqui, vamos aprender como lidar com as colunas do seu conjunto de dados, seja se
 
 ### `select()`
 
-Como falamos acima, o `select()` seleciona as colunas a partir do nome ou da posição da variável desejada. Junto com as funções de apoio no [tidyselect](https://tidyselect.r-lib.org/reference/index.html), você também consegue indicar a(s) coluna(s) desejada(s) de forma dinâmica, como: `starts_with()`, `matches()`, `num_range()`, e `everything()`.
+Como falamos acima, o `select()` seleciona as colunas a partir do nome ou da posição da variável desejada. Junto com as funções de apoio no [tidyselect](https://tidyselect.r-lib.org/reference/index.html), você também consegue indicar a(s) coluna(s) desejada(s) de forma dinâmica, como: `starts_with()`, `matches()`, `num_range()`, `everything()` e `where()`, ou ainda adicionando o simbolo menos `-` antes da coluna que gostaríamos de excluir
 
 ```{r}
 voos %>% 
-  select(contains("horario")) %>% 
+  #select(atraso_saida) %>% 
+  #select(-atraso_saida) %>% 
+  #select(contains("horario")) %>% 
+  select(where(is.character)) %>% 
   head()
 ```
+
+
+#### `pull()`
+
+Algumas funções do R não aceitam tibbles como entrada (esta que é a estrutura de saída da função `select()`), como alternativa podemos trabalhar com a função `pull()`. Compare:
+
+```{r}
+voos %>% select(companhia_aerea) %>% class()
+voos %>% select(companhia_aerea) %>% is.vector()
+```
+
+```{r}
+voos %>% pull(companhia_aerea) %>% class()
+voos %>% pull(companhia_aerea) %>% is.vector()
+```
+
+Lembrando que quando estamos trabalhando com um vetor atômico, o retorno da função `class()` se limita ao tipo de classe, e não a estrutura em si. 
+
 
 ### `arrange()`
 
@@ -66,7 +87,7 @@ Com `arrange()`, conseguimos ordenar as linhas de acordo com a(s) coluna(s) espe
 ```{r}
 voos %>% 
   select(companhia_aerea, voo, atraso_chegada) %>%
-  arrange(atraso_chegada) %>% 
+  arrange(-atraso_chegada) %>% 
   head()
 ```
 
@@ -75,9 +96,25 @@ No exemplo acima, o voo VX 193 chegou com 86 minutos adiantado, uau! E abaixo, o
 ```{r}
 voos %>% 
   select(companhia_aerea, voo, atraso_chegada) %>%
-  arrange(desc(atraso_chegada)) %>% 
+  arrange(desc(companhia_aerea)) %>% 
   head()
 ```
+
+### `relocate()`
+
+Como última função deste bloco, e me vejo obrigada a dizer, uma das funções que mais uso, é a `relocate()`, esta função faz algo simples: muda a coluna de posição. Contudo isto é feito de maneira muito prática:
+
+```{r}
+voos%>%
+  select(1:3) %>% 
+  glimpse() %>% 
+  relocate(dia, .before = ano) %>% 
+  glimpse() %>% 
+  relocate(ano, .after = last_col()) %>% 
+  glimpse()
+```
+
+
 
 ## Manuseando linhas
 
@@ -91,7 +128,9 @@ Por exemplo, para descobrir os voos que atrasaram na saída (vamos dizer com mai
 
 ```{r}
 voos %>%
-  #filter(atraso_saida >= 15 | atraso_chegada <= 0) %>%
+  #filter(atraso_saida == 0) %>% 
+  #filter(atraso_saida >= 15 & atraso_chegada <= 0) %>%
+  #filter(atraso_saida == c(15, 16)) %>% 
   filter(atraso_saida %in% c(15, 16)) %>% 
   select(companhia_aerea, voo, atraso_saida, atraso_chegada)
 ```
@@ -104,51 +143,84 @@ Alguns até chegaram adiantados! :O
 
 ### `slice()`
 
-    
-Parecido com o `filter()`, o `slice()` seleciona linhas, mas em vez de operadores lógicos, usa suas posições ordinais, como um índice. Também tem variações como o `slice_max()` que retorna as linhas referentes aos valores máximos da coluna; ou `slice_sample()`, que retorna uma amostra aleatória conforme os parâmetros especificados.
+Parecido com o `filter()`, o `slice()` seleciona linhas, mas em vez de operadores lógicos, usa suas posições ordinais, como um índice. Neste exemplo, selecionamos os 3 voos com maior atraso de saída: 
 
-Neste exemplo, selecionamos os 3 voos com maior atraso de saída.
-    
 ```{r}
 voos %>%
-  #slice_max(atraso_saida, n = 3) %>%
-  slice_sample(prop = 0.05) %>% 
+  slice(1:3) %>% 
   select(companhia_aerea, voo, atraso_saida, atraso_chegada)
 ```
 
-### `sample_n()`
+Esta função possui variações importantes, como:
 
-Enquanto o `slice()` seleciona posições ordinais, o `sample_n()` resulta uma amostra aleatória considerando o número de elementos desejados. Já o `sample_frac()` seleciona a amostra considerando a proporção desejada baseado no número de observações.
 
-No exemplo, pegamos 10 voos aleatórios, e depois selecionamos 50% dessa amostra, ou seja, 5 voos.
+- `slice_max()` ou `slice_min()` que retorna as linhas referentes aos valores máximos/mínimos da coluna, com base no parâmetro `n` específicado (quantidade de linhas desejadas); 
+
+- `slice_sample()`, que resulta uma amostra aleatória considerando ou o número de elementos desejados (parâmetro `n`), ou a proporção desejada (parâmetro `n`).
+
+- `slice_head()` e `slice_tail()` equivalentes às funções `head()` e `tail()`, tendo, contudo, algumas funcionalidades a mais, como a possibilidade de trabalhar não apenas com a quantidade de linhas desejadas (parâmetro `n`), mas também com a proporção (parâmetro `prop`) – assim como as demais funções do slice
+    
+```{r}
+voos %>% 
+  slice_max(atraso_saida, n = 20) %>%
+  slice_sample(prop = 0.5) %>% 
+  slice_sample(n = 5) %>% 
+  slice_head(prop = 0.6)
+```
+
+
+Note que ao trabalhar com amostras, tratam-se de amostras aleatórias, o que significa que a cada vez que você rodar o código, o resultado poderá ser alterado. Para replicar os mesmos resultados, é importante que uma semente seja específicada, compare:
 
 ```{r}
 voos %>% 
-  slice_sample( n = 10) %>% 
-  sample_frac(0.5) %>%
-  select(companhia_aerea, voo, atraso_saida, atraso_chegada)
+  slice_sample(n = 3) 
+
+voos %>% 
+  slice_sample(n = 3) 
+
+set.seed(2)
+voos %>% 
+  slice_sample(n = 3)
+
+set.seed(2)
+voos %>% 
+  slice_sample(n = 3) 
+
 ```
 
-> As funções `sample_frac()` e `sample_n()` estão sendo substituidas pela função `slice_sample()`, no caso, com os parâmetros `slice_sample(frac = *)` e `slice_sample(n = *)`, respectivamente.
+
+
+> Originalmente, para trabalharmos com amostras, tinhamos as funções: `sample_frac()` e `sample_n()`, porém estas foram substituidas pela função `slice_sample()`.
 
 
 ### `distinct()`
 
 Bem útil quando você tem linhas iguais, o `distinct()` remove valores duplicados para as colunas selecionadas. Se você não selecionar nenhuma coluna, ele olha para o conjunto de dados inteiro, mas você pode tanto especificar uma coluna quanto combinar várias.
 
-Neste último caso, ele considera os valores únicos combinados para essas colunas, e não elas individualmente. Neste exemplo, selecionamos as origens e destinos únicos para cada companhia aérea.
+```{r}
+voos %>%
+  distinct(companhia_aerea)
+```
+
+Neste último caso, ele considera os valores únicos combinados para essas colunas, e não elas individualmente. Neste exemplo, selecionamos as origens para cada companhia aérea.
 
 ```{r}
 voos %>%
-  distinct(companhia_aerea, origem, destino) %>% 
+  distinct(companhia_aerea, origem) %>% 
   arrange(companhia_aerea)
 ```
 
-Sem o `distinct()`, e apenas com o `select()`, teríamos um número maior de linhas, e a maioria, duplicada.
+```{r}
+voos %>% nrow() 
+
+voos %>% distinct() %>% nrow() 
+```
+
+Sem o `distinct()`, e apenas com o `select()`, teríamos um número maior de linhas, e a maioria, duplicadas.
 
 ```{r}
 voos %>%
-  select(companhia_aerea, origem, destino)
+  select(companhia_aerea, origem)
 ```
 
 ## Alterando e criando novas colunas
@@ -205,8 +277,9 @@ Por fim, a serem combinados com as transformações, existem os verbos `group_by
 
 ```{r}
 voos %>% 
-  summarise(mean_distancia = mean(distancia),
-            mediana_distancia = quantile(distancia, 0.5)) %>% 
+  summarise(
+    mediana_distancia = median(distancia),
+    atraso_saida = median(atraso_saida, na.rm = T)) %>% 
   mutate(mediana_distancia_km = mediana_distancia*1.609)
 ```
 Em média, os voos deste conjunto percorrem 872 milhas, ou seja, 1.400 km, entre aeroportos.
@@ -218,23 +291,25 @@ Mais poderoso quando combinado com o `summarise()`, o `group_by()` cria grupos a
 ```{r}
 voos %>%
   group_by(mes) %>% 
-  summarise(tempo_voo_mean = mean(tempo_voo, na.rm = T))  %>% 
-  arrange(-tempo_voo_mean)
+  summarise(distancia_media = mean(distancia),
+            atraso_saida = mean(atraso_saida, na.rm = T)) %>% 
+  arrange(-atraso_saida)
 ``` 
 
 
 Aqui, vamos usar o conjunto `voos_atrasados`, criado a partir do `mutate()`, para identificar os status de horário mais comuns no nosso conjunto de dados.
 
 
-
 ```{r}
 voos_atrasados %>%
   group_by(status_horario) %>% # agrupando pelo status de horário
-  summarise(n = n(),
-            mean_distancia = mean(distancia)) # o número de linhas em cada grupo
+  summarise(n = n(), # o número de linhas em cada grupo
+            mean_distancia = mean(distancia)) %>% 
+  ungroup() %>% 
+  mutate(p = n /sum(n))
 ``` 
 
-Ou seja, vemos que é mais comum os voos chegarem antes do horário programado (194 mil ocorrências) do que depois (127 mil). Poucos chegam exatamente no horário previsto (5 mil).
+Ou seja, vemos que é mais comum os voos chegarem antes do horário programado do que depois. E poucos chegam exatamente no horário previsto.
 
 
 

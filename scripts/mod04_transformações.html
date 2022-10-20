@@ -441,19 +441,41 @@ partir do nome ou da posição da variável desejada. Junto com as funções
 de apoio no <a href="https://tidyselect.r-lib.org/reference/index.html">tidyselect</a>,
 você também consegue indicar a(s) coluna(s) desejada(s) de forma
 dinâmica, como: <code>starts_with()</code>, <code>matches()</code>,
-<code>num_range()</code>, e <code>everything()</code>.</p>
+<code>num_range()</code>, <code>everything()</code> e
+<code>where()</code>, ou ainda adicionando o simbolo menos
+<code>-</code> antes da coluna que gostaríamos de excluir</p>
 <pre class="r"><code>voos %&gt;% 
-  select(contains(&quot;horario&quot;)) %&gt;% 
+  #select(atraso_saida) %&gt;% 
+  #select(-atraso_saida) %&gt;% 
+  #select(contains(&quot;horario&quot;)) %&gt;% 
+  select(where(is.character)) %&gt;% 
   head()
-## # A tibble: 6 × 2
-##   horario_saida horario_chegada
-##           &lt;int&gt;           &lt;int&gt;
-## 1           517             830
-## 2           533             850
-## 3           542             923
-## 4           544            1004
-## 5           554             812
-## 6           554             740</code></pre>
+## # A tibble: 6 × 4
+##   companhia_aerea cauda  origem destino
+##   &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  
+## 1 UA              N14228 EWR    IAH    
+## 2 UA              N24211 LGA    IAH    
+## 3 AA              N619AA JFK    MIA    
+## 4 B6              N804JB JFK    BQN    
+## 5 DL              N668DN LGA    ATL    
+## 6 UA              N39463 EWR    ORD</code></pre>
+<div id="pull" class="section level4">
+<h4><code>pull()</code></h4>
+<p>Algumas funções do R não aceitam tibbles como entrada (esta que é a
+estrutura de saída da função <code>select()</code>), como alternativa
+podemos trabalhar com a função <code>pull()</code>. Compare:</p>
+<pre class="r"><code>voos %&gt;% select(companhia_aerea) %&gt;% class()
+## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;
+voos %&gt;% select(companhia_aerea) %&gt;% is.vector()
+## [1] FALSE</code></pre>
+<pre class="r"><code>voos %&gt;% pull(companhia_aerea) %&gt;% class()
+## [1] &quot;character&quot;
+voos %&gt;% pull(companhia_aerea) %&gt;% is.vector()
+## [1] TRUE</code></pre>
+<p>Lembrando que quando estamos trabalhando com um vetor atômico, o
+retorno da função <code>class()</code> se limita ao tipo de classe, e
+não a estrutura em si.</p>
+</div>
 </div>
 <div id="arrange" class="section level3">
 <h3><code>arrange()</code></h3>
@@ -463,23 +485,7 @@ na ordem crescente, mas é possível inverter para a ordem com a função
 <code>desc()</code>.</p>
 <pre class="r"><code>voos %&gt;% 
   select(companhia_aerea, voo, atraso_chegada) %&gt;%
-  arrange(atraso_chegada) %&gt;% 
-  head()
-## # A tibble: 6 × 3
-##   companhia_aerea   voo atraso_chegada
-##   &lt;chr&gt;           &lt;int&gt;          &lt;dbl&gt;
-## 1 VX                193            -86
-## 2 VX                 11            -79
-## 3 UA                612            -75
-## 4 AA                269            -75
-## 5 AS                  7            -74
-## 6 UA               1628            -73</code></pre>
-<p>No exemplo acima, o voo VX 193 chegou com 86 minutos adiantado, uau!
-E abaixo, o voo HA 51, chegou com 1.272 minutos (ou 21 horas) de atraso.
-Imagina o desespero dos parentes…</p>
-<pre class="r"><code>voos %&gt;% 
-  select(companhia_aerea, voo, atraso_chegada) %&gt;%
-  arrange(desc(atraso_chegada)) %&gt;% 
+  arrange(-atraso_chegada) %&gt;% 
   head()
 ## # A tibble: 6 × 3
 ##   companhia_aerea   voo atraso_chegada
@@ -490,6 +496,51 @@ Imagina o desespero dos parentes…</p>
 ## 4 AA                177           1007
 ## 5 MQ               3075            989
 ## 6 DL               2391            931</code></pre>
+<p>No exemplo acima, o voo VX 193 chegou com 86 minutos adiantado, uau!
+E abaixo, o voo HA 51, chegou com 1.272 minutos (ou 21 horas) de atraso.
+Imagina o desespero dos parentes…</p>
+<pre class="r"><code>voos %&gt;% 
+  select(companhia_aerea, voo, atraso_chegada) %&gt;%
+  arrange(desc(companhia_aerea)) %&gt;% 
+  head()
+## # A tibble: 6 × 3
+##   companhia_aerea   voo atraso_chegada
+##   &lt;chr&gt;           &lt;int&gt;          &lt;dbl&gt;
+## 1 YV               3750            -20
+## 2 YV               3771            -23
+## 3 YV               3750            -13
+## 4 YV               3771             75
+## 5 YV               3771            -15
+## 6 YV               3750            -18</code></pre>
+</div>
+<div id="relocate" class="section level3">
+<h3><code>relocate()</code></h3>
+<p>Como última função deste bloco, e me vejo obrigada a dizer, uma das
+funções que mais uso, é a <code>relocate()</code>, esta função faz algo
+simples: muda a coluna de posição. Contudo isto é feito de maneira muito
+prática:</p>
+<pre class="r"><code>voos%&gt;%
+  select(1:3) %&gt;% 
+  glimpse() %&gt;% 
+  relocate(dia, .before = ano) %&gt;% 
+  glimpse() %&gt;% 
+  relocate(ano, .after = last_col()) %&gt;% 
+  glimpse()
+## Rows: 336,776
+## Columns: 3
+## $ ano &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, …
+## $ mes &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ dia &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## Rows: 336,776
+## Columns: 3
+## $ dia &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ ano &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, …
+## $ mes &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## Rows: 336,776
+## Columns: 3
+## $ dia &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ mes &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ ano &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, …</code></pre>
 </div>
 </div>
 <div id="manuseando-linhas" class="section level2">
@@ -509,7 +560,9 @@ e <code>between()</code>.</p>
 dizer com mais de 15 min de atraso), mas não atrasaram na chegada, é só
 escrever:</p>
 <pre class="r"><code>voos %&gt;%
-  #filter(atraso_saida &gt;= 15 | atraso_chegada &lt;= 0) %&gt;%
+  #filter(atraso_saida == 0) %&gt;% 
+  #filter(atraso_saida &gt;= 15 &amp; atraso_chegada &lt;= 0) %&gt;%
+  #filter(atraso_saida == c(15, 16)) %&gt;% 
   filter(atraso_saida %in% c(15, 16)) %&gt;% 
   select(companhia_aerea, voo, atraso_saida, atraso_chegada)
 ## # A tibble: 4,225 × 4
@@ -545,42 +598,116 @@ post do stackoverflow</a> você encontrará mais detalhes sobre ;)</p>
 <h3><code>slice()</code></h3>
 <p>Parecido com o <code>filter()</code>, o <code>slice()</code>
 seleciona linhas, mas em vez de operadores lógicos, usa suas posições
-ordinais, como um índice. Também tem variações como o
-<code>slice_max()</code> que retorna as linhas referentes aos valores
-máximos da coluna; ou <code>slice_sample()</code>, que retorna uma
-amostra aleatória conforme os parâmetros especificados.</p>
-<p>Neste exemplo, selecionamos os 3 voos com maior atraso de saída.</p>
+ordinais, como um índice. Neste exemplo, selecionamos os 3 voos com
+maior atraso de saída:</p>
 <pre class="r"><code>voos %&gt;%
-  slice_max(atraso_saida, n = 3) %&gt;%
+  slice(1:3) %&gt;% 
   select(companhia_aerea, voo, atraso_saida, atraso_chegada)
 ## # A tibble: 3 × 4
 ##   companhia_aerea   voo atraso_saida atraso_chegada
 ##   &lt;chr&gt;           &lt;int&gt;        &lt;dbl&gt;          &lt;dbl&gt;
-## 1 HA                 51         1301           1272
-## 2 MQ               3535         1137           1127
-## 3 MQ               3695         1126           1109</code></pre>
-</div>
-<div id="sample_n" class="section level3">
-<h3><code>sample_n()</code></h3>
-<p>Enquanto o <code>slice()</code> seleciona posições ordinais, o
-<code>sample_n()</code> resulta uma amostra aleatória considerando o
-número de elementos desejados. Já o <code>sample_frac()</code> seleciona
-a amostra considerando a proporção desejada baseado no número de
-observações.</p>
-<p>No exemplo, pegamos 10 voos aleatórios, e depois selecionamos 50%
-dessa amostra, ou seja, 5 voos.</p>
+## 1 UA               1545            2             11
+## 2 UA               1714            4             20
+## 3 AA               1141            2             33</code></pre>
+<p>Esta função possui variações importantes, como:</p>
+<ul>
+<li><p><code>slice_max()</code> ou <code>slice_min()</code> que retorna
+as linhas referentes aos valores máximos/mínimos da coluna, com base no
+parâmetro <code>n</code> específicado (quantidade de linhas
+desejadas);</p></li>
+<li><p><code>slice_sample()</code>, que resulta uma amostra aleatória
+considerando ou o número de elementos desejados (parâmetro
+<code>n</code>), ou a proporção desejada (parâmetro
+<code>n</code>).</p></li>
+<li><p><code>slice_head()</code> e <code>slice_tail()</code>
+equivalentes às funções <code>head()</code> e <code>tail()</code>,
+tendo, contudo, algumas funcionalidades a mais, como a possibilidade de
+trabalhar não apenas com a quantidade de linhas desejadas (parâmetro
+<code>n</code>), mas também com a proporção (parâmetro
+<code>prop</code>) – assim como as demais funções do slice</p></li>
+</ul>
 <pre class="r"><code>voos %&gt;% 
-  sample_n(10) %&gt;% 
-  sample_frac(0.5) %&gt;%
-  select(companhia_aerea, voo, atraso_saida, atraso_chegada)
-## # A tibble: 5 × 4
-##   companhia_aerea   voo atraso_saida atraso_chegada
-##   &lt;chr&gt;           &lt;int&gt;        &lt;dbl&gt;          &lt;dbl&gt;
-## 1 EV               4175           -8            -10
-## 2 EV               5451          -10            -15
-## 3 UA               1154            1            -20
-## 4 B6               2280           -9             -5
-## 5 AA                 85           -5            -33</code></pre>
+  slice_max(atraso_saida, n = 20) %&gt;%
+  slice_sample(prop = 0.5) %&gt;% 
+  slice_sample(n = 5) %&gt;% 
+  slice_head(prop = 0.6)
+## # A tibble: 3 × 19
+##     ano   mes   dia horario_sa…¹ saida…² atras…³ horar…⁴ chega…⁵ atras…⁶ compa…⁷
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+## 1  2013     2    10         2243     830     853     100    1106     834 F9     
+## 2  2013     7    22          845    1600    1005    1044    1815     989 MQ     
+## 3  2013     6    15         1432    1935    1137    1607    2120    1127 MQ     
+## # … with 9 more variables: voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
+## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
+## #   data_hora &lt;dttm&gt;, and abbreviated variable names ¹​horario_saida,
+## #   ²​saida_programada, ³​atraso_saida, ⁴​horario_chegada, ⁵​chegada_prevista,
+## #   ⁶​atraso_chegada, ⁷​companhia_aerea</code></pre>
+<p>Note que ao trabalhar com amostras, tratam-se de amostras aleatórias,
+o que significa que a cada vez que você rodar o código, o resultado
+poderá ser alterado. Para replicar os mesmos resultados, é importante
+que uma semente seja específicada, compare:</p>
+<pre class="r"><code>voos %&gt;% 
+  slice_sample(n = 3) 
+## # A tibble: 3 × 19
+##     ano   mes   dia horario_sa…¹ saida…² atras…³ horar…⁴ chega…⁵ atras…⁶ compa…⁷
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+## 1  2013     8    12         1931    1940      -9    2134    2150     -16 EV     
+## 2  2013     8    20         1339    1338       1    1603    1634     -31 B6     
+## 3  2013    10    13         2112    2010      62    2346    2248      58 EV     
+## # … with 9 more variables: voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
+## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
+## #   data_hora &lt;dttm&gt;, and abbreviated variable names ¹​horario_saida,
+## #   ²​saida_programada, ³​atraso_saida, ⁴​horario_chegada, ⁵​chegada_prevista,
+## #   ⁶​atraso_chegada, ⁷​companhia_aerea
+
+voos %&gt;% 
+  slice_sample(n = 3) 
+## # A tibble: 3 × 19
+##     ano   mes   dia horario_sa…¹ saida…² atras…³ horar…⁴ chega…⁵ atras…⁶ compa…⁷
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+## 1  2013     2    27         1126    1000      86    1248    1134      74 UA     
+## 2  2013     6    22         1026    1025       1    1140    1205     -25 AA     
+## 3  2013     6     4         1636    1630       6    1957    1959      -2 VX     
+## # … with 9 more variables: voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
+## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
+## #   data_hora &lt;dttm&gt;, and abbreviated variable names ¹​horario_saida,
+## #   ²​saida_programada, ³​atraso_saida, ⁴​horario_chegada, ⁵​chegada_prevista,
+## #   ⁶​atraso_chegada, ⁷​companhia_aerea
+
+set.seed(2)
+voos %&gt;% 
+  slice_sample(n = 3)
+## # A tibble: 3 × 19
+##     ano   mes   dia horario_sa…¹ saida…² atras…³ horar…⁴ chega…⁵ atras…⁶ compa…⁷
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+## 1  2013     8    30         1609    1615      -6    1757    1831     -34 DL     
+## 2  2013    10    30         1556    1545      11    1745    1751      -6 US     
+## 3  2013    10    10         1528    1529      -1    1648    1700     -12 UA     
+## # … with 9 more variables: voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
+## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
+## #   data_hora &lt;dttm&gt;, and abbreviated variable names ¹​horario_saida,
+## #   ²​saida_programada, ³​atraso_saida, ⁴​horario_chegada, ⁵​chegada_prevista,
+## #   ⁶​atraso_chegada, ⁷​companhia_aerea
+
+set.seed(2)
+voos %&gt;% 
+  slice_sample(n = 3) 
+## # A tibble: 3 × 19
+##     ano   mes   dia horario_sa…¹ saida…² atras…³ horar…⁴ chega…⁵ atras…⁶ compa…⁷
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+## 1  2013     8    30         1609    1615      -6    1757    1831     -34 DL     
+## 2  2013    10    30         1556    1545      11    1745    1751      -6 US     
+## 3  2013    10    10         1528    1529      -1    1648    1700     -12 UA     
+## # … with 9 more variables: voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
+## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
+## #   data_hora &lt;dttm&gt;, and abbreviated variable names ¹​horario_saida,
+## #   ²​saida_programada, ³​atraso_saida, ⁴​horario_chegada, ⁵​chegada_prevista,
+## #   ⁶​atraso_chegada, ⁷​companhia_aerea</code></pre>
+<blockquote>
+<p>Originalmente, para trabalharmos com amostras, tinhamos as funções:
+<code>sample_frac()</code> e <code>sample_n()</code>, porém estas foram
+substituidas pela função <code>slice_sample()</code>.</p>
+</blockquote>
 </div>
 <div id="distinct" class="section level3">
 <h3><code>distinct()</code></h3>
@@ -588,42 +715,69 @@ dessa amostra, ou seja, 5 voos.</p>
 remove valores duplicados para as colunas selecionadas. Se você não
 selecionar nenhuma coluna, ele olha para o conjunto de dados inteiro,
 mas você pode tanto especificar uma coluna quanto combinar várias.</p>
+<pre class="r"><code>voos %&gt;%
+  distinct(companhia_aerea)
+## # A tibble: 16 × 1
+##    companhia_aerea
+##    &lt;chr&gt;          
+##  1 UA             
+##  2 AA             
+##  3 B6             
+##  4 DL             
+##  5 EV             
+##  6 MQ             
+##  7 US             
+##  8 WN             
+##  9 VX             
+## 10 FL             
+## 11 AS             
+## 12 9E             
+## 13 F9             
+## 14 HA             
+## 15 YV             
+## 16 OO</code></pre>
 <p>Neste último caso, ele considera os valores únicos combinados para
 essas colunas, e não elas individualmente. Neste exemplo, selecionamos
-as origens e destinos únicos para cada companhia aérea.</p>
+as origens para cada companhia aérea.</p>
 <pre class="r"><code>voos %&gt;%
-  distinct(companhia_aerea, origem, destino)
-## # A tibble: 439 × 3
-##    companhia_aerea origem destino
-##    &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;  
-##  1 UA              EWR    IAH    
-##  2 UA              LGA    IAH    
-##  3 AA              JFK    MIA    
-##  4 B6              JFK    BQN    
-##  5 DL              LGA    ATL    
-##  6 UA              EWR    ORD    
-##  7 B6              EWR    FLL    
-##  8 EV              LGA    IAD    
-##  9 B6              JFK    MCO    
-## 10 AA              LGA    ORD    
-## # … with 429 more rows</code></pre>
+  distinct(companhia_aerea, origem) %&gt;% 
+  arrange(companhia_aerea)
+## # A tibble: 35 × 2
+##    companhia_aerea origem
+##    &lt;chr&gt;           &lt;chr&gt; 
+##  1 9E              JFK   
+##  2 9E              EWR   
+##  3 9E              LGA   
+##  4 AA              JFK   
+##  5 AA              LGA   
+##  6 AA              EWR   
+##  7 AS              EWR   
+##  8 B6              JFK   
+##  9 B6              EWR   
+## 10 B6              LGA   
+## # … with 25 more rows</code></pre>
+<pre class="r"><code>voos %&gt;% nrow() 
+## [1] 336776
+
+voos %&gt;% distinct() %&gt;% nrow() 
+## [1] 336776</code></pre>
 <p>Sem o <code>distinct()</code>, e apenas com o <code>select()</code>,
-teríamos um número maior de linhas, e a maioria, duplicada.</p>
+teríamos um número maior de linhas, e a maioria, duplicadas.</p>
 <pre class="r"><code>voos %&gt;%
-  select(companhia_aerea, origem, destino)
-## # A tibble: 336,776 × 3
-##    companhia_aerea origem destino
-##    &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;  
-##  1 UA              EWR    IAH    
-##  2 UA              LGA    IAH    
-##  3 AA              JFK    MIA    
-##  4 B6              JFK    BQN    
-##  5 DL              LGA    ATL    
-##  6 UA              EWR    ORD    
-##  7 B6              EWR    FLL    
-##  8 EV              LGA    IAD    
-##  9 B6              JFK    MCO    
-## 10 AA              LGA    ORD    
+  select(companhia_aerea, origem)
+## # A tibble: 336,776 × 2
+##    companhia_aerea origem
+##    &lt;chr&gt;           &lt;chr&gt; 
+##  1 UA              EWR   
+##  2 UA              LGA   
+##  3 AA              JFK   
+##  4 B6              JFK   
+##  5 DL              LGA   
+##  6 UA              EWR   
+##  7 B6              EWR   
+##  8 EV              LGA   
+##  9 B6              JFK   
+## 10 AA              LGA   
 ## # … with 336,766 more rows</code></pre>
 </div>
 </div>
@@ -638,6 +792,32 @@ do que já conseguimos especificar.</p>
 <code>mutate()</code> consegue criar novas colunas e modificar variáveis
 já existentes, inclusive alterando a classe dos dados quando necessário
 (de texto para número, por exemplo).</p>
+<pre class="r"><code>voos %&gt;% 
+  mutate(atraso_saida = as.integer(atraso_saida)) %&gt;% 
+  mutate(atraso_saida_index = ifelse(atraso_saida &gt; 0 , TRUE, FALSE)) %&gt;% 
+  glimpse()
+## Rows: 336,776
+## Columns: 20
+## $ ano                &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 201…
+## $ mes                &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ dia                &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ horario_saida      &lt;int&gt; 517, 533, 542, 544, 554, 554, 555, 557, 557, 558, 5…
+## $ saida_programada   &lt;int&gt; 515, 529, 540, 545, 600, 558, 600, 600, 600, 600, 6…
+## $ atraso_saida       &lt;int&gt; 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, -2…
+## $ horario_chegada    &lt;int&gt; 830, 850, 923, 1004, 812, 740, 913, 709, 838, 753, …
+## $ chegada_prevista   &lt;int&gt; 819, 830, 850, 1022, 837, 728, 854, 723, 846, 745, …
+## $ atraso_chegada     &lt;dbl&gt; 11, 20, 33, -18, -25, 12, 19, -14, -8, 8, -2, -3, 7…
+## $ companhia_aerea    &lt;chr&gt; &quot;UA&quot;, &quot;UA&quot;, &quot;AA&quot;, &quot;B6&quot;, &quot;DL&quot;, &quot;UA&quot;, &quot;B6&quot;, &quot;EV&quot;, &quot;B6…
+## $ voo                &lt;int&gt; 1545, 1714, 1141, 725, 461, 1696, 507, 5708, 79, 30…
+## $ cauda              &lt;chr&gt; &quot;N14228&quot;, &quot;N24211&quot;, &quot;N619AA&quot;, &quot;N804JB&quot;, &quot;N668DN&quot;, &quot;…
+## $ origem             &lt;chr&gt; &quot;EWR&quot;, &quot;LGA&quot;, &quot;JFK&quot;, &quot;JFK&quot;, &quot;LGA&quot;, &quot;EWR&quot;, &quot;EWR&quot;, &quot;L…
+## $ destino            &lt;chr&gt; &quot;IAH&quot;, &quot;IAH&quot;, &quot;MIA&quot;, &quot;BQN&quot;, &quot;ATL&quot;, &quot;ORD&quot;, &quot;FLL&quot;, &quot;I…
+## $ tempo_voo          &lt;dbl&gt; 227, 227, 160, 183, 116, 150, 158, 53, 140, 138, 14…
+## $ distancia          &lt;dbl&gt; 1400, 1416, 1089, 1576, 762, 719, 1065, 229, 944, 7…
+## $ hora               &lt;dbl&gt; 5, 5, 5, 5, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, …
+## $ minuto             &lt;dbl&gt; 15, 29, 40, 45, 0, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5…
+## $ data_hora          &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-…
+## $ atraso_saida_index &lt;lgl&gt; TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE…</code></pre>
 <p>Ele pode ser combinado com outras funções igualmente eficientes como
 <code>ifelse()</code> e <code>case_when()</code>, que possibilitam
 regras mais elaboradas na transformação dos dados.</p>
@@ -710,11 +890,14 @@ o conjunto de dados em linhas menores. Aqui o que cada um faz:</p>
 de sua escolha. Por exemplo, aqui conseguimos saber a mediana da
 distância entre os aeroportos nos voos do nosso conjunto de dados.</p>
 <pre class="r"><code>voos %&gt;% 
-  summarise(mediana_distancia = median(distancia))
-## # A tibble: 1 × 1
-##   mediana_distancia
-##               &lt;dbl&gt;
-## 1               872</code></pre>
+  summarise(
+    mediana_distancia = median(distancia),
+    atraso_saida = median(atraso_saida, na.rm = T)) %&gt;% 
+  mutate(mediana_distancia_km = mediana_distancia*1.609)
+## # A tibble: 1 × 3
+##   mediana_distancia atraso_saida mediana_distancia_km
+##               &lt;dbl&gt;        &lt;dbl&gt;                &lt;dbl&gt;
+## 1               872           -2                1403.</code></pre>
 <p>Em média, os voos deste conjunto percorrem 872 milhas, ou seja, 1.400
 km, entre aeroportos.</p>
 </div>
@@ -724,22 +907,45 @@ km, entre aeroportos.</p>
 <code>group_by()</code> cria grupos a partir das colunas especificadas
 para manipular o conjunto de dados. Ele não modifica a tabela em si, mas
 combina os resultados de acordo com as operações escritas.</p>
+<pre class="r"><code>voos %&gt;%
+  group_by(mes) %&gt;% 
+  summarise(distancia_media = mean(distancia),
+            atraso_saida = mean(atraso_saida, na.rm = T)) %&gt;% 
+  arrange(-atraso_saida)
+## # A tibble: 12 × 3
+##      mes distancia_media atraso_saida
+##    &lt;int&gt;           &lt;dbl&gt;        &lt;dbl&gt;
+##  1     7           1059.        21.7 
+##  2     6           1057.        20.8 
+##  3    12           1065.        16.6 
+##  4     4           1039.        13.9 
+##  5     3           1012.        13.2 
+##  6     5           1041.        13.0 
+##  7     8           1062.        12.6 
+##  8     2           1001.        10.8 
+##  9     1           1007.        10.0 
+## 10     9           1041.         6.72
+## 11    10           1039.         6.24
+## 12    11           1050.         5.44</code></pre>
 <p>Aqui, vamos usar o conjunto <code>voos_atrasados</code>, criado a
 partir do <code>mutate()</code>, para identificar os status de horário
 mais comuns no nosso conjunto de dados.</p>
 <pre class="r"><code>voos_atrasados %&gt;%
   group_by(status_horario) %&gt;% # agrupando pelo status de horário
-  summarise(n = n()) # o número de linhas em cada grupo
-## # A tibble: 4 × 2
-##   status_horario      n
-##   &lt;chr&gt;           &lt;int&gt;
-## 1 Adiantado      194766
-## 2 Atrasado       127888
-## 3 Indefinido       8713
-## 4 No horário       5409</code></pre>
+  summarise(n = n(), # o número de linhas em cada grupo
+            mean_distancia = mean(distancia)) %&gt;% 
+  ungroup() %&gt;% 
+  mutate(p = n /sum(n))
+## # A tibble: 4 × 4
+##   status_horario      n mean_distancia      p
+##   &lt;chr&gt;           &lt;int&gt;          &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Adiantado      194766          1068. 0.578 
+## 2 Atrasado       127888          1019. 0.380 
+## 3 Indefinido       8713           704. 0.0259
+## 4 No horário       5409          1040. 0.0161</code></pre>
 <p>Ou seja, vemos que é mais comum os voos chegarem antes do horário
-programado (194 mil ocorrências) do que depois (127 mil). Poucos chegam
-exatamente no horário previsto (5 mil).</p>
+programado do que depois. E poucos chegam exatamente no horário
+previsto.</p>
 </div>
 </div>
 </div>
