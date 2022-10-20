@@ -326,23 +326,43 @@ Isso significa fazer os ajustes necessários para garantir que os dados estejam 
 
 A biblioteca `tidyr` tem o propósito de ajudar neste processo, caso o conjunto de dados ainda não esteja neste formato.
 
-## Reformatando os dados
+## Reformatando os dados (pivotagem)
 
-Como a base de dados `voos` já está no formato tidy, vamos trabalhar com outro dataset, no caso, o conjunto `billboard`, que lista os rankings de música na Billboard top 100 durante o ano 2000.
+### De linhas para colunas: `pivot_wider()`
+
+Como o nome descreve, o `pivot_wider()` "gira" o eixo dos dados para o formato largo – em detrimento de um formato comprido. Um exemplo simples:
+
+
+```{r}
+fish_encounters
+
+fish_encounters %>% 
+  pivot_wider(names_from = station, values_from = seen)
+```
+
+
+```{r}
+us_rent_income
+
+us_rent_income %>%
+  pivot_wider(names_from = variable,
+              values_from = c(estimate, moe))
+```
+
+
+### De colunas para linhas: `pivot_longer()`
+
+Como o inverso da função anterior, o `pivot_longer()` transforma o conjunto de dados em um formato comprido, ou seja, onde o número de linhas aumenta e o de colunas diminui.
+
+Para isso, ele usa as colunas especificadas na coluna parâmetro `cols`, e seus valores na coluna parâmetro `value`. Assim conseguimos tratar os dados como nos exemplos acima, seja filtrando, escrevendo novas variáveis, transformando as já existentes, e mais.
+
+Considere o conjunto `billboard`, que lista os rankings de músicas na Billboard top 100 durante o ano 2000.
 
 ```{r}
 data("billboard")
 
 billboard %>% head()
 ```
-
-### De colunas para linhas 
-
-#### `pivot_longer()`
-
-Como o nome descreve, o `pivot_longer()` "gira" o eixo dos dados para o formato longo (ou comprido), normalmente dentro do padrão `tidy`.
-
-Para isso, ele usa as colunas especificadas na coluna parâmetro `key`, e seus valores na coluna parâmetro `value`. Assim conseguimos tratar os dados como nos exemplos acima, seja filtrando, escrevendo novas variáveis, transformando as já existentes, e mais.
 
 Como vemos no conjunto `billboard`, as colunas começando com `wk` definem qual a posição da música no ranking a partir da semana que entraram e vai desde o 1 até o 76. No entanto, não é possível rodar a maioria das funções que aprendemos acima porque a informação das semanas está em **colunas** e não em **linhas**.
 
@@ -352,7 +372,6 @@ Para resolver isso, precisamos transformá-la em formato longo, criando a variá
 billboard_longer <- billboard %>% 
   pivot_longer(cols = starts_with("wk"),
                names_to = "week",
-               names_prefix = "wk",
                values_to = "rank",
                values_drop_na = TRUE)
 
@@ -369,20 +388,15 @@ billboard_longer %>%
   arrange(desc(n_week)) 
 ```
 
-### De linhas para colunas
+#### voltando para o formato longo:
 
-#### `pivot_wider()`
-
-Como o inverso da função anterior, `pivot_wider()` transforma o conjunto de dados em um formato largo, ou seja, onde o número de colunas aumenta e o de linhas diminui.
-
-Ao contrário da `pivot_longer()`, que recebe texto como input, esta recebe as colunas para transformar em formato longo. Vamos reverter o que acabamos de fazer, voltando a `week` para nome de coluna e o `rank` como valor de cada uma, usando o prefixo `wk`.
 
 ```{r}
 billboard_longer %>%
-  pivot_wider(names_from = week, values_from = rank,
+  pivot_wider(names_from = week, 
+              values_from = rank,
               names_prefix = "wk")
 ```
-
 
 ## Separando e combinando colunas  
 
@@ -449,9 +463,7 @@ voos_completo %>%
   arrange(desc(maior_atraso))
 ```
 
-## Lidando com múltiplas colunas
-
-### `across()`
+## Lidando com múltiplas colunas (`across()`)
 
 Até aqui, o tidyverse tem como ponto forte a legibilidade do código, se aproximando com a maneira com que pensamos as ações que gostariamos de aplicar nos dados. Nos recursos avançados, nem sempre isso é regra, mas a perda é compensada pela produtividade do código.
 
@@ -462,6 +474,7 @@ Ou seja, em vez de tirar a média de `atraso_saida` e `atraso_chegada` de forma 
 
 ```{r}
 voos %>% 
+    #summarise(across(starts_with("atraso_"), ~mean(.x, na.rm = T)))
     summarise(across(starts_with("atraso_"), mean, na.rm = T))
 ```
 
@@ -473,6 +486,12 @@ voos %>%
             atraso_chegada = mean(atraso_chegada, na.rm = T))
 ```
 
+```{r}
+voos %>% 
+    #summarise(across(starts_with("atraso_"), ~mean(.x, na.rm = T)))
+    summarise(across(where(is.numeric), mean, na.rm = T))
+```
+
 Pode parecer algo simples, mas quando você tem:
 - muitas colunas que respeitam determinada regra – seja de nomenclatura, tipo de dados, ou qualquer característica que possa ser transcrita segundo um padrão lógico; ou
 
@@ -482,7 +501,7 @@ a função `across()` torna-se um recurso extremamente útil para garantir não 
 
 
 
-## Programação funcional (`purrr`)
+## Programação funcional (`purrr::`)
 
 Como ferramenta transversal a todas as etapas do workflow de análise, temos a programação funcional, que permite a criação de códigos mais concisos. 
 
@@ -493,8 +512,7 @@ Abaixo, exemplificamos a identificação de quais colunas no conjunto `voos` tem
 ```{r}
 voos %>% 
     map(is.na) %>%
-    map(sum) %>%
-    glimpse()
+    map(sum) 
 ```
 
 Visto as bibliotecas que já estudamos, a aplicação da função `is.na()` não se apresenta tão crítica. Contudo é importante lembrar que você pode construir funções no R – conforme apresentado no módulo 1 do curso, inclusive como uma maneira de automatizar uma sequencia de ações – uma função que identifica as observações faltantes e endereça a solução a depender de determinadas características dos dados, por exemplos (comentaremos mais sobre este tipo de situação). De modo que ter os recursos do pacote `purrr` disponíveis, irá garantir que tais ajustes sejam aplicáveis considerando uma semântica mais simples.
