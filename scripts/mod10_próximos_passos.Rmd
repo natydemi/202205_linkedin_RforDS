@@ -9,77 +9,66 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Intro
 
-Aqui iremos listar algumas das possibilidades de próximos passos, e gostaria de frisar a palavra POSSIBILIDADES. Pois Ciência de Dados é muito amplo e multidiciplinar, não se abale com a quantidade de conteúdo, aqui recomendo você se inspirar em filosofos como Socrates "só sei que nada sei", ou ainda Paulo Freire "Ninguém ignora tudo. Ninguém sabe tudo. Todos nós sabemos alguma coisa. Todos nós ignoramos alguma coisa. Por isso aprendemos sempre". 
+Aqui iremos listar algumas das possibilidades de próximos passos, e gostaria de frisar a palavra POSSIBILIDADES. Pois a Ciência de Dados é muito ampla e multidiciplinar, então não se abale com a quantidade de conteúdos, aqui recomendo você se inspirar em filosofos como Socrates "só sei que nada sei", ou ainda Paulo Freire "Ninguém ignora tudo. Ninguém sabe tudo. Todos nós sabemos alguma coisa. Todos nós ignoramos alguma coisa. Por isso aprendemos sempre".
 
-Dito isto, vamos lá.
+Dito isto, vamos lá!
+
 
 
 # Dicas para evoluir em Ciência de Dados
 
-Siga pessoas legais (twitter [#rstats], linkedin [[eu!](https://www.linkedin.com/in/nathaliademetrio/)], instagram , etc), participe de grupos e eventos (existe muita coisa gratuita bacana por aí), e crie o hábito de procurar saber o que está acontecendo de novo – nesta área, sempre tem coisa nova. Para esta última eu gosto de algumas newsletters (a minha preferida é a [Data Elixir](https://dataelixir.com/)), e de vez em quando dar uma olhada em listas de "pacotes mais legais do ano", ou mesmo abrir a página [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/) e ver se tem algum pacote novo, ou mesmo rever algum pacote que eu já conheça, mas que talvez só com a minha maturidade atual é que vou identificar alguma função bacana.  
+-   siga pessoas legais
+    - twitter [#rstats]
+    - linkedin [{espero que eu! rs}](https://www.linkedin.com/in/nathaliademetrio/)]
+    
+-   participe de grupos e eventos, existe muita coisa gratuita bacana por aí, como
+    - [SatRday](https://satrdays.org/) 
+    - [tidytuesday](https://www.tidytuesday.com/) 
+  
+-   crie o hábito de procurar saber o que está acontecendo de novo -- nesta área, sempre tem coisa nova
+    -   o [rstudio::conf()](https://rstudio.com/conference/) é uma ótima pedida
+    -   newsletters são uma boa também, a minha preferida é a [Data Elixir](https://dataelixir.com/)
+    -   explorar a página [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/), mesmo que para rever algum pacote que eu já conheça -- mas que talvez só com a minha maturidade atual é que vou identificar uma função que irá mudar a minha vida.
 
-Por fim procure construir um mapa mental dos tópicos que você for tendo conhecimento. A priori você não precisa dominar tudo, mas saber no que aquilo pode ser útil .Além dos conteúdos citados no fim da parte de modelagem, seguem
+Por fim procure construir um mapa mental dos tópicos que você for tendo conhecimento. A priori você não precisa dominar tudo, mas ter uma noção do que se trata, e ter noção em que contexto que aquilo pode ser útil, é mais que suficiente (e recomendado!).
 
 
+não deixe de compartilhar compartilha a sua jornada de evolução na linguagem!
 
-Você pode evoluir como especialista, ou como generalista
 
-a área é multidiciplinar, as pessoas não
-
-# Dicas de pacotes R  
+# Dicas de pacotes R
 
 ### Ponto de Partida
 
-- tidyverse
-- tidymodels
+-   tidyverse
+-   tidymodels
+
+### Próximos passos
+
+-   interoperabilidade R e Python: [reticulate](https://rstudio.github.io/reticulate/)
+-   criar mapas: [leaflet](https://rstudio.github.io/leaflet/)
+-   gerar memes: [memer](https://github.com/sctyner/memer)
+-   trabalhar com deep learning e dados não estruturados: [torch](https://torch.mlverse.org/packages/)
+-   automatizar processos: [usethis](https://github.com/r-lib/usethis)
+-   modelagem bayesiana: [tidybayes](http://mjskay.github.io/tidybayes/)
+-   analisar texto: [tidytext](https://github.com/juliasilge/tidytext)
+-   desenvolver pacotes: [devtools](https://github.com/r-lib/devtools)
+-   gerenciar dependências do R: [renv](https://rstudio.github.io/renv/articles/renv.html)
+-   criar pipelines: [target](https://cran.r-project.org/web/packages/targets/vignettes/overview.html)
+-   testar códigos: [testthat](https://testthat.r-lib.org/)
+-   deploy de modelos: [vetiver](https://github.com/rstudio/vetiver-r)
+-   gerenciar e analisar dados com o Hadoop: [RHadoop](https://github.com/RevolutionAnalytics/RHadoop/wiki)
 
 
-### Próximos passos 
+# Bibliografia recomendada
 
-- interoperabilidade R e Python: [reticulate](https://rstudio.github.io/reticulate/) 
-- criar mapas: [leaflet](https://rstudio.github.io/leaflet/)
-- gerar memes: [memer](https://github.com/sctyner/memer)
-- trabalhar com deep learning e dados não estruturados: [torch](https://torch.mlverse.org/packages/)
-- automatizar processos: [usethis](https://github.com/r-lib/usethis)
-- modelagem bayesiana: [tidybayes](http://mjskay.github.io/tidybayes/)
-- analisar texto: [tidytext](https://github.com/juliasilge/tidytext)
-- desenvolver pacotes: [devtools](https://github.com/r-lib/devtools)
-- gerenciar dependências do R: [renv](https://rstudio.github.io/renv/articles/renv.html)
-- criar pipelines: [target](https://cran.r-project.org/web/packages/targets/vignettes/overview.html)
-- testar códigos: [testthat](https://testthat.r-lib.org/)
-- deploy de modelos: [vetiver](https://github.com/rstudio/vetiver-r)
-- gerenciar e analisar dados com o Hadoop: [RHadoop](https://github.com/RevolutionAnalytics/RHadoop/wiki) 
+Além dos links e bibliotecas comentados, é importante lembrar que o R oferece muitas formas de completar uma mesma atividade. Sendo assim, é sempre recomendado que procure opções para otimizar sua rotina. Seguem abaixo as algumas referências open-source para o aprofundamento dos pontos aqui listados:
+
+ - [R for data science](https://r4ds.had.co.nz/introduction.html)
+ - [Curso-R](https://www.curso-r.com/material/)
+ - [Rstudio Education](https://education.rstudio.com/)
 
 
-Quando estava compartilhando essa lista com alguns colegas, comentaram também do pac ``
+A grande dica é: Você pode evoluir como generalista ou como especialista, o importante é não querer dominar 100% de tudo (isto é utópico) tampouco subjulgar áreas diferentes da sua (isto é prepotencia). Trabalhe com versões de você mesma (o), para que amanhã saiba um pouco mais do que pensava que sabia ontem. No mais, vai lá e brilha! :)
 
-
-# Referências
-
-Além das soluções e bibliotecas aqui comentados, é importante lembrar que o R oferece muitas formas de completar uma mesma atividade. Sendo assim, é sempre recomendado que procure opções para otimizar sua rotina. Seguem abaixo as algumas referências open-source para o aprofundamento dos pontos aqui listados:
-
-- R for data science: https://r4ds.had.co.nz/introduction.html
-- Advanced R: http://adv-r.had.co.nz/
-- Hands-On Programming with R: https://rstudio-education.github.io/hopr/
-- Curso-R: https://www.curso-r.com/material/
-- Zen do R - https://lnkd.in/dZG4pb2
-•	Livro que passa por praticamente tudo o que vimos aqui, porem em inglês:
-https://worldpece.org/sites/default/files/datastyle.pdf   
-
-- github - Happy Git and GitHub for the useR: https://happygitwithr.com/index.html
-
-Seguir #rstats nas redes sociais, ou participar de grupos como: R-Ladies, R-Brasil no Telegram, ou ainda se manter ligado em eventos como: ventos
-		○ rstudio::conf(2021) - https://rstudio.com/conference/
-		○ SatRday - https://satrdays.org/ 
-		○ TidyTuesday
-		○ Cheat Sheets RStudio: https://rstudio.com/resources/cheatsheets/
-		○ Rstudio - https://education.rstudio.com/
-
--  kaggle
-- páginas do Rstudio
-- #rstats
-
-A grande dica é: saiba que existe um mundo de coisa para aprender, e que por um lado é ótimo acompanhar páginas e pessoas de referencia na áreas, para seguir ampliando o seu horizonte de possibilidades, mas aplicar os conhecimentos, fazer pesquisas sobre novas maneiras de resolver algum desafio, aumente a sua produtividade!  
- 
- 
-# Até a próxima!
+# Até a próxima! 😘

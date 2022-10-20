@@ -283,13 +283,13 @@ Treinando! Lendo a documentação, replicando visualizações, experimentando se
 
 # Como fazer boas escolhas visuais?
 
-Uma divisão interessante é separar a etapa de **exploração** da etapa de **explanação** (ou apresentação). Ou seja, tratar de maneira diferente quando você está minerando o conjunto de dados, procurando encontrar insights e validar hipóteses, e quando você já chegou em algo que será compartilhado, e deseja comunicar isto para outras pessoas.
+Uma divisão interessante é separar a etapa de **exploração** da etapa de **explanação** (ou apresentação). Ou seja, tratar de maneira diferente quando você está minerando o conjunto de dados, procurando construir percepções, e quando você já chegou em algo que será compartilhado, e deseja comunicar isto para outras pessoas.
 
 Ambas as partes têm sua complexidade: a primeira exige um entendimento exploratório (e muitas vezes estatístico) de como estudar o conjunto de dados de forma visual para encontrar padrões; e a segunda exige uma maturidade comunicativa para utilizar cada elemento visual de forma que ajude a sua audiência a entender o que você descobriu.
 
 ## Exploração: qual gráfico usar? (geom_*)
 
-Como você viu na *cheat sheet* acima, existem diferentes opções de geometria no `ggplot2`, para citar alguns: 
+Assim como as sumarizações estatísticas, as visualizações são visões parciais dos dados, otimizadas segundo algum propósito, implicando, necessariamente, na perda de alguma informação. De modo que é importante ter em mente que: “diferentes níveis de pensamento pedem diferentes níveis de agregação” ou ainda “um gráfico mostra o que aquele gráfico mostra, e nada mais”. Com isto em mente, alterar os tipos de visualização, no contexto do `ggplot`, fazer uso das muitas `geoms_*` ofertadas pelo `ggplot2`, pode ser uma excelente tática ao iniciar um estudo. E como você viu na *Cheat Sheet* acima, existem diferentes opções de geometria no `ggplot2`, para citar algumas: 
 
 - `geom_line`: para linhas definidas por pares (x,y);
 - `geom_abline`: para retas definidas por um intercepto e uma inclinação;
@@ -300,7 +300,8 @@ Como você viu na *cheat sheet* acima, existem diferentes opções de geometria 
 - `geom_density`: para gráficos de densidades;
 - `geom_area`: para gráficos com áreas.
 
-E existem vários outros pacotes que aumentam ou complementam estas funções.
+Além dos vários pacotes que aumentam ou complementam tais funções.
+
 
 O primeiro passo para decidir qual visualização usar é entender como você quer relacionar as variáveis a partir de sua classe, além de ter clareza no que você quer comunicar. Existem duas ferramentas para ampliar o entendimento nestes pontos: a [from Data to Viz](https://www.data-to-viz.com/), que lista gráficos possíveis a partir das variáveis e suas classes; e a [R Graph Gallery](https://r-graph-gallery.com/), que reúne exemplos de gráficos construídos no R.
 
@@ -377,6 +378,23 @@ Aqui, nosso interesse é entender a distribuição da variável `cut` em relaç�
   
 ```
 
+### Organização
+
+Aqui queremos entender sobre a organização dos pinguins nas ilhas do Arquipélago Palmer – esta trata-se de uma base de dados muito utilizada pela comunidade R :)
+
+```{r}
+dados::pinguins %>% 
+  janitor::tabyl(ilha) %>% 
+  ggplot(aes(area = n, fill = n, label = ilha)) + 
+    treemapify::geom_treemap() +
+    treemapify::geom_treemap_text(colour = "white",
+                    place = "centre",
+                    size = 15)
+```
+
+
+
+
 ### Evolução
 
 Por fim segue um exemplo de dados temporais em que, em conjunto com as funções do `tidyr` e `dplyr`, remodelamos a base de dados `economics`, visando obter a visualização das variáveis `psavert` e `uempmed` desde `1990`:
@@ -398,6 +416,7 @@ economics %>%
 ## Explanação: como apresentar? 
 
 Aqui seria uma aula (ou um curso) à parte, temas como: teoria das cores e Proportional Ink Principle (algo como "princípio da tinta proporcional"), nos ajudam a direcionar as escolhas em termos de design. Para iniciar o entendimento no tema, tendo o R como pano de fundo, recomendo a [Parte II "Principles of figure design" do livro Fundamentals of Data Visualization, do Claus O. Wilke ](https://clauswilke.com/dataviz/). E como uma alternativa rápida, para ter um primeiro contato com princípios de design: [essa apresentação do Will Chase sobre o "Glamour of Graphics"](https://www.williamrchase.com/slides/assets/player/KeynoteDHTMLPlayer.html#1).
+
 
 > No mais acompanhar os materiais desenvolvidos semanalmente na [tidytuesday](https://www.tidytuesday.com/), é, sem dúvida, uma das maneiras mais divertidas de evoluir em temas de dataviz :) 
 
