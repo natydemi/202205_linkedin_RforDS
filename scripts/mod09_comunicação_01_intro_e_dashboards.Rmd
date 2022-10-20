@@ -52,7 +52,7 @@ Para próximos passos
 - o site oficial do [rmarkdown.rstudio.com](https://rmarkdown.rstudio.com/docs/articles/rmarkdown.html)– que havia sido comentado no início do curso
 - o livro (R Markdown Cookbook)[https://bookdown.org/yihui/rmarkdown-cookbook/], que apresenta uma série de possibilidades de estilização do .Rmd
 
-No mais recomendo também os materiais desenvolvidos pela [Beatriz Milz](https://beamilz.com/talks/pt/), não apenas por estarem em português, mas pela Bea ser uma das grandes referências brasileiras no tema . Inclusive por lá você vai encontrar conteúdos sobre o [quarto](https://quarto.org/) o pacote que promete ser a nova geração do Rmarkdown – só que mais abrangente, visto ser possível utiliza-lo em outras ferramentas além da RStudio, como a IDE VS Code ou o Jupyter Notebook.
+No mais recomendo também os materiais desenvolvidos pela [Beatriz Milz](https://beamilz.com/talks/pt/), não apenas por estarem em português, mas pela Bea ser uma das grandes referências brasileiras no tema . Inclusive por lá você vai encontrar conteúdos sobre o [quarto](https://quarto.org/) o pacote que promete ser a nova geração do Rmarkdown – só que mais abrangente, visto ser possível utiliza-lo em outras ferramentas além da RStudio, como a IDE VS Code ou o Jupyter Notebook. Deixo uma referência que apresenta alguns pontos interessantes relacionados a esta mudança: ["perguntas sobre o quarto"](https://occasionaldivergences.com/posts/quarto-questions/?utm_campaign=Data_Elixir&utm_source=Data_Elixir_409/)
 
 
 
