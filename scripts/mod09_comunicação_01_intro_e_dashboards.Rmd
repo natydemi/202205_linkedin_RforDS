@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 ```
 
 
-## Comunicação
+# Introdução
 
 Na etapa de comunicação dos dados, o objetivo primário é o alinhamento entre os envolvidos e envolvidas. E tal tarefa tende a ser desafiadora, visto a ciência de dados envolver profissionais com diferentes formações, e, portanto, diferentes perspectivas, linguagens e prioridades. Uma forma interessante de enxergar este desafio da comunicação, é por meio da visão de Churchill Jr. G.A. e Peter, J.P., que definem "a comunicação trata da transmissão de uma mensagem, de um emissor para um receptor, de modo que ambos a entendam da mesma maneira."
 
