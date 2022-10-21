@@ -1590,12 +1590,14 @@ maneira.”</p>
 <p>Neste contexto dispor de ferramentas que tornem esta tarefa mais
 fluída é extremamente importante. De modo que sejam evitados:</p>
 <ul>
-<li><p>ruidos na comunicação, gerados a partir da sobrecarga cognitiva
-desnecessária que apresentar códigos para um público não técnico possa
-causar; ou, em contraponto,</p></li>
-<li><p>a perda de reprodutibilidade do trabalho, ao exportar de
-ferramentas de linguagem de programação cientifica para ferramentas em
-que o trabalho é feito de maneira totalmente manual.</p></li>
+<li><p>dificuldades e ruidos na comunicação: ampliados pela sobrecarga
+cognitiva que o público técnico pode acabar gerando na audiência pelo
+excesso de códigos e conceitos; ou, em contraponto,</p></li>
+<li><p>perda da reprodutibilidade do trabalho: gerado ao exportar os
+resultados de ferramentas de linguagem de programação cientifica para
+ferramentas que facilitam a apresentações, porém manuais, e sem
+integração direta com o ambiente de análise, impossibilitando a
+replicabilidade.</p></li>
 </ul>
 <p>Em outros palavras, ter acesso a ferramentas que ofereçam recursos
 tanto para o desenvolvimento quanto para a devida comunicação dos
@@ -1608,8 +1610,9 @@ ferramentas disponíveis na linguagem R.</p>
 <h1>RMarkdown</h1>
 <p>Apesar de já estarmos trabalhando com o Rmarkdown, exploramos pouco
 os seus recursos. Como é o caso da estilização do cabeçalho (YAML
-header), que possui como possibilidade menu suspeso e dinâmico, por
-exemplo. Ou ainda, os chunks, aqui, oferecem parâmetros como:</p>
+header), que possui como possibilidade menu suspeso e dinâmico por
+exemplo, para mais opções, <a href="https://bookdown.org/yihui/rmarkdown/html-document.html">acesse</a>.
+Ou ainda, os chunks, aqui, oferecem parâmetros como:</p>
 <ul>
 <li>include = FALSE : impede que o código e os resultados apareçam no
 arquivo finalizado, porém o R Markdown executa os códigos internamente,
@@ -1728,10 +1731,10 @@ sobre o quarto”</a></p>
 </div>
 <div id="flexdashboard" class="section level1">
 <h1>Flexdashboard</h1>
-<p>O objetivo do flexdashboard é facilitar a criação de painéis
-interativos para R, usando a mesma lógica do R Markdown, mas tendo como
-estrutura de saída algo mais próximo a um dashboard. Ao instalar esta
-biblioteca, você passará a ter esta opção no menu
+<p>O objetivo do flexdashboard é facilitar a criação de painéis para R,
+usando a mesma lógica do R Markdown, mas tendo como estrutura de saída
+algo mais próximo a um dashboard. Ao instalar esta biblioteca, você
+passará a ter esta opção no menu
 <code>File &gt;  New File &gt; RMarkdown &gt; From Template</code>. Por
 meio dela, com algumas poucas linhas de código de diferença, você tem um
 output amigável para o usuário, e sem grandes desafios em termos de
