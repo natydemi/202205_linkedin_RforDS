@@ -353,63 +353,58 @@ display: none;
 </div>
 
 
-<div id="bibliotecas" class="section level1">
-<h1>Bibliotecas</h1>
-<pre class="r"><code>library(tidyverse)
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6      ✔ purrr   0.3.5 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2 
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-</div>
 <div id="introdução" class="section level1">
 <h1>Introdução</h1>
-<p>Teremos este módulo dividido da seguinte forma: teremos uma breve
-apresentação da modelagem segundo a perspectiva de machine learning,
-particularmente em relação aos algoritmos supervisionados e não
-supervisionados. Seguido de uma rápida apresentação voltada à abordagem
-inferêncial, tendo como enfoque, testes estatísticos.</p>
-<p>Após um estudo mais profundo sobre os dados, seu comportamento e
-especificidades, podemos passar para a fase de Modelagem. Quando temos
-os dados prontos e as perguntas de interesse bem especificadas, podemos
-utilizar um modelo para respondê-las. Mas, o que é um modelo?</p>
-<p>Modelos são simplificações da realidade. Uma descrição construída a
-partir da análise das informações relacionadas a um evento de interesse,
-visando identificar um padrão que generalize tal acontecimento. Perceba
-que isso é algo que nós, seres humanos, fazemos naturalmente –
-descrevemos a realidade ao nosso redor a partir de padrões que
-observamos, e procuramos replicá-los. Porém, em geral fazemos isso de
-forma intuitiva e inconsciente. Em nosso rotina do dia a dia isso é mais
-do que suficiente, mas quando precisamos tomar decisões de alto impacto
-ou explicar problemas complexos precisamos de um ferramental mais
-robusto. Quando utilizamos técnicas para modelar a realidade nos
-tornamos capazes de garantir, até certo ponto, que nosso modelo seja
-feito de forma estruturada, transparente, consciente, reprodutível e, em
-muitos casos, escalável. São ganhos que não podemos desprezar!</p>
+<p>Teremos neste módulo uma breve apresentação sobre o conceito de
+modelagem, seguido de algumas discussões sobre a relação entre áreas
+como: Estatística, Aprendizagem de Máquina e Inteligência Artificial.
+Por fim teremos a lista de algumas referências de bibliotecas e
+bibliografias para que você possa seguir evoluindo no tema ;)</p>
 </div>
-<div id="a-intuição-por-trás-das-técnicas" class="section level1">
-<h1>A intuição por trás das técnicas</h1>
+<div id="modelagem" class="section level1">
+<h1>Modelagem</h1>
+<p>Após um estudo mais profundo sobre os dados, seu comportamento e
+especificidades, podemos passar para a fase de Modelagem. Aqui, com as
+perguntas de interesse bem especificadas, podemos utilizar um modelo
+para respondê-las. Mas, o que é um modelo? Simplificações da realidade.
+Uma descrição construída a partir de padrões da análise das informações
+disponíveis, visando identificar um padrão que generalize um
+acontecimento de interesse. Perceba que isso é algo que nós, seres
+humanos, fazemos naturalmente – descrevemos a realidade ao nosso redor a
+partir de padrões que observamos, e procuramos replicá-los. Porém, em
+geral fazemos isso de forma intuitiva e inconsciente. Em nosso rotina do
+dia a dia isso é mais do que suficiente, mas quando precisamos tomar
+decisões de alto impacto ou explicar problemas complexos precisamos de
+um ferramental mais robusto. Quando utilizamos técnicas para modelar a
+realidade nos tornamos capazes de garantir, até certo ponto, que nosso
+modelo seja feito de forma estruturada, transparente, consciente,
+reprodutível e, em muitos casos, escalável. São ganhos que não podemos
+desprezar!</p>
+<div id="a-intuição-por-trás-das-técnicas" class="section level2">
+<h2>A intuição por trás das técnicas</h2>
 <p>É mais simples que parece, pois conforme comentado, não é nada assim
-tão diferente do que fazemos no nosso dia a dia: <strong>aprendemos a
-partir da frequência de ocorrência de determinados acontecimentos, da
-relação entre diferentes situações e da generalização das
-experiências</strong>:</p>
+tão diferente do que fazemos no nosso dia a dia:</p>
+<blockquote>
+<p><strong>aprendemos a partir da frequência de ocorrência de
+determinados acontecimentos, da relação entre diferentes situações e da
+generalização das experiências</strong>.</p>
+</blockquote>
+<p>Aqui temos alguns exemplos:</p>
 <ul>
 <li><p>Se você pede um café com leite e um pão na chapa na lanchonete da
 esquina todos os dias pela manhã, a pessoa que faz o atendimento
 casualmente pode passar a perguntar: “o de sempre?”;</p></li>
-<li><p>Se você sai de casa com um pandeiro, é razoável que ao encontrar
-com um colega, este possa associar que você toca este instrumento;
-Ou</p></li>
-<li><p>Ao vermos um grupo de torcedores ou torcedoras uniformizados, por
-mais que um integrante não esteja com a roupa do time, ainda assim
-inferimos que aquela pessoa também torça para o mesmo time.</p></li>
+<li><p>Ao sair de casa com um violão, é razoável que ao encontrar com um
+colega, este pessoa associe este objeto ao seu uso: “nossa, não sabia
+que você sabia tocar”; Ou</p></li>
+<li><p>Ao vermos um grupo de torcedoras ou torcedores uniformizados, por
+mais que um dos integrantes do grupo não esteja com a roupa do time,
+ainda assim tendemos a inferir que aquela pessoa também torça para o
+mesmo time.</p></li>
 </ul>
 <p>E por que isso? Pois aprendemos com repetições, fazemos associações,
-e inferimos comportamentos por similaridade!</p>
+e inferimos comportamentos por similaridade! Sabe quem mais faz isso?
+Pois é, os modelos!</p>
 <p>A questão é que nós não somos capazes de processar todas as
 informações a que temos acesso, tampouco ponderamos a importância de
 cada evento de forma clara e estruturada – a sua má experiência ao
@@ -420,54 +415,58 @@ possibilita justamente a identificação de padrões complexos e o
 processamento de diferentes fontes de informação, permitindo uma tomada
 de decisão mais coerente com a realidade dos dados (e não com a
 realidade da nossa percepção individual).</p>
-<div id="tipos-de-modelos" class="section level2">
-<h2>Tipos de Modelos</h2>
+</div>
+<div id="alguns-exemplos-aplicados" class="section level2">
+<h2>Alguns exemplos aplicados</h2>
+<p>Aqui listei alguns possíveis objetivos em que os modelos podem nos
+ajudar:</p>
+<ul>
+<li><strong>Ordenação</strong>: Priorizar grupos mais/menos propensos a
+algo</li>
+<li><strong>Predição de resultados</strong>: prever resultados numéricos
+ou categóricos</li>
+<li><strong>Variabilidade</strong>: mensurar o intervalo de variação
+esperado de um dado resultado</li>
+<li><strong>Explicação</strong>: identificar fatores relacionados a
+eventos de interesse</li>
+<li><strong>Agrupamento</strong> : segmentar observações e/ou
+características</li>
+</ul>
+</div>
+</div>
+<div id="tipos-de-modelos" class="section level1">
+<h1>Tipos de Modelos</h1>
 <p>Em Ciência de Dados existem muitos modelos e algoritmos importantes.
 Que são selecionados, escolhidos e testados de acordo com a natureza do
 problema que estamos tentando modelar e, também, com o objetivo que
-queremos alcançar. Num primeiro nível podemos pensar em duas formas de
-separar as técnicas de modelagem:</p>
-<div id="natureza-dos-dados" class="section level3">
-<h3>Natureza dos Dados</h3>
-<p>Quanto a natureza dos dado podemos pensar em modelos
-<strong>Supervisionados</strong> e <strong>Não
-Supervisionados</strong>.</p>
-<p>Modelos Supervisionados são aqueles em que existe uma pergunta clara
-a ser respondida, como “Qual é o valor de aluguel de uma casa?” ou “Esse
-e-mail é spam ou não?”. Já os Modelos Não Supervisionados não tem uma
-pergunta fechada, mas buscam organizar dos dados de maneira que seja
-possível tirar conclusões práticas. Eles podem ser usados, por exemplo,
-para segmentação de clientes.</p>
+queremos alcançar. E podemos organizar as técnicas existentes segundo
+muitos olhares diferentes – lembre-se trata-se de uma área
+multidiciplinar! E por isso ser algo que gera bastante confusão a
+depender da sua área de origem, vou contextualizar o que considero ser
+mais crucial para que você consiga aproveitar os muitos conteúdos
+gerados na área:</p>
+<div id="objetivo-da-modelagem-preditivo-vs.-inferencial" class="section level2">
+<h2>1) Objetivo da Modelagem: preditivo vs. inferencial</h2>
+<p>Quanto a finalidade da modelagem, podemos considerar ao menos dois
+grandes objetivos, os Modelos <strong>Preditivos</strong> e
+<strong>Inferenciais</strong>.</p>
+<p>No primeiro caso, os modelos preditivos buscam identificar padrões
+que permitam <em>prever</em> resultados futuros ou desconhecidos.
+Podendo ser usados para predizer o valor de aluguel de uma casa, a
+previsão do tempo ou o resultado de exames Já os modelos inferenciais, o
+que buscamos é ententer o <em>porquê</em> e o <em>como</em> de algo, por
+exemplo, podemos tentar entender porque o produto A passou a vender mais
+do que um outro produto B ou então analisar uma base de dados para
+entender qual é a melhor oferta de produtos para um segmento específico
+de clientes.</p>
 </div>
-<div id="objetivo-da-modelagem" class="section level3">
-<h3>Objetivo da Modelagem</h3>
-<p>Quanto a finalidade da modelagem, podemos considerar ao menos duas
-classesos Modelos <strong>Inferencias</strong> e
-<strong>Preditivos</strong>.</p>
-<p>No primeiro caso, os modelos inferenciais, o que buscamos é ententer
-o <em>porquê</em> e o <em>como</em> de algo, por exemplo, podemos tentar
-entender porque o produto A passou a vender mais do que um outro produto
-B ou então analisar uma base de dados para entener qual é a melhor
-oferta de produtos para um segmento específico de clientes. Já os
-modelos preditivos buscam através identificar padrões que permitam
-<em>prever</em> resultados futuros ou desconhecidos. Podendo ser usados
-para prever o valor de aluguel de uma casa, a previsão do tempo ou o
-resultado de exames médicos.</p>
-<p>Caso essa divisão entre modelos Supervisionados e Não
-Supervisionados, ou Inferenciais e Preditivos, não esteja muito clara,
-não se preocupe, esse será o tema de boa parte dessa seção. Ao longo das
-próximas seções veremos exemplos, aplicações e conheceremos os modelos
-mais utilizados em Ciência de Dados para que você seja capaz de iniciar
-a sua carreira na área. Antes, porém, vamos passar por alguns conceitos
-importantes para o restante de nossa jornada.</p>
-</div>
-</div>
-<div id="modelagem-estatística-e-aprendizado-de-máquina" class="section level2">
-<h2>Modelagem Estatística e Aprendizado de Máquina</h2>
-<p>Vamos comentar sobre alguns termos fundamentais da área, pois de
-partida, os termos e definições podem ser bastante confusos. E É
-importante que você esteja confortável com eles para seguir com mais
-confiança para os próximos tópicos.</p>
+<div id="ia-aprendizado-de-máquina-e-modelagem-estatística" class="section level2">
+<h2>2) IA, Aprendizado de Máquina e Modelagem Estatística</h2>
+<p>Você já pensou onde começa uma área e onde termina a outra? Quais as
+similares e diferenças entre estas áreas? Já ficou confuso ou confusa
+com o uso de algum destes termos? Pois bem, este será um capítulo
+importante para você então, pois vamos comentar sobre cada uma destas
+áreas :)</p>
 <div id="inteligência-artificial-ia" class="section level3">
 <h3>Inteligência Artificial (IA)</h3>
 <p>Em sua origem Inteligência Artificial (IA) é um campo da Ciência da
@@ -494,23 +493,22 @@ futuro.</p>
 <div id="modelagem-estatística" class="section level3">
 <h3>Modelagem Estatística</h3>
 <p>Modelagem Estatística é um método de aproximação matemática do mundo.
-Ela nada mais é do processo de descrever eventos e identificar padrões
-que façam sentido considerando os dados observados. De forma que, ao
-final, seja construído um modelo matemático. Tal generalização irá nos
-permitir compreender melhor os fenômenos em que temos interesse e tirar
-conclusões sobre suas causas, bem como entender as relações entre as
-informações disponíveis.</p>
+Trata do processo de entender e descrever eventos, de modo a identificar
+padrões que façam sentido para a população, a partir de dados
+observados, e por vezes, suposições de comportamento. De modo que tal
+generalização nos permita compreender melhor os fenômenos em que temos
+interesse, em última estância, tendo conclusões sobre suas causas.</p>
 </div>
 </div>
-<div id="modelagem-estatística-e-aprendizado-de-máquina-são-a-mesma-coisa" class="section level2">
-<h2>Modelagem Estatística e Aprendizado de Máquina são a mesma
+<div id="aprendizado-de-máquina-e-modelagem-estatística-são-a-mesma-coisa" class="section level2">
+<h2>3) Aprendizado de Máquina e Modelagem Estatística são a mesma
 coisa?</h2>
 <p>Em termos práticos acredito que sim, culturalmente, não. Pois se por
 um lado é usual ver a aplicação de ambos os termos de forma
 intercambiável, é comum também que profissionais com determinadas
-formações utilizem mais um termo do que o outro, isto em decorrência das
-diferenças culturais de cada área, e das diferentes ideias que cada
-domínio prioriza ao falar de análise de dados.</p>
+formações utilizem mais um termo do que o outro, isto em decorrência dos
+diferentes enfoques que cada domínio prioriza ao falar de análise de
+dados.</p>
 <p>No caso da aprendizagem de máquina, que como vimos é um termo vindo
 da Inteligência Artificial, e, portanto, mais frequente entre
 profissionais com viés computacional. Têm-se como um dos principais
@@ -519,29 +517,44 @@ de tais experiências em novos dados, ou seja, um foco preditivo.</p>
 <p>Ao passo que na modelagem, palavra mais comum no universo da
 estatística, existe a intenção de garantir conclusões sobre a população
 a partir das amostras disponíveis. E, portanto, uma preocupação maior em
-modelar o fenômeno, isto é, um enfoque inferencial. Porém, apesar destas
-diferenças, o fato de muitas tecnicas serem comuns às duas abordagens,
-além da afinidade entre os objetivos, justifica o uso dos termos de
-forma permutável.</p>
+modelar o fenômeno, isto é, um enfoque inferencial.</p>
+<p>Contudo, apesar destas diferenças, o fato de muitas tecnicas serem
+comuns às duas abordagens, além da afinidade entre os objetivos,
+justifica o uso dos termos de forma permutável.</p>
 <blockquote>
 <p>Como referência mandatória para esta discussão, recomendo o artigo <a href="http://www2.math.uu.se/~thulin/mm/breiman.pdf">L. Breiman,
 “Statistical Modeling: The Two Cultures,” Statistical Science, Vol. 18,
 No. 3, 2001</a>.</p>
 </blockquote>
 </div>
+<div id="a-natureza-dos-dados-supervisionado-vs.-não-supervisionado" class="section level2">
+<h2>4) A Natureza dos Dados: supervisionado vs. não supervisionado</h2>
+<p>Hoje na Ciência de Dados a divisão dos modelos segundo a perspectiva
+do Aprendizado de Máquina Clássica é, de longe, a mais comunmente
+encontrada. Nesta segmentamos os modelos de acordo com a natureza dos
+dados disponíveis, no caso, modelos <strong>Supervisionados</strong> e
+<strong>Não Supervisionados</strong>.</p>
+<p>Modelos Supervisionados são aqueles em que existe uma pergunta clara
+a ser respondida, como “Qual é o valor de aluguel de uma casa?” ou “Esse
+e-mail é spam ou não?”. Já os Modelos Não Supervisionados não tem uma
+pergunta fechada, mas buscam organizar dos dados de maneira que seja
+possível tirar conclusões práticas. Eles podem ser usados, por exemplo,
+para segmentação de clientes.</p>
 </div>
-<div id="no-r" class="section level1">
-<h1>No R</h1>
-<p>No <code>tidyverse</code> a biblioteca <code>broom</code> é
-direcionada para esta etapa da análise, porém de um ponto de vista de
-integração. Isto porque tem como finalidade transformar resultados de
-modelos estatísticos e de machine learning em objetos com formato
-<em>tidy</em>, facilitando desde o entendimento e comunicação resultado,
-visto a integração com as muitas ferramentas do <code>tidyverse</code>,
-quanto a comparação entre diferentes modelos. O R possui como uma de
-suas bibliotecas default o <code>stats</code>, contemplando uma série de
-funções estatísticas, como, por exemplo, para o ajuste de um modelo de
-regressão linear simples:</p>
+</div>
+<div id="e-o-r-nisso-tudo" class="section level1">
+<h1>E o R nisso tudo?</h1>
+<p>Apesar do R ter nascido na estatística, por ter dados como enfoque,
+encontramos todas as abordagens citadas na linguagem.</p>
+<p>Falando sobre o <code>tidyverse</code> a biblioteca
+<code>broom</code> é direcionada para a etapa de modelagem, porém de um
+ponto de vista de integração. Isto porque tem como finalidade
+transformar resultados de modelos estatísticos e de machine learning em
+objetos com formato <em>tidy</em> – garantindo a integração com todos os
+demais recursos do universo tidyverse. Vamos tomar como exemplo uma
+função do pacote <code>stats</code>, que contempla uma série de funções
+estatísticas, como, por exemplo, o ajuste de um modelo de regressão
+linear simples por meio da função <code>lm()</code>:</p>
 <pre class="r"><code>#exemplo: regressão linear simples
   fit &lt;- lm(Sepal.Width ~ Petal.Length + Petal.Width, data = iris)
 #e ao invés de visulizar os dados com os comandos abaixo 
@@ -552,8 +565,17 @@ regressão linear simples:</p>
 ## 
 ## Coefficients:
 ##  (Intercept)  Petal.Length   Petal.Width  
-##       3.5870       -0.2571        0.3640
-  summary(fit)
+##       3.5870       -0.2571        0.3640</code></pre>
+<pre class="r"><code>#podemos utilizar um dos comandos da biblioteca `broom`   
+  broom::tidy(fit)
+## # A tibble: 3 × 5
+##   term         estimate std.error statistic  p.value
+##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)     3.59     0.0937     38.3  2.51e-78
+## 2 Petal.Length   -0.257    0.0669     -3.84 1.80e- 4
+## 3 Petal.Width     0.364    0.155       2.35 2.01e- 2</code></pre>
+<p>Ou ainda,</p>
+<pre class="r"><code>summary(fit)
 ## 
 ## Call:
 ## lm(formula = Sepal.Width ~ Petal.Length + Petal.Width, data = iris)
@@ -573,18 +595,19 @@ regressão linear simples:</p>
 ## Residual standard error: 0.3893 on 147 degrees of freedom
 ## Multiple R-squared:  0.2131, Adjusted R-squared:  0.2024 
 ## F-statistic:  19.9 on 2 and 147 DF,  p-value: 2.238e-08
-  
-#podemos utilizar um dos comandos da biblioteca `broom`   
-  broom::tidy(fit)
+
+#vs.
+
+broom::tidy(summary(fit))
 ## # A tibble: 3 × 5
 ##   term         estimate std.error statistic  p.value
 ##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 (Intercept)     3.59     0.0937     38.3  2.51e-78
 ## 2 Petal.Length   -0.257    0.0669     -3.84 1.80e- 4
 ## 3 Petal.Width     0.364    0.155       2.35 2.01e- 2</code></pre>
-<p>Em relação à modelagem em si, visto ser algo que demanda
-conhecimentos prévios, não iremos nos aprofundar. Contudo segue uma
-lista com opções de bibliotecas para algumas metodologias/áreas:</p>
+<p>Em relação a etapa de modelagem em si, conforme comentado, não iremos
+nos aprofundar. Deixo aqui uma lista com opções de bibliotecas para
+algumas metodologias/áreas:</p>
 <ul>
 <li>Árvore de Decisão - <code>part</code> e <code>rpart</code></li>
 <li>Clusterização - <code>stats</code>, <code>cluster</code> e
@@ -599,39 +622,40 @@ lista com opções de bibliotecas para algumas metodologias/áreas:</p>
 <li>Text Mining - <code>tm</code> e <code>wordcloud</code></li>
 <li>Validação Cruzada - <code>caret</code></li>
 </ul>
-<div id="supervisionado" class="section level2">
-<h2>Supervisionado</h2>
-<p>queremos minimizar o erro da predição cada método tem o seu dataprep
-obrigatório, assim como recursos de dataprep e feature engineering que
-podem não ser mandatórios mas que podem ser extremamente benefcos para o
-seu precisamos escolher qual o melhor método, e depende do objetivo, e
-nos modelos supervisionados segmentamos o objetivo em duas classes:
-sensibilidade, especificidade, erro tipo I e II, … hiperparametros</p>
-</div>
-<div id="não-supervisionado" class="section level2">
-<h2>Não supervisionado</h2>
-<p>Em estatística tais tecnicas são mais usuais no contexto de análise
-multivariada</p>
-<p>O que precisamos ter noção</p>
-<p>Medidas de distância</p>
+<div id="as-três-maiores-dicas-de-pacotes-deste-módulo" class="section level2">
+<h2>As três maiores dicas de pacotes deste módulo:</h2>
 <ul>
-<li>Agrupamento</li>
-<li>hierarquicas</li>
-<li>kmeans</li>
-<li>Redução de Dimensão Espaço k dimensional</li>
+<li><p><a href="https://www.tidymodels.org/"><strong>tidymodels</strong></a>:
+coleção de pacotes para modelagem e aprendizado de máquina usando
+princípios tidy – particularmente interessante para modelos
+supervisionados.</p></li>
+<li><p><a href="http://sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization"><strong>factoextra</strong></a>:
+pacote com uma série de recursos voltados a análise e visualização de
+dados multivariados – particularmente interessante para modelos não
+supervisionados.</p></li>
+<li><p><a href="https://infer.netlify.app/"><strong>infer</strong></a> :
+pacote voltado à inferência estatística, fazendo uso de uma gramática
+coerente com a estrutura de design do tidyverse – particularmente
+interessante para trabalhar com inferência estatística.</p></li>
 </ul>
 </div>
 </div>
 <div id="referências" class="section level1">
 <h1>Referências</h1>
+<p>Além dos materiais dos próprios pacotes citados, sem dúvidas
+excelentes pontos de partida, recomendo:</p>
 <ul>
 <li><p>o canal no youtube do <a href="https://www.youtube.com/c/joshstarmer">Stat Quest</a>, do Josh
 Starmer. É simplesmente incrível, te ajuda a entender conceitos
 complexos de uma maneira muito acessível. Ah, ele mantem também um blog,
 como prefira: <a href="https://statquest.org/" class="uri">https://statquest.org/</a></p></li>
-<li><p>o livro Aprendizado de Máquina: uma abordagem estatística (AME):
-<a href="http://www.rizbicki.ufscar.br/AME.pdf" class="uri">http://www.rizbicki.ufscar.br/AME.pdf</a></p></li>
-<li><p>o livro An Introduction to Statistical Learning: <a href="https://hastie.su.domains/ISLR2/ISLRv2_website.pdf" class="uri">https://hastie.su.domains/ISLR2/ISLRv2_website.pdf</a></p></li>
+<li><p>o livro <a href="https://www.statlearning.com/">An Introduction
+to Statistical Learning (AISL)</a>, escrito por Hastie, Tibshirani e
+Friedman. É sem dúvida uma das referências de modelagem mais completas
+da atualidade</p></li>
+<li><p>o livro em português <a href="http://www.rizbicki.ufscar.br/AME.pdf">Aprendizado de Máquina: uma
+abordagem estatística (AME)</a>, escrito por Rafael Izbicki e Tiago
+Mendonça dos Santos.</p></li>
 </ul>
 </div>
 
