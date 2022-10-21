@@ -1,5 +1,5 @@
 ---
-title: "Modelagem de Dados"
+title: "Contextualização da Modelagem de Dados"
 output: html_document
 ---
 
@@ -149,7 +149,7 @@ Em relação a etapa de modelagem em si, conforme comentado, não iremos nos apr
 
 - [**tidymodels**](https://www.tidymodels.org/): coleção de pacotes para modelagem e aprendizado de máquina usando princípios tidy – particularmente interessante para modelos supervisionados.
 
-- [**factoextra**](http://sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization): pacote com uma série de recursos voltados a análise e visualização de dados multivariados  – particularmente interessante para modelos não supervisionados.
+- [**factoextra**](https://github.com/kassambara/factoextra): pacote com uma série de recursos voltados a análise e visualização de dados multivariados  – particularmente interessante para modelos não supervisionados.
 
 - [**infer**](https://infer.netlify.app/) : pacote voltado à inferência estatística, fazendo uso de uma gramática coerente com a estrutura de design do tidyverse   – particularmente interessante para trabalhar com inferência estatística.
 
