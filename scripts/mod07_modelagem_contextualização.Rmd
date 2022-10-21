@@ -9,12 +9,12 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 ```
 
 # Introdução
-Teremos, neste módulo, uma breve apresentação sobre o conceito de modelagem, seguido de algumas discussões sobre a relação entre áreas como: Estatística, Aprendizagem de Máquina e Inteligência Artificial. Por fim, teremos a lista de algumas referências de bibliotecas e bibliografias para que você possa seguir evoluindo no tema ;)
+Teremos, neste módulo, uma breve apresentação sobre o conceito de modelagem, seguido de algumas discussões sobre a dinâmica entre áreas como: Estatística, Aprendizagem de Máquina e Inteligência Artificial (IA). Por fim, teremos a lista de algumas referências de pacotes do R e bibliografias para que você possa seguir evoluindo no tema ;)
 
 
 # Modelagem
 
-Após um estudo mais profundo sobre os dados, seu comportamento e especificidades, podemos passar para a fase de Modelagem. Aqui, com as perguntas de interesse bem especificadas, podemos utilizar um modelo para respondê-las. Mas, o que é um modelo? Simplificações da realidade. Uma descrição construída a partir de padrões da análise das informações disponíveis, visando identificar um padrão que generalize um acontecimento de interesse. Perceba que isso é algo que nós, seres humanos, fazemos naturalmente – descrevemos a realidade ao nosso redor a partir de padrões que observamos, e procuramos replicá-los. Porém, em geral fazemos isso de forma intuitiva e inconsciente. Em nossa rotina do dia a dia, isso é mais do que suficiente, mas quando precisamos tomar decisões de alto impacto ou explicar problemas complexos precisamos de um ferramental mais robusto. Quando utilizamos técnicas para modelar a realidade nos tornamos capazes de garantir, até certo ponto, que nosso modelo seja feito de forma estruturada, transparente, consciente, reprodutível e, em muitos casos, escalável. São ganhos que não podemos desprezar! 
+Após um estudo mais profundo sobre os dados, seu comportamento e especificidades, podemos passar para a fase de Modelagem. Aqui, com as perguntas de interesse bem especificadas, podemos utilizar um modelo para respondê-las. Mas, o que é um modelo? Simplificações da realidade. Uma descrição construída a partir de padrões da análise das informações disponíveis, visando identificar um padrão que generalize um acontecimento de interesse. Perceba que isso é algo que nós, seres humanos, fazemos naturalmente – descrevemos a realidade ao nosso redor a partir de padrões que observamos, e procuramos replicá-los. Porém, em geral fazemos isso de forma intuitiva e quase inconsciente. Em para a nossa rotina do dia a dia, isso é mais do que suficiente, mas quando precisamos tomar decisões de alto impacto ou explicar problemas complexos precisamos de um ferramental mais robusto. Quando utilizamos técnicas para modelar a realidade nos tornamos capazes de garantir, até certo ponto, que nosso modelo seja feito de forma estruturada, transparente, consciente, reprodutível e, em muitos casos, escalável. São ganhos que não podemos desprezar! 
 
 
 
@@ -37,7 +37,7 @@ E por que isso? Pois aprendemos com repetições, fazemos associações, e infer
 A questão é que nós não somos capazes de processar todas as informações a que temos acesso, tampouco ponderamos a importância de cada evento de forma clara e estruturada – a sua má experiência ao visitar um site, pode se tratar de uma exceção ou de uma regra, e é apenas avaliando o total de casos que teríamos como tomar uma decisão sobre o futuro do site. Em contraponto, o aprendizado de máquina possibilita justamente a identificação de padrões complexos e o processamento de diferentes fontes de informação, permitindo uma tomada de decisão mais coerente com a realidade dos dados (e não com a realidade da nossa percepção individual). 
 
 
-## Alguns exemplos aplicados
+## Alguns exemplos de aplicação para técnicas de modelagem
 
 Aqui listei alguns possíveis objetivos em que os modelos podem nos ajudar: 
 
@@ -49,7 +49,7 @@ Aqui listei alguns possíveis objetivos em que os modelos podem nos ajudar:
 
 
 
-# Tipos de Modelos
+# Um Mapa Mental sobre Modelos
 
 Em Ciência de Dados, existem muitos modelos e algoritmos importantes. Eles são selecionados, escolhidos e testados de acordo com a natureza do problema que estamos tentando modelar e, também, com o objetivo que queremos alcançar. E podemos organizar as técnicas existentes segundo muitos olhares diferentes – lembre-se: trata-se de uma área multidiciplinar! E por isso ser algo que gera bastante confusão, a depender da sua área de origem. Vou contextualizar o que considero ser mais crucial para que você consiga aproveitar os muitos conteúdos gerados na área:
 
@@ -81,7 +81,7 @@ Aprendizado de Máquina é uma subcampo de IA que tenta fazer com que as máquin
 Modelagem Estatística é um método de aproximação matemática do mundo. Trata do processo de entender e descrever eventos, de modo a identificar padrões que façam sentido para a população, a partir de dados observados, e por vezes, suposições de comportamento. De modo que tal generalização nos permita compreender melhor os fenômenos em que temos interesse, em última instância, tendo conclusões sobre suas causas.
 
 
-## 3) Aprendizado de Máquina e Modelagem Estatística são a mesma coisa?
+## > Aprendizagem de Máquina e Modelagem Estatística são a mesma coisa?
 
 Em termos práticos acredito que sim, culturalmente, não. Pois se por um lado é usual ver a aplicação de ambos os termos de forma intercambiável, é comum também que profissionais com determinadas formações utilizem mais um termo do que o outro, isto em decorrência dos diferentes enfoques que cada domínio prioriza ao falar de análise de dados. 
 
@@ -95,20 +95,18 @@ Contudo, apesar destas diferenças, o fato de muitas tecnicas serem comuns às d
 > Como referência mandatória para esta discussão, recomendo o artigo [L. Breiman, “Statistical Modeling: The Two Cultures,” Statistical Science, Vol. 18, No. 3, 2001](http://www2.math.uu.se/~thulin/mm/breiman.pdf).
 
 
-## 4) A Natureza dos Dados: supervisionado vs. não supervisionado
+## 3) A Natureza dos Dados: supervisionado vs. não supervisionado
 
 Hoje, na Ciência de Dados, a divisão dos modelos segundo a perspectiva do Aprendizado de Máquina Clássica é, de longe, a mais comunmente encontrada. Nesta, segmentamos os modelos de acordo com a natureza dos dados disponíveis, no caso, modelos **Supervisionados** e **Não Supervisionados**.
 
 Modelos Supervisionados são aqueles em que existe uma pergunta clara a ser respondida, como "Qual é o valor de aluguel de uma casa?" ou "Esse e-mail é spam ou não?". Já os Modelos Não Supervisionados não tem uma pergunta fechada, mas buscam organizar dos dados de maneira que seja possível tirar conclusões práticas. Eles podem ser usados, por exemplo, para segmentação de clientes. 
 
 
-
-
 # E o R nisso tudo? 
 
-Apesar do R ter nascido na estatística, por ter dados como enfoque, encontramos todas as abordagens citadas na linguagem.
+Por ser uma linguagem que nasceu na estatística, por muito tempo teve o seu maior poder de fogo no contexto inferêncial, contudo conforme a área de dados passou a contemplar outros olhares de maneira mais ampla a estruturada, passamos a ver este mesmo movimento no R. E hoje encontramos um excelente leque das mais diferentes abordagens.
 
-Falando sobre o `tidyverse`, a biblioteca `broom` é direcionada para a etapa de modelagem, porém de um ponto de vista de integração. Isto porque tem como finalidade transformar resultados de modelos estatísticos e de machine learning em objetos com formato *tidy* – garantindo a integração com todos os demais recursos do universo tidyverse. 
+Gostaria de comentar um pouco sobre o `tidyverse` neste contexto, pois temos a biblioteca `broom` como um recurso direcionado para a etapa de modelagem, porém de um ponto de vista de integração. Isto porque tem como finalidade transformar resultados de modelos estatísticos e de machine learning em objetos com formato *tidy* – garantindo a integração com todos os demais recursos do universo tidyverse. 
 Vamos tomar como exemplo uma função do pacote `stats`, que contempla uma série de funções estatísticas, como, por exemplo, o ajuste de um modelo de regressão linear simples por meio da função `lm()`:
 
 ```{r}
@@ -151,7 +149,7 @@ Em relação a etapa de modelagem em si, conforme comentado, não iremos nos apr
 
 - [**factoextra**](https://github.com/kassambara/factoextra): pacote com uma série de recursos voltados a análise e visualização de dados multivariados  – particularmente interessante para modelos não supervisionados.
 
-- [**infer**](https://infer.netlify.app/) : pacote voltado à inferência estatística, fazendo uso de uma gramática coerente com a estrutura de design do tidyverse  – particularmente interessante para trabalhar com inferência estatística.
+- [**infer**](https://infer.netlify.app/): pacote voltado à inferência utilizando uma estrutura compatível com a gramáticas e padrões do tidyverse – particularmente interessante para trabalhos de inferência causal.
 
 
 # Referências
