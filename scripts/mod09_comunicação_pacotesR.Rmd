@@ -75,7 +75,7 @@ Inclusive, entre os materiais dela você vai encontrar conteúdos sobre o [quart
 
 # Flexdashboard
 
-O objetivo do flexdashboard é facilitar a criação de painéis interativos para R, usando a mesma lógica do R Markdown, mas tendo como estrutura de saída algo mais próximo a um dashboard. Ao instalar esta biblioteca, você passará a ter esta opção no menu `File >  New File > RMarkdown > From Template`. POe meio dela, com algumas poucas linhas de código de diferença, você tem um output amigável para o usuário, e sem grandes desafios em termos de programação, dado seu layout simples,  baseado em linhas e colunas, tendo seus componentes sendo redimensionados de forma inteligente para preencher o navegador e adaptar-se à exibição nos diferentes dispositivos. 
+O objetivo do flexdashboard é facilitar a criação de painéis interativos para R, usando a mesma lógica do R Markdown, mas tendo como estrutura de saída algo mais próximo a um dashboard. Ao instalar esta biblioteca, você passará a ter esta opção no menu `File >  New File > RMarkdown > From Template`. Por meio dela, com algumas poucas linhas de código de diferença, você tem um output amigável para o usuário, e sem grandes desafios em termos de programação, dado seu layout simples,  baseado em linhas e colunas, tendo seus componentes sendo redimensionados de forma inteligente para preencher o navegador e adaptar-se à exibição nos diferentes dispositivos. 
 
 Como referências, recomendo:
 
@@ -102,7 +102,7 @@ Em termos de referência, o Shiny é super bem servido. Às vezes até demais, e
 Como uma última sugestão, que tal instalar o pacote `Shiny` e ir em `File >  New File > RMarkdown ...` e conhecer como fica a cara do Rmarkdown tendo um Shiny embutido? 
 
 
-# Pacotes, muitos outros pacotes! 
+# Pacotes, muitos pacotes! 
 
 Aqui vou listar algumas formas mais de otimizar a comunicação via o ferramental oferecido pelos pacotes do R: 
 
