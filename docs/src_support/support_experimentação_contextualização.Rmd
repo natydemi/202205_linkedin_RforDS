@@ -1,0 +1,174 @@
+---
+title: "Experimentação e Inferência Causal"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Estamos encapsulando a discussão sobre comunicação em uma etapa apenas para garantir uma reflexão mais profunda, pois comunicação é algo realmente transversal a nossa rotina, visto que nos previne dos nossos pontos cegos, amplia nossas percepções, e, consequentemente, aumenta a qualidade das nossas entregas. De modo geral, comunicação nos economiza tempo!
+
+# Bibliotecas
+
+```{r}
+library(tidyverse)
+```
+
+
+# Introdução
+
+Nesta etapa focamos no que será feito a partir de todo o conhecimento obtido, quão efetiva é a ação aplicada? Se tivermos identificado clientes que alta propensão à abandonar o nosso serviço, por exemplo, é natural que queiramos aplicar ações preventivas, visando evitar esta saída. Mas como saber se estamos tomando ações efetivas? Como mensurar tal efeito de forma fundamentada? A resposta: utilizando pensamento científico, por meio de experimentações, controle de fatores externos, e mensuração de resultados!
+
+# Experimentação
+
+Em linhas gerais, conduzimos um experimento quando criamos uma situação, mas não temos certeza quanto as consequências que a situação implica, e gostaríamos de entender e mensurar o efeito desta ação. Ao falar de experimentos, estamos nos referindo a experimentos controlados, na indústria de tecnologia usualmente conhecidos por meio dos testes A/B. Considerando um cenário mais tradicional, temos que a experimentação se dá pela: segmentação do público a ser testado em dois grupos, ambos equivalentes e comparáveis, salvo pela aplicação da ação que queremos mensurar em um destes grupos, o grupo de ação, enquanto mantemos o segundo grupo, denominado o grupo controle ou placebo, preservado (ou ainda: grupo A e grupo B). De modo que, visto os grupos serem equivalentes exceto pela ação a ser aplicada em um e não em outro grupo, qualquer diferença observada entre tais grupos será atribuída a ação aplicada. 
+
+
+# Discussão de um case
+Para ilustrar de forma mais palpável sobre a importância de experimentações, considere o caso de uma empresa de telecomunicações, também conhecida como TELECOM, que possui o interesse em garantir a convergência entre os seus serviços de assinatura de tv, internet fixa e serviços de telefonia móveis, isto é, a empresa tem como interesse que clientes que já utilizem algum de seus serviços, passem a contratar os demais serviços oferecidos, no caso: tv, internet residencial e celular. Vamos supor que um modelo já nos indique quais clientes que são mais propensos a contratação dos três serviços quando recebem uma oferta de desconto para tal, contudo, não sabemos quanto de desconto precisa ser dado. Aqui podemos utilizar a experimentação como recurso! 
+
+
+- Primeiramente precisamos refletir no problema que nos propomos a resolver, considerando o conhecimento, ferramentas e dados disponíveis. No caso, poderíamos ter que faixas de desconto variando entre 5 e 15% seriam valores possíveis de serem considerados, visando facilitar o exemplo, vamos considerar que seriam testados três faixas de desconto: 5, 10 e 15%, além do 0%, que nos daria a referência do que aconteceria se não aplicássemos qualquer desconto. No mais, para a avaliação dos efeitos, poderíamos, por exemplo, comparar o percentual de clientes de cada grupo que aderiram os três serviços após receber a oferta; 
+
+- De modo que teríamos como possíveis hipóteses: oferecer descontos aumenta a taxa de contratação dos três serviços, ou ainda, quanto maior o percentual de desconto oferecido, maior o percentual de clientes contratando os serviços desejados; 
+
+-	Refletindo sobre possíveis fatores de influência, isto é, procurando identificar aspectos que poderiam vir a influencias os resultados que temos o interesse em mensurar, podemos levantar fatores como: a diferenciação entre clientes que só possuem um serviço, daqueles que já possuem dois serviços, o que pode tornar o segundo grupo mais propício a contratarem os três serviços;
+
+-	Em relação a especificação do experimento, de modo a garantir comparabilidade e a minimização de possíveis ruídos aleatórios, além da consideração dos grupos acima, podemos especificar a forma como os clientes seriam notificados do desconto, ou ainda algum cuidado para garantir que não acabem caindo em outra “régua de promoção”, ou outros fatores, que poderiam enviesar o resultado. Nos levando a acreditar que o efeito dos descontos é maior ou menor do que realmente é;
+
+-	Assim, com a execução e avaliação dos efeitos, chegamos no questionamento: o experimento foi conclusivo? Isto é, conseguimos responder as hipóteses inicialmente postas? Se sim, ótimo! Caso não, precisamos entender melhor os porquês, identificar possíveis vieses que não foram devidamente controlados e reiniciar o fluxo, garantindo um cenário mais consistente que o último. Poderíamos por exemplo, concluir que houve um desbalanceamento nos grupos de clientes com apenas um serviço já contratado, tendo que para aqueles que receberam a faixa de desconto de 5% havia uma quantidade maior de clientes com o serviço mais barato já contratado, o que pode tornar a faixa de 5% menos atrativa, devido ao valor absoluto resultante do desconto. Assim, em uma nova rodada do experimento, teríamos um maior controle na questão dos serviços já contratados por cada cliente.
+
+
+Estamos aqui comentando sobre uma aplicação mais genérica, tendo como intenção elucidar a lógica da experimentação. Porém, para um maior aprofundamento, é importante comentar que, a depender de qual área a experimentação estiver sendo aplicada, podemos encontrar denominações diferentes, como: Ensaio Clínico, DOE (do inglês, design of experiments, em português: Planejamento de Experimentos), ou mesmo o Teste A/B, que passa a ser denominado como Testes Multivariados, quando prevê mais de dois cenários. E apesar de cada um destes termos terem especificidades próprias, todas contemplam a investigação sistemática por meio do método científico
+
+
+# E no R?
+
+Para garantir que este processo seja conclusivo, ferramentas e conceitos provenientes de áreas como:
+
+- inferência estatística: como testes de hipótese e avaliação comportamentos esperados vs. amostras observadas, entender o modelo populacional subjacente; 
+- amostragem: viés e segmentação da população em estratos; ou
+- planejamento de experimentos: variáveis de confusão
+
+são essenciais para auxiliar o cientista nas definições e acompanhamentos apropriados ao longo de todo o processo. E visto o R ter origem na estatística, e existirem temos muitas opções de funções e pacotes para tais temas
+
+
+
+# Notes
+
+* Um dos aspectos fundamentais da análise estatística é a inferência, ou o processo de tirar conclusões sobre uma população maior a partir de uma amostra de dados. Embora contra intuitivo, a prática padrão é tentar refutar uma alegação de pesquisa que não é de interesse. Por exemplo, para mostrar que um tratamento médico é melhor que outro, podemos supor que os dois tratamentos levam a taxas de sobrevivência iguais apenas para serem refutadas pelos dados. Além disso, introduzimos a ideia de um valor-p, ou o grau de discordância entre os dados e a hipótese. Também mergulhamos em intervalos de confiança, que medem a magnitude do efeito de interesse (por exemplo, quão melhor um tratamento é do que outro).
+
+
+* Investigação em que uma
+hipótese é testada cientificamente,
+onde uma variável independente (ou causa ) é manipulada, a
+variável dependente (ou efeito ) é medida e onde outras
+variáveis são devidamente controladas ( ceteris paribus
+
+
+# Case
+Para demonstrar, percorreremos um pipeline de inferência típico passo a passo. Ao longo deste post, fazemos uso do gss, um conjunto de dados fornecido pela infer contendo uma amostra de 500 observações de 11 variáveis do General Social Survey.
+
+Subconjunto de dados do Inquérito Social Geral (GSS).
+Descrição
+O General Social Survey é um levantamento de alta qualidade que reúne dados sobre a sociedade e opiniões americanas, realizado desde 1972. Este conjunto de dados é uma amostra de 500 entradas do GSS, abrangendo os anos 1973-2018, incluindo marcadores demográficos e algumas variáveis econômicas. Observe que esses dados são incluídos apenas para demonstração e não devem ser considerados como estimativas precisas relacionadas ao GSS. No entanto, devido à alta qualidade do GSS, os dados não ponderados se aproximarão dos dados ponderados em algumas análises.
+
+
+```{r}
+library(infer)
+
+gss <- gss %>% glimpse()
+```
+especificar(): Especificando variáveis de resposta (e explicativas)
+A função spec() pode ser usada para especificar em qual das variáveis do conjunto de dados você está interessado. Se estiver interessado apenas, digamos, na idade dos respondentes, você pode escrever:
+
+Se você estiver interessado em duas variáveis – idade e partyid, por exemplo – você pode especificar() seu relacionamento de uma das duas maneiras (equivalentes):
+
+```{r}
+# encontre a estimativa pontual --- número médio de horas trabalhadas por semana
+
+(point_estimate <- gss %>%
+  specify(response = hours) %>%
+  calculate(stat = "mean"))
+```
+
+
+hypothesize(): Declarando a hipótese nula
+A próxima etapa em um pipeline de inferência geralmente é declarar uma hipótese nula usando hypothesize(). O primeiro passo é fornecer um de “independência” ou “ponto” para o argumento nulo. Se sua hipótese nula assume independência entre duas variáveis, então isso é tudo que você precisa fornecer para hypothesize():
+
+
+```{r}
+# ...and a bootstrap distribution
+boot_dist <- gss %>%
+  # ...we're interested in the number of hours worked per week
+  specify(response = hours) %>%
+  # generating data points
+  generate(reps = 1000, type = "bootstrap") %>%
+  # finding the distribution from the generated data
+  calculate(stat = "mean")
+
+
+# find a confidence interval around the point estimate
+ci <- boot_dist %>%
+  get_confidence_interval(point_estimate = point_estimate,
+                          # at the 95% confidence level
+                          level = .95,
+                          # using the standard error method
+                          type = "se")  
+
+# and plot it!
+boot_dist %>%
+  visualize() +
+  shade_confidence_interval(ci)
+```
+
+```{r}
+(p_value <- boot_dist %>%
+  get_p_value(obs_stat = point_estimate, direction = "two-sided"))
+```
+
+```{r}
+(conf_ints <- boot_dist %>%
+  get_confidence_interval(
+    point_estimate = point_estimate,
+    level = 0.95,
+    type = "se"
+  ) )
+```
+
+generate(): Gerando a distribuição simulada
+Uma vez que afirmamos nossa hipótese nula usando hypothesize(), podemos construir uma distribuição nula com base nessa hipótese. Podemos fazer isso usando um dos vários métodos, fornecidos no argumento type:
+
+permutar: Para cada replicação, cada valor de entrada será reatribuído aleatoriamente (sem substituição) a um novo valor de saída na amostra.
+draw: Um valor será amostrado de uma distribuição teórica com parâmetros especificados em hypothesize() para cada replicação. (Esta opção atualmente é aplicável apenas para estimativas de pontos de teste.)
+bootstrap: Uma amostra bootstrap será extraída para cada réplica, onde uma amostra de tamanho igual ao tamanho da amostra de entrada é extraída (com reposição) dos dados da amostra de entrada. O bootstrap é mais comumente usado no contexto de construção de um intervalo de confiança, omitindo a etapa hypothesize() de infer.
+Continuando com nosso exemplo acima, sobre o número médio de horas trabalhadas por semana, podemos escrever:
+
+
+
+calcular(): Calculando estatísticas de resumo
+calcular() calcula estatísticas resumidas a partir da saída das funções principais de inferência. A função, por exemplo, recebe um argumento stat, que atualmente é "mean", "median", "sum", "sd", "prop", "count", "diff in averages", "diff in medianas", "diff in props", "Chisq", "F", "t", "z", "slope" ou "correlation". Por exemplo, continuando nosso exemplo acima para calcular a distribuição nula da média de horas trabalhadas por semana:
+
+
+Para ilustrar, voltaremos ao exemplo de determinar se o número médio de horas trabalhadas por semana é de 40 horas.
+
+
+
+Nossa estimativa pontual 41.382 parece bem próxima de 40, mas um pouco diferente. Podemos nos perguntar se essa diferença se deve apenas ao acaso ou se o número médio de horas trabalhadas por semana na população realmente não é 40.
+
+Inicialmente, poderíamos apenas visualizar a distribuição.
+
+
+
+
+Como você pode ver, 40 horas por semana não estão contidas nesse intervalo, o que se alinha com nossa conclusão anterior de que esse achado é significativo no nível de confiança
+α
+=
+0,05
+
+
+
+
+
+> exemplo retirado do [post](https://infer.netlify.app/reference/shade_confidence_interval.html)

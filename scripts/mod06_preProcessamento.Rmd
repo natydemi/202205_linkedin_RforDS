@@ -1,5 +1,5 @@
 ---
-title: "Arrumação e Transformação de Dados"
+title: "Contextualização do Pré Processamento de Dados"
 output: html_document
 ---
 
@@ -15,12 +15,13 @@ library(tidyverse)
 
 
 # Introdução
-Neste arquivo ...
+
+Neste material iremos discutir sobre desafios relacionados a etapa de preparação de dados, usualmente conhecida pela abreviação dataprep. Aqui procuramos garantir que as informações estejam retratando de forma apropriada as variáveis que se propõem a representar. 
 
 
 # Pré-processamento
 
-A etapa de pré-processamento faz uso de todos os recursos que utilizamos até aqui. Tendo como enfoque a qualidade do dado, algumas das ações que podemos relacionar a esta etapa, organizadas por grupos, são:
+A etapa de pré-processamento faz uso de todos os recursos que utilizamos até aqui. Contudo, tendo como enfoque a garantir que o dado está sendo devidamente representado, queremos garantir a qualidade da informação. Algumas das ações que podemos relacionar a esta etapa, organizadas por grupos, são:
 
 - Importação
   - Identificar unidade de análise 
@@ -48,35 +49,42 @@ A etapa de pré-processamento faz uso de todos os recursos que utilizamos até a
   - Aplicar padronizações
 
 
-Note que se tratam de ajustes que podem fazer a diferença entre o sucesso e o fracasso da sua análise, e não vou te enganar, isso dá trabalho! Algumas estimativas indicam que até 80% do tempo de uma análise de dados pode se concentrar aqui. Desde abreviações e espaços extras indevidos, até dados faltantes que podem indicar a necessidade de redirecionamento da sua análise, é na etapa de pré-processamento que garantimos que os dados estão aptos a representarem a realidade que esperamos que seja retratada.
+Note que se tratam de ajustes que podem fazer a diferença entre o sucesso e o fracasso da sua análise, e não vou te enganar, isso dá trabalho! Algumas estimativas indicam que até 80% do tempo de uma análise de dados pode se concentrar aqui. Desde o entendimento da origem de um dado faltante, passando por abreviações e espaços extras indevidos, até valores inválidos, tudo isto pode acabar redirecionando a sua análise. Mas é assim que garantimos que os dados estão aptos a representarem a realidade que esperamos que seja retratada.
 
-- falar de outliers: Valores extremos, também conhecidos como outliers, ou valores aberrantes, são características facilmente encontradas em bases de dados reais, e com alto potencial de influência nas análises. Neste video iremos discutir sobre a importancia de identificar tais características, e formas de endereça-las.
 
-   
 ## E no R? 
 
-Aqui o desafio é mais investigativo e julgamental do que em termos de ferramenta. Com o que vimos nos módulos anteriores, você será capaz de avaliar as questões e endereçar soluções. Com certeza existem pacotes que se mostram mais práticos para determinados estudos, como por exemplo `codemeta` que nos auxiliar com a criação de metadados, ou o pacote `naniar` que nos auxilia com dados faltantes (falaremos dele logo mais). Mas é importante ressaltar que, em última instância, é uma questão de pesquisar `library R missing data`, por exemplo — DICA: pesquisas em inglês tendem a ser mais efetivas ;). O verdadeiro conhecimento nesta etapa é ter um horizonte sobre O QUE precisa ser feito, mais do que o COMO. 
+Como nesta etapa o desafio é mais investigativo e julgamental do que em termos técnicos. Com o que foi visto nos módulos anteriores, você será capaz de endereçar as soluções, apesar de existem pacotes que facilitam determinadas atividades, como por exemplo `codemeta` que nos auxiliar com a criação de metadados, ou o pacote `naniar` que nos auxilia com dados faltantes (falaremos dele logo mais). Mas é importante ressaltar que, em última instância, é uma questão de pesquisar: `library R missing data`, por exemplo — DICA: pesquisas em inglês tendem a ser mais efetivas ;). 
+
+O verdadeiro conhecimento nesta etapa é ter um horizonte sobre O QUE precisa ser feito, muito mais do que o COMO aplicar. 
 
 
 ## Ajustes pré modelagem (dataprep)
 
-Apesar dos comentários acima, existe um grupo em particular que comentaremos um pouco mais. No caso, o grupo que denominamos `Ajustes pré modelagem`, ou ainda dataprep. Tais pré-processamentos são particularmente importantes pois, a depender da técnica de modelagem que você deseje aplicar, estes ajustes podem ser obrigatórios — dado que algumas técnicas não aceitam valores faltantes ou features categóricas como entrada. Sendo assim, teremos uma breve discussão sobre o que envolve cada um dos `dataprep` citados. No caso dos dados faltantes, visto a sua relevância, daremos uma profundidade maior à discussão.
+Apesar dos comentários acima, existe um grupo em particular que gostaria de falar um pouco mais. No caso, o grupo que denominamos `Ajustes pré modelagem`, ou ainda dataprep. Tais pré-processamentos são particularmente importantes pois podem ser obrigatórios, a depender da técnica de modelagem que você decida aplicar na etapa de modelagem. Isto porque algumas técnicas não aceitam valores faltantes ou features categóricas como entrada, por exemplo. Sendo assim, teremos uma breve discussão sobre o que envolve cada um dos `dataprep` citados. No caso dos dados faltantes, visto a sua relevância, daremos uma profundidade maior à discussão. 
+
+Como pacote de referência para pré-processamentos, utilizaremos o [`recipes`](https://recipes.tidymodels.org/), biblioteca que faz parte do meta-pacote `tidymodels`, indico ainda o anexo do livro [Tidy Modeling with R](https://www.tmwr.org/pre-proc-table.html), do Max Kuhn e da Julia Silge para o tema.
 
 
 ### Aplicar codificações
 
-De forma geral as técnicas de modelagem utilizadas no contexto de análise de dados são capazes de lidar apenas com valores numéricos. Mas, se temos em uma base de dados variáveis como nível de escolaridade, em que os  valores podem ser "fundamental", "médio" ou "superior" ou estado de nascimento, nos quais podemos ter 27 categorias, não é razoável que a gente simplesmente deixe de usar essas informações, pois podem ser de grande importância na explicação do problema. Assim, para que esses dados não sejam disperdiçados utilizamos técnicas de Codificação de Variáveis, que nada mais é do que o processo de transformar variáveis categóricas em  númericas, logo, adequadas às técnicas de modelagem.
+De forma geral as técnicas de modelagem utilizadas no contexto de análise de dados são capazes de lidar apenas com valores numéricos. De modo que, para que esses dados não sejam disperdiçados utilizamos técnicas de Codificação de Variáveis, que nada mais é do que o processo de transformar variáveis categóricas em  númericas, logo, adequadas às técnicas de modelagem que possuem tal restrição.
 
-Existem várias estratégias para fazer isso e, em geral, o desafio é saber qual é a mais adequada para cada contexto. Algumas estratégias comuns são:
+Existem várias estratégias para fazer isso, sendo importante entender a natureza e características da variável em questão, para julgar qual é a mais adequada para cada contexto. Algumas estratégias comuns são:
 
-- Variáveis Dummy (`recipes::step_dummy()`) 
-- One Hot Encoding (`recipes::step_dummy(.x, one_hot = T)`): cria-se uma nova variável para cada categoria da variável original
-- Tokenize (`recipes::step_tokenize()`): 
-- Hash  (`textrecipes::step_dummy_hash()`): convert nominal data (e.g. character or factors) into one or more numeric binary columns using the levels of the original data.
+- One Hot Encoding (`recipes::step_dummy(.x, one_hot = T)`): cria-se uma variável binária para cada categoria da variável original
+
+- Variáveis Dummy (`recipes::step_dummy()`): similar ao One Hot Encoding, mas aqui criaremos uma variável binária a menos. Isto porque uma das categorias da variável original, pode ser representada pela exclusão das demais. 
+
+- Tokenize (`recipes::step_tokenize()`): divisão de uma cadeia de caracteres em partes menores.
+
+- Hash  (`textrecipes::step_dummy_hash()`): 
+
 - Label Encoding: cada categoria passa a ser representada por um número
+
 - Frequency Encoding: O valor numérico atribuído a cada categoria é a quantidade de vezes em que ela aparece na base
 
-Aqui é importante ter em conta pontos como: quantidade de categorias existentes, nosso interesse em manter a interpretabilidade dos resultados, ou ainda pontos relacionados a própria modelagem (como questões de multicolineariedade). 
+Aqui é importante ter em conta pontos como: quantidade de categorias existentes, nosso interesse em manter a interpretabilidade dos resultados, ou ainda pontos relacionados a própria modelagem (como questões de multicolineariedade).Este [artigo do pacote recipes](https://recipes.tidymodels.org/articles/Dummies.html), discute algumas opções relacionadas a features categoricas.
 
 
 ### Aplicar padronizações
@@ -192,6 +200,7 @@ Mas existem pacotes mais robustos, como é o exemplo do pacote naniar:
 
 #### pacote naniar
 
+O pacote [naniar](https://github.com/njtierney/naniar) fornece maneiras organizadas visando possibilitar o resumo, visualização e manipulação de dados ausentes, garantindo inclusive integração com o pacote ggplot2 e com o universo tidyverse. Vamos conhecer algumas funções considerando a base de dados `airquality`: 
 
 ```{r}
 ggplot(airquality, 
@@ -212,9 +221,7 @@ naniar::gg_miss_var(airquality)
 naniar::gg_miss_var(airquality, facet = Month)
 ```
 
-
-
-
+Para avaliar a análise completa [acesse](https://cran.r-project.org/web/packages/naniar/vignettes/getting-started-w-naniar.html).
 
 # Feature Engineering
 
@@ -241,30 +248,19 @@ Em termos ferramentais, aqui estamos novamente no contexto em que saber o que fa
 
 ## textos (stringr)
 
-Variáveis de texto são muito comuns nos bancos de dados e, geralmente, dão bastante trabalho para serem manipuladas.
+Variáveis de texto são muito comuns nos bancos de dados e, geralmente, dão bastante trabalho para serem manipuladas. Aqui entra o pacote `stringr`, com ele ganhamos uma sintaxe unificada, o que auxilia na memorização das funções e leitura do código. Como regras básica do pacote: as funções de manipulação de texto começam com `str_`, então caso você esqueça o nome de uma função, basta digitar `stringr::str_` e apertar TAB para ver quais são as opções :)
 
-Vantagens do stringr em relação às funções do R base:
+O primeiro argumento da função é sempre uma string ou um vetor de strings. Como principais funções temos:
 
-Sintaxe unificada, o que auxilia na memorização das funções e leitura do código.
-Todas as funções são vetorizadas.
-Construído sobre a biblioteca ICU, implementada em C e C++, uma garantia de resultados mais rápidos.
-Regras básicas do pacote:
-
-As funções de manipulação de texto começam com str_. Caso esqueça o nome de uma função, basta digitar stringr::str_ e apertar TAB para ver quais são as opções.
-
-O primeiro argumento da função é sempre uma string ou um vetor de strings.
-
-Principais funções:
-
-- str_detect() - identificar a presença de padrões em uma string;
-- str_count() - contabiliza o número de vezes que um padrão é encontrado;
-- str_replace() - substitui um dado padrão em uma string;
-- str_to_lower() - converter strings maiúsculas e minúsculas
-
-Exercício: Quantos `blue` existem na coluna skin_color?
+ - `str_detect()` - identificar a presença de padrões em uma string;
+ - `str_count()` - contabiliza o número de vezes que um padrão é encontrado;
+ - `str_replace()` - substitui um dado padrão em uma string;
+ - `str_to_lower()` - converter strings maiúsculas e minúsculas
 
 
 ```{r}
+#ex.: Quantos `blue` existem na coluna skin_color?
+
 starwars %>% 
     #mutate(index_blue = ifelse(skin_color == "blue", "linhas com", "linhas sem")) %>% 
     mutate(index_blue = ifelse( str_detect(skin_color, "blue") ,
@@ -273,30 +269,31 @@ starwars %>%
     count
 ```
 
-Exercício: criar uma coluna com as skin_color unicas
-
 
 ```{r}
-#base para exemplo
-  fruit %>% 
-    enframe %>% #versão tibble para vetores
-    glimpse
-
-#exemplo: obtenção da quantidade de palavras contendo a string "berry"
+#exemplo: como obter a quantidade de palavras contendo a string "berry"
   fruit %>% 
     str_count("berry") %>% 
     sum()
     
 ```
 
+
+### Cheat Sheet
+
+```{r , echo=FALSE,, fig.align = "center", fig.cap="Cheat Sheet stringr"}
+knitr::include_graphics('https://raw.githubusercontent.com/rstudio/cheatsheets/main/pngs/thumbnails/strings-cheatsheet-thumbs.png')
+```
+
+
 ## datas (lubridate)
 
 Trabalhar com datas em qualquer linguagemm de programação costuma dar alguma dor de cabeça, muitas vezes com as lógicas sendo alteradas de acordo com o tipo do objeto que você está usando (data, hora, data/hora).Contudo, com o pacote {lubridate} passamos a ter uma sintaxe rica, contemplando :
 
-    - `as_date()` - converter um objeto para uma data ou hora 
-    - `wday()` - retorna o dia da semana como um número decimal 
-    - `today()` - retorna a data corrente 
-    - `floor_date()` - arredonda para o limite inferior mais próximo da unidade de tempo
+ - `as_date()` - converter um objeto para uma data ou hora 
+ - `wday()` - retorna o dia da semana como um número decimal 
+ - `today()` - retorna a data corrente 
+ - `floor_date()` - arredonda para o limite inferior mais próximo da unidade de tempo
 
 ```{r, error=TRUE, message=F}
 #exemplo: retorna erro por não ser uma data válida
@@ -365,12 +362,19 @@ rm(temp1, temp2, temp3)
 ```
 
 
-## fatores (forcats)
-Grande parte da frustração associada ao uso de fatores no R existe por conta da falta de algumas ferramentas úteis no pacote base. As principais funções do forcats servem para alterar a ordem e modificar os níveis de um fator.
+### Cheat Sheet
 
-- fct_count() - conta o número de valores de cada nível;
-- fct_relevel() - reordenar os níveis dos fatores;
-- fct_explicit_na() - adicionar o NA como um dos níveis
+```{r , echo=FALSE,, fig.align = "center", fig.cap="Cheat Sheet lubridate"}
+knitr::include_graphics('https://raw.githubusercontent.com/rstudio/cheatsheets/main/pngs/thumbnails/lubridate-cheatsheet-thumbs.png')
+```
+
+
+## fatores (forcats)
+Grande parte da frustração associada ao uso de fatores no R existe por conta da falta de algumas ferramentas úteis no pacote base. As principais funções do forcats servem para alterar a ordem e modificar os níveis de um fator:
+
+- `fct_count()` - conta o número de valores de cada nível;
+- `fct_relevel()` - reordenar os níveis dos fatores;
+- `fct_explicit_na()` - adicionar o NA como um dos níveis
 
 
 ```{r}
@@ -402,7 +406,11 @@ starwars %>%
     geom_boxplot()
 ```
 
+### Cheat Sheet
 
+```{r , echo=FALSE,, fig.align = "center", fig.cap="Cheat Sheet forcats"}
+knitr::include_graphics('https://i1.wp.com/www.rstudio.com/blog/cheat-sheet-updates/forcats.png?w=584&ssl=1')
+```
 
 # Considerações Finais
 
@@ -419,7 +427,8 @@ Sempre vale lembrar sobre como termos em inglês retornam mais resultados para e
 
 # MÃO NA MASSA!
 
-- o pacote `naniar` se mostrou uma ferramenta interessante no contexto de `missing data`, mas não exploramos todos os seus recursos. Por exemplo, a sequência de funções nos possibilita avaliar se existe uma mudança na distribuição dos dados faltantes:
+
+- o pacote `naniar` se mostrou uma ferramenta interessante no contexto de `missing data`, mas não exploramos todos os seus recursos. Por exemplo, a sequência de funções abaixo nos possibilita avaliar se existe uma mudança na distribuição dos dados faltantes. Considerando o output gráfico, você diria que estamos lidando com qual tipo de missing aqui? Parece ser o caso de dados faltantes aleatórios? 
 
 ```{r}
 naniar::oceanbuoys %>%
@@ -428,8 +437,6 @@ naniar::oceanbuoys %>%
                fill = humidity_NA)) +
         geom_histogram()
 ```
-
-Considerando o output gráfico, você diria que estamos lidando com qual tipo de missing aqui? Parece ser o caso de dados faltantes aleatórios? 
 
 
 - O livro [Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/) é uma das minhas referências preferidas! Não apenas pelos excelentes cases e discussões, mas por procurar desenvolver o(a) leitor(a) não apenas em termos técnicos, mas também com a intuição das técnicas. A tarefa aqui é: leia a seção de introdução de cada um dos capítulos para evoluir nos assuntos aqui abordados. Recomendo particularmente a leitura sobre encoding, do capítulo 5.
