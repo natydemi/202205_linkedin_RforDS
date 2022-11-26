@@ -2,10 +2,10 @@
 # Guia de Bolso - Introdução Linguagem R e RStudio
 
 # Introdução
-# Neste script você irá encontrar uma revisão sobre o R, considerando a 
-# apresentação do ambiente RStudio, e aspectos estruturais da linguagem.
-# De maneira complementar (e opcional), são apresentados alguns recursos
-# mais avançados da linguagem.
+  # Neste script você irá encontrar uma revisão sobre o R, considerando a 
+  # apresentação do ambiente RStudio, e aspectos estruturais da linguagem.
+  # De maneira complementar (e opcional), são apresentados alguns recursos
+  # mais avançados da linguagem.
 
 
 # ----- Instalação -----
@@ -40,13 +40,10 @@
   # A mais difundida no caso do R é o RStudio:
 
   #O RStudio é de uma IDE do R, amplamente difundida na comunidade. 
-  #Para fazer o download do RStudio entre na página oficial do RStudio 
-    #https://www.rstudio.com/
-      #na opção ‘Download’ RStudio, após passar pela descrição das 
-      #opções disponíveis do RStudio, você encontrará a lista de instaladores 
-      #organizados segundo os sistemas operacionais e processadores compatíveis
+  #Para fazer o download, entre na página de download do RStudio:
+    #https://posit.co/download/rstudio-desktop/
+  #e siga as instruções (caso já tenha instalado o R, pule para o Step 2)
 
-  #Tutorial: https://livro.curso-r.com/1-2-instalacao-do-rstudio.html
   
 # RStudio (Posit): muito mais que uma IDE ----- 
 
@@ -74,76 +71,76 @@
         # execute a instalação como se estivesse fazendo pela primeira vez
         # Pronto! O seu Rstudio está atualizado! 
 
-# Para fazer o update do R, você pode seguir a mesma dinâmica, mas 
-# baixando a versão mais atualizada do R. 
-
-# No caso do windowns, existe ainda a opção de fazer o update via bibliotecas 
-# como o installlr::updateR(). No caso do Mac, a biblioteca seria updateR.
-
-# ATENÇÃO: Ao atualizar o R, por default, você irá “perder” as bibliotecas 
-# que estiverem instaladas no seu computador, sendo necessário fazer a 
-# instalação destas novamente. Isto porque não há garantia que as bibliotecas 
-# funcionem com a nova versão do R – um comportamento usual para qualquer 
-# linguagem de programação. Para consultar a versão dos seus pacotes: 
-#sessionInfo()
+  # Para fazer o update do R, você pode seguir a mesma dinâmica, mas 
+  # baixando a versão mais atualizada do R. 
+  
+  # No caso do windowns, existe ainda a opção de fazer o update via bibliotecas 
+  # como o installlr::updateR(). No caso do Mac, a biblioteca seria updateR.
+  
+  # ATENÇÃO: Ao atualizar o R, por default, você irá “perder” as bibliotecas 
+  # que estiverem instaladas no seu computador, sendo necessário fazer a 
+  # instalação destas novamente. Isto porque não há garantia que as bibliotecas 
+  # funcionem com a nova versão do R – um comportamento usual para qualquer 
+  # linguagem de programação. Para consultar a versão dos seus pacotes: 
+  #sessionInfo()
 
 
 # Alternativa às instalações físicas ----- 
 
-#De maneira alternativa à instalação você pode consirar o RStudio Cloud,
-# um serviço gratuito oferecido pelo RStudio que permite que os usuários R 
-# tenham acesso a todo o ambiente RStudio via web, de maneira on-line, 
-# inclusive permitindo colaboração, através do site do RStudio Cloud:
-
-#https://rstudio.cloud/
+  #De maneira alternativa à instalação você pode consirar o RStudio Cloud,
+  # um serviço gratuito oferecido pelo RStudio que permite que os usuários R 
+  # tenham acesso a todo o ambiente RStudio via web, de maneira on-line, 
+  # inclusive permitindo colaboração, através do site do RStudio Cloud:
+  
+  #https://rstudio.cloud/
 
 
 # ----- Um tour pela IDE Rstudio  -----
 
-#O RStudio possui uma série de recursos que otimizam a análise de dados, 
-# sendo a própria interface, a principal vantagem, visto os seus paines:
+  #O RStudio possui uma série de recursos que otimizam a análise de dados, 
+  # sendo a própria interface, a principal vantagem, visto os seus paines:
+  
+  #*Console - painel onde os comandos são executados interativamente, 
+  # permitindo opções como autocompletar e consultas por meio da tecla ‘Tab’, 
+  # ou o acesso aos comandos já digitados via a tecla ‘Seta para cima’
+  
+  #*Source - onde são abertos os scripts do R, ou seja, onde você irá 
+  # escrever o código - sendo necessário enviá-lo manualmente para o Console,
+  # isto é, para execução, quando desejado. Para criar um script podemos  
+  # utilizar o point-and-click ‘File > New File > R Script’ 
+  # ou por meio do atalho Ctrl+Shift+N
 
-#*Console - painel onde os comandos são executados interativamente, 
-# permitindo opções como autocompletar e consultas por meio da tecla ‘Tab’, 
-# ou o acesso aos comandos já digitados via a tecla ‘Seta para cima’
-
-#*Source - onde são abertos os scripts do R, ou seja, onde você irá 
-# escrever o código - sendo necessário enviá-lo manualmente para o Console,
-# isto é, para execução, quando desejado. Para criar um script podemos  
-# utilizar o point-and-click ‘File > New File > R Script’ 
-# ou por meio do atalho Ctrl+Shift+N
-
-#*Environment - lista dos objetos carregados e/ou criados ao longo da sessão
-
-#*History - consulta do histórico de comandos
-
-#*Files - acesso às pastas e arquivos do computador
-
-#*Plots - visualização dos gráficos gerados
-
-#*Packages - gerenciamento das bibliotecas instaladas
-
-#*Help - menu de ajuda e visualização das documentações consultadas
-
-#*Viewer - visualização dos relatórios e aplicativos criados
-
-#*Connections - ferramentas para conexão com diferentes bancos de dados 
-
-#*Tutorial - tutoriais de aprendizado — disponível apenas em versões mais 
-# recentes da IDE RStudio
+    #*Environment - lista dos objetos carregados e/ou criados ao longo da sessão
+    
+    #*History - consulta do histórico de comandos
+    
+    #*Files - acesso às pastas e arquivos do computador
+    
+    #*Plots - visualização dos gráficos gerados
+    
+    #*Packages - gerenciamento das bibliotecas instaladas
+    
+    #*Help - menu de ajuda e visualização das documentações consultadas
+    
+    #*Viewer - visualização dos relatórios e aplicativos criados
+    
+    #*Connections - ferramentas para conexão com diferentes bancos de dados 
+    
+    #*Tutorial - tutoriais de aprendizado — disponível apenas em versões mais 
+    # recentes da IDE RStudio
 
 
-#Todos os painéis possuem uma série de funcionalidades próprias, 
-# sendo interessante que, conforme avance na sua utilização do R, volte a 
-# explorar tais opções, como as abas Git e Jobs.
-
-#A mesma dica de investigação vale para a barra de ferramentas do RStudio, 
-# onde é possível encontrar desde recursos de codificação, como busca e 
-# substituição, desenvolvimento de pacotes, ou Debug de código. 
-
-#DICA: Um recurso interessante do RStudio é a personalização da interface: 
-# acesse na barra superior a opção  `Tools > Global Options’, dentre
-# as alternativas, recomendo a sessão `Appearance` e `Pane Layout`.
+  #Todos os painéis possuem uma série de funcionalidades próprias, 
+  # sendo interessante que, conforme avance na sua utilização do R, volte a 
+  # explorar tais opções, como as abas Git e Jobs.
+  
+  #A mesma dica de investigação vale para a barra de ferramentas do RStudio, 
+  # onde é possível encontrar desde recursos de codificação, como busca e 
+  # substituição, desenvolvimento de pacotes, ou Debug de código. 
+  
+  #DICA: Um recurso interessante do RStudio é a personalização da interface: 
+  # acesse na barra superior a opção  `Tools > Global Options’, dentre
+  # as alternativas, recomendo a sessão `Appearance` e `Pane Layout`.
 
 # ----- Programação R -----
 
