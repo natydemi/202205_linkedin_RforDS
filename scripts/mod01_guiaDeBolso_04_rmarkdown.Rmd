@@ -82,6 +82,19 @@ plot(cars)
 Pois é, isto também é possível! Se quisermos, por exemplo, saber a quantidade de linhas da base de dados `cars`, basta escrever o comando para tal, no caso a função `nrow()`, utilizando aspas e a letra r no início do comando. Ou seja `r` seguido por `nrow(cars)` tudo junto. Assim a quantidade de linhas da base de dados cars é: `r nrow(cars)`.
 
 
+## Opções do chunk
+
+Ao criar um novo chunk, você pode especificar vários parâmetros. No código abaixo estou utilizando dois destes parâmetros, o primeiro especificando que o código não deve ser executado (`eval = FALSE`), e o segundo indicando também que o código em si não deve aparecer no output do nosso `.Rmd`. 
+
+```{r eval=FALSE}
+Este chunk não será executado! Ainda bem, pois, caso contrário, retornaria um erro.
+```
+
+
+```{r eval=FALSE, include=FALSE}
+Este chunk não será executado, e não constará no output do .Rmd
+```
+
 ## Atenção!
 
 É importante saber que ao trabalhar com o Rmarkdown você está em um ambiente apartado do seu console. De modo que o que você rodar no console não estará valendo para o seu Rmarkdown.
@@ -120,7 +133,7 @@ Ou ainda para acesso a links, como estas excelentes referências de consulta:
 
 2. <https://rmarkdown.rstudio.com/>
 
-3. Canal no youtube da Fernanda Peres – [R Markdown: Gerando relatórios usando o R (Parte1), ](https://www.youtube.com/watch?v=obxa5VH4WvY)  
+3. Canal no youtube da Fernanda Peres – [R Markdown: Gerando relatórios usando o R (Parte1)](https://www.youtube.com/watch?v=obxa5VH4WvY)  
 
 
 

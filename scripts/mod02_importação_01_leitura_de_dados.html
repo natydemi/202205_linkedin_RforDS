@@ -370,10 +370,10 @@ Ambiente R e RStudio</h1>
 <h1>Introdução</h1>
 <p>Neste material iremos passar pelos principais pontos relacionados a
 importação e exportação de dados no R. Adicionalmente teremos uma breve
-discussão sobre a dinâmica de diretórios, quais os pontos de atenção que
-devemos ter sobre as diferenças de comportamento entre os arquivos .R e
+discussão sobre a dinâmica de diretórios, e quais os pontos de atenção
+importantes sobre as diferenças de comportamento entre os arquivos .R e
 .Rmd. E, por fim, como projetos podem e devem ser utilizados como uma
-ferramenta de reprodutibilidade.</p>
+ferramenta de reprodutibilidade na sua análise.</p>
 </div>
 <div id="importação" class="section level1">
 <h1>Importação</h1>
@@ -396,7 +396,7 @@ respectivos códigos, e garantir a reprodutibilidade desta ação.</p>
 <p>Uma alternativa menos replicável é por meio do comando
 <code>file.choose()</code>, que abre um pop-up, onde você pode
 selecionar o seu arquivo de interesse.</p>
-<pre class="r"><code>#file.choose()</code></pre>
+<pre class="r"><code>file.choose()</code></pre>
 </div>
 <div id="via-código-para-o-seu-diretório-de-trabalho" class="section level3">
 <h3>Via código, para o seu diretório de trabalho</h3>
@@ -406,7 +406,7 @@ funções do pacote <code>readr</code> – uma das bibliotecas do universo
 tidyverse. Abaixo seguem alguns exemplos para a leitura de um arquivo
 que denominaremos de forma genérica como “file” – assumindo que este
 esteja no seu diretório corrente de trabalho (falaremos mais sobre isto
-mais a frente), considerando diferentes possíveis extensões e
+mais à frente), considerando diferentes possíveis extensões e
 delimitadores que este arquivo possa vir a ter:</p>
 <ul>
 <li>read_csv(“file.csv”) - lê arquivos delimitados por vírgula</li>
@@ -421,19 +421,21 @@ largura fixa (exemplo dado para o padrão 1,3,5)</li>
 características do arquivo, considerando parâmetros como: nome das
 colunas, cabeçalho, linhas para serem ignoradas, ou ainda a
 pré-especificação da classe de cada uma das colunas do arquivo
-(falaremos mais sobre classes ao passarmos para a etapa
-<code>inspeções</code>). Contudo, no caso deste último parâmetro não ser
-listado, as funções do <code>readr</code> irão “adivinhar” a classe das
-colunas, retornando uma mensagem com tais informações.</p>
-<p>Como exemplo, vamos ler um arquivo que acompanha a instalação da
-biblioteca, para que o R encontre este arquivo, precisamos compartilhar
-o seu diretório. Felizmente o pacote readr possui uma função que nos
-retorna a localização exata dos seus dados para teste:</p>
+(falaremos mais sobre classes no próximo módulo) – no caso deste último
+parâmetro não ser listado, as funções do <code>readr</code> irão
+“adivinhar” a classe das colunas, retornando uma mensagem com tais
+informações. Como exemplo, vamos ler um arquivo que acompanha a
+instalação da biblioteca, para que o R encontre este arquivo, precisamos
+compartilhar o seu diretório. Felizmente o pacote readr possui uma
+função que nos retorna a localização de tais “dados teste” no seu
+computador (no caso, estes dados estarão junto com a instalação da
+biblioteca readr):</p>
 <pre class="r"><code>readr_example(&quot;mtcars.csv&quot;)
-## [1] &quot;C:/Users/linkedin/AppData/Local/R/win-library/4.2/readr/extdata/mtcars.csv&quot;
+## [1] &quot;C:/Users/natyd/OneDrive/courses/intro_R_language/202205_linkedin_RforDS/renv/library/R-4.2/x86_64-w64-mingw32/readr/extdata/mtcars.csv&quot;
 #dica: explore as demais opções da função `readr_example`</code></pre>
-<p>Assim, sabendo onde está o arquivo, o seu diretório, ou ainda o seu
-<code>path</code>, podemos fazer a leitura:</p>
+<p>Assim, sabendo onde está o arquivo, ou seja, em que diretório, ou
+<code>path</code>, o seu arquivo se encontra, podemos fazer a
+leitura:</p>
 <pre class="r"><code>path &lt;- readr_example(&quot;mtcars.csv&quot;)
 read_csv(path)
 ## Rows: 32 Columns: 11
@@ -458,18 +460,18 @@ read_csv(path)
 ## 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
 ## # … with 22 more rows</code></pre>
 <p>Durante o capítulo de exportação vamos discutir um pouco mais sobre
-diretórios, mas o é importante de saber aqui é saber onde o seu arquivo
-se encontra, e indicar esta informação como parâmetro da função.</p>
+diretórios, aqui o importante é que você tenha claro que se trata da
+localização do seu arquivo no seu computador.</p>
 </div>
 </div>
-<div id="salvando-o-objeto-atribuição" class="section level2">
-<h2>Salvando o objeto (atribuição)</h2>
+<div id="salvando-o-objeto-importado-atribuição" class="section level2">
+<h2>Salvando o objeto importado (atribuição)</h2>
 <p>Na etapa anterior fizemos a leitura do arquivo, mas este não foi
 salvo, se você avaliar a aba <code>Environment</code> do seu RStudio,
-notará que a base <code>path</code> não consta lá. Para que a base
-conste no seu ambiente, e para que você possa carrega-la em outros
-momentos da análise, ou mesmo exportá-la, é necessário criar um objeto
-que receba a leitura:</p>
+notará que a base <code>mtcars.csv</code> não está lá. Para que a base
+conste no seu ambiente, o que irá permitir que você a utilize em outros
+momentos da análise, ou mesmo a exporte, é necessário criar um objeto
+que irá guardar o arquivo lido:</p>
 <pre class="r"><code>nossa_base &lt;- read_csv(path)
 ## Rows: 32 Columns: 11
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -478,25 +480,29 @@ que receba a leitura:</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<p>Agora sim! Podemos seguir :)</p>
+<p>Outra maneira de descrever esta ação é: atribuímos o resultado da
+função <code>read_csv()</code> ao objeto <code>nossa_base</code>. E
+agora sim! Podemos seguir para a próxima etapa! :)</p>
 </div>
 <div id="dados-de-diferentes-extensões" class="section level2">
 <h2>Dados de diferentes extensões</h2>
 <p>O R dispõe de uma larga gama de bibliotecas relacionadas à leitura de
-dados nos mais variados formatos e contextos, abaixo temos algumas
-destas opções:</p>
+dados, dos mais variados formatos e contextos. Abaixo temos alguns
+exemplos de pacotes e seus respectivos enfoques:</p>
 <ul>
-<li><code>readxl</code>: arquivos .xls e .xlsx.</li>
-<li><code>googlesheets4</code>: planilhas do google sheets</li>
+<li><code>readxl</code>: importação e exportação de arquivos .xls e
+.xlsx</li>
+<li><code>googlesheets4</code>: importação e exportação de planilhas do
+google sheets</li>
 <li><code>feather</code>: compartilhar arquivos com Python e outras
-linguagens.</li>
-<li><code>haven</code>: trabalhar com arquivos do SPSS, SAS e
-Stata.</li>
-<li><code>DBI</code> / <code>odbc</code> : conexão de base de dados
-(SQL)</li>
-<li><code>rvest</code> / <code>httr</code>: web scraping.</li>
-<li><code>jsonlite</code>: para JSON arquivos.</li>
-<li><code>xml2</code>: para XML.</li>
+linguagens</li>
+<li><code>haven</code>: trabalhar com arquivos do SPSS, SAS e Stata</li>
+<li><code>DBI</code> / <code>odbc</code> : fornecer interface para
+trabalhar com bancos de dados (SQL)</li>
+<li><code>rvest</code> / <code>httr</code>: fornecer recursos para web
+scraping</li>
+<li><code>jsonlite</code>: importação e exportação de arquivos JSON</li>
+<li><code>xml2</code>: importação e exportação de arquivos XML</li>
 </ul>
 <p>Apesar de não haver a intenção de ser extensiva aqui, gostaria de
 comentar também do pacote <code>sparklyr</code>, que fornece uma
@@ -507,18 +513,19 @@ de Big Data.</p>
 <h2>Dados dos pacotes do R</h2>
 <p>No R, existe também a opção de trabalhar com as bases de dados
 disponíveis pela própria linguagem. Para consultar as opções default,
-podemos utilizar a função <code>data()</code>. Porém, não para por aí,
-pois existem muitas bases que acompanham as milhares de bibliotecas, de
-modo que para cada biblioteca instalada/carregada, teremos uma
-atualização nesta lista, compare:</p>
-<pre class="r"><code>#data()
+podemos utilizar a função <code>data()</code>. Porém, não pára por aí,
+pois existem muitas bases que acompanham as milhares de bibliotecas do
+R, de modo que para cada pacote que carregamos no ambiente (função
+<code>library()</code>), teremos uma atualização nesta lista. Rode os
+comandos abaixo e compare os resultados:</p>
+<pre class="r"><code>data()
 
-#library(dados)
+library(dados)
 
-#data()</code></pre>
+data()</code></pre>
 <p>As bases built-in do R, assim como as bases pertencentes a
-bibliotecas que <em>esteja carregadas</em>, podem ser diretamente
-acessadas:</p>
+bibliotecas que <strong>estejam carregadas</strong>, podem ser
+diretamente acessadas:</p>
 <pre class="r"><code>AirPassengers
 ##      Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 ## 1949 112 118 132 129 121 135 148 148 136 119 104 118
@@ -540,11 +547,12 @@ precisamos carregá-las, por meio da função
 <div id="alguns-pacotes-legais-do-r-para-pesquisar-bases-de-dados" class="section level3">
 <h3>Alguns pacotes legais do R para pesquisar bases de dados</h3>
 <p>Conforme comentado, temos datasets que acompanham as bibliotecas, e
-existem pacotes tendo como enfoque facilitar o acesso aos dados:</p>
+existem pacotes que são criados visando a disponibilização de dados:</p>
 <ul>
 <li><p><code>dados::</code> disponibiliza a tradução para português de
 algumas das bases de dados mais usuais no contexto de tutorias de
-análise/ciência de dados.</p></li>
+análise/ciência de dados – <a href="https://github.com/cienciadedatos/dados">pacote criado
+colaborativamente pela comunidade R brasileira</a></p></li>
 <li><p><code>charlatan::</code> possibilita a construção de dados falsos
 a partir de especificações de temas ou de caracteristicas desejadas para
 as variáveis.</p></li>
@@ -564,8 +572,8 @@ este aplicativo Shiny é particularmente interessante: <a href="https://marija-s
 that you need</a>, algo como “encontre os dados do R que você precisa”
 em português. Nele você pode pesquisar bases de dados a partir da
 especificação de informações como: número mínimo de observações
-desejadas, a presença de determinadas classes de dados, ou
-palavras-chave relacionadas.</p>
+desejadas, a presença de determinadas classes de dados (tema do próximo
+módulo deste curso), ou palavras-chave relacionadas aos dados.</p>
 </div>
 <div id="alguns-sites-legais-para-pesquisar-bases-de-dados" class="section level3">
 <h3>Alguns sites legais para pesquisar bases de dados</h3>
@@ -594,7 +602,7 @@ seguido do que chamamos de <code>path</code>, no caso mais simples, o
 a extensão desejada para o arquivo, por exemplo:</p>
 <pre class="r"><code>#exporte os dados em um arquivo .csv
 write_csv(nossa_base, &quot;base_exportada.csv&quot;)</code></pre>
-<p>Mas onde o arquivo <code>base_exportada.csv</code>, criado acima se
+<p>Mas onde o arquivo <code>base_exportada.csv</code>, criado acima, se
 encontra no seu computador? Em qual pasta o arquivo foi salvo? A
 resposta é: no seu diretório de trabalho, basicamente a pasta do seu
 computador que está sendo entendida pelo R como a sua pasta raiz, a sua
@@ -603,25 +611,27 @@ pasta de referência.</p>
 comando <code>getwd()</code> (<em>get working directory</em>), que
 retornará algo como “C:/Users/Documents”. Avalie qual o seu com o
 comando abaixo:</p>
-<pre class="r"><code>#getwd()</code></pre>
+<pre class="r"><code>getwd()</code></pre>
 <p>No caso de você ter interesse em alterar o diretório de trabalho,
 temos a função <code>setwd()</code> (<em>set working directory</em>), em
 que é possível passar especificações como:
-<code>setwd(&quot;C:/Users/Desktop&quot;)</code>, e alterar o seu diretório de
+<code>setwd(&quot;C:/Users/Downloads&quot;)</code>, e alterar o seu diretório de
 referência.</p>
-<pre class="r"><code># Faça um teste você mesmo! Coloque um endereço (`path`) do seu computador, 
-# e veja se o getwd() será alterado.
-# Você vai precisar de algo similar aos exemplos abaixo:
-  # setwd(&quot;C:/Users/natyd/Desktop&quot;)
-  # setwd(&quot;C:\\Users\\natyd\\Desktop&quot;)</code></pre>
-<p>Notou a mensagem de warning, ela é bem importante! Está nos dizendo
-que a mudança realizada só valerá dentro deste bloco de código, para os
-demais voltaremos ao diretório que você havia consultado antes. Este é
-um comportamento exclusivo dos arquivos <code>.Rmd</code>, ou seja, para
-código em .R, este tipo de alteração será perene ao longo do código.
-Mais a frente falaremos um pouco mais sobre este ponto.</p>
-<p>Sendo assim, com o comando abaixo podemos importar a base
-anteriormente exportada.</p>
+<p>Faça um teste você mesmo! Coloque um endereço (<code>path</code>) do
+seu computador, e veja se o getwd() será alterado. Você vai precisar de
+algo similar aos exemplos abaixo:</p>
+<pre class="r"><code>setwd(&quot;C:/Users/natyd/Desktop&quot;)
+#ou
+setwd(&quot;C:\\Users\\natyd\\Desktop&quot;)</code></pre>
+<p>Notou uma mensagem de <code>warning</code>, no seu <code>.Rmd</code>?
+Ela é bem importante! Está nos dizendo que a mudança realizada só valerá
+dentro deste bloco de código. Para os demais chunks voltaremos ao
+diretório que você havia consultado antes. Este é um comportamento
+exclusivo dos arquivos Rmarkdown, ou seja, para códigos com extensão .R,
+este tipo de alteração será perene ao longo do código. Mais à frente
+falaremos um pouco mais sobre este ponto.</p>
+<p>Por fim, como um último teste, com o comando abaixo podemos importar
+a base anteriormente exportada.</p>
 <pre class="r"><code>nossa_base_exportada &lt;- read_csv(&quot;base_exportada.csv&quot;)
 ## Rows: 32 Columns: 11
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -645,27 +655,33 @@ nossa_base_exportada
 ##  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
 ## 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
 ## # … with 22 more rows</code></pre>
-<p>De maneira alternativa às funções comentadas, você pode explorar a
-aba <code>File</code> do RStudio, onde encontrará algumas opções
-point-and-click para navegar pelos diretórios do seu computador.</p>
+<blockquote>
+<p>DICA: de maneira alternativa às funções comentadas, você pode
+explorar a aba <code>File</code> do RStudio, onde encontrará algumas
+opções point-and-click para navegar pelos diretórios do seu
+computador.</p>
+</blockquote>
 </div>
 </div>
 <div id="e-quando-os-arquivos-não-estão-no-diretório-de-trabalho" class="section level1">
 <h1>E quando os arquivos não estão no diretório de trabalho?</h1>
-<p>Lembra quando comentei no início da seção de exportação: “no caso
-mais simples, o <code>path</code> será apenas o nome que você pretende
-dar ao arquivo”, pois bem, estava chamando de simples o caso em que o
-arquivo que você deseja importar está no seu diretório de trabalho. No
-caso em que não estiver, você vai precisa passar o endereço completo,
-similar ao que foi feito aqui:
-C:/Users/linkedin/AppData/Local/R/win-library/4.2/readr/extdata/mtcars.csv.
+<p>No início da seção de exportação foi comentado que: “no caso mais
+simples, o <code>path</code> será apenas o nome que você pretende dar ao
+arquivo”, pois bem, estava chamando de simples o caso em que o arquivo
+que você deseja importar está no seu diretório de trabalho. No caso em
+que não estiver, você vai precisar passar o endereço completo do
+arquivo, o <code>path</code>, similar ao que foi feito aqui:
+C:/Users/natyd/OneDrive/courses/intro_R_language/202205_linkedin_RforDS/renv/library/R-4.2/x86_64-w64-mingw32/readr/extdata/mtcars.csv.
 Basicamente o nome do arquivo deve ser precedido pelo diretório de
 origem, tanto para o caso de importação, quanto para exportação, algo
 como: <code>write_delim(mtcars, file = &quot;C:/Users/mtcars.txt&quot;)</code> por
-exemplo. Ah, uma dica: dependendo do seu sistema operacional, ou se
-existir algum caracter especial no seu path, você pode ter que trabalhar
-com: barras simples (<code>/</code>), barras invertidas (<code>\</code>)
-ou barras duplas (<code>\\</code>).</p>
+exemplo.</p>
+<blockquote>
+<p>ATENÇÃO: dependendo do seu sistema operacional, ou se existir algum
+caracter especial no seu path, você pode ter que trabalhar com barras
+simples (<code>/</code>), barras invertidas (<code>\</code>) ou barras
+duplas (<code>\\</code>).</p>
+</blockquote>
 </div>
 <div id="trabalhe-com-projetos" class="section level1">
 <h1>Trabalhe com Projetos!</h1>
@@ -673,8 +689,8 @@ ou barras duplas (<code>\\</code>).</p>
 encontram no seu diretório de trabalho, é possível especificar o
 endereço (<code>path</code>) de origem do arquivo (algo como
 “diretorio/arquivo.extensão”), ou mudar o diretório de todo o documento
-(no caso de arquivos .R) e apenas do chunk (no caso de arquivos .Rmd) em
-si (<code>setwd()</code>). Contudo nenhuma destas são práticas são
+(no caso de arquivos .R) e apenas do chunk (no caso de arquivos .Rmd)
+(<code>setwd()</code>). Contudo nenhuma destas são práticas são
 recomendadas, visto tornar o seu trabalho não reprodutível por outras
 pessoas, ou mesmo por você em outros ambientes (outro computadores).
 Como alternativa é extremamente recomendado trabalhar com a opção de
@@ -682,12 +698,12 @@ projetos do RStudio ( arquivos com extensão <code>.RProj</code>).
 Nestes, o local (diretório) em que o arquivo <code>.RProj</code> estiver
 salvo, passa a ser a pasta raiz das análises, como se fosse um
 <code>setwd()</code> automático. De modo que se você manter todas as
-pastas e arquivos importantes para a sua análise na mesma pasta, ou em
-subpastas do <code>.Rproj</code>, será possível reproduzir as suas
-análises em outros contextos, sem que seja necessário corrigir nenhum
-dos endereços Legal né?</p>
+pastas, arquivos e dependências da sua análise na mesma pasta, ou em
+subpastas do <code>.Rproj</code>, será possível reproduzir os seus
+resultados em outros contextos, sem que seja necessário corrigir nenhum
+dos endereços. Legal né?</p>
 <blockquote>
-<p>Para ilustrar um pouco melhor, sem trabalhar com projetos, se você
+<p>Para ilustrar um pouco melhor: sem trabalhar com projetos, se você
 resolver me enviar agora uma pasta com a sua análise, e a primeira linha
 dos seus scripts for algo como
 <code>setwd(&quot;C:/Users/SEU_nome/Desktop&quot;)</code>. Para que eu consiga
@@ -701,28 +717,28 @@ tiver salvo a pasta recebida.</p>
 <p>Então seja para que outras pessoas consigam executar o seu código,
 seja para que você mesmo (a) possa trocar de ambiente sem se preocupar
 de atualizar todos os endereços de especificação de leitura de arquivos,
-de script, e etc, basta enviar a pasta com os arquivos necessários, o
-<code>.Rproj</code> na raiz, e os paths construídos considerando sempre
-que o local do seu projeto é a sua pasta de referência (o que significa
-trabalhar com paths relativos, falaremos mais a frente sobre isto) e
-voilà! Todos os seus códigos estarão reprodutíveis! E aqui vale comentar
-que replicabilidade é um dos princípios básicos do método científico, e
-se estamos falando de <strong>ciência</strong> de dados, nada mais
-justo, certo? ;)</p>
-<p>E como criar esse tal <code>.Rproj</code>? A maneira mais tradicional
+de script, e etc. Trabalhar com as dependências da análise na pasta (ou
+em subpastas) do <code>.Rproj</code>, e voilà! Você estará com os seus
+códigos reprodutíveis, ou, no mínimo, muito mais próximo disso! E aqui
+vale comentar que replicabilidade é um dos princípios básicos do método
+científico, e se estamos falando de <strong>ciência</strong> de dados,
+nada mais justo, certo? ;)</p>
+<p>E como criar esse tal <code>.Rproj</code>? A maneira tradicional
 é:</p>
 <ol style="list-style-type: decimal">
 <li>Clique no ícone azul que consta no canto superior direito do
 RStudio</li>
 <li>Clique em “Novo Diretório”. Digite um nome para esta nova pasta, por
-exemplo, “Curso_Intro_R”, e escolha um local conveniente para ela.</li>
-<li>Clique no botão “Criar Projeto”</li>
+exemplo, “Curso_Intro_R”, e escolha um diretório conveniente para ela no
+seu computador.</li>
+<li>Clique no botão “Criar Projeto” e pronto!</li>
 </ol>
-<p>E pronto! Vamos testar se está tudo funcionando? Feche o RStudio,
-navegue até o diretório onde você criou o projeto, e clique duas vezes
-no arquivo <code>.Rproj</code>, e … e aí? Funcionou? Não? Dá uma
-repassada nos passos de criação, se seguir tendo problemas, envia uma
-mensagem aqui para gente. Sim? /</p>
+<p>Vamos testar se está tudo funcionando? Feche o RStudio, navegue até o
+diretório onde você criou o projeto, e clique duas vezes no arquivo
+<code>.Rproj</code>, e … E aí? Funcionou? Não? Dá uma repassada nos
+passos de criação, se preferir, dá uma olhada nesse passo a passo também
+<a href="https://livro.curso-r.com/2-3-projetos.html" class="uri">https://livro.curso-r.com/2-3-projetos.html</a>. Funcionou?
+Uhulll /</p>
 <p>Ah, se você quiser fechar ou trocar de projeto, você pode fazer a
 alteração no mesmo canto superior direito da tela :)</p>
 <div id="estrutura-de-pastas-e-organização-de-arquivos" class="section level2">
@@ -735,31 +751,34 @@ trabalho.</p>
 </div>
 <div id="caminho-relativo-vs.-absoluto" class="section level2">
 <h2>Caminho relativo vs. absoluto</h2>
-<p>Camihos relativos são aqueles que tem início no diretório de trabalho
-da sua sessão. Assim, se você quiser acessar determinado arquivo que
-esteja em uma subpasta, chamada dados, por exemplo, você precisaria
-apenas adicionar <code>dados/nome_do_arquivo.extensão</code>. É como se
-tudo o que precede a pasta <code>/dados</code> não precisasse ser
-especificado. Note que adicionar a pratica de caminhos relativos aos
+<p>Caminhos relativos são aqueles que tem início no diretório de
+trabalho da sua sessão. Assim, se você quiser acessar um arquivo que
+esteja em uma subpasta do seu diretório, por exemplo uma subpasta
+chamada <code>dados</code>, você precisaria apenas adicionar
+<code>dados/nome_do_arquivo.extensão</code>. Na prática, é como se tudo
+o que precede a pasta <code>/dados</code> não precisasse ser
+especificado, pois o R já entende que se trata da sua pasta de
+referência. Note que adotar caminhos relativos em conjunto com os
 projetos do RStudio, nos incentiva a colocar todos os arquivos da
-análise dentro da pasta do projeto. Assim, você pode compartilhar a
-pasta do projeto com qualquer pessoa (alô galera do git!), e todas as
-importações e exportações serão mantidas! (texto baseado no material <a href="https://livro.curso-r.com/5-1-caminhos.html" class="uri">https://livro.curso-r.com/5-1-caminhos.html</a> )</p>
+análise dentro do mesmo diretório. Assim, você pode compartilhar o seu
+trabalho em outros ambientes de maneira mais simples (alô galera do
+git!), e todas as importações e exportações serão mantidas! (texto
+baseado no material <a href="https://livro.curso-r.com/5-1-caminhos.html" class="uri">https://livro.curso-r.com/5-1-caminhos.html</a> )</p>
 </div>
 <div id="rmd-e-.r-diferentes-comportamentos-para-termos-de-diretórios" class="section level2">
 <h2>.Rmd e .R : diferentes comportamentos para termos de diretórios</h2>
 <p>Existem diferenças importantes entre o comportamento dos arquivos
 .Rmd e .R em relação a maneira com que lidam com o diretório de
 trabalho. No caso dos arquivos .R, caso não estivermos trabalhando com
-projetos, terá como diretório default o último diretório específicado na
+projetos, o diretório default será o último diretório específicado na
 sessão — no caso de nenhuma específicação ter sido realizada, a sessão
-irá utilizar um diretório padrão, usualmente os “Meus Documentos”
+irá utilizar um diretório padrão, usualmente a pasta “Meus Documentos”
 (“C:/Users/natyd/Documents”), ou algo similar. Já para o .Rmd o
-diretório padrão será o local em que o arquivo Rmarkdown estiver, mesmo
-se estivermos trabalhando com projetos. Deste modo, mesmo trabalhando
-com projetos, será importante que você tenha o cuidado de trabalhar com
-os caminhos relativos ao .Rmd e não ao .Rproj, ou então que você faça a
-alteração desta configuração no seu RStudio
+diretório padrão será o local em que o arquivo Rmarkdown estiver salvo,
+mesmo se estivermos trabalhando com projetos. Deste modo, mesmo
+trabalhando com projetos, será importante que você tenha o cuidado de
+trabalhar com os caminhos relativos ao .Rmd e não ao .Rproj, ou então
+que você faça a alteração desta configuração no seu RStudio
 (<code>Tools &gt; Global Options &gt; R Markdown &gt; Evaluate chunks in directory</code>
 e mude de <code>Document</code> para <code>Project</code>).</p>
 <p>Considerando o que falamos sobre caminho relativo, no caso do seu
