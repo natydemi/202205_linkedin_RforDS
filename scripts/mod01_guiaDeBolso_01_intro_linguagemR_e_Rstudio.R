@@ -26,7 +26,7 @@
   # em que o R foi instalado.
 
   # Neste ambiente, via point-and-click, temos opções que vão desde mudanças de 
-  #diretórios até a instalação de bibliotecas. 
+  # diretórios até a instalação de bibliotecas. 
 
   #Tutorial: https://livro.curso-r.com/1-1-instalacao-do-r.html
 
@@ -37,25 +37,25 @@
   # portanto, disponibiliza poucos recursos em termos de usabilidade. 
   # Como alternativa podemos trabalhar com Ambientes de Desenvolvimento Integrados, 
   # ou IDEs (Integrated Development Environment), como são mais conhecidas. 
-  # A mais difundida no caso do R é o RStudio:
+  # A mais difundida no caso do R é a IDE RStudio:
 
-  #O RStudio é de uma IDE do R, amplamente difundida na comunidade. 
-  #Para fazer o download, entre na página de download do RStudio:
+  # Para fazer o download, entre na página de download do RStudio:
     #https://posit.co/download/rstudio-desktop/
-  #e siga as instruções (caso já tenha instalado o R, pule para o Step 2)
+  # e siga as instruções (caso já tenha instalado o R, 
+  # você pode pular diretamente para o Step 2 da página)
 
   
 # RStudio (Posit): muito mais que uma IDE ----- 
 
-  #	RStudio não é apenas de uma IDE, mas também uma empresa, uma 
-  # organização que tem por objetivo ajudar cientistas a dar sentido para o 
-  # mundo por meio de dados.
+  #	RStudio não é apenas uma IDE, mas também uma empresa, uma 
+  # organização que tem por objetivo ajudar cientistas a dar sentido para 
+  # o mundo por meio de dados.
 
   # Em 2022, a RStudio passou a se chamar Posit (https://posit.co/), visando 
   # ampliar sua comunidade e poder de atuação. 
 
   # Seja como Posit, seja como Rstudio, existem MUITOS materiais interessantes
-  # voltados para profissionais que trabalham com dados, vale visitar ;)
+  # voltados para profissionais que trabalham com dados, vale visitar o site ;)
 
 
 # Atualizando as versão do R e RStudio ----- 
@@ -82,12 +82,12 @@
   # instalação destas novamente. Isto porque não há garantia que as bibliotecas 
   # funcionem com a nova versão do R – um comportamento usual para qualquer 
   # linguagem de programação. Para consultar a versão dos seus pacotes: 
-  #sessionInfo()
+  # sessionInfo()
 
 
 # Alternativa às instalações físicas ----- 
 
-  #De maneira alternativa à instalação você pode consirar o RStudio Cloud,
+  #De maneira alternativa à instalação você pode considerar o RStudio Cloud,
   # um serviço gratuito oferecido pelo RStudio que permite que os usuários R 
   # tenham acesso a todo o ambiente RStudio via web, de maneira on-line, 
   # inclusive permitindo colaboração, através do site do RStudio Cloud:
@@ -150,7 +150,9 @@
   # vale comentar que a indentação no R não é um pré requisito, mas sim
   # uma boa prática, visto auxiliar na organização do código.
   
-  #ATALHO: selecione as linhas que você quer comentar e `ctrl + shift + c`
+  #DICA: para comentar um bloco de códigos, ao invés de fazer o comentário 
+  # linha a linha, você pode selecionar os comandos que você quer comentar 
+  # e usar o atalho `ctrl + shift + c`
   
   #DICA: um recurso interessante do RStudio são as seções, ou sections.
   # Para conhecer digite: crtl + shift + R, e teste você mesmo! Você 
@@ -293,7 +295,7 @@
   #Atribuição: a recomendação é trabalhar com `<-` para atribuição de objetos, 
   # `=` para a especificação de parâmetros de funções e evitar o `->`.
   
-  #ATALHO: para inserir o símbolo `<-` no RStudio podemos utilizar 'alt + -'.
+  #DICA: para inserir o símbolo `<-` podemos utilizar o atalho 'alt + -'.
   
   #Ao criar objetos, passamos a ter a informação que estes carregam 
   # salvos na memória e podemos chama-los posteriormente  
@@ -628,9 +630,9 @@
   # você encontrará materiais para praticar e seguir evoluindo na linguagem R!
   # ao longo dos módulos vamos fazer referências a alguns materiais daqui ;)
   
-  #Se você nunca tiver programado em R recomendo dar uma olhada na apresentação 
-  # "Curso Básico de R" das R-Ladies São Paulo:
-    # https://beatrizmilz.github.io/2020-R-Ladies-SP-Basico/#1
+  #Se você nunca tiver programado em R recomendo dar uma olhada nos materiais  
+  # da apresentação "Oficina de Introdução ao R" das R-Ladies São Paulo:
+    # https://r-ladies-sao-paulo.github.io/2022-11-oficina-introducao-R/
   #e se já tiver visto algo sobre o R, então talvez seja mais prático ir direto
   # no módulo "The Basics - Programming basics", do RStudio Learn Primers:
     #https://rstudio.cloud/learn/primers/1.2

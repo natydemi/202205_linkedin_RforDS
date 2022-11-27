@@ -367,10 +367,10 @@ arquivos de extensão .Rmd alternativos aos scripts usuais .R.</p>
 <p>Rmarkdown é script com formato (.Rmd) que nos possibilita trabalhar
 com códigos, assim como um script usual .R. Contudo aqui temos a
 possibilidade de adicionar textos e visualizar os outputs dos códigos,
-de maneira mais visual e interativa. Permitindo uma maior praticidade
-durante a análise. Além disso o Rmarkdown pode ser compilado, de modo
-que o produto final seja salvo como um arquivo HTML , PDFs, Word,
-slides, entre outros.</p>
+de maneira mais interativa. Permitindo uma maior praticidade durante a
+análise. Além disso o Rmarkdown pode ser compilado, de modo que o
+produto final seja salvo como um arquivo HTML , PDFs, Word, slides,
+entre outros.</p>
 <p>Para saber mais, acesse: <a href="https://rmarkdown.rstudio.com/">rmarkdown.rstudio.com</a>.</p>
 <p>Vamos agora ver algumas das funcionalidades básicas do Rstudio:</p>
 </div>
@@ -397,8 +397,8 @@ barra de funcionalidades do documento .Rmd, ou ainda por meio do atalho
 <div id="criando-um-novo-chunk" class="section level2">
 <h2>Criando um novo chunk</h2>
 <p>Para isto você poderá ir via point-and-click, na parte superior
-direita da tela (+C, em verde), ou por meio do atalho
-<code>Ctrl+Alt+I</code>.</p>
+direita da tela (o botão <strong>+C</strong>, em verde), ou por meio do
+atalho <code>Ctrl+Alt+I</code>.</p>
 <pre class="r"><code>#este chunk está vazio, mas daqui para frente traremos uma visão da base cars</code></pre>
 </div>
 <div id="rodando-um-código-dentro-do-chunk" class="section level2">
@@ -461,9 +461,9 @@ final da linha, à direita, na seta verde.</p>
 ## 50    25   85</code></pre>
 <pre class="r"><code>1 + 1</code></pre>
 <pre><code>## [1] 2</code></pre>
-<p>Fica bacana o output da tabela no script, né? Super interativa! :)
-Mas não fica tão bonita no documento final, devido a esta base ter
-muitas linhas. Mas existem bibliotecas específicas para tornar a tabela
+<p>Fica bacana o output da tabela no script, né? Bem interativa! :) Mas
+não fica tão bonita no documento final, devido a esta base ter muitas
+linhas. Mas existem bibliotecas específicas para tornar a tabela
 interativa por lá também :)</p>
 <pre class="r"><code>summary(cars)</code></pre>
 <pre><code>##      speed           dist       
@@ -488,26 +488,29 @@ base de dados cars é: 50.</p>
 </div>
 <div id="atenção" class="section level2">
 <h2>Atenção!</h2>
-<p>É importante saber que ao trabalhar com o Rmarkdown você precisará
-ter em vista que está trabalhando com um ambiente apartado do seu
-console. De modo que o que você rodar no console não estará valendo para
-o seu Rmarkdown.</p>
+<p>É importante saber que ao trabalhar com o Rmarkdown você está em um
+ambiente apartado do seu console. De modo que o que você rodar no
+console não estará valendo para o seu Rmarkdown.</p>
 <p>Outro ponto que vale comentar é que a cada vez que você compilar o
 documento, você irá rodar o seu .Rmd desde o início. Se qualquer chunk
-tiver qualquer tipo de problema, o documento não será gerado q mas não
-se desespere! Usualmente a mensagem de erro já te dará uma boa dica da
-origem do problema. Uma questão comum, é a utilização de alguma função
-sem ter, antes, realizado o carregamento da respectiva biblioteca.</p>
+tiver qualquer tipo de problema, o documento não será gerado! Mas não se
+desespere! Usualmente a mensagem de erro já te dará uma boa dica da
+origem do problema.</p>
+<blockquote>
+<p>DICA: um problema comum, é a utilização de alguma função sem ter,
+antes, realizado o carregamento da respectiva biblioteca.</p>
+</blockquote>
 <p>Vou adicionar aqui um exemplo, em que chamamos a base de dados
 <code>construction</code>, que faz parte da biblioteca
 <code>tidyr</code> — lembrando que, caso você nunca tenha instalado esta
 biblioteca, será necessário fazer a instalação por meio do
 <code>install.packages(&quot;tidyr&quot;)</code> no Console, ou via
 point-and-click na aba <code>Packages</code>. Como teste, inverta os
-comandos, ou seja, carregue a biblioteca <strong>após</strong> chamar a
-base, e compile o documento (botão <code>Knit</code> ou pelo atalho que
-comentamos anteriormente). Note que na aba <code>Render</code> você terá
-uma mensagem com a frase “objeto não encontrado”.</p>
+comandos do chunk abaixo, ou seja, carregue a biblioteca
+<strong>após</strong> chamar a base, e compile o documento (botão
+<code>Knit</code> ou pelo atalho que comentamos anteriormente). Note que
+na aba <code>Render</code> você terá uma mensagem com algo como “objeto
+não encontrado”.</p>
 <pre class="r"><code>library(tidyr)
 us_rent_income</code></pre>
 <pre><code>## # A tibble: 104 × 5
@@ -550,16 +553,18 @@ consulta:</p>
 <li><p>Canal no youtube da Fernanda Peres – <a href="https://www.youtube.com/watch?v=obxa5VH4WvY">R Markdown: Gerando
 relatórios usando o R (Parte1),</a></p></li>
 </ol>
-<p>Uma última dica aqui é explorar a opção “Visual” do Rmarkdown
-(disponível em versões mais recentes), que nos permite trabalhar com uma
-interface com menos código, e mais opções point-and-click.</p>
+<blockquote>
+<p>DICA: explorar a opção “Visual” do Rmarkdown (disponível em versões
+mais recentes), que nos permite trabalhar com uma interface com menos
+código, e mais opções point-and-click.</p>
+</blockquote>
 </div>
 <div id="mão-na-massa" class="section level1">
-<h1>&gt; MÃO NA MASSA!</h1>
+<h1>MÃO NA MASSA!</h1>
 <p>Que tal repassar os scripts deste módulo para um Rmarkdown? Você pode
 fazer uma curadoria do que é importante para você, possibilitando um
-material para consulta melhor formatado, inclusive com os seus próprios
-comentários :)</p>
+material para consulta melhor formatado, mais visual, e com os seus
+próprios comentários! :)</p>
 </div>
 
 

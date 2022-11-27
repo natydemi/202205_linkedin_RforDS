@@ -87,7 +87,7 @@
   #DICA: para checar quais bibliotecas estão instaladas: além da aba `Packages`
   # do RStudio, podemos também utilizar o comando: `installed.packages()`.            
 
-  # ATENÇÃO: Ao atualizar o R, por default, você irá “perder” as bibliotecas 
+  #ATENÇÃO: Ao atualizar o R, por default, você irá “perder” as bibliotecas 
   # já instaladas no seu computador, sendo necessário fazer as instalações 
   # novamente. Isto porque não há garantia que as bibliotecas funcionem com 
   # a nova versão do R – um comportamento usual em qualquer linguagem de 
@@ -107,8 +107,8 @@
   # para busca, como alternativa use:
   ?praise::praise()
   
-  #ATALHO: posicione o cursor na função que você tem interesse em 
-  # pesquisar, e digite F1.
+  #DICA: posicione o cursor na função que você tem interesse em 
+  # pesquisar a respeito, e digite F1 para abrir a aba `Help`.
   
   #No caso de consultas que envolvam objetos com caracteres especiais, 
   # é necessário que o texto esteja entre crases.

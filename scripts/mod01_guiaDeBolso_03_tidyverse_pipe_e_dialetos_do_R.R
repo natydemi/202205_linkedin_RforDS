@@ -75,181 +75,181 @@
     #   ...
     #   funçãoN(argsN)
 
-# Muito mais legível, né?
+  # Muito mais legível, né?
+  
+  #Para trabalhar com o pipe, precisamos carregar um das bibliotecas que  
+  # possuam esta função, no caso, o pipe foi originalmente introduzido no R 
+  # por meio da biblioteca `magrittr`. Mas, atualmente, diversas bibliotecas 
+  # garantem que o pipe seja utilizado.
+  
+    #exemplo 1 - uso simples
+    library(magrittr)
+    "olá, tudo bem" %>% print()
+    
+    
+    #exemplo 2 - comparando resultados
+    #criando base de exemplos 
+    x <- 1:5
 
-#Para trabalhar com o pipe, precisamos carregar um das bibliotecas que  
-# possuam esta função, no caso, o pipe foi originalmente introduzido no R 
-# por meio da biblioteca `magrittr`. Mas, atualmente, diversas bibliotecas 
-# garantem o acesso ao pipe.
+  # sem o pipe, isto é, seguindo a leitura default do R, de dentro para fora:
+  floor(sqrt(sum(x)))
+  
+  # com o pipe, ou seja, a partir de uma leitura sequencial:
+  x %>% 
+    sum() %>% 
+    sqrt() %>% 
+    floor()
+  
+  #Assim, para além do claro ganho em termos de leitura, passamos a ter uma
+  # análise mais modular, sendo possível alterar, remover ou inserir funções  
+  # de maneira muito mais prática:
+  
+  x %>% 
+    #sum() %>% 
+    sqrt() %>% 
+    floor() %>% 
+    log()
 
-#exemplo 1 - uso simples
-library(magrittr)
-"olá, tudo bem" %>% print()
-
-
-#exemplo 2 - comparando resultados
-#criando base de exemplos 
-x <- 1:5
-
-# sem o pipe, isto é, seguindo a leitura default do R, de dentro para fora:
-floor(sqrt(sum(x)))
-
-# com o pipe, ou seja, a partir de uma leitura sequencial:
-x %>% 
-  sum() %>% 
-  sqrt() %>% 
-  floor()
-
-#Assim, para além do claro ganho em termos de leitura, passamos a ter uma
-# análise mais modular, sendo possível alterar, remover ou inserir funções  
-# de maneira muito mais prática:
-
-x %>% 
-  #sum() %>% 
-  sqrt() %>% 
-  floor() %>% 
-  log()
-
-# O pipe ganhou tamanha importância no R, que passou a ser uma função nativa 
-# do R para versões mais recentes. Tendo apenas uma alteração de layout:
-#  |> ao invés de %>%
-# Mas para utilizar tal recurso built-in no RStudio, é necessário indicar o 
-# interesse nas configurações da IDE (ao menos na versão que estou utilizando
-# hoje, que é a RStudio 2022.07)
-# Para tal acesse: `Tools > Global Options > Code` e dê o check na opção
-# `use native pipe operator |>`, note que para tal é necessário que você 
-# esteja utilizando o R na versão 4.1 ou maior.
-
-# Contudo, conforme comentado, diversos pacotes, inclusive, o tidyverse, 
-# abraçaram o uso do pipe. Se o pacote tiver qualquer referência ao universo 
-# tidy, é quase certo que terá o pipe (%>%) automaticamente importado :) 
-# De modo que juntamente com o conceito de `dados tidy`, temos os pilares 
-# que formam o universo tidyverse!
+  # DICA: o pipe ganhou tamanha importância no R, que passou a ser uma função  
+  # nativa do R para versões mais recentes. Tendo como diferença mais marcante 
+  # a sua alteração de layout: |> ao invés de %>%
+  # Mas para utilizar tal recurso built-in no RStudio, é necessário indicar o 
+  # interesse nas configurações da IDE (ao menos na versão que estou utilizando
+  # hoje, que é a RStudio 2022.07)
+  # Para tal acesse: `Tools > Global Options > Code` e dê o check na opção
+  # `use native pipe operator |>`, note que para tal é necessário que você 
+  # esteja utilizando o R na versão 4.1 ou maior.
+  
+  # Contudo, conforme comentado, diversos pacotes, inclusive, o tidyverse, 
+  # abraçaram o uso do pipe. Se o pacote tiver qualquer referência ao universo 
+  # tidy, é quase certo que terá o pipe "raiz" (%>%) automaticamente importado. 
+  # De modo que juntamente com o conceito de `dados tidy`, temos os pilares 
+  # que formam o universo tidyverse!
 
 
 
 # Quais bibliotecas que compõem o tidyverse? -----
 
-#O tidyverse é um meta pacote, ou seja, é um pacote que contém pacotes. 
-# Assim, ao instalar o tidyverse você estará também instalando uma série 
-# de outras bibliotecas, como: lubridate para trabalhar com datas, ou ainda 
-# readxl, httr, ou xml2 para importar tipos específicos de dados. 
-
-#Para conhecer as bibliotecas instaladas junto ao tidyverse:
-
-install.packages("tidyverse")
-tidyverse::tidyverse_packages()
-
-#Para saber um pouco mais sobre algum dos pacotes, você pode pesquisar
-# diretamente no navegador, ou por meio do help:
-?haven
-
-#Contudo, ao carregar o meta-pacote tidyverse, você observará na mensagem que 
-# apenas algumas das bibliotecas são carregadas, as bibliotecas core:
-
-library(tidyverse)
-
-#Isto porque as demais bibliotecas, apesar de instaladas, só serão carregadas
-# caso você o faça manualmente, no caso, as `non-core packages`. Para ter 
-# uma visão geral dos pacotes, podemos consultar: 
-
-tidyverse::tidyverse_sitrep()
-
-#Para aprender mais sobre o universo do tidyverse, existem muitas referências 
-# e materiais interessantes disponíveis na página oficial do pacote:
-# https://www.tidyverse.org/ 
+  #O tidyverse é um meta pacote, ou seja, é um pacote que contém pacotes. 
+  # Assim, ao instalar o tidyverse você estará também instalando uma série 
+  # de outras bibliotecas, como: lubridate para trabalhar com datas, ou ainda 
+  # readxl, httr, ou xml2 para importar tipos específicos de dados. 
+  
+  #Para conhecer as bibliotecas instaladas junto ao tidyverse:
+  
+  install.packages("tidyverse")
+  tidyverse::tidyverse_packages()
+  
+  #Para saber um pouco mais sobre algum dos pacotes, você pode pesquisar
+  # diretamente no navegador, ou por meio do help:
+  ?haven
+  
+  #Contudo, ao carregar o meta-pacote tidyverse, você observará na mensagem que 
+  # apenas algumas das bibliotecas são carregadas, as bibliotecas core:
+  
+  library(tidyverse)
+  
+  #Isto porque as demais bibliotecas, apesar de instaladas, só serão carregadas
+  # caso você o faça manualmente, no caso, as `non-core packages`. Para ter 
+  # uma visão geral dos pacotes, podemos consultar: 
+  
+  tidyverse::tidyverse_sitrep()
+  
+  #Para aprender mais sobre o universo do tidyverse, existem muitas referências 
+  # e materiais interessantes disponíveis na página oficial do pacote:
+  # https://www.tidyverse.org/ 
 
 
 
 # tidyverse e o Ciclo de Análise da Ciência de Dados -----
 
-# As bibliotecas que compõem o tidyverse podem ser organizadas ao redor das  
-# etapas que compõem o Ciclo de Análises da Ciência de Dados, proposto por
-# Hadley em seu livro `R for Data Science`: 
-# https://r4ds.had.co.nz/explore-intro.html
-
-# No caso, temos as ações: ler e arrumar os dados (isto é, deixá-lo em uma
-# estrutura tidy), e então entramos em um circuito de transformar, visualizar 
-# e modelar os dados, considerando a quantidade de repetições necessárias,  
-# e, por fim, o ato de comunicar os resultados obtidos.
-
-# Note que aspectos como deploy e manutenção de modelos não estão sendo 
-# considerados neste flow. Isto porque, apesar da incontextável importância, 
-# tais fases tendem a priorizar outros aspectos como: performance, 
-# monitoramento, códigos gerenciáveis, infra, integrações com sistemas, enfim,
-# habilidades que não necessariamente garantem uma boa análise de dados. 
-# Enquanto que para o ciclo pontuado acima, temos o entendimento do dado, 
-# bem como a modelagem do problema como objetivos centrais. Mas perceba: 
-# não se trata de uma competição: AMBAS as abordagens são importantes! Você
-# pode, e deve, procurar evoluir em outros campos de habilidades, OU procurar 
-# trabalhar em times multidisciplinares, em que com a soma das habilidades, 
-# sejam garantidas entregas à lá UNICÓRNIO :)
-
-#Voltando ao tidyverse, temos a implementação deste ciclo de ações por meio
-# da coleção de pacotes do tidyverse:
-# readr: leitura dos dados
-# tibble: opções para tratar estruturas de dados tidy
-# tidyr: reformulação de layout dos dados
-# dplyr: manipulação/transformação de dados
-# ggplot2: criação de gráficos
-# purrr: programação funcional
-# forcats: operações com variáveis categoricas
-# stringr: operações com strings
-
-#Adicionalmente, existem algumas bibliotecas que, apesar de não serem  
-# carregadas juntamente com os pacotes listados acima, são instaladas, estando 
-# à disposição para uso:
-
-# readxl: leitura e escrita de arquivos .xls e .xlsx
-# haven: leitura e escrita de arquivos SPSS, Stata, e SAS
-# lubridate: operações para trabalhar com datas
-# reza a lenda que este pacote passará para a primeira lista
-# até a versão 1.3.2 do tidyverse isto não ocorreu, mas cada nova 
-# versão, uma nova esperança! (sim, eu adoro esse pacote ;p)
-# broom: resume informações de modelagem de forma estruturada
-# knitr: relatórios dinâmicos
-
-# Lembrando que para utilizar as funções de tais bibliotecas é necessário 
-# carregar o pacote individualmente. Ou, alternativamente, chamar a função 
-# de interesse especificamente, por meio de comandos como: 
-
-#readxl::readxl_example() 
-#ou 
-#lubridate::date()    
-
-#Observação: você pode ter sentido falta de pacotes relacionados à etapa de
-# modelagem, e existem algumas razões para isso, mas vou focar em uma: 
-# existe um pacote chamado tidymodels que super resolve isso, falaremos 
-# dele mais à frente no curso :)
+  # As bibliotecas que compõem o tidyverse podem ser organizadas ao redor das  
+  # etapas que compõem o Ciclo de Análises da Ciência de Dados, proposto por
+  # Hadley em seu livro `R for Data Science`: 
+  # https://r4ds.had.co.nz/explore-intro.html
+  
+  # No caso, temos as ações: ler e arrumar os dados (isto é, deixá-lo em uma
+  # estrutura tidy), e então entramos em um circuito de transformar, visualizar 
+  # e modelar os dados, considerando a quantidade de repetições necessárias,  
+  # e, por fim, o ato de comunicar os resultados obtidos.
+  
+  # Note que aspectos como deploy e manutenção de modelos não estão sendo 
+  # considerados neste flow. Isto porque, apesar da incontextável importância, 
+  # tais fases tendem a priorizar outros aspectos como: performance, 
+  # monitoramento, códigos gerenciáveis, infra, integrações com sistemas, enfim,
+  # habilidades que não necessariamente garantem uma boa análise de dados. 
+  # Enquanto que para o ciclo pontuado acima, temos o entendimento do dado, 
+  # bem como a modelagem do problema como objetivos centrais. Mas perceba: 
+  # não se trata de uma competição: AMBAS as abordagens são importantes! Você
+  # pode, e deve, procurar evoluir em outros campos de habilidades, OU procurar 
+  # trabalhar em times multidisciplinares, em que com a soma das habilidades, 
+  # sejam garantidas entregas à lá UNICÓRNIO :)
+  
+  #Voltando ao tidyverse, temos a implementação deste ciclo de ações por meio
+  # da coleção de pacotes do tidyverse:
+  # readr: leitura dos dados
+  # tibble: opções para tratar estruturas de dados tidy
+  # tidyr: reformulação de layout dos dados
+  # dplyr: manipulação/transformação de dados
+  # ggplot2: criação de gráficos
+  # purrr: programação funcional
+  # forcats: operações com variáveis categoricas
+  # stringr: operações com strings
+  
+  #Adicionalmente, existem algumas bibliotecas que, apesar de não serem  
+  # carregadas juntamente com os pacotes listados acima, são instaladas, estando 
+  # à disposição para uso:
+  
+  # readxl: leitura e escrita de arquivos .xls e .xlsx
+  # haven: leitura e escrita de arquivos SPSS, Stata, e SAS
+  # lubridate: operações para trabalhar com datas
+  # reza a lenda que este pacote passará para a primeira lista
+  # até a versão 1.3.2 do tidyverse isto não ocorreu, mas cada nova 
+  # versão, uma nova esperança! (sim, eu adoro esse pacote ;p)
+  # broom: resume informações de modelagem de forma estruturada
+  # knitr: relatórios dinâmicos
+  
+  # Lembrando que para utilizar as funções de tais bibliotecas é necessário 
+  # carregar o pacote individualmente. Ou, alternativamente, chamar a função 
+  # de interesse especificamente, por meio de comandos como: 
+  
+  #readxl::readxl_example() 
+  #ou 
+  #lubridate::date()    
+  
+  #Observação: você pode ter sentido falta de pacotes relacionados à etapa de
+  # modelagem, e existem algumas razões para isso, mas vou focar em uma: 
+  # existe um pacote chamado tidymodels que super resolve isso, falaremos 
+  # dele mais à frente no curso :)
 
 
 # ----- Dialetos para Manipulação de Dados no R -----
 
-# Existem três importantes opções de sintaxes para manipulação de dados no R:
-
-# Rbase
-#não é necessário instalar ou carregar nenhuma biblioteca
-
-#Refs: a seção de exemplos do help
-?`[.data.frame`
-
-
-# tidyverse: 
-install.packages("tidyverse")
-library(tidyverse)
-
-#Refs.: 
-?tidyverse::tidyverse	
-??tidyverse   
-
-
-# data.table
-install.packages("data.table")
-library(data.table)
-
-#Refs
-?data.table::datatable-intro	
-??data.table
+  # Existem três importantes opções de sintaxes para manipulação de dados no R:
+  
+  # Rbase
+  #não é necessário instalar ou carregar nenhuma biblioteca
+  
+  #Refs: a seção de exemplos do help
+  ?`[.data.frame`
+  
+  
+  # tidyverse: 
+  install.packages("tidyverse")
+  library(tidyverse)
+  
+  #Refs.: 
+  ?tidyverse::tidyverse	
+  ??tidyverse   
+  
+  
+  # data.table
+  install.packages("data.table")
+  library(data.table)
+  
+  #Refs
+  ?data.table::datatable-intro	
+  ??data.table
 
 
 
