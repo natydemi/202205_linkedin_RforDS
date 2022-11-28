@@ -12,7 +12,7 @@
 
 <meta name="date" content="1988-03-25" />
 
-<title>Guia de Bolso - Intro arquivos Rmarkdown</title>
+<title>Guia de Bolso - Intro arquivos R Markdown</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -298,17 +298,23 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+content: "";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "\e258";
-font-family: 'Glyphicons Halflings';
+content: "";
 border: none;
+}
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "";
+font-family: 'Glyphicons Halflings';
+display: inline-block;
+padding: 10px;
+border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -349,8 +355,8 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Guia de Bolso - Intro arquivos
-Rmarkdown</h1>
+<h1 class="title toc-ignore">Guia de Bolso - Intro arquivos R
+Markdown</h1>
 <h3 class="subtitle">(arquivos com extensão .Rmd)</h3>
 <h4 class="date">1988-03-25</h4>
 
@@ -359,12 +365,12 @@ Rmarkdown</h1>
 
 <div id="introdução" class="section level1">
 <h1>Introdução</h1>
-<p>Neste arquivo faremos uma breve introdução sobre o Rmarkdown,
+<p>Neste arquivo faremos uma breve introdução sobre o R Markdown,
 arquivos de extensão .Rmd alternativos aos scripts usuais .R.</p>
 </div>
-<div id="o-rmarkdown" class="section level1">
-<h1>O Rmarkdown</h1>
-<p>Rmarkdown é script com formato (.Rmd) que nos possibilita trabalhar
+<div id="o-r-markdown" class="section level1">
+<h1>O R Markdown</h1>
+<p>R Markdown é script com formato (.Rmd) que nos possibilita trabalhar
 com códigos, assim como um script usual .R. Contudo aqui temos a
 possibilidade de adicionar textos e visualizar os outputs dos códigos,
 de maneira mais interativa. Permitindo uma maior praticidade durante a
@@ -497,7 +503,7 @@ em si não deve aparecer no output do nosso <code>.Rmd</code>.</p>
 </div>
 <div id="atenção" class="section level2">
 <h2>Atenção!</h2>
-<p>É importante saber que ao trabalhar com o Rmarkdown você está em um
+<p>É importante saber que ao trabalhar com o R Markdown você está em um
 ambiente apartado do seu console. De modo que o que você rodar no
 console não estará valendo para o seu Rmarkdown.</p>
 <p>Outro ponto que vale comentar é que a cada vez que você compilar o
@@ -540,7 +546,7 @@ us_rent_income</code></pre>
 </div>
 <div id="como-trabalhar-com-o-texto" class="section level1">
 <h1>Como trabalhar com o texto</h1>
-<p>Vamos falar um pouco sobre as opções de textos no Rmarkdown —
+<p>Vamos falar um pouco sobre as opções de textos no R Markdown —
 basicamente a parte <code>Markdown</code> do documento, que apesar de
 ser muito similar a editores de texto usuais, aqui existe também a
 possibilidade de trabalhar com formatação de textos, como:</p>
@@ -555,7 +561,7 @@ consulta:</p>
 <ol style="list-style-type: decimal">
 <li><p>Aba <code>Help \&gt; CheatSheet</code> :</p>
 <ul>
-<li><p>cheatsheet Rmarkdown</p></li>
+<li><p>cheatsheet R Markdown</p></li>
 <li><p>Reference guide</p></li>
 </ul></li>
 <li><p><a href="https://rmarkdown.rstudio.com/" class="uri">https://rmarkdown.rstudio.com/</a></p></li>
@@ -563,16 +569,16 @@ consulta:</p>
 relatórios usando o R (Parte1)</a></p></li>
 </ol>
 <blockquote>
-<p>DICA: explorar a opção “Visual” do Rmarkdown (disponível em versões
+<p>DICA: explorar a opção “Visual” do R Markdown (disponível em versões
 mais recentes), que nos permite trabalhar com uma interface com menos
 código, e mais opções point-and-click.</p>
 </blockquote>
 </div>
 <div id="mão-na-massa" class="section level1">
 <h1>MÃO NA MASSA!</h1>
-<p>Que tal repassar os scripts deste módulo para um Rmarkdown? Você pode
-fazer uma curadoria do que é importante para você, possibilitando um
-material para consulta melhor formatado, mais visual, e com os seus
+<p>Que tal repassar os scripts deste módulo para um R Markdown? Você
+pode fazer uma curadoria do que é importante para você, possibilitando
+um material para consulta melhor formatado, mais visual, e com os seus
 próprios comentários! :)</p>
 </div>
 

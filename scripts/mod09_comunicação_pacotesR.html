@@ -1448,17 +1448,23 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+content: "";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "\e258";
-font-family: 'Glyphicons Halflings';
+content: "";
 border: none;
+}
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "";
+font-family: 'Glyphicons Halflings';
+display: inline-block;
+padding: 10px;
+border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -1606,9 +1612,9 @@ deve, ser considerado.</p>
 <p>Neste documento, vamos conhecer um pouco mais sobre algumas das
 ferramentas disponíveis na linguagem R.</p>
 </div>
-<div id="rmarkdown" class="section level1">
-<h1>RMarkdown</h1>
-<p>Apesar de já estarmos trabalhando com o Rmarkdown, exploramos pouco
+<div id="r-markdown" class="section level1">
+<h1>R Markdown</h1>
+<p>Apesar de já estarmos trabalhando com o R Markdown, exploramos pouco
 os seus recursos. Como é o caso da estilização do cabeçalho (YAML
 header), que possui como possibilidade menu suspeso e dinâmico por
 exemplo, para mais opções, <a href="https://bookdown.org/yihui/rmarkdown/html-document.html">acesse</a>.
@@ -1695,7 +1701,7 @@ parâmetro global para todo o documento. Que tal trocar para
 você prefira o modelo original :)</p>
 <p>A esta altura, você pode já ter notado a presença de um pacote que
 não falamos até então, o <code>knitr</code>. Esta biblioteca nos oferece
-algumas facilidades para lidar com os outputs gerados pelo Rmarkdown.
+algumas facilidades para lidar com os outputs gerados pelo R Markdown.
 Podemos, por exemplo, utilizar uma função para adicionar uma imagem da
 web ao documento – esta mesma função poderia ser utilizada para
 adicionar imagens diretamente do seu computador:</p>
@@ -1723,7 +1729,7 @@ brasileiras no tema.</p></li>
 </ul>
 <p>Inclusive, entre os materiais dela você vai encontrar conteúdos sobre
 o <a href="https://quarto.org/">quarto</a> o pacote que promete ser a
-nova geração do Rmarkdown – só que mais abrangente, visto ser possível
+nova geração do R Markdown – só que mais abrangente, visto ser possível
 utiliza-lo em outras ferramentas além da RStudio, como a IDE VS Code ou
 o Jupyter Notebook. Deixo uma referência que apresenta alguns pontos
 interessantes relacionados a esta mudança: <a href="https://occasionaldivergences.com/posts/quarto-questions/?utm_campaign=Data_Elixir&amp;utm_source=Data_Elixir_409/">“perguntas
@@ -1767,8 +1773,8 @@ responsável pela lógica do programa, tratamento e exibição dos dados; e
 necessárias com o usuário através do navegador. O Shiny oferece métodos
 e funções prontas para a construção e estilização de ambos. Uma notícia
 legal para quem não empolga com a tecnologia, é que você pode usar o
-Shiny diretamente no Rmarkdown, tornando a programação envolvida ainda
-mais simples, visto que o Rmarkdown cuida da interface do usuário para
+Shiny diretamente no R Markdown, tornando a programação envolvida ainda
+mais simples, visto que o R Markdown cuida da interface do usuário para
 você.</p>
 <p>Em termos de referência, o Shiny é super bem servido. Às vezes até
 demais, eu acho! (rs). Vou deixar aqui três das referências que eu
@@ -1785,7 +1791,7 @@ Em português ;)</p></li>
 <p>Como uma última sugestão, que tal instalar o pacote
 <code>Shiny</code> e ir em
 <code>File &gt;  New File &gt; RMarkdown ...</code> e conhecer como fica
-a cara do Rmarkdown tendo um Shiny embutido?</p>
+a cara do R Markdown tendo um Shiny embutido?</p>
 </div>
 <div id="pacotes-muitos-pacotes" class="section level1">
 <h1>Pacotes, muitos pacotes!</h1>

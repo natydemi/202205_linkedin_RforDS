@@ -588,29 +588,39 @@ causou a ausência dos dados. Tendo como referência a discussão feita no
 Predictive Models</a>, temos como três principais causas de ausência de
 dados:</p>
 <ul>
-<li><p><strong>Deficiência Estrutural</strong> : um nível da variável
-que foi excluído dos dados. Por exemplo, para uma feature que
-caracteriza um componente que não existe na maioria das observações,
-poderia se usada uma categoria para indicar sua inexistência</p></li>
-<li><p><strong>Causas Específicas</strong> : há ocorrência de evento
-específico que gera a falta de dados, como quando um paciente interrompe
-sua participação em um estudo clínico devido a um efeito adverso ou
-morte.</p></li>
+<li><p><strong>Deficiência Estrutural</strong> : quando um componente,
+uma possível resposta da feature, um nível da variável, Por exemplo no
+caso em que pessoas respondam sobre possuírem ou não um imóvel, e na
+sequência, aqueles que indicaram possuir tal bem, indicam o tipo do
+imóvel. De modo que, para a segunda pergunta, teríamos dados faltantes
+para aqueles que responderam não possuir imóveis na primeira
+pergunta.</p></li>
+<li><p><strong>Causas Específicas</strong> : a ocorrência de eventos
+específicos é um dos mecanismos que gera a ausência do dado. Como
+exemplo podemos considerar uma base proveniente de um estudo clínico,
+tendo como uma das colunas a informação “se recuperou” ou “não se
+recuperou”. E aqui os dados faltantes poderiam ter maior concentração
+justo entre os pacientes que não se recuperaram, por terem interrompido
+a participação no estudo, ou mesmo por efeitos adversos relacionados ao
+objeto sob estudo.</p></li>
 <li><p><strong>Ocorrências Aleatórias</strong> : quando não é possível
-identificar uma causa específica para a ausência dos dados.</p></li>
+identificar uma causa específica para a ausência dos dados, tampouco se
+há ou não uma concentração em algum subgrupo da população.</p></li>
 </ul>
 <p>Em termos de endereçamento, existem diferentes modos de atuar.
 Podemos:</p>
 <ul>
-<li>Deleter a coluna<br />
+<li>Deletar a coluna<br />
 </li>
-<li>Imputar valores</li>
+<li>Imputar valores (por meio de sumarizações como média, técnicas
+baseadas em modelos, entre outros)</li>
 <li>Criar uma nova categoria</li>
 </ul>
 <p>Tendo que, para cada uma dessas, é requerido algum grau de
-investigação e decisão, como por exemplo: qual será o valor da
-imputação? A média da coluna? A mediana? Utilizaremos alguma técnica
-baseada em modelos? Cada caso será um caso.</p>
+investigação e decisão, como por exemplo, no caso de inputar valores:
+qual será o valor da imputação? A média da coluna? A mediana?
+Utilizaremos alguma técnica baseada em modelos? E a resposta aqui é:
+depende! No contexto em que os seus dados faltantes.</p>
 <p>Vamos agora comentar um pouco sobre o ferramental relacionado aos
 valores faltantes:</p>
 <div id="no-r" class="section level4">
@@ -865,7 +875,7 @@ dmy(&quot;21.10.2015&quot;)
 temp1 &lt;- ymd_hms(&quot;2010-08-03 00:50:50&quot;) ; temp1
 ## [1] &quot;2010-08-03 00:50:50 UTC&quot;
 temp2 &lt;- date(temp1) - today() ; temp2
-## Time difference of -4463 days
+## Time difference of -4499 days
 temp3 &lt;- temp1 + months(3) + weeks(1) ; temp3
 ## [1] &quot;2010-11-10 00:50:50 UTC&quot;
 

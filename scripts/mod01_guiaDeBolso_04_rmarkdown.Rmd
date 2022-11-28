@@ -1,5 +1,5 @@
 ---
-title: "Guia de Bolso - Intro arquivos Rmarkdown"
+title: "Guia de Bolso - Intro arquivos R Markdown"
 subtitle: (arquivos com extensão .Rmd)
 output: html_document
 date: '1988-03-25'
@@ -10,10 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Introdução
-Neste arquivo faremos uma breve introdução sobre o Rmarkdown, arquivos de extensão .Rmd alternativos aos scripts usuais .R. 
+Neste arquivo faremos uma breve introdução sobre o R Markdown, arquivos de extensão .Rmd alternativos aos scripts usuais .R. 
 
-# O Rmarkdown
-Rmarkdown é script com formato (.Rmd) que nos possibilita trabalhar com códigos, assim como um script usual .R. Contudo aqui temos a possibilidade de adicionar textos e visualizar os outputs dos códigos, de maneira mais interativa. Permitindo uma maior praticidade durante a análise. Além disso o Rmarkdown pode ser compilado, de modo que o produto final seja salvo como um arquivo HTML , PDFs, Word, slides, entre outros. 
+# O R Markdown
+
+R Markdown é script com formato (.Rmd) que nos possibilita trabalhar com códigos, assim como um script usual .R. Contudo aqui temos a possibilidade de adicionar textos e visualizar os outputs dos códigos, de maneira mais interativa. Permitindo uma maior praticidade durante a análise. Além disso o Rmarkdown pode ser compilado, de modo que o produto final seja salvo como um arquivo HTML , PDFs, Word, slides, entre outros. 
 
 Para saber mais, acesse: [rmarkdown.rstudio.com](https://rmarkdown.rstudio.com/).
 
@@ -97,7 +98,7 @@ Este chunk não será executado, e não constará no output do .Rmd
 
 ## Atenção!
 
-É importante saber que ao trabalhar com o Rmarkdown você está em um ambiente apartado do seu console. De modo que o que você rodar no console não estará valendo para o seu Rmarkdown.
+É importante saber que ao trabalhar com o R Markdown você está em um ambiente apartado do seu console. De modo que o que você rodar no console não estará valendo para o seu Rmarkdown.
 
 Outro ponto que vale comentar é que a cada vez que você compilar o documento, você irá rodar o seu .Rmd desde o início. Se qualquer chunk tiver qualquer tipo de problema, o documento não será gerado! Mas não se desespere! Usualmente a mensagem de erro já te dará uma boa dica da origem do problema. 
 
@@ -113,7 +114,7 @@ us_rent_income
 
 # Como trabalhar com o texto
 
-Vamos falar um pouco sobre as opções de textos no Rmarkdown — basicamente a parte `Markdown` do documento, que apesar de ser muito similar a editores de texto usuais, aqui existe também a possibilidade de trabalhar com formatação de textos, como:
+Vamos falar um pouco sobre as opções de textos no R Markdown — basicamente a parte `Markdown` do documento, que apesar de ser muito similar a editores de texto usuais, aqui existe também a possibilidade de trabalhar com formatação de textos, como:
 
 -   bullets
 
@@ -127,7 +128,7 @@ Ou ainda para acesso a links, como estas excelentes referências de consulta:
 
 1. Aba `Help \> CheatSheet` :
 
-    -   cheatsheet Rmarkdown
+    -   cheatsheet R Markdown
 
     -   Reference guide
 
@@ -137,12 +138,12 @@ Ou ainda para acesso a links, como estas excelentes referências de consulta:
 
 
 
-> DICA: explorar a opção "Visual" do Rmarkdown (disponível em versões mais recentes), que nos permite trabalhar com uma interface com menos código, e mais opções point-and-click.
+> DICA: explorar a opção "Visual" do R Markdown (disponível em versões mais recentes), que nos permite trabalhar com uma interface com menos código, e mais opções point-and-click.
 
 
 
 # MÃO NA MASSA!
 
-Que tal repassar os scripts deste módulo para um Rmarkdown? Você pode fazer uma curadoria do que é importante para você, possibilitando um material para consulta melhor formatado, mais visual, e com os seus próprios comentários! :)
+Que tal repassar os scripts deste módulo para um R Markdown? Você pode fazer uma curadoria do que é importante para você, possibilitando um material para consulta melhor formatado, mais visual, e com os seus próprios comentários! :)
 
 

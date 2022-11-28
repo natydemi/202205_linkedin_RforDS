@@ -369,19 +369,20 @@ Estruturas de Dados</h1>
 <div id="introdução" class="section level1">
 <h1>Introdução</h1>
 <p>Neste arquivo, conheceremos algumas funções que nos auxiliam nas
-investigações iniciais, poteriores a importação de uma base de dados, no
-caso: inspeção de volumetrias, suas dimensões (linhas e colunas), e como
-tais informações estão sendo entendidas pela linguagem. Em relação a
-este último veremos também o conceito de <code>Classes do R</code>, como
-se relacionam com o conceito estatístico de
-<code>Tipos de Variáveis</code>, e algumas das principais
+investigações iniciais de uma base de dados, isto é, o que devemos
+primeiro inspecionar após a importação de uma base de dados, no caso:
+inspeção de volumetrias, dimensões da tabela (linhas e colunas), e como
+tais informações estão sendo processadas pela linguagem R. Em relação a
+este último ponto, veremos também o conceito de
+<code>Classes do R</code>, como se relacionam com o conceito estatístico
+de <code>Tipos de Variáveis</code>, e algumas das principais
 características das <code>Estruturas de Dados</code> existentes no
 R.</p>
 </div>
 <div id="inspeções-iniciais" class="section level1">
 <h1>Inspeções iniciais</h1>
-<p>Vamos iniciar a discussão sobre as verificações considerando dados
-dos filmes da Pixar, que podem ser consultados por meio do pacote
+<p>Vamos utilizar como base para a discussão os dados das animações do
+Studio da Pixar, que podem ser consultados por meio do pacote
 <code>pixarfilms</code>, ou na sua versão traduzida para português,
 disponível no pacote <code>dados</code>:</p>
 <pre class="r"><code>pixar_filmes &lt;- dados::pixar_filmes
@@ -401,12 +402,12 @@ pixar_filmes
 ## 10 10               Up - Altas Aventuras              2009-05-29      96 Orient…
 ## # … with 17 more rows, and abbreviated variable names ¹​data_lancamento,
 ## #   ²​classificacao_indicativa</code></pre>
-<p>Existem diferentes alternativas para visualizar os dados no R,
-funções como <code>str(pixar_filmes)</code> ou
-<code>View(pixar_filmes)</code>. Esta última é particularmente
-interessante, pois abre os dados em uma janela à parte, permitindo
-recursos como filtros e ordenação. Outro recurso interessante são as
-funções <code>tail(pixar_filmes)</code> ou:</p>
+<p>Existem diferentes alternativas para visualizar dados no R, funções
+como <code>str(pixar_filmes)</code> ou <code>View(pixar_filmes)</code>.
+Esta última particularmente interessante, pois abre os dados em uma
+janela à parte, permitindo recursos como filtros e ordenação. Outro
+recurso interessante são as funções <code>tail(pixar_filmes)</code>
+ou:</p>
 <pre class="r"><code>pixar_filmes %&gt;% head()
 ## # A tibble: 6 × 5
 ##   ordem_lancamento filme                             data_lanc…¹ duracao class…²
@@ -420,19 +421,20 @@ funções <code>tail(pixar_filmes)</code> ou:</p>
 ## # … with abbreviated variable names ¹​data_lancamento, ²​classificacao_indicativa</code></pre>
 <div id="linhas-colunas-e-suas-nomenclaturas" class="section level2">
 <h2>Linhas, colunas e suas nomenclaturas</h2>
-<p>Antes de seguirmos vale pontuar de alertar que é relativamente comum
-encontrar diferentes nomenclaturas para as mesmas “entidades” no
-contexto de análise de dados, algo particularmente confuso para quem
-está iniciando na área. E não se preocupe, a área possui uma natureza
-multidiciplinar, tais variações são naturais. Neste curso, em que vamos
-trabalhar basicamente com dados tabulares, iremos nos referir aos dados
-como: tabelas, dataset, ou base de dados Em relação as linhas das bases,
-trataremos como unidades observacionais, ou simplesmente observações. Já
-para as colunas, utilizaremos os termos: variáveis, características,
-atributos ou ainda features (este último sendo mais usual no contexto de
+<p>Antes de seguirmos vale alertar que é relativamente comum encontrar
+diferentes nomenclaturas para as mesmas “entidades” no contexto de
+análise de dados, algo particularmente confuso para quem está iniciando
+na área. E não se preocupe, a área possui uma natureza multidiciplinar,
+com profissionais vindos das mais diferentes áreas, de modo que tais
+variações são naturais. Neste curso, em que vamos trabalhar basicamente
+com dados tabulares, iremos nos referir aos dados como: tabelas,
+dataset, ou base de dados Em relação as linhas das bases, trataremos
+como unidades observacionais, ou simplesmente observações. Já para as
+colunas, utilizaremos os termos: variáveis, características, atributos
+ou ainda features (este último sendo mais usual no contexto de
 modelagem, que veremos mais à frente). Por fim, para fazer referência à
 intersecção entre variáveis e observações, utilizaremos o termo
-“elementos da tabela” ou “célula da tabela”.</p>
+“elementos da tabela” ou simplesmente “célula”.</p>
 <p>Para examinarmos as quantidades de observações e variáveis da base de
 dados, podemos trabalhar com funções como:</p>
 <pre class="r"><code>#linhas
@@ -454,10 +456,13 @@ tabela:</p>
 ## [5] &quot;classificacao_indicativa&quot;</code></pre>
 <p>Apesar de existirem muitas funções importantes que podem nos ajudar
 na investigação inicial de uma base de dados, neste curso iremos
-priorizar a função <code>glimpse()</code>. Visto que esta nos permite
-verificar: as dimensões do dataset, os nomes das colunas, suas
-respectivas classes, e uma amostra das primeiras observações de cada
-variável:</p>
+priorizar a função <code>glimpse()</code>, disponível nas bibliotecas
+<code>dplyr</code> ou <code>tibble</code> – é isso mesmo, uma mesma
+função pode constar em diferentes pacotes, bem como é possível que
+funções com o mesmo nome, tenham comportamentos diferentes, apesar de
+compartilharem o mesmo nome. Com esta função podemos verificar: as
+dimensões do dataset, os nomes das colunas, suas respectivas classes, e
+uma amostra das primeiras observações de cada variável:</p>
 <pre class="r"><code>pixar_filmes %&gt;% glimpse()
 ## Rows: 27
 ## Columns: 5
@@ -515,6 +520,9 @@ class(exemplo)
 exemplo %&gt;% as.numeric()
 ## Warning in exemplo %&gt;% as.numeric(): NAs introduzidos por coerção
 ## [1] NA</code></pre>
+<p>Por meio do pacote <code>stringr</code>, que será melhor
+contextualizado no capítulo de pré-processamento, podemos redefinir o
+objeto <code>exemplo</code>:</p>
 <pre class="r"><code>(exemplo &lt;- exemplo %&gt;% stringr::str_replace(&quot;R\\$&quot;, &quot;&quot;) %&gt;% as.numeric() )
 ## [1] 1
 class(exemplo)

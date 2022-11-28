@@ -25,9 +25,9 @@ Em outros palavras, ter acesso a ferramentas que ofereçam recursos tanto para o
 
 Neste documento, vamos conhecer um pouco mais sobre algumas das ferramentas disponíveis na linguagem R.
 
-# RMarkdown
+# R Markdown
 
-Apesar de já estarmos trabalhando com o Rmarkdown, exploramos pouco os seus recursos. Como é o caso da estilização do cabeçalho (YAML header), que possui como possibilidade menu suspeso e dinâmico por exemplo, para mais opções, [acesse](https://bookdown.org/yihui/rmarkdown/html-document.html). Ou ainda, os chunks, aqui, oferecem parâmetros como:
+Apesar de já estarmos trabalhando com o R Markdown, exploramos pouco os seus recursos. Como é o caso da estilização do cabeçalho (YAML header), que possui como possibilidade menu suspeso e dinâmico por exemplo, para mais opções, [acesse](https://bookdown.org/yihui/rmarkdown/html-document.html). Ou ainda, os chunks, aqui, oferecem parâmetros como:
 
 -   include = FALSE : impede que o código e os resultados apareçam no arquivo finalizado, porém o R Markdown executa os códigos internamente, de modo que os resultados podem ser usados por outros chunks.
 -   echo = FALSE : impede que o código, mas não os resultados apareçam no arquivo finalizado. Esta é uma maneira útil de incorporar figuras.
@@ -45,7 +45,7 @@ str(knitr::opts_chunk$get())
 
 Particularmente gosto de deixar o parâmetro `collapse = TRUE`como global para todo o documento -- note que este parametro está sendo específicado no início do documento, dentro da função `knitr::opts_chunk$set`, o que garante que seja um parâmetro global para todo o documento. Que tal trocar para `collapse = FALSE` e ver como o output é alterado, talvez você prefira o modelo original :)
 
-A esta altura, você pode já ter notado a presença de um pacote que não falamos até então, o `knitr`. Esta biblioteca nos oferece algumas facilidades para lidar com os outputs gerados pelo Rmarkdown. Podemos, por exemplo, utilizar uma função para adicionar uma imagem da web ao documento -- esta mesma função poderia ser utilizada para adicionar imagens diretamente do seu computador:
+A esta altura, você pode já ter notado a presença de um pacote que não falamos até então, o `knitr`. Esta biblioteca nos oferece algumas facilidades para lidar com os outputs gerados pelo R Markdown. Podemos, por exemplo, utilizar uma função para adicionar uma imagem da web ao documento -- esta mesma função poderia ser utilizada para adicionar imagens diretamente do seu computador:
 
 ```{r , echo=FALSE, out.width = '20%', fig.align = "center", fig.cap="Sticker Knit"}
 knitr::include_graphics('https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/knitr.png')
@@ -61,7 +61,7 @@ E para próximos passos? Recomendo:
 
 -   os materiais desenvolvidos pela [Beatriz Milz](https://beamilz.com/talks/pt/), não apenas por estarem em português, mas por ela ser uma das grandes referências brasileiras no tema.
 
-Inclusive, entre os materiais dela você vai encontrar conteúdos sobre o [quarto](https://quarto.org/) o pacote que promete ser a nova geração do Rmarkdown -- só que mais abrangente, visto ser possível utiliza-lo em outras ferramentas além da RStudio, como a IDE VS Code ou o Jupyter Notebook. Deixo uma referência que apresenta alguns pontos interessantes relacionados a esta mudança: ["perguntas sobre o quarto"](https://occasionaldivergences.com/posts/quarto-questions/?utm_campaign=Data_Elixir&utm_source=Data_Elixir_409/)
+Inclusive, entre os materiais dela você vai encontrar conteúdos sobre o [quarto](https://quarto.org/) o pacote que promete ser a nova geração do R Markdown -- só que mais abrangente, visto ser possível utiliza-lo em outras ferramentas além da RStudio, como a IDE VS Code ou o Jupyter Notebook. Deixo uma referência que apresenta alguns pontos interessantes relacionados a esta mudança: ["perguntas sobre o quarto"](https://occasionaldivergences.com/posts/quarto-questions/?utm_campaign=Data_Elixir&utm_source=Data_Elixir_409/)
 
 # Flexdashboard
 
@@ -77,7 +77,7 @@ Como referências, recomendo:
 
 O Shiny é um pacote usado para a geração de gráficos e dashboards interativos, permitindo a construção de aplicações Web. Para tal, as ferramentas da biblioteca convertem os dados analisados e as funções de R para HTML, CSS e JavaScript, gerando arquivos que podem ser abertos e manipulados em qualquer navegador.
 
-Tendo como base dois componentes principais: o 'server', que é responsável pela lógica do programa, tratamento e exibição dos dados; e 'ui' (user interface), responsável por oferecer as interações necessárias com o usuário através do navegador. O Shiny oferece métodos e funções prontas para a construção e estilização de ambos. Uma notícia legal para quem não empolga com a tecnologia, é que você pode usar o Shiny diretamente no Rmarkdown, tornando a programação envolvida ainda mais simples, visto que o Rmarkdown cuida da interface do usuário para você.
+Tendo como base dois componentes principais: o 'server', que é responsável pela lógica do programa, tratamento e exibição dos dados; e 'ui' (user interface), responsável por oferecer as interações necessárias com o usuário através do navegador. O Shiny oferece métodos e funções prontas para a construção e estilização de ambos. Uma notícia legal para quem não empolga com a tecnologia, é que você pode usar o Shiny diretamente no R Markdown, tornando a programação envolvida ainda mais simples, visto que o R Markdown cuida da interface do usuário para você.
 
 Em termos de referência, o Shiny é super bem servido. Às vezes até demais, eu acho! (rs). Vou deixar aqui três das referências que eu considero mais robustas:
 
@@ -87,7 +87,7 @@ Em termos de referência, o Shiny é super bem servido. Às vezes até demais, e
 
 -   o material do curso da galera da Curso-R [Shiny do Zero a Hero](https://curso-r.github.io/latinr-shiny/). Em português ;)
 
-Como uma última sugestão, que tal instalar o pacote `Shiny` e ir em `File >  New File > RMarkdown ...` e conhecer como fica a cara do Rmarkdown tendo um Shiny embutido?
+Como uma última sugestão, que tal instalar o pacote `Shiny` e ir em `File >  New File > RMarkdown ...` e conhecer como fica a cara do R Markdown tendo um Shiny embutido?
 
 # Pacotes, muitos pacotes!
 

@@ -297,17 +297,23 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+content: "";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "\e258";
-font-family: 'Glyphicons Halflings';
+content: "";
 border: none;
+}
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "";
+font-family: 'Glyphicons Halflings';
+display: inline-block;
+padding: 10px;
+border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -358,10 +364,10 @@ Ambiente R e RStudio</h1>
 <h1>Bibliotecas</h1>
 <pre class="r"><code>library(tidyverse)
 ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6      ✔ purrr   0.3.5 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2 
+## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
+## ✔ tibble  3.1.7     ✔ dplyr   1.0.9
+## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
+## ✔ readr   2.1.2     ✔ forcats 0.5.1
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
@@ -431,7 +437,7 @@ função que nos retorna a localização de tais “dados teste” no seu
 computador (no caso, estes dados estarão junto com a instalação da
 biblioteca readr):</p>
 <pre class="r"><code>readr_example(&quot;mtcars.csv&quot;)
-## [1] &quot;C:/Users/natyd/OneDrive/courses/intro_R_language/202205_linkedin_RforDS/renv/library/R-4.2/x86_64-w64-mingw32/readr/extdata/mtcars.csv&quot;
+## [1] &quot;C:/Users/natyd/AppData/Local/R/win-library/4.2/readr/extdata/mtcars.csv&quot;
 #dica: explore as demais opções da função `readr_example`</code></pre>
 <p>Assim, sabendo onde está o arquivo, ou seja, em que diretório, ou
 <code>path</code>, o seu arquivo se encontra, podemos fazer a
@@ -627,8 +633,8 @@ setwd(&quot;C:\\Users\\natyd\\Desktop&quot;)</code></pre>
 Ela é bem importante! Está nos dizendo que a mudança realizada só valerá
 dentro deste bloco de código. Para os demais chunks voltaremos ao
 diretório que você havia consultado antes. Este é um comportamento
-exclusivo dos arquivos Rmarkdown, ou seja, para códigos com extensão .R,
-este tipo de alteração será perene ao longo do código. Mais à frente
+exclusivo dos arquivos R Markdown, ou seja, para códigos com extensão
+.R, este tipo de alteração será perene ao longo do código. Mais à frente
 falaremos um pouco mais sobre este ponto.</p>
 <p>Por fim, como um último teste, com o comando abaixo podemos importar
 a base anteriormente exportada.</p>
@@ -671,7 +677,7 @@ arquivo”, pois bem, estava chamando de simples o caso em que o arquivo
 que você deseja importar está no seu diretório de trabalho. No caso em
 que não estiver, você vai precisar passar o endereço completo do
 arquivo, o <code>path</code>, similar ao que foi feito aqui:
-C:/Users/natyd/OneDrive/courses/intro_R_language/202205_linkedin_RforDS/renv/library/R-4.2/x86_64-w64-mingw32/readr/extdata/mtcars.csv.
+C:/Users/natyd/AppData/Local/R/win-library/4.2/readr/extdata/mtcars.csv.
 Basicamente o nome do arquivo deve ser precedido pelo diretório de
 origem, tanto para o caso de importação, quanto para exportação, algo
 como: <code>write_delim(mtcars, file = &quot;C:/Users/mtcars.txt&quot;)</code> por
@@ -774,7 +780,7 @@ projetos, o diretório default será o último diretório específicado na
 sessão — no caso de nenhuma específicação ter sido realizada, a sessão
 irá utilizar um diretório padrão, usualmente a pasta “Meus Documentos”
 (“C:/Users/natyd/Documents”), ou algo similar. Já para o .Rmd o
-diretório padrão será o local em que o arquivo Rmarkdown estiver salvo,
+diretório padrão será o local em que o arquivo R Markdown estiver salvo,
 mesmo se estivermos trabalhando com projetos. Deste modo, mesmo
 trabalhando com projetos, será importante que você tenha o cuidado de
 trabalhar com os caminhos relativos ao .Rmd e não ao .Rproj, ou então

@@ -16,19 +16,19 @@ library(tidyverse)
 
 # Introdução
 
-Neste arquivo, conheceremos algumas funções que nos auxiliam nas investigações iniciais, poteriores a importação de uma base de dados, no caso: inspeção de volumetrias, suas dimensões (linhas e colunas), e como tais informações estão sendo entendidas pela linguagem. Em relação a este último veremos também o conceito de `Classes do R`, como se relacionam com o conceito estatístico de `Tipos de Variáveis`, e algumas das principais características das `Estruturas de Dados` existentes no R.   
+Neste arquivo, conheceremos algumas funções que nos auxiliam nas investigações iniciais de uma base de dados, isto é, o que devemos primeiro inspecionar após a importação de uma base de dados, no caso: inspeção de volumetrias, dimensões da tabela (linhas e colunas), e como tais informações estão sendo processadas pela linguagem R. Em relação a este último ponto, veremos também o conceito de `Classes do R`, como se relacionam com o conceito estatístico de `Tipos de Variáveis`, e algumas das principais características das `Estruturas de Dados` existentes no R.   
 
 
 # Inspeções iniciais
 
-Vamos iniciar a discussão sobre as verificações considerando dados dos filmes da Pixar, que podem ser consultados por meio do pacote `pixarfilms`, ou na sua versão traduzida para português, disponível no pacote `dados`:
+Vamos utilizar como base para a discussão os dados das animações do Studio da Pixar, que podem ser consultados por meio do pacote `pixarfilms`, ou na sua versão traduzida para português, disponível no pacote `dados`:
 
 ```{r}
 pixar_filmes <- dados::pixar_filmes
 pixar_filmes
 ```
 
-Existem diferentes alternativas para visualizar os dados no R, funções como `str(pixar_filmes)` ou `View(pixar_filmes)`. Esta última é particularmente interessante, pois abre os dados em uma janela à parte, permitindo recursos como filtros e ordenação. Outro recurso interessante são as funções `tail(pixar_filmes)` ou: 
+Existem diferentes alternativas para visualizar dados no R, funções como `str(pixar_filmes)` ou `View(pixar_filmes)`. Esta última particularmente interessante, pois abre os dados em uma janela à parte, permitindo recursos como filtros e ordenação. Outro recurso interessante são as funções `tail(pixar_filmes)` ou: 
 
 ```{r}
 pixar_filmes %>% head()
@@ -37,7 +37,7 @@ pixar_filmes %>% head()
 
 ## Linhas, colunas e suas nomenclaturas
 
-Antes de seguirmos vale pontuar de alertar que é relativamente comum encontrar diferentes nomenclaturas para as mesmas "entidades" no contexto de análise de dados, algo particularmente confuso para quem está iniciando na área. E não se preocupe, a área possui uma natureza multidiciplinar, tais variações são naturais. Neste curso, em que vamos trabalhar basicamente com dados tabulares, iremos nos referir aos dados como: tabelas, dataset, ou base de dados Em relação as linhas das bases, trataremos como unidades observacionais, ou simplesmente observações. Já para as colunas, utilizaremos os termos: variáveis, características, atributos ou ainda features (este último sendo mais usual no contexto de modelagem, que veremos mais à frente). Por fim, para fazer referência à intersecção entre variáveis e observações, utilizaremos o termo "elementos da tabela" ou "célula da tabela".
+Antes de seguirmos vale alertar que é relativamente comum encontrar diferentes nomenclaturas para as mesmas "entidades" no contexto de análise de dados, algo particularmente confuso para quem está iniciando na área. E não se preocupe, a área possui uma natureza multidiciplinar, com profissionais vindos das mais diferentes áreas, de modo que tais variações são naturais. Neste curso, em que vamos trabalhar basicamente com dados tabulares, iremos nos referir aos dados como: tabelas, dataset, ou base de dados Em relação as linhas das bases, trataremos como unidades observacionais, ou simplesmente observações. Já para as colunas, utilizaremos os termos: variáveis, características, atributos ou ainda features (este último sendo mais usual no contexto de modelagem, que veremos mais à frente). Por fim, para fazer referência à intersecção entre variáveis e observações, utilizaremos o termo "elementos da tabela" ou simplesmente "célula".
 
 Para examinarmos as quantidades de observações e variáveis da base de dados, podemos trabalhar com funções como:
 
@@ -59,7 +59,7 @@ Para o caso de termos interesse em consultar o nome dos atributos da tabela:
 pixar_filmes %>% names()
 ```
 
-Apesar de existirem muitas funções importantes que podem nos ajudar na investigação inicial de uma base de dados, neste curso iremos priorizar a função `glimpse()`. Visto que esta nos permite verificar: as dimensões do dataset, os nomes das colunas, suas respectivas classes, e uma amostra das primeiras observações de cada variável:
+Apesar de existirem muitas funções importantes que podem nos ajudar na investigação inicial de uma base de dados, neste curso iremos priorizar a função `glimpse()`, disponível nas bibliotecas `dplyr` ou `tibble` – é isso mesmo, uma mesma função pode constar em diferentes pacotes, bem como é possível que funções com o mesmo nome, tenham comportamentos diferentes, apesar de compartilharem o mesmo nome. Com esta função podemos verificar: as dimensões do dataset, os nomes das colunas, suas respectivas classes, e uma amostra das primeiras observações de cada variável:
 
 ```{r}
 pixar_filmes %>% glimpse()
@@ -82,6 +82,7 @@ class(exemplo)
 exemplo %>% as.numeric()
 ```
 
+Por meio do pacote `stringr`, que será melhor contextualizado no capítulo de pré-processamento, podemos redefinir o objeto `exemplo`: 
 
 ```{r}
 (exemplo <- exemplo %>% stringr::str_replace("R\\$", "") %>% as.numeric() )

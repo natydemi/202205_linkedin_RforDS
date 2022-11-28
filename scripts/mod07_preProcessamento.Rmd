@@ -153,19 +153,20 @@ Note a similaridade desta discussão com o módulo sobre as investigações inic
 Aqui, nosso objetivo primário deve ser entender qual o mecanismo que causou a ausência dos dados. Tendo como referência a discussão feita no [Capítulo 08 do livro Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/handling-missing-data.html), temos como três principais causas de ausência de dados:
 
 
-- **Deficiência Estrutural** : um nível da variável que foi excluído dos dados. Por exemplo, para uma feature que caracteriza um componente que não existe na maioria das observações, poderia se usada uma categoria para indicar sua inexistência
+- **Deficiência Estrutural** : quando um componente, uma possível resposta da feature, um nível da variável, Por exemplo no caso em que pessoas respondam sobre possuírem ou não um imóvel, e na sequência, aqueles que indicaram possuir tal bem, indicam o tipo do imóvel. De modo que, para a segunda pergunta, teríamos dados faltantes para aqueles que responderam não possuir imóveis na primeira pergunta. 
 
-- **Causas Específicas** : há ocorrência de evento específico que gera a falta de dados, como quando um paciente interrompe sua participação em um estudo clínico devido a um efeito adverso ou morte.
 
-- **Ocorrências Aleatórias** : quando não é possível identificar uma causa específica para a ausência dos dados.
+- **Causas Específicas** : a ocorrência de eventos específicos é um dos mecanismos que gera a ausência do dado. Como exemplo podemos considerar uma base proveniente de um estudo clínico, tendo como uma das colunas a informação "se recuperou" ou "não se recuperou". E aqui os dados faltantes poderiam ter maior concentração justo entre os pacientes que não se recuperaram, por terem interrompido a participação no estudo, ou mesmo por efeitos adversos relacionados ao objeto sob estudo.
+
+- **Ocorrências Aleatórias** : quando não é possível identificar uma causa específica para a ausência dos dados, tampouco se há ou não uma concentração em algum subgrupo da população. 
 
 Em termos de endereçamento, existem diferentes modos de atuar. Podemos:
 
-- Deleter a coluna  
-- Imputar valores 
+- Deletar a coluna  
+- Imputar valores (por meio de sumarizações como média, técnicas baseadas em modelos, entre outros)
 - Criar uma nova categoria
 
-Tendo que, para cada uma dessas, é requerido algum grau de investigação e decisão, como por exemplo: qual será o valor da imputação? A média da coluna? A mediana? Utilizaremos alguma técnica baseada em modelos? Cada caso será um caso.
+Tendo que, para cada uma dessas, é requerido algum grau de investigação e decisão, como por exemplo, no caso de inputar valores: qual será o valor da imputação? A média da coluna? A mediana? Utilizaremos alguma técnica baseada em modelos? E a resposta aqui é: depende! No contexto em que os seus dados faltantes. 
 
 Vamos agora comentar um pouco sobre o ferramental relacionado aos valores faltantes:
 
@@ -179,9 +180,10 @@ Uma vez que você conhece a fonte de origem dos valores faltantes, pode concluir
 
 Comentando um pouco sobre o ferramental, o pacote `tidyr` possui algumas funções para tratar missing data, são elas:
 
-  - `drop_na()` - excluí todas as linhas que apresentam elementos faltantes. 
+  - `drop_na()` - excluí todas as linhas que apresentam elementos faltantes nas colunas específicadas – no caso em que nenhuma coluna é especificada, todas as colunas são consideras. 
   - `fill()` - substituí os dados faltantes pelo valor mais recente da referida coluna.
-  - `replace_na()` - substituí os dados faltantes por um valor especificado.
+  - `replace_na()` - substituí os dados faltantes por um valor especificado
+  .
   
 Alguns exemplos simples
 ```{r}
@@ -225,7 +227,7 @@ Para avaliar a análise completa [acesse](https://cran.r-project.org/web/package
 
 # Feature Engineering
 
-Na wikipedia, a definição de Feature Engineering, o que em português seria algo como Engenharia de Atributos é: "descoberta de variáveis, é o processo de usar o conhecimento da área de negócio, para extrair features (características, propriedades, atributos)". E é exatamente disto que se trata, de traduzir o conhecimento existente em features, de modo que o fênomeno que estamos estudando esteja melhor representado. Gosto muito de pensar na palavra eloquente aqui :) 
+Na wikipedia, a definição de Feature Engineering, o que em português seria algo como Engenharia de Atributos é: "descoberta de variáveis, é o processo de usar o conhecimento da área de negócio, para extrair features (características, propriedades, atributos)". E é exatamente disto que se trata, de traduzir o conhecimento existente em features, de modo que o fênomeno que estamos estudando esteja melhor representado. Gosto muito de pensar na palavra: eloquente :) 
 
 E como isto tende a ficar muito abstrato, organizei alguns grupos que podem nos ajudar a dar um horizonte maior do que é possível:
 

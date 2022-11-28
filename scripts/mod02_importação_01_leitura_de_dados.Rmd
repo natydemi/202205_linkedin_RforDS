@@ -184,7 +184,7 @@ setwd("C:/Users/natyd/Desktop")
 setwd("C:\\Users\\natyd\\Desktop")
 ```
 
-Notou uma mensagem de `warning`, no seu `.Rmd`? Ela é bem importante! Está nos dizendo que a mudança realizada só valerá dentro deste bloco de código. Para os demais chunks voltaremos ao diretório que você havia consultado antes. Este é um comportamento exclusivo dos arquivos Rmarkdown, ou seja, para códigos com extensão .R, este tipo de alteração será perene ao longo do código. Mais à frente falaremos um pouco mais sobre este ponto.
+Notou uma mensagem de `warning`, no seu `.Rmd`? Ela é bem importante! Está nos dizendo que a mudança realizada só valerá dentro deste bloco de código. Para os demais chunks voltaremos ao diretório que você havia consultado antes. Este é um comportamento exclusivo dos arquivos R Markdown, ou seja, para códigos com extensão .R, este tipo de alteração será perene ao longo do código. Mais à frente falaremos um pouco mais sobre este ponto.
 
 Por fim, como um último teste, com o comando abaixo podemos importar a base anteriormente exportada. 
 
@@ -239,7 +239,7 @@ Note que adotar caminhos relativos em conjunto com os projetos do RStudio, nos i
 
 
 ## .Rmd e .R : diferentes comportamentos para  termos de diretórios 
-Existem diferenças importantes entre o comportamento dos arquivos .Rmd e .R em relação a maneira com que lidam com o diretório de trabalho. No caso dos arquivos .R, caso não estivermos trabalhando com projetos, o diretório default será o último diretório específicado na sessão — no caso de nenhuma específicação ter sido realizada, a sessão irá utilizar um diretório padrão, usualmente a pasta "Meus Documentos" ("C:/Users/natyd/Documents"), ou algo similar. Já para o .Rmd o diretório padrão será o local em que o arquivo Rmarkdown estiver salvo, mesmo se estivermos trabalhando com projetos. Deste modo, mesmo trabalhando com projetos, será importante que você tenha o cuidado de trabalhar com os caminhos relativos ao .Rmd e não ao .Rproj, ou então que você faça a alteração desta configuração no seu RStudio (`Tools > Global Options > R Markdown > Evaluate chunks in directory` e mude de `Document` para `Project`). 
+Existem diferenças importantes entre o comportamento dos arquivos .Rmd e .R em relação a maneira com que lidam com o diretório de trabalho. No caso dos arquivos .R, caso não estivermos trabalhando com projetos, o diretório default será o último diretório específicado na sessão — no caso de nenhuma específicação ter sido realizada, a sessão irá utilizar um diretório padrão, usualmente a pasta "Meus Documentos" ("C:/Users/natyd/Documents"), ou algo similar. Já para o .Rmd o diretório padrão será o local em que o arquivo R Markdown estiver salvo, mesmo se estivermos trabalhando com projetos. Deste modo, mesmo trabalhando com projetos, será importante que você tenha o cuidado de trabalhar com os caminhos relativos ao .Rmd e não ao .Rproj, ou então que você faça a alteração desta configuração no seu RStudio (`Tools > Global Options > R Markdown > Evaluate chunks in directory` e mude de `Document` para `Project`). 
 
 Considerando o que falamos sobre caminho relativo, no caso do seu .Rmd estar em uma subpasta chamada `/códigos`, por exemplo, e você tivesse interesse em ler um arquivo que estivesse em uma pasta denominada `/dados`, a leitura poderia ser feita da seguinte forma: `../dados/nome_do_arquivo.extensão`, isto porque o  `../` do início do path, indica que o computador deve voltar um passo na hierarquia de pastas. Por exemplo:
 
