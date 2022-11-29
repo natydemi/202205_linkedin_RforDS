@@ -11,7 +11,7 @@
 
 
 
-<title>Considerações Finais</title>
+<title>Continue a sua jornada de aprendizado na Ciência de Dados com o R</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -297,17 +297,23 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+content: "";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "\e258";
-font-family: 'Glyphicons Halflings';
+content: "";
 border: none;
+}
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "";
+font-family: 'Glyphicons Halflings';
+display: inline-block;
+padding: 10px;
+border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -348,7 +354,8 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Considerações Finais</h1>
+<h1 class="title toc-ignore">Continue a sua jornada de aprendizado na
+Ciência de Dados com o R</h1>
 
 </div>
 
@@ -357,8 +364,8 @@ display: none;
 <h1>Introdução</h1>
 <p>Aqui iremos listar algumas das possibilidades de próximos passos, e
 gostaria de frisar a palavra POSSIBILIDADES. Pois a Ciência de Dados é
-muito ampla e multidiciplinar, então não se abale com a quantidade de
-conteúdos, aqui recomendo você se inspirar em filosofos como Socrates
+muito ampla e multidisciplinar, então não se abale com a quantidade de
+conteúdos, aqui recomendo você se inspirar em filósofos como Sócrates
 “só sei que nada sei”, ou ainda Paulo Freire “Ninguém ignora tudo.
 Ninguém sabe tudo. Todos nós sabemos alguma coisa. Todos nós ignoramos
 alguma coisa. Por isso aprendemos sempre”.</p>
@@ -367,23 +374,24 @@ alguma coisa. Por isso aprendemos sempre”.</p>
 <div id="dicas-para-evoluir-em-ciência-de-dados" class="section level1">
 <h1>Dicas para evoluir em Ciência de Dados</h1>
 <ul>
-<li>siga pessoas legais
+<li>Siga pessoas legais
 <ul>
-<li>twitter [#rstats]</li>
+<li>twitter <a href="https://twitter.com/search?q=%23RStats&amp;src=typeahead_click&amp;f=top">#rstats</a></li>
 <li>linkedin <a href="https://www.linkedin.com/in/nathaliademetrio/">{#olhaEu}</a>]</li>
 </ul></li>
-<li>participe de grupos e eventos, existe muita coisa gratuita bacana
-por aí, por exemplo:
+<li>Participe de grupos e eventos, existe muita coisa gratuita bacana
+por aí
 <ul>
-<li><a href="https://satrdays.org/">SatRday</a></li>
+<li><a href="https://satrdays.org/">satRday</a></li>
 <li><a href="https://www.tidytuesday.com/">tidytuesday</a></li>
 </ul></li>
-<li>crie o hábito de saber o que está rolando de novo (e vá por mim,
-sempre tem!)
+<li>Crie o hábito de saber o que está rolando de novo (e vá por mim,
+sempre tem coisas novas interessantes!)
 <ul>
 <li>congressos: <a href="https://rstudio.com/conference/">rstudio::conf()</a> é uma ótima
 pedida</li>
-<li>newsletters: a minha preferida é a <a href="https://dataelixir.com/">Data Elixir</a></li>
+<li>newsletter: <a href="https://dataelixir.com/">Data Elixir</a> é a
+minha preferida</li>
 </ul></li>
 </ul>
 <p>Por fim, procure construir um mapa mental dos tópicos que você for
@@ -393,10 +401,13 @@ mais que suficiente (e recomendado!).</p>
 <p>Ah, e não deixe de compartilhar a sua jornada de evolução na
 linguagem! A comunidade R é muito receptiva, lembra que teve alguém que
 passou por todo o processo de submissão do CRAN, só para garantir que
-tivessemos essa biblioteca no repositório oficial:</p>
-<pre class="r"><code>set.seed(100)
+tivéssemos essa biblioteca no repositório oficial:</p>
+<pre class="r"><code>set.seed(100) 
 praise::praise()</code></pre>
 <pre><code>## [1] &quot;You are remarkable!&quot;</code></pre>
+<pre class="r"><code>#a função set.seed() serve para que a função praise() retorne sempre o mesmo output
+#que tal testar o que acontece se você rodar o praise sem o set.seed? 
+# DICA: rode o praise mais de uma vez! :)</code></pre>
 </div>
 <div id="dicas-de-pacotes-r" class="section level1">
 <h1>Dicas de pacotes R</h1>
@@ -415,27 +426,27 @@ praise::praise()</code></pre>
 <div id="passos-avançados" class="section level3">
 <h3>Passos avançados</h3>
 <ul>
-<li>interoperabilidade R e Python: <a href="https://rstudio.github.io/reticulate/">reticulate</a></li>
-<li>criar mapas: <a href="https://rstudio.github.io/leaflet/">leaflet</a></li>
-<li>gerar memes: <a href="https://github.com/sctyner/memer">memer</a></li>
-<li>trabalhar com deep learning e dados não estruturados: <a href="https://torch.mlverse.org/packages/">torch</a></li>
-<li>automatizar processos: <a href="https://github.com/r-lib/usethis">usethis</a></li>
-<li>modelagem bayesiana: <a href="http://mjskay.github.io/tidybayes/">tidybayes</a></li>
-<li>analisar texto: <a href="https://github.com/juliasilge/tidytext">tidytext</a></li>
-<li>desenvolver pacotes: <a href="https://github.com/r-lib/devtools">devtools</a></li>
-<li>gerenciar dependências do R: <a href="https://rstudio.github.io/renv/articles/renv.html">renv</a></li>
-<li>criar pipelines: <a href="https://cran.r-project.org/web/packages/targets/vignettes/overview.html">target</a></li>
-<li>testar códigos: <a href="https://testthat.r-lib.org/">testthat</a></li>
-<li>deploy de modelos: <a href="https://github.com/rstudio/vetiver-r">vetiver</a></li>
-<li>gerenciar e analisar dados com o Hadoop: <a href="https://github.com/RevolutionAnalytics/RHadoop/wiki">RHadoop</a></li>
+<li>Interoperabilidade R e Python: <a href="https://rstudio.github.io/reticulate/">reticulate</a></li>
+<li>Criar mapas: <a href="https://rstudio.github.io/leaflet/">leaflet</a></li>
+<li>Gerar memes: <a href="https://github.com/sctyner/memer">memer</a></li>
+<li>Trabalhar com deep learning e dados não estruturados: <a href="https://torch.mlverse.org/packages/">torch</a></li>
+<li>Automatizar processos: <a href="https://github.com/r-lib/usethis">usethis</a></li>
+<li>Modelagem bayesiana: <a href="http://mjskay.github.io/tidybayes/">tidybayes</a></li>
+<li>Analisar texto: <a href="https://github.com/juliasilge/tidytext">tidytext</a></li>
+<li>Desenvolver pacotes: <a href="https://github.com/r-lib/devtools">devtools</a></li>
+<li>Gerenciar dependências do R: <a href="https://rstudio.github.io/renv/articles/renv.html">renv</a></li>
+<li>Criar pipelines: <a href="https://cran.r-project.org/web/packages/targets/vignettes/overview.html">target</a></li>
+<li>Testar códigos: <a href="https://testthat.r-lib.org/">testthat</a></li>
+<li>Estruturar deploy de modelos: <a href="https://github.com/rstudio/vetiver-r">vetiver</a></li>
+<li>Gerenciar e analisar dados com o Hadoop: <a href="https://github.com/RevolutionAnalytics/RHadoop/wiki">RHadoop</a></li>
 </ul>
 </div>
 </div>
 <div id="bibliografia-recomendada" class="section level1">
 <h1>Bibliografia recomendada</h1>
 <p>Além dos links e bibliotecas comentados durante todo o curso, vou
-deixar o que entendo ser o top3 para que você fique confortável com os
-temas vistos aqui:</p>
+deixar o que entendo ser o top três para que você fique confortável com
+os temas vistos aqui:</p>
 <ul>
 <li><a href="https://r4ds.had.co.nz/introduction.html">R for data
 science</a></li>

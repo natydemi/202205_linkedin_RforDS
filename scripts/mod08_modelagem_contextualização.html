@@ -297,17 +297,23 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+content: "";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "\e258";
-font-family: 'Glyphicons Halflings';
+content: "";
 border: none;
+}
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "";
+font-family: 'Glyphicons Halflings';
+display: inline-block;
+padding: 10px;
+border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -357,9 +363,10 @@ display: none;
 <h1>Introdução</h1>
 <p>Teremos, neste módulo, uma breve apresentação sobre o conceito de
 modelagem, seguido de algumas discussões sobre a dinâmica entre áreas
-como: Estatística, Aprendizagem de Máquina e Inteligência Artificial
-(IA). Por fim, teremos a lista de algumas referências de pacotes do R e
-bibliografias para que você possa seguir evoluindo no tema ;)</p>
+como: Estatística, Aprendizagem de Máquina (em inglês, Machine Learning,
+ML) e Inteligência Artificial (IA). Seguido, de uma lista com algumas
+referências de pacotes do R e bibliografias para que você possa seguir
+evoluindo no tema ;)</p>
 </div>
 <div id="modelagem" class="section level1">
 <h1>Modelagem</h1>
@@ -395,7 +402,7 @@ generalização das experiências</strong>.</p>
 esquina todos os dias pela manhã, a pessoa que faz o atendimento
 casualmente pode passar a perguntar: “o de sempre?”;</p></li>
 <li><p>Ao sair de casa com um violão, é razoável que ao encontrar com um
-colega, este pessoa associe este objeto ao seu uso: “nossa, não sabia
+colega, esta pessoa associe este objeto ao seu uso: “nossa, não sabia
 que você sabia tocar”; Ou</p></li>
 <li><p>Ao vermos um grupo de torcedoras ou torcedores uniformizados, por
 mais que um dos integrantes do grupo não esteja com a roupa do time,
@@ -441,7 +448,7 @@ Eles são selecionados, escolhidos e testados de acordo com a natureza do
 problema que estamos tentando modelar e, também, com o objetivo que
 queremos alcançar. E podemos organizar as técnicas existentes segundo
 muitos olhares diferentes – lembre-se: trata-se de uma área
-multidiciplinar! E por isso ser algo que gera bastante confusão, a
+multidisciplinar! E por isso ser algo que gera bastante confusão, a
 depender da sua área de origem. Vou contextualizar o que considero ser
 mais crucial para que você consiga aproveitar os muitos conteúdos
 gerados na área:</p>
@@ -450,15 +457,15 @@ gerados na área:</p>
 <p>Quanto à finalidade da modelagem, podemos considerar ao menos dois
 grandes objetivos, os Modelos <strong>Preditivos</strong> e
 <strong>Inferenciais</strong>.</p>
-<p>No primeiro caso, os modelos preditivos buscam identificar padrões
-que permitam <em>prever</em> resultados futuros ou desconhecidos.
-Podendo ser usados para predizer o valor de aluguel de uma casa, a
-previsão do tempo ou o resultado de exames. Já os modelos inferenciais,
-o que buscamos é ententer o <em>porquê</em> e o <em>como</em> de algo,
-por exemplo, podemos tentar entender porque o produto A passou a vender
-mais do que um outro produto B, ou então analisar uma base de dados para
-entender qual é a melhor oferta de produtos para um segmento específico
-de clientes.</p>
+<p>No primeiro caso, os modelos preditivos, existe o enfoque na
+identificação de padrões que permitam <em>prever</em> resultados futuros
+ou desconhecidos. Podendo ser usados para predizer o valor de aluguel de
+uma casa, a previsão do tempo ou o resultado de exames. Já no contexto
+dos modelos inferenciais, priorizamos o entendimento do <em>porquê</em>
+e o <em>como</em> do acontecimento, por exemplo, podemos tentar entender
+porque o produto A passou a vender mais do que um outro produto B, ou
+então analisar uma base de dados para entender qual é a melhor oferta de
+produtos para um segmento específico de clientes.</p>
 </div>
 <div id="ia-aprendizado-de-máquina-e-modelagem-estatística" class="section level2">
 <h2>2) IA, Aprendizado de Máquina e Modelagem Estatística</h2>
@@ -499,10 +506,9 @@ observados, e por vezes, suposições de comportamento. De modo que tal
 generalização nos permita compreender melhor os fenômenos em que temos
 interesse, em última instância, tendo conclusões sobre suas causas.</p>
 </div>
-</div>
-<div id="aprendizagem-de-máquina-e-modelagem-estatística-são-a-mesma-coisa" class="section level2">
-<h2>&gt; Aprendizagem de Máquina e Modelagem Estatística são a mesma
-coisa?</h2>
+<div id="aprendizagem-de-máquina-e-modelagem-estatística-são-a-mesma-coisa" class="section level3">
+<h3>&gt; Aprendizagem de Máquina e Modelagem Estatística são a mesma
+coisa?</h3>
 <p>Em termos práticos acredito que sim, culturalmente, não. Pois se por
 um lado é usual ver a aplicação de ambos os termos de forma
 intercambiável, é comum também que profissionais com determinadas
@@ -523,22 +529,23 @@ comuns às duas abordagens, além da afinidade entre os objetivos,
 justifica o uso dos termos de forma permutável.</p>
 <blockquote>
 <p>Como referência mandatória para esta discussão, recomendo o artigo <a href="http://www2.math.uu.se/~thulin/mm/breiman.pdf">L. Breiman,
-“Statistical Modeling: The Two Cultures,” Statistical Science, Vol. 18,
+“Statistical Modeling: The Two Cultures”, Statistical Science, Vol. 18,
 No. 3, 2001</a>.</p>
 </blockquote>
+</div>
 </div>
 <div id="a-natureza-dos-dados-supervisionado-vs.-não-supervisionado" class="section level2">
 <h2>3) A Natureza dos Dados: supervisionado vs. não supervisionado</h2>
 <p>Hoje, na Ciência de Dados, a divisão dos modelos segundo a
 perspectiva do Aprendizado de Máquina Clássica é, de longe, a mais
-comunmente encontrada. Nesta, segmentamos os modelos de acordo com a
+comumente encontrada. Nesta, segmentamos os modelos de acordo com a
 natureza dos dados disponíveis, no caso, modelos
 <strong>Supervisionados</strong> e <strong>Não
 Supervisionados</strong>.</p>
 <p>Modelos Supervisionados são aqueles em que existe uma pergunta clara
 a ser respondida, como “Qual é o valor de aluguel de uma casa?” ou “Esse
-e-mail é spam ou não?”. Já os Modelos Não Supervisionados não tem uma
-pergunta fechada, mas buscam organizar dos dados de maneira que seja
+e-mail é spam ou não?”. Já os Modelos Não Supervisionados não possuem
+uma pergunta fechada, mas buscam organizar dos dados de maneira que seja
 possível tirar conclusões práticas. Eles podem ser usados, por exemplo,
 para segmentação de clientes.</p>
 </div>
@@ -546,7 +553,7 @@ para segmentação de clientes.</p>
 <div id="e-o-r-nisso-tudo" class="section level1">
 <h1>E o R nisso tudo?</h1>
 <p>Por ser uma linguagem que nasceu na estatística, por muito tempo teve
-o seu maior poder de fogo no contexto inferêncial, contudo conforme a
+o seu maior poder de fogo no contexto inferencial, contudo conforme a
 área de dados passou a contemplar outros olhares de maneira mais ampla a
 estruturada, passamos a ver este mesmo movimento no R. E hoje
 encontramos um excelente leque das mais diferentes abordagens.</p>

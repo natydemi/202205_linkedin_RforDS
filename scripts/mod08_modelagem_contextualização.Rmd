@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
 ```
 
 # Introdução
-Teremos, neste módulo, uma breve apresentação sobre o conceito de modelagem, seguido de algumas discussões sobre a dinâmica entre áreas como: Estatística, Aprendizagem de Máquina e Inteligência Artificial (IA). Por fim, teremos a lista de algumas referências de pacotes do R e bibliografias para que você possa seguir evoluindo no tema ;)
+Teremos, neste módulo, uma breve apresentação sobre o conceito de modelagem, seguido de algumas discussões sobre a dinâmica entre áreas como: Estatística, Aprendizagem de Máquina (em inglês, Machine Learning, ML) e Inteligência Artificial (IA). Seguido, de uma lista com algumas referências de pacotes do R e bibliografias para que você possa seguir evoluindo no tema ;)
 
 
 # Modelagem
@@ -28,7 +28,7 @@ Aqui temos alguns exemplos:
 
 - Se você pede um café com leite e um pão na chapa na lanchonete da esquina todos os dias pela manhã, a pessoa que faz o atendimento casualmente pode passar a perguntar: “o de sempre?”;
 
-- Ao sair de casa com um violão, é razoável que ao encontrar com um colega, este pessoa associe este objeto ao seu uso: "nossa, não sabia que você sabia tocar"; Ou 
+- Ao sair de casa com um violão, é razoável que ao encontrar com um colega, esta pessoa associe este objeto ao seu uso: "nossa, não sabia que você sabia tocar"; Ou 
 
 - Ao vermos um grupo de torcedoras ou torcedores uniformizados, por mais que um dos integrantes do grupo não esteja com a roupa do time, ainda assim tendemos a inferir que aquela pessoa também torça para o mesmo time. 
 
@@ -51,13 +51,13 @@ Aqui listei alguns possíveis objetivos em que os modelos podem nos ajudar:
 
 # Um Mapa Mental sobre Modelos
 
-Em Ciência de Dados, existem muitos modelos e algoritmos importantes. Eles são selecionados, escolhidos e testados de acordo com a natureza do problema que estamos tentando modelar e, também, com o objetivo que queremos alcançar. E podemos organizar as técnicas existentes segundo muitos olhares diferentes – lembre-se: trata-se de uma área multidiciplinar! E por isso ser algo que gera bastante confusão, a depender da sua área de origem. Vou contextualizar o que considero ser mais crucial para que você consiga aproveitar os muitos conteúdos gerados na área:
+Em Ciência de Dados, existem muitos modelos e algoritmos importantes. Eles são selecionados, escolhidos e testados de acordo com a natureza do problema que estamos tentando modelar e, também, com o objetivo que queremos alcançar. E podemos organizar as técnicas existentes segundo muitos olhares diferentes – lembre-se: trata-se de uma área multidisciplinar! E por isso ser algo que gera bastante confusão, a depender da sua área de origem. Vou contextualizar o que considero ser mais crucial para que você consiga aproveitar os muitos conteúdos gerados na área:
 
 
 ## 1) Objetivo da Modelagem: preditivo vs. inferencial
 Quanto à finalidade da modelagem, podemos considerar ao menos dois grandes objetivos, os Modelos **Preditivos** e **Inferenciais**. 
 
-No primeiro caso, os modelos preditivos buscam identificar padrões que permitam *prever* resultados futuros ou desconhecidos. Podendo ser usados para predizer o valor de aluguel de uma casa, a previsão do tempo ou o resultado de exames.  Já os modelos inferenciais, o que buscamos é ententer o *porquê* e o *como* de algo, por exemplo, podemos tentar entender porque o produto A passou a vender mais do que um outro produto B, ou então analisar uma base de dados para entender qual é a melhor oferta de produtos para um segmento específico de clientes.
+No primeiro caso, os modelos preditivos, existe o enfoque na identificação de padrões que permitam *prever* resultados futuros ou desconhecidos. Podendo ser usados para predizer o valor de aluguel de uma casa, a previsão do tempo ou o resultado de exames. Já no contexto dos modelos inferenciais, priorizamos o entendimento do *porquê* e o *como* do acontecimento, por exemplo, podemos tentar entender porque o produto A passou a vender mais do que um outro produto B, ou então analisar uma base de dados para entender qual é a melhor oferta de produtos para um segmento específico de clientes. 
 
 
 
@@ -81,7 +81,7 @@ Aprendizado de Máquina é uma subcampo de IA que tenta fazer com que as máquin
 Modelagem Estatística é um método de aproximação matemática do mundo. Trata do processo de entender e descrever eventos, de modo a identificar padrões que façam sentido para a população, a partir de dados observados, e por vezes, suposições de comportamento. De modo que tal generalização nos permita compreender melhor os fenômenos em que temos interesse, em última instância, tendo conclusões sobre suas causas.
 
 
-## > Aprendizagem de Máquina e Modelagem Estatística são a mesma coisa?
+### > Aprendizagem de Máquina e Modelagem Estatística são a mesma coisa?
 
 Em termos práticos acredito que sim, culturalmente, não. Pois se por um lado é usual ver a aplicação de ambos os termos de forma intercambiável, é comum também que profissionais com determinadas formações utilizem mais um termo do que o outro, isto em decorrência dos diferentes enfoques que cada domínio prioriza ao falar de análise de dados. 
 
@@ -92,19 +92,19 @@ Ao passo que na modelagem, palavra mais comum no universo da estatística, exist
 Contudo, apesar destas diferenças, o fato de muitas tecnicas serem comuns às duas abordagens, além da afinidade entre os objetivos, justifica o uso dos termos de forma permutável.
 
 
-> Como referência mandatória para esta discussão, recomendo o artigo [L. Breiman, “Statistical Modeling: The Two Cultures,” Statistical Science, Vol. 18, No. 3, 2001](http://www2.math.uu.se/~thulin/mm/breiman.pdf).
+> Como referência mandatória para esta discussão, recomendo o artigo [L. Breiman, “Statistical Modeling: The Two Cultures”, Statistical Science, Vol. 18, No. 3, 2001](http://www2.math.uu.se/~thulin/mm/breiman.pdf).
 
 
 ## 3) A Natureza dos Dados: supervisionado vs. não supervisionado
 
-Hoje, na Ciência de Dados, a divisão dos modelos segundo a perspectiva do Aprendizado de Máquina Clássica é, de longe, a mais comunmente encontrada. Nesta, segmentamos os modelos de acordo com a natureza dos dados disponíveis, no caso, modelos **Supervisionados** e **Não Supervisionados**.
+Hoje, na Ciência de Dados, a divisão dos modelos segundo a perspectiva do Aprendizado de Máquina Clássica é, de longe, a mais comumente encontrada. Nesta, segmentamos os modelos de acordo com a natureza dos dados disponíveis, no caso, modelos **Supervisionados** e **Não Supervisionados**.
 
-Modelos Supervisionados são aqueles em que existe uma pergunta clara a ser respondida, como "Qual é o valor de aluguel de uma casa?" ou "Esse e-mail é spam ou não?". Já os Modelos Não Supervisionados não tem uma pergunta fechada, mas buscam organizar dos dados de maneira que seja possível tirar conclusões práticas. Eles podem ser usados, por exemplo, para segmentação de clientes. 
+Modelos Supervisionados são aqueles em que existe uma pergunta clara a ser respondida, como "Qual é o valor de aluguel de uma casa?" ou "Esse e-mail é spam ou não?". Já os Modelos Não Supervisionados não possuem uma pergunta fechada, mas buscam organizar dos dados de maneira que seja possível tirar conclusões práticas. Eles podem ser usados, por exemplo, para segmentação de clientes. 
 
 
 # E o R nisso tudo? 
 
-Por ser uma linguagem que nasceu na estatística, por muito tempo teve o seu maior poder de fogo no contexto inferêncial, contudo conforme a área de dados passou a contemplar outros olhares de maneira mais ampla a estruturada, passamos a ver este mesmo movimento no R. E hoje encontramos um excelente leque das mais diferentes abordagens.
+Por ser uma linguagem que nasceu na estatística, por muito tempo teve o seu maior poder de fogo no contexto inferencial, contudo conforme a área de dados passou a contemplar outros olhares de maneira mais ampla a estruturada, passamos a ver este mesmo movimento no R. E hoje encontramos um excelente leque das mais diferentes abordagens.
 
 Gostaria de comentar um pouco sobre o `tidyverse` neste contexto, pois temos a biblioteca `broom` como um recurso direcionado para a etapa de modelagem, porém de um ponto de vista de integração. Isto porque tem como finalidade transformar resultados de modelos estatísticos e de machine learning em objetos com formato *tidy* – garantindo a integração com todos os demais recursos do universo tidyverse. 
 Vamos tomar como exemplo uma função do pacote `stats`, que contempla uma série de funções estatísticas, como, por exemplo, o ajuste de um modelo de regressão linear simples por meio da função `lm()`:
@@ -145,7 +145,7 @@ Em relação a etapa de modelagem em si, conforme comentado, não iremos nos apr
 
 ## As três maiores dicas de pacotes deste módulo:
 
-- [**tidymodels**](https://www.tidymodels.org/): coleção de pacotes para modelagem e aprendizado de máquina usando princípios tidy – particularmente interessante para modelos supervisionados.
+- [**tidymodels**](https://www.tidymodels.org/): coleção de pacotes para modelagem e aprendizado de máquina usando princípios tidy – particularmente interessante para modelos supervisionados. 
 
 - [**factoextra**](https://github.com/kassambara/factoextra): pacote com uma série de recursos voltados a análise e visualização de dados multivariados  – particularmente interessante para modelos não supervisionados.
 
@@ -156,16 +156,11 @@ Em relação a etapa de modelagem em si, conforme comentado, não iremos nos apr
 
 Além dos materiais dos próprios pacotes citados, sem dúvidas excelentes pontos de partida, recomendo:
 
-
 - o canal no youtube do [Stat Quest](https://www.youtube.com/c/joshstarmer), do Josh Starmer. É simplesmente incrível, te ajuda a entender conceitos complexos de uma maneira muito acessível. Ah, ele mantém também um blog, como prefira: <https://statquest.org/>
 
 - o livro [An Introduction to Statistical Learning (AISL)](https://www.statlearning.com/), escrito por Hastie, Tibshirani e Friedman. É sem dúvida uma das referências de modelagem mais completas da atualidade
 
 - o livro em português [Aprendizado de Máquina: uma abordagem estatística (AME)](http://www.rizbicki.ufscar.br/AME.pdf), escrito por Rafael Izbicki e Tiago Mendonça dos Santos.  
-
-
-
-
 
 
 

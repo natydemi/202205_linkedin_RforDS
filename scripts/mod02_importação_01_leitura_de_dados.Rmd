@@ -96,7 +96,7 @@ Apesar de não haver a intenção de ser extensiva aqui, gostaria de comentar ta
 
 ## Dados dos pacotes do R
 
-No R, existe também a opção de trabalhar com as bases de dados disponíveis pela própria linguagem. Para consultar as opções default, podemos utilizar a função `data()`. Porém, não pára por aí, pois existem muitas bases que acompanham as milhares de bibliotecas do R, de modo que para cada pacote que carregamos no ambiente (função `library()`), teremos uma atualização nesta lista. Rode os comandos abaixo e compare os resultados:
+No R, existe também a opção de trabalhar com as bases de dados disponíveis pela própria linguagem. Para consultar as opções default, podemos utilizar a função `data()`. Porém, não para por aí, pois existem muitas bases que acompanham as milhares de bibliotecas do R, de modo que para cada pacote que carregamos no ambiente (função `library()`), teremos uma atualização nesta lista. Rode os comandos abaixo e compare os resultados:
 
 ```{r, eval=FALSE}
 data()
@@ -202,7 +202,7 @@ nossa_base_exportada
 
 No início da seção de exportação foi comentado que: "no caso mais simples, o `path` será apenas o nome que você pretende dar ao arquivo", pois bem, estava chamando de simples o caso em que o arquivo que você deseja importar está no seu diretório de trabalho. No caso em que não estiver, você vai precisar passar o endereço completo do arquivo, o `path`, similar ao que foi feito aqui: `r readr_example("mtcars.csv")`. Basicamente o nome do arquivo deve ser precedido pelo diretório de origem, tanto para o caso de importação, quanto para exportação, algo como: `write_delim(mtcars, file = "C:/Users/mtcars.txt")` por exemplo. 
 
-> ATENÇÃO: dependendo do seu sistema operacional, ou se existir algum caracter especial no seu path, você pode ter que trabalhar com barras simples (`/`), barras invertidas (`\`) ou barras duplas (`\\`).
+> ATENÇÃO: dependendo do seu sistema operacional, ou se existir algum caractere especial no seu path, você pode ter que trabalhar com barras simples (`/`), barras invertidas (`\`) ou barras duplas (`\\`).
 
 
 
@@ -239,7 +239,7 @@ Note que adotar caminhos relativos em conjunto com os projetos do RStudio, nos i
 
 
 ## .Rmd e .R : diferentes comportamentos para  termos de diretórios 
-Existem diferenças importantes entre o comportamento dos arquivos .Rmd e .R em relação a maneira com que lidam com o diretório de trabalho. No caso dos arquivos .R, caso não estivermos trabalhando com projetos, o diretório default será o último diretório específicado na sessão — no caso de nenhuma específicação ter sido realizada, a sessão irá utilizar um diretório padrão, usualmente a pasta "Meus Documentos" ("C:/Users/natyd/Documents"), ou algo similar. Já para o .Rmd o diretório padrão será o local em que o arquivo R Markdown estiver salvo, mesmo se estivermos trabalhando com projetos. Deste modo, mesmo trabalhando com projetos, será importante que você tenha o cuidado de trabalhar com os caminhos relativos ao .Rmd e não ao .Rproj, ou então que você faça a alteração desta configuração no seu RStudio (`Tools > Global Options > R Markdown > Evaluate chunks in directory` e mude de `Document` para `Project`). 
+Existem diferenças importantes entre o comportamento dos arquivos .Rmd e .R em relação a maneira com que lidam com o diretório de trabalho. No caso dos arquivos .R, caso não estivermos trabalhando com projetos, o diretório default será o último diretório especificado na sessão — no caso de nenhuma especificação ter sido realizada, a sessão irá utilizar um diretório padrão, usualmente a pasta "Meus Documentos" ("C:/Users/natyd/Documents"), ou algo similar. Já para o .Rmd o diretório padrão será o local em que o arquivo R Markdown estiver salvo, mesmo se estivermos trabalhando com projetos. Deste modo, mesmo trabalhando com projetos, será importante que você tenha o cuidado de trabalhar com os caminhos relativos ao .Rmd e não ao .Rproj, ou então que você faça a alteração desta configuração no seu RStudio (`Tools > Global Options > R Markdown > Evaluate chunks in directory` e mude de `Document` para `Project`). 
 
 Considerando o que falamos sobre caminho relativo, no caso do seu .Rmd estar em uma subpasta chamada `/códigos`, por exemplo, e você tivesse interesse em ler um arquivo que estivesse em uma pasta denominada `/dados`, a leitura poderia ser feita da seguinte forma: `../dados/nome_do_arquivo.extensão`, isto porque o  `../` do início do path, indica que o computador deve voltar um passo na hierarquia de pastas. Por exemplo:
 
