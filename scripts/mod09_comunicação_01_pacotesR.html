@@ -1585,40 +1585,42 @@ border-radius: 0px;
 <div id="introdução" class="section level1">
 <h1>Introdução</h1>
 <p>Na etapa de comunicação dos dados, o objetivo primário é o
-alinhamento entre os envolvidos e envolvidas. E tal tarefa tende a ser
-desafiadora, visto a ciência de dados envolver profissionais com
+alinhamento entre as pessoas interessadas E tal tarefa tende a ser
+desafiadora, visto a Ciência de Dados envolver profissionais com
 diferentes formações e, portanto, diferentes perspectivas, linguagens e
-prioridades. Uma forma interessante de enxergar este desafio da
+prioridades. Uma forma interessante de enxergar o desafio da
 comunicação, é por meio da visão de Churchill Jr. G.A. e Peter, J.P.,
 que definem que “a comunicação trata da transmissão de uma mensagem, de
 um emissor para um receptor, de modo que ambos a entendam da mesma
-maneira.”</p>
-<p>Neste contexto dispor de ferramentas que tornem esta tarefa mais
-fluída é extremamente importante. De modo que sejam evitados:</p>
+maneira”.</p>
+<p>Neste contexto dispor de ferramentas que tornem a comunicação mais
+fluída é extremamente importante. De modo que sejam minimizadas:</p>
 <ul>
-<li><p>Dificuldades e ruídos na comunicação: ampliados pela sobrecarga
-cognitiva que o público técnico pode acabar gerando na audiência pelo
-excesso de códigos e conceitos; ou, em contraponto,</p></li>
-<li><p>Perda da reprodutibilidade do trabalho: gerado ao exportar os
-resultados de ferramentas de linguagem de programação cientifica para
-ferramentas que facilitam a apresentações, porém manuais, e sem
+<li><p>Dificuldades e ruídos na comunicação: usualmente ampliados pela
+sobrecarga cognitiva que os detalhamentos técnicos pode acabar gerando
+na audiência, seja pelo excesso de códigos, conceitos ou etapas
+intermediárias da análise; e</p></li>
+<li><p>Perda da reprodutibilidade do trabalho: que pode ocorrer ao
+exportar os resultados de ferramentas de linguagem de programação
+cientifica para ferramentas de natureza totalmente manual, sem
 integração direta com o ambiente de análise, impossibilitando a
-replicabilidade.</p></li>
+replicabilidade do trabalho.</p></li>
 </ul>
 <p>Em outros palavras, ter acesso a ferramentas que ofereçam recursos
 tanto para o desenvolvimento quanto para a devida comunicação dos
-resultados, sem a necessidade de intermediários, é algo que pode, e
-deve, ser considerado.</p>
+resultados, sem a necessidade de criar gargalos manuais, porém mantendo
+recursos que nos possibilitem uma comunicação mais efetiva, é algo que
+pode, e deve, ser considerado.</p>
 <p>Neste documento, vamos conhecer um pouco mais sobre algumas das
-ferramentas disponíveis na linguagem R.</p>
+ferramentas disponíveis na linguagem R visando tais finalidades.</p>
 </div>
 <div id="r-markdown" class="section level1">
 <h1>R Markdown</h1>
 <p>Apesar de já estarmos trabalhando com o R Markdown, exploramos pouco
 os seus recursos. Como é o caso da estilização do cabeçalho (YAML
 header), que possui como possibilidade menu suspenso e dinâmico por
-exemplo, para mais opções, <a href="https://bookdown.org/yihui/rmarkdown/html-document.html">acesse</a>.
-Ou ainda, os chunks, aqui, oferecem parâmetros como:</p>
+exemplo – para mais opções <a href="https://bookdown.org/yihui/rmarkdown/html-document.html">acesse</a>.
+Ou ainda, os chunks, que oferecem parâmetros como:</p>
 <ul>
 <li>include = FALSE : impede que o código e os resultados apareçam no
 arquivo finalizado, porém o R Markdown executa os códigos internamente,
@@ -1632,7 +1634,7 @@ no arquivo finalizado.</li>
 no arquivo finalizado.</li>
 <li>fig.cap = “…” adiciona uma legenda aos resultados gráficos.</li>
 </ul>
-<p>Entre tantos outros. Segue a lista completa de parâmetros:</p>
+<p>Segue a lista completa de parâmetros disponíveis:</p>
 <pre><code>## List of 53
 ##  $ eval         : logi TRUE
 ##  $ echo         : logi TRUE
@@ -1688,16 +1690,15 @@ no arquivo finalizado.</li>
 ##  $ include      : logi TRUE
 ##  $ purl         : logi TRUE</code></pre>
 <blockquote>
-<p>Podemos fazer parte dos ajustes de chunk via point-and-click, na
-engrenagem que aparece na direita superior do chunk.</p>
+<p>DICA: podemos fazer parte dos ajustes de chunk via point-and-click,
+na engrenagem que aparece na direita superior do chunk.</p>
 </blockquote>
-<p>Particularmente gosto de deixar o parâmetro
-<code>collapse = TRUE</code>como global para todo o documento – note que
-este parâmetro está sendo especificado no início do documento, dentro da
-função <code>knitr::opts_chunk$set</code>, o que garante que seja um
-parâmetro global para todo o documento. Que tal trocar para
-<code>collapse = FALSE</code> e ver como o output é alterado, talvez
-você prefira o modelo original :)</p>
+<p>Note que é possível especificar parâmetros globais, que irão valer
+para todos os chunks do documento – gosto particularmente do parâmetro
+<code>collapse = TRUE</code>, note que este parâmetro está sendo
+especificado no início deste documento, dentro da função
+<code>knitr::opts_chunk$set</code>. Que tal trocar esta especificação
+para <code>collapse = FALSE</code> e ver como o output é alterado?</p>
 <p>A esta altura, você pode já ter notado a presença de um pacote que
 não falamos até então, o <code>knitr</code>. Esta biblioteca nos oferece
 algumas facilidades para lidar com os outputs gerados pelo R Markdown.
@@ -1712,16 +1713,16 @@ Sticker Knit
 </div>
 <p>Perceba que apesar do algo simples, estes recursos permitem que após
 uma série de análises (explorações), você possa resguardar a sua
-audiência de toda a trajetória de estudo, dando enfoque apenas no que
+audiência de toda a trajetória do estudo, dando enfoque apenas no que
 for relevante de ser apresentado. Inclusive, se durante a apresentação
 houver algum ponto que possa redirecionar a análise, por que não abrir o
-RStudio e fazer um live coding? :)</p>
+RStudio e fazer um <em>live coding</em> ? :)</p>
 <p>E para próximos passos? Recomendo:</p>
 <ul>
-<li><p>o site oficial do <a href="https://rmarkdown.rstudio.com/docs/articles/rmarkdown.html">rmarkdown.rstudio.com</a>–
-que havia sido comentado no início do curso</p></li>
+<li><p>o site oficial do <a href="https://rmarkdown.rstudio.com/docs/articles/rmarkdown.html">rmarkdown.rstudio.com</a>,
+conforme comentado no início do curso,</p></li>
 <li><p>o livro (R Markdown Cookbook)[<a href="https://bookdown.org/yihui/rmarkdown-cookbook/" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook/</a>], que
-apresenta uma série de possibilidades de estilização do .Rmd</p></li>
+apresenta uma série de possibilidades de estilização do .Rmd, e</p></li>
 <li><p>os materiais desenvolvidos pela <a href="https://beamilz.com/talks/pt/">Beatriz Milz</a>, não apenas por
 estarem em português, mas por ela ser uma das grandes referências
 brasileiras no tema.</p></li>
@@ -1735,23 +1736,25 @@ interessantes relacionados a esta mudança: <a href="https://occasionaldivergenc
 sobre o quarto”</a></p>
 </div>
 <div id="flexdashboard" class="section level1">
-<h1>Flexdashboard</h1>
-<p>O objetivo do flexdashboard é facilitar a criação de painéis para R,
-usando a mesma lógica do R Markdown, mas tendo como estrutura de saída
-algo mais próximo a um dashboard. Ao instalar esta biblioteca, você
-passará a ter esta opção no menu
+<h1>flexdashboard</h1>
+<p>O objetivo do pacote flexdashboard é facilitar a criação de painéis
+para R, usando a mesma lógica do R Markdown, mas tendo como estrutura de
+saída um dashboard. E como fazer? Primeiro é necessário instalar a
+biblioteca, então você passará a ter esta opção Flex Dashboard no menu
 <code>File &gt;  New File &gt; RMarkdown &gt; From Template</code>. Por
-meio dela, com algumas poucas linhas de código de diferença, você tem um
-output amigável para o usuário, e sem grandes desafios em termos de
-programação, dado seu layout simples, baseado em linhas e colunas, tendo
-seus componentes sendo redimensionados de forma inteligente para
-preencher o navegador e adaptar-se à exibição nos diferentes
-dispositivos.</p>
+meio dela, com algumas poucas linhas de código diferentes do R Markdown
+“original”, você tem um output amigável para o usuário. Assim, sem
+grandes novos desafios em termos de programação, dado seu layout
+simples, baseado em linhas e colunas, e seus componentes sendo
+redimensionados de forma inteligente para preencher o navegador e
+adaptar-se à exibição nos diferentes dispositivos, você ganha mais um
+recurso de comunicação no R ;)</p>
 <p>Como referências, recomendo:</p>
 <ul>
-<li><p>a página oficial do <a href="https://pkgs.rstudio.com/flexdashboard/">flexdashboard</a>, com
-materiais de <code>Get Started</code>, Mural de exemplos, e Referências
-- super completo!</p></li>
+<li><p>a página oficial do <a href="https://pkgs.rstudio.com/flexdashboard/">flexdashboard</a>,
+particularmente as seções <code>Get Started</code>,
+<code>Mural de exemplos</code>, e <code>Referências</code> - um site
+super completo!</p></li>
 <li><p>a playlist de dashboards do <a href="https://www.youtube.com/watch?v=51N-LSYXlHU&amp;list=PLCQ7-I8jjAsn-2ZcKBjGE8XfPc1VAm05J">Canal
 do Youtube do Samuel Macedo</a>. Aqui, além de estar em português,
 enquanto você tem o passo a passo para evoluir no uso do Flex, tem
@@ -1769,23 +1772,23 @@ manipulados em qualquer navegador.</p>
 <p>Tendo como base dois componentes principais: o ‘server’, que é
 responsável pela lógica do programa, tratamento e exibição dos dados; e
 ‘ui’ (user interface), responsável por oferecer as interações
-necessárias com o usuário através do navegador. O Shiny oferece métodos
-e funções prontas para a construção e estilização de ambos. Uma notícia
-legal para quem não empolga com a tecnologia, é que você pode usar o
-Shiny diretamente no R Markdown, tornando a programação envolvida ainda
-mais simples, visto que o R Markdown cuida da interface do usuário para
-você.</p>
-<p>Em termos de referência, o Shiny é super bem servido. Às vezes até
-demais, eu acho! (rs). Vou deixar aqui três das referências que eu
+necessárias com o usuário através do navegador. O Shiny possui métodos e
+funções prontas para a construção e estilização de ambos. Uma notícia
+legal para quem não empolgar para enfrentar a curva de aprendizagem
+desta ferramenta, é que você pode utilizar o Shiny diretamente do R
+Markdown, tornando a programação envolvida mais simples, visto que o R
+Markdown cuida da interface do usuário para você.</p>
+<p>Em termos de referência, o Shiny é super bem servido, às vezes até
+demais eu acho! (rs). Vou deixar aqui três das referências que eu
 considero mais robustas:</p>
 <ul>
 <li><p>o site do <a href="https://shiny.rstudio.com/">Shiny</a>, que
-oferece desde um <code>Get Started</code> até uma extensa
-<code>Galeria de exemplos</code></p></li>
+oferece desde um <code>Get Started</code> muito bem elaboradi, até uma
+extensa <code>Galeria de exemplos</code>,</p></li>
 <li><p>o livro <a href="https://mastering-shiny.org/index.html">Mastering Shiny</a>,
-escrito pelo Hadley Wickham</p></li>
-<li><p>o material do curso da galera da Curso-R <a href="https://curso-r.github.io/latinr-shiny/">Shiny do Zero a Hero</a>.
-Em português ;)</p></li>
+escrito pelo Hadley Wickham, e</p></li>
+<li><p>o material do curso da galera da Curso-R <a href="https://curso-r.github.io/latinr-shiny/">Shiny do Zero a Hero</a>,
+todo em português ;)</p></li>
 </ul>
 <p>Como uma última sugestão, que tal instalar o pacote
 <code>Shiny</code> e ir em
@@ -1813,17 +1816,18 @@ por exemplo.</p>
 </div>
 <div id="considerações-finais" class="section level1">
 <h1>Considerações Finais</h1>
-<p>Aqui foram apresentadas ferramentas para otimizar a comunicação, mas
-existem conceitos ainda mais relevantes para garantir isto: uso de
-estruturas narrativas, identificação de público para adaptação de
-mensagem, pratica da escuta ativa. Vou deixar aqui como dica um livro
-que me ajudou muito a ter um olhar mais estruturado sobre comunicação:
+<p>Aqui foram apresentadas ferramentas para otimizar a comunicação no
+contexto da Ciência de Dados, mas existem conceitos ainda mais cruciais
+para garantir isto, como por exemplo: uso de estruturas narrativas,
+identificação de público para adaptação de mensagem, prática da escuta
+ativa. Vou deixar aqui como dica um livro que me ajudou muito a ter um
+olhar mais estruturado sobre comunicação:
 <code>TED Talks: O guia oficial do TED para falar em público</code>, do
 Chris Anderson – spoiler: uma das discussões é sobre como explicar
 conceitos complexos para públicos leigos. Ou ainda, como uma referência
 mais focada em dados: <code>Effective Data Storytelling</code>, do Brent
 Dykes – que compartilha excelentes conteúdos no <a href="https://www.linkedin.com/in/brentdykes/">LinkedIn</a>,
-inclusive.</p>
+recomendo.</p>
 <p>Até a próxima ;)</p>
 </div>
 
