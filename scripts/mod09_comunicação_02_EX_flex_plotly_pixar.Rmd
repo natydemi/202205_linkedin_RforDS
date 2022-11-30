@@ -1,0 +1,229 @@
+---
+title: "Exemplo: flexdashboard + plotly"
+output: 
+  flexdashboard::flex_dashboard:
+    vertical_layout: fill
+    storyboard: true
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+#parametro global
+  knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+```{r libraries, include=FALSE}
+library(flexdashboard)
+library(knitr)
+library(janitor)
+library(tidyverse)
+library(pixarfilms)
+```
+
+
+datasets
+=======================================================================
+
+Bases disponíveis:
+
+```{r, eval = F, echo = T}
+pixarfilms::academy
+pixarfilms::box_office
+pixarfilms::genres
+pixarfilms::pixar_films
+pixarfilms::pixar_people
+pixarfilms::public_response
+```
+
+Para mais detalhes sobre as bases de dados, favor consultar: [<https://rpubs.com/natydemi/pixarfilms_datasets>](https://rpubs.com/natydemi/pixarfilms_datasets) .
+
+genres
+=======================================================================
+
+Column {data-width=400}
+-------------------------------------
+
+### **Total**
+
+```{r, collapse = TRUE}
+pixarfilms::genres %>% 
+    janitor::tabyl(genre) %>% 
+    arrange(genre) %>% 
+    knitr::kable()
+```
+
+
+Column {data-width=300}
+-------------------------------------
+
+### **rotten_tomatoes**
+
+```{r, collapse = TRUE}
+pixarfilms::genres %>% 
+    left_join(pixarfilms::public_response, by = "film") %>%  
+    group_by(genre) %>% 
+    summarise(rotten_tomatoes = mean(rotten_tomatoes, na.rm = T)) %>% 
+    mutate(rotten_tomatoes = as.integer(rotten_tomatoes)) %>% 
+    arrange(genre) %>% 
+    knitr::kable()
+```
+
+Column {data-width=300}
+-------------------------------------
+
+### **metacritic**
+
+```{r, collapse = TRUE}
+pixarfilms::genres %>% 
+    left_join(pixarfilms::public_response, by = "film") %>%  
+    group_by(genre) %>% 
+    summarise(metacritic = mean(metacritic, na.rm = T)) %>% 
+    mutate(metacritic = as.integer(metacritic)) %>% 
+    arrange(genre) %>% 
+    knitr::kable()
+```
+
+
+box_office (table)
+=======================================================================
+
+
+Column {data-vertical_layout=scroll}
+-----------------------------------------------------------------------
+
+### films
+
+```{r, collapse = TRUE}
+pixarfilms::box_office %>% 
+    mutate(across(where(is.numeric), ~scales::number(., big.mark = "."))) %>% 
+    DT::datatable()
+```
+
+
+
+
+box_office (graphs)
+=======================================================================
+
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### budget
+
+```{r, collapse = TRUE}
+pixarfilms::box_office %>%  
+    ggplot(aes("",budget)) +
+      geom_boxplot() +
+      scale_y_continuous(labels = scales::label_number_si(prefix = "$ ")) +
+      xlab("")
+  
+```
+
+
+### box_office_worldwide
+
+```{r, collapse = TRUE}
+p <- pixarfilms::box_office %>%  
+    ggplot(aes(budget, box_office_worldwide, color = film)) +
+      geom_jitter() +
+      scale_y_continuous(
+        labels=scales::label_number_si(prefix = "$ ")) +
+      scale_x_continuous(
+        labels=scales::label_number_si(prefix = "$ ")) +
+  theme(legend.position = 'none')
+  
+plotly::ggplotly(p)  
+```
+
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### box_office_us_canada
+
+```{r, collapse = TRUE}
+p <- pixarfilms::box_office %>%  
+    ggplot(aes(budget, box_office_us_canada, color = film)) +
+      geom_jitter() +
+      scale_y_continuous(
+        labels=scales::label_number_si(prefix = "$ ")) +
+      scale_x_continuous(
+        labels=scales::label_number_si(prefix = "$ ")) +
+  theme(legend.position = 'none')
+  
+plotly::ggplotly(p)  
+```
+
+### box_office_other
+
+```{r, collapse = TRUE}
+p <- pixarfilms::box_office %>%  
+    ggplot(aes(budget, box_office_other, color = film)) +
+      geom_jitter() +
+      scale_y_continuous(
+        labels=scales::label_number_si(prefix = "$ ")) +
+      scale_x_continuous(
+        labels=scales::label_number_si(prefix = "$ ")) +
+  theme(legend.position = 'none')
+  
+plotly::ggplotly(p)  
+```
+
+
+public_response Vs. box_office
+=======================================================================
+
+
+Column 
+-------------------------------------
+    
+### rotten_tomatoes vs. box_office_worldwide
+    
+```{r, collapse = TRUE}
+p <- pixarfilms::public_response %>% 
+    left_join(pixarfilms::box_office, by = "film") %>%  
+    ggplot(aes(rotten_tomatoes, box_office_worldwide, label = film)) +
+      geom_jitter() +
+      scale_y_continuous(
+        labels=scales::label_number_si(prefix = "$ ")) +
+      scale_x_continuous(
+        limits = c(0, 100), breaks = seq(0, 100, 10))
+  
+plotly::ggplotly(p)  
+```
+   
+   
+   
+Column {.tabset}
+-------------------------------------
+   
+### **rotten_tomatoes**
+
+```{r, collapse = TRUE}
+pixarfilms::public_response %>%  
+    group_by(film) %>% 
+    summarise(rotten_tomatoes = mean(rotten_tomatoes, na.rm = T)) %>% 
+    mutate(rotten_tomatoes = as.integer(rotten_tomatoes)) %>% 
+    arrange(film) %>% 
+    kableExtra::kbl() %>% 
+    kableExtra::kable_styling(
+      bootstrap_options = c("hover"),
+      full_width = FALSE)
+```  
+ 
+### **box_office_worldwide**
+
+```{r, collapse = TRUE}
+pixarfilms::box_office %>%  
+    group_by(film) %>% 
+    summarise(box_office_worldwide = mean(box_office_worldwide, na.rm = T)) %>% 
+    mutate(box_office_worldwide = scales::comma(box_office_worldwide)) %>% 
+    arrange(film) %>% 
+    kableExtra::kbl() %>% 
+    kableExtra::kable_styling(
+      bootstrap_options = c("hover"),
+      full_width = FALSE)
+```  
+

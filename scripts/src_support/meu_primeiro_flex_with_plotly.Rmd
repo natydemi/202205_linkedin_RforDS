@@ -1,0 +1,85 @@
+---
+title: "meu primeiro flexdashboard + plotly"
+output: flexdashboard::flex_dashboard
+---
+
+```{r setup, include=FALSE}
+#install.packages("hrbrthemes")
+#if(!require("tidyverse")){install.packages("tidyverse")}
+
+library(flexdashboard)
+library(tidyverse)
+library(viridis)
+```
+
+
+Análise
+=====================================  
+
+
+coluna 1
+---
+
+### Base de Dados
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r, echo = TRUE }
+# create a dataset
+data <- data.frame(
+    name=c( rep("A",500), rep("B",500), rep("B",500), rep("C",20), rep('D', 100)  ),
+    value=c( rnorm(500, 10, 5), rnorm(500, 13, 1), rnorm(500, 18, 1), rnorm(20, 25, 4), rnorm(100, 12, 1) )
+)
+
+DT::datatable(data)
+```
+
+
+
+
+Column 2  {.tabset}
+-----------------------------------------------------------------------
+
+### Gráfico
+
+```{r}
+
+# Plot
+p <- data %>%
+    ggplot( aes(x=name, y=value, fill=name)) +
+    geom_boxplot() +
+    scale_fill_viridis(discrete = TRUE, alpha=0.6) +
+    hrbrthemes::theme_ipsum() +
+    theme(
+        legend.position="none",
+        plot.title = element_text(size=11)
+    ) +
+    ggtitle("A boxplot with jitter") +
+    xlab("")
+
+plotly::ggplotly(p)
+
+```
+
+### Backlog de atividades
+
+Backlog de atividades:
+
+- investigar representatividade das categorias 
+
+
+
+
+Quotes
+=====================================  
+
+coluna 1
+---
+
+
+> coloque um texto aqui

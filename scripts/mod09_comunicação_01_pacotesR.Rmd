@@ -1,0 +1,111 @@
+---
+title: "Comunicação para Ciência de Dados"
+output: 
+    html_document:
+        code_folding: hide
+        toc: TRUE
+        toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
+```
+
+# Introdução
+
+Na etapa de comunicação dos dados, o objetivo primário é o alinhamento entre os envolvidos e envolvidas. E tal tarefa tende a ser desafiadora, visto a ciência de dados envolver profissionais com diferentes formações e, portanto, diferentes perspectivas, linguagens e prioridades. Uma forma interessante de enxergar este desafio da comunicação, é por meio da visão de Churchill Jr. G.A. e Peter, J.P., que definem que "a comunicação trata da transmissão de uma mensagem, de um emissor para um receptor, de modo que ambos a entendam da mesma maneira."
+
+Neste contexto dispor de ferramentas que tornem esta tarefa mais fluída é extremamente importante. De modo que sejam evitados:
+
+-   Dificuldades e ruídos na comunicação: ampliados pela sobrecarga cognitiva que o público técnico pode acabar gerando na audiência pelo excesso de códigos e conceitos; ou, em contraponto,
+
+-   Perda da reprodutibilidade do trabalho: gerado ao exportar os resultados de ferramentas de linguagem de programação cientifica para ferramentas que facilitam a apresentações, porém manuais, e sem integração direta com o ambiente de análise, impossibilitando a replicabilidade.
+
+Em outros palavras, ter acesso a ferramentas que ofereçam recursos tanto para o desenvolvimento quanto para a devida comunicação dos resultados, sem a necessidade de intermediários, é algo que pode, e deve, ser considerado.
+
+Neste documento, vamos conhecer um pouco mais sobre algumas das ferramentas disponíveis na linguagem R.
+
+
+
+# R Markdown
+
+Apesar de já estarmos trabalhando com o R Markdown, exploramos pouco os seus recursos. Como é o caso da estilização do cabeçalho (YAML header), que possui como possibilidade menu suspenso e dinâmico por exemplo, para mais opções, [acesse](https://bookdown.org/yihui/rmarkdown/html-document.html). Ou ainda, os chunks, aqui, oferecem parâmetros como:
+
+-   include = FALSE : impede que o código e os resultados apareçam no arquivo finalizado, porém o R Markdown executa os códigos internamente, de modo que os resultados podem ser usados por outros chunks.
+-   echo = FALSE : impede que o código, mas não os resultados apareçam no arquivo finalizado. Esta é uma maneira útil de incorporar figuras.
+-   message = FALSE : impede que mensagens geradas por código apareçam no arquivo finalizado.
+-   warning = FALSE : impede que os avisos gerados pelo código apareçam no arquivo finalizado.
+-   fig.cap = "..." adiciona uma legenda aos resultados gráficos.
+
+Entre tantos outros. Segue a lista completa de parâmetros:
+
+```{r echo=FALSE}
+str(knitr::opts_chunk$get())
+```
+
+> Podemos fazer parte dos ajustes de chunk via point-and-click, na engrenagem que aparece na direita superior do chunk.
+
+Particularmente gosto de deixar o parâmetro `collapse = TRUE`como global para todo o documento -- note que este parâmetro está sendo especificado no início do documento, dentro da função `knitr::opts_chunk$set`, o que garante que seja um parâmetro global para todo o documento. Que tal trocar para `collapse = FALSE` e ver como o output é alterado, talvez você prefira o modelo original :)
+
+A esta altura, você pode já ter notado a presença de um pacote que não falamos até então, o `knitr`. Esta biblioteca nos oferece algumas facilidades para lidar com os outputs gerados pelo R Markdown. Podemos, por exemplo, utilizar uma função para adicionar uma imagem da web ao documento -- esta mesma função poderia ser utilizada para adicionar imagens diretamente do seu computador:
+
+```{r , echo=FALSE, out.width = '20%', fig.align = "center", fig.cap="Sticker Knit"}
+knitr::include_graphics('https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/knitr.png')
+```
+
+Perceba que apesar do algo simples, estes recursos permitem que após uma série de análises (explorações), você possa resguardar a sua audiência de toda a trajetória de estudo, dando enfoque apenas no que for relevante de ser apresentado. Inclusive, se durante a apresentação houver algum ponto que possa redirecionar a análise, por que não abrir o RStudio e fazer um live coding? :)
+
+E para próximos passos? Recomendo:
+
+-   o site oficial do [rmarkdown.rstudio.com](https://rmarkdown.rstudio.com/docs/articles/rmarkdown.html)-- que havia sido comentado no início do curso
+
+-   o livro (R Markdown Cookbook)[<https://bookdown.org/yihui/rmarkdown-cookbook/>], que apresenta uma série de possibilidades de estilização do .Rmd
+
+-   os materiais desenvolvidos pela [Beatriz Milz](https://beamilz.com/talks/pt/), não apenas por estarem em português, mas por ela ser uma das grandes referências brasileiras no tema.
+
+Inclusive, entre os materiais dela você vai encontrar conteúdos sobre o [quarto](https://quarto.org/) o pacote que promete ser a nova geração do R Markdown -- só que mais abrangente, visto ser possível utilizá-lo em outras ferramentas além da RStudio, como a IDE VS Code ou o Jupyter Notebook. Deixo uma referência que apresenta alguns pontos interessantes relacionados a esta mudança: ["perguntas sobre o quarto"](https://occasionaldivergences.com/posts/quarto-questions/?utm_campaign=Data_Elixir&utm_source=Data_Elixir_409/)
+
+# Flexdashboard
+
+O objetivo do flexdashboard é facilitar a criação de painéis para R, usando a mesma lógica do R Markdown, mas tendo como estrutura de saída algo mais próximo a um dashboard. Ao instalar esta biblioteca, você passará a ter esta opção no menu `File >  New File > RMarkdown > From Template`. Por meio dela, com algumas poucas linhas de código de diferença, você tem um output amigável para o usuário, e sem grandes desafios em termos de programação, dado seu layout simples, baseado em linhas e colunas, tendo seus componentes sendo redimensionados de forma inteligente para preencher o navegador e adaptar-se à exibição nos diferentes dispositivos.
+
+Como referências, recomendo:
+
+-   a página oficial do [flexdashboard](https://pkgs.rstudio.com/flexdashboard/), com materiais de `Get Started`, Mural de exemplos, e Referências - super completo!
+
+-   a playlist de dashboards do [Canal do Youtube do Samuel Macedo](https://www.youtube.com/watch?v=51N-LSYXlHU&list=PLCQ7-I8jjAsn-2ZcKBjGE8XfPc1VAm05J). Aqui, além de estar em português, enquanto você tem o passo a passo para evoluir no uso do Flex, tem também estudos de caso, particularmente em tópicos de finanças. Recomendo demais! :)
+
+# Shiny
+
+O Shiny é um pacote usado para a geração de gráficos e dashboards interativos, permitindo a construção de aplicações Web. Para tal, as ferramentas da biblioteca convertem os dados analisados e as funções de R para HTML, CSS e JavaScript, gerando arquivos que podem ser abertos e manipulados em qualquer navegador.
+
+Tendo como base dois componentes principais: o 'server', que é responsável pela lógica do programa, tratamento e exibição dos dados; e 'ui' (user interface), responsável por oferecer as interações necessárias com o usuário através do navegador. O Shiny oferece métodos e funções prontas para a construção e estilização de ambos. Uma notícia legal para quem não empolga com a tecnologia, é que você pode usar o Shiny diretamente no R Markdown, tornando a programação envolvida ainda mais simples, visto que o R Markdown cuida da interface do usuário para você.
+
+Em termos de referência, o Shiny é super bem servido. Às vezes até demais, eu acho! (rs). Vou deixar aqui três das referências que eu considero mais robustas:
+
+-   o site do [Shiny](https://shiny.rstudio.com/), que oferece desde um `Get Started` até uma extensa `Galeria de exemplos`
+
+-   o livro [Mastering Shiny](https://mastering-shiny.org/index.html), escrito pelo Hadley Wickham
+
+-   o material do curso da galera da Curso-R [Shiny do Zero a Hero](https://curso-r.github.io/latinr-shiny/). Em português ;)
+
+Como uma última sugestão, que tal instalar o pacote `Shiny` e ir em `File >  New File > RMarkdown ...` e conhecer como fica a cara do R Markdown tendo um Shiny embutido?
+
+# Pacotes, muitos pacotes!
+
+Aqui vou listar algumas formas mais de otimizar a comunicação via o ferramental oferecido pelos pacotes do R:
+
+-   Criar blogs online - [blogdown](https://github.com/rstudio/blogdown) ou [distill](https://github.com/rstudio/distill)
+-   Montar currículo - [pagedown](https://github.com/rstudio/pagedown)
+-   Construir slides - [xaringan](https://github.com/yihui/xaringan)
+-   Disponibilizar um livro - [bookdown](https://github.com/rstudio/bookdown)
+-   Produzir tutoriais interativos - [learnr](https://github.com/rstudio/learnr)
+-   Formatar artigos cientificos - [rticles](https://github.com/rstudio/rticles)
+
+E não para por aí. Tem pacote até para ajudar a mexer no pacote office (officedown)! Além de uma série de bibliotecas voltadas a estilização dos materiais, como: [`prettydoc`](https://github.com/yixuan/prettydoc), [`shinydashboard`](https://github.com/rstudio/shinydashboard), e [`xaringanthemer`](https://github.com/gadenbuie/xaringanthemer), por exemplo.
+
+# Considerações Finais
+
+Aqui foram apresentadas ferramentas para otimizar a comunicação, mas existem conceitos ainda mais relevantes para garantir isto: uso de estruturas narrativas, identificação de público para adaptação de mensagem, pratica da escuta ativa. Vou deixar aqui como dica um livro que me ajudou muito a ter um olhar mais estruturado sobre comunicação: `TED Talks: O guia oficial do TED para falar em público`, do Chris Anderson -- spoiler: uma das discussões é sobre como explicar conceitos complexos para públicos leigos. Ou ainda, como uma referência mais focada em dados: `Effective Data Storytelling`, do Brent Dykes -- que compartilha excelentes conteúdos no [LinkedIn](https://www.linkedin.com/in/brentdykes/), inclusive.
+
+Até a próxima ;)
