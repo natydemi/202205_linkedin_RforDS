@@ -45,6 +45,8 @@ Um bom exercício nas etapas de transformação de dados é encaixar os diferent
 voos <- dados::voos %>% glimpse()
 ```
 
+
+
 ## Manuseando colunas
 
 Aqui, vamos aprender como lidar com as colunas do seu conjunto de dados, seja selecionando ou ordenando a informação.
@@ -222,6 +224,8 @@ Sem o `distinct()`, e apenas com o `select()`, teríamos um número maior de lin
 voos %>%
   select(companhia_aerea, origem)
 ```
+
+
 
 ## Alterando e criando novas colunas
 
