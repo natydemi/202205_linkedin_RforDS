@@ -16,7 +16,7 @@ library(tidyverse)
 
 # Introdução
 
-Neste arquivo, conheceremos algumas funções que nos auxiliam nas investigações iniciais de uma base de dados, isto é, o que devemos primeiro inspecionar após a importação de uma base de dados, no caso: inspeção de volumetrias, dimensões da tabela (linhas e colunas), e como tais informações estão sendo processadas pela linguagem R. Em relação a este último ponto, veremos também o conceito de `Classes do R`, como se relacionam com o conceito estatístico de `Tipos de Variáveis`, e algumas das principais características das `Estruturas de Dados` existentes no R.   
+Neste arquivo, conheceremos algumas funções que nos auxiliam nas investigações iniciais de uma base de dados, isto é, o que devemos primeiro examinar após a importação de uma base de dados, no caso: inspeção de volumetrias, dimensões da tabela (linhas e colunas), e como tais informações estão sendo processadas pela linguagem R. Em relação a este último ponto, veremos também o conceito de `Classes do R`, como se relacionam com o conceito estatístico de `Tipos de Variáveis`, e algumas das principais características das `Estruturas de Dados` existentes no R.   
 
 
 # Inspeções iniciais
@@ -59,7 +59,7 @@ Para o caso de termos interesse em consultar o nome dos atributos da tabela:
 pixar_filmes %>% names()
 ```
 
-Apesar de existirem muitas funções importantes que podem nos ajudar na investigação inicial de uma base de dados, neste curso iremos priorizar a função `glimpse()`, disponível nas bibliotecas `dplyr` ou `tibble` – é isso mesmo, uma mesma função pode constar em diferentes pacotes, bem como é possível que funções com o mesmo nome, tenham comportamentos diferentes, apesar de compartilharem o mesmo nome. Com esta função podemos verificar: as dimensões do dataset, os nomes das colunas, suas respectivas classes, e uma amostra das primeiras observações de cada variável:
+Apesar de existirem muitas funções importantes que podem nos ajudar na investigação inicial de uma base de dados, neste curso iremos priorizar a função `glimpse()`, disponível nas bibliotecas `dplyr` ou `tibble` – é isso mesmo, uma mesma função pode constar em diferentes pacotes, bem como é possível que funções com o mesmo nome, tenham comportamentos diferentes, apesar de compartilharem o mesmo nome (funções homônimas). Com esta função podemos verificar: as dimensões do dataset, os nomes das colunas, suas respectivas classes, e uma amostra das primeiras observações de cada variável:
 
 ```{r}
 pixar_filmes %>% glimpse()
@@ -68,13 +68,13 @@ pixar_filmes %>% glimpse()
 
 ## Identificando as classes das colunas
 
-A partir do resultado da função `glimpse()` temos nosso primeiro contato com um dos conceitos mais fundamentais no contexto de análise de dados: as classes das colunas de um dataset. Considerando a base `pixar_filmes` podemos observar as classes: character ( \<chr\> ), indicando que existem colunas que possuem strings, ou seja, palavras; double ( \<dbl\> ), isto é, números; e date ( \<date\> ), basicamente, datas. Saber sobre a classe de cada coluna é extremamente importante, pois nos permite identificar o tipo do dado, um conceito estatístico que nos guia sobre as características lógicas da variável, inclusive sobre quais cálculos que fazem ou não sentido de serem aplicados. Por exemplo, observe o resultado abaixo e reflita: sendo a coluna `filme` uma palavra, faria sentido termos o cálculo de média?
+A partir do resultado da função `glimpse()` temos nosso primeiro contato com um dos conceitos mais fundamentais no contexto de análise de dados: as classes das colunas de um dataset. Considerando a base `pixar_filmes` podemos observar as classes: character ( \<chr\> ), indicando que existem colunas que possuem strings, ou seja, palavras; double ( \<dbl\> ), isto é, números; e date ( \<date\> ), basicamente, datas. Saber sobre a classe de cada coluna é extremamente importante, pois nos permite identificar o tipo do dado, um conceito estatístico que nos guia sobre as características da variável, inclusive sobre quais cálculos que fazem ou não sentido de serem aplicados. Por exemplo, observe o resultado abaixo e reflita: sendo a coluna `filme` uma palavra, faria sentido termos o cálculo de média?
 
 ```{r}
 pixar_filmes %>% summary()
 ```
 
-Aqui você pode se perguntar: como o R identifica as classes das variáveis? E em geral é por meio de regras lógicas, por exemplo: se tivermos uma string, uma letra, em uma coluna, não tem como esta variável ser numérica, certo? Bem, quase. Pois se tivermos uma coluna com valores monetários, por exemplo, é possível que o número esteja precedido pelo simbolo de `R$`. E este exemplo é justo para pontuar que se, de alguma maneira, não dermos esta informação para o R (que a coluna é numérica), não será possível aplicar calculos numéricos à coluna. 
+Aqui você pode se perguntar: como o R identifica as classes das variáveis? E em geral é por meio de regras lógicas, por exemplo: se tivermos uma coluna da classe `string` (uma letra), não tem como esta variável ser um número, certo? Bem, quase. Pois se tivermos uma coluna com valores monetários, por exemplo, é possível que o número esteja precedido pelo simbolo de `R$`. E este exemplo é justo para pontuar que se, de alguma maneira, não dermos a informação para o R que a coluna é numérica, não será possível aplicar calculos como: média, somo, ou cálculos númericos em geral.  Vamos ver uma aplicação:
 
 ```{r}
 (exemplo <- "R$ 1.00")
@@ -82,7 +82,7 @@ class(exemplo)
 exemplo %>% as.numeric()
 ```
 
-Por meio do pacote `stringr`, que será melhor contextualizado no capítulo de pré-processamento, podemos redefinir o objeto `exemplo`: 
+Agora, por meio do pacote `stringr`, que será melhor contextualizado no capítulo de pré-processamento, podemos redefinir o objeto `exemplo`: 
 
 ```{r}
 (exemplo <- exemplo %>% stringr::str_replace("R\\$", "") %>% as.numeric() )
@@ -100,7 +100,7 @@ dados::pixar_filmes %>%
   summary()
 ```
 
-Agora, alterando a classe da coluna para o tipo numérico, passamos a ter:
+Agora, alterando a classe da coluna para o tipo numérico, podemos aplicar diferentes cálculos:
 
 ```{r}
 dados::pixar_filmes %>% 
@@ -114,26 +114,26 @@ dados::pixar_filmes %>%
 
 Existem algumas maneiras de classificar os diferentes tipos de dados segundo a perspectiva da estatística, aqui iremos considerar a organização:
 
--   variáveis qualitativas (categóricas)
+-   variáveis qualitativas (ou categóricas)
     -   nominal
     -   ordinal
     
--   variáveis quantitativas (numéricas)
+-   variáveis quantitativas (ou numéricas)
     -   discretas
     -   contínuas
 
 Para cada um destes tipos, teremos classes no R indicando quais propriedades e funções fazem ou não sentido para cada coluna da tabela:
 
--   variáveis qualitativas (categóricas)
+-   variáveis qualitativas (ou categóricas)
     -   nominal (`character`/ `<chr>` ou `factor`/ `<fct>`)
     -   ordinal (`ordered`/ `<ord>`)
     
--   variáveis quantitativas (numéricas)
+-   variáveis quantitativas (ou numéricas)
     -   discretas (`integer`/ `<int>`)
     -   contínuas (`double`/ `<dbl>`)
 
 
-Importante comentar que nesta organização, alguns casos, como variáveis lógicas, do tipo `TRUE`/`FALSE`, ou ainda datas, como células do tipo dia-mês-ano, apesar de poderem ser entendidas como subcasos da organização acima, por possuírem muitas características próprias, possuem suas próprias classes no R, no caso `logical`/`<lgl>` e `date`/`<date>`, respectivamente. 
+Importante comentar que nesta organização, alguns casos, como variáveis lógicas, do tipo `TRUE`/`FALSE`, ou ainda datas, como células do tipo dia-mês-ano, apesar de poderem ser entendidas como subcasos da organização acima, por terem muitas características próprias, possuem suas próprias classes no R, no caso `logical`/`<lgl>` e `date`/`<date>`, respectivamente. 
 
 
 ## construindo um exemplo
@@ -178,20 +178,30 @@ No R, chamamos de `Estruturas de Dados` a maneira como as informações são org
 
 - Data Frame: estruturas bidimensionais que permitem que cada coluna possua a sua própria classe – em termos práticos, cada coluna é um vetor atômico.
 
-- Listas: a estrutura mais genérica que temos no R, pois permite que diferentes classes sejam guardadas em um único objeto. Adicionalmente, as Listas possuem uma propriedade recursiva, isto é, uma lista pode conter outras listas, de diferentes tamanhos.
+- Listas: a estrutura mais genérica que temos no R, pois permite que diferentes classes sejam guardadas em um único objeto. Adicionalmente, as listas possuem uma propriedade recursiva, isto é, uma lista pode conter outras listas, de diferentes tamanhos.
 
-Além destes três casos, existem também as estruras do tipo: `matrix` e `array`, que possuem a mesma natureza atômica dos vetores, porém com mais dimensões. 
+Além destes três casos, existem também as estruras do tipo: `matrix` e `array`, que possuem a mesma natureza atômica dos vetores, porém com mais dimensões. Estas estruturas são interessantes para trabalhar com cálculos matemáticos (lembrando que o R é uma linguagem com um apelo acadêmico). 
 
-Apesar de estarmos trabalhando majoritariamente com os `data.frame` (no contexto do tidyverse, temos o `tibble` como uma versão melhorada do data.frame), uma estrutura de duas dimensões, em que as linhas são necessariamente de uma mesma classe. Ter alguma visibilidade sobre e existencia das outras estruturas, te ajudará a evoluir na linguagem de maneira mais consistente.
+No contexto de Ciência de Dados trabalhamos majoritariamente com a estrutura de `data.frame`, uma estrutura de duas dimensões, em que as colunas são necessariamente de uma mesma classe. Ainda assim ter alguma visibilidade sobre e existencia das outras estruturas, te ajudará a evoluir na linguagem de maneira mais consistente – por exemplo, sabendo lidar com possíveis erros de funções que só permitem trabalhar com uma estrutura de dados específica. 
 
-
-## class() retorna a classe ou a estrura? 
-Bem, os dois. Se você fizer a consulta para qualquer dado com uma estrutura superior a 1 dimensão, ou seja qualquer estrutura que não um vetor, você terá como output a estrutura do dado. Enquanto que a consulta para vetores, teremos a informação da classe de fato, ou seja, se a informação guardada por aquele vetor se trata de um número, uma string, ou uma data, por exemplo.
+Por fim é importante pontuar que ao trabalhar com funções do tidyverse, iremos encontrar a estrutura `tibble`, basicamente a mesma coisa que um `data.frame`, mas com algumas melhorias e otimizações, por exemplo um output mais informativo – note a presença da classe das colunas no output do objeto `ex_estrutura_alterada`, exemplificado abaixo.  
 
 ```{r}
 ex_estrutura = data.frame(a = c(1L, 2L, 3L), b = c("1", "2", "3"), c = c(TRUE, FALSE, TRUE))
 class(ex_estrutura)
+ex_estrutura
 ```
+
+```{r}
+ex_estrutura_alterada <- as_tibble(ex_estrutura)
+class(ex_estrutura_alterada)
+ex_estrutura_alterada
+```
+
+
+## class() retorna a classe ou a estrura? 
+Bem, os dois. Se você fizer a consulta para qualquer dado com uma estrutura superior a uma dimensão, ou seja qualquer estrutura que não um vetor, você terá como output a estrutura do dado. Enquanto que a consulta para vetores, teremos a informação da classe de fato, ou seja, se a informação guardada por aquele vetor se trata de um número, uma string, uma data, ou etc.
+
 ```{r}
 ex_vetor = c(1L, 2L, 3L)
 class(ex_vetor)
@@ -201,11 +211,11 @@ class(ex_vetor)
 
 ## vetores e a hierarquia de coerção 
 
-Sabe a propriedade de que o vetor precisa ter a mesma classe? Pois bem, isto é levadoa a sério no R, pois se você misturar classes diferentes em um único vetor, o R irá transformar tudo em uma classe só. Para esta coerção, são consideradas não as classes em si, mas sim a maneira como tais informações são armazenadas internamente pelo R, algo um pouco mais low code. Abaixo consta a  hierarquia de coerção: 
+Sabe a propriedade de que o vetor precisa ter a mesma classe? Pois bem, isto é levado muito a sério no R, pois se você tentar misturar classes diferentes em um único vetor, o R irá transformar tudo em uma classe só. E para esta coerção, o R considera a maneira como os elementos são armazenados em memória, algo um pouco mais técnico (*low code*). Não temos a intenção de entrar neste detalhe, mas, na prática o R respeita a seguinte hierarquia de coerção: 
 
 - `character` > `complex` > `double` > `integer` > `logical` > `raw`
 
-Mas de maneira mais prática: se você tiver um vetor numérico, e adicionar uma string neste, o vetor passará a ser da classe character:
+Ou seja, se você tiver um vetor numérico, e adicionar uma string neste vetor, o vetor passará a ser da classe character. Por quê? Pois o R só permite uma classe para cada vetor, e a escolha é feita segundo a hierarquia listada acima, de modo que o elemento à esquerda é sempre priorizado. Segue um exemplo:
 
 ```{r}
 (ex1 = c(1, 2, 3))
@@ -215,7 +225,7 @@ class(ex1)
 class(ex1)
 ```
 
-Similarmente se estiver trabalhando com informações lógicas, estas podem ser transformadas em números, no caso TRUE = 1 e o FALSE = 0.
+Similarmente se estivermos trabalhando com informações lógicas, estas podem ser transformadas em números, no caso TRUE = 1 e o FALSE = 0.
 
 ```{r}
 (ex2 = c(TRUE, FALSE, TRUE))
@@ -228,10 +238,12 @@ class(ex2)
 Temos ainda que algumas funções aplicam estas coerções de maneira automática:
 
 ```{r}
-sum(c(TRUE, FALSE, TRUE))
+c(TRUE, FALSE, TRUE) %>% 
+  sum() %>% 
+  class()
 ```
 
-Note que a característica de coerção faz sentido no contexto de análise de dados — afinal sem ela como iriamos calcular a média de uma coluna que possue números em algumas linhas, e palavras em outras? Ainda assim este ponto pode te dar muita dor de cabeça, pois basta que uma célula da tabela tenha sido digitada errada, para que toda a coluna seja desconfigurada.
+Note que a característica de coerção faz bastante sentido no contexto da análise de dados, final, sem ela, como iriamos calcular a média de uma coluna que misturasse números e letras? Então atenção para garantir que as colunas da sua tabela estejam sendo representadas corretamente ;) 
 
 
 

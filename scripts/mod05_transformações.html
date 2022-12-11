@@ -297,17 +297,23 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+content: "";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "\e258";
-font-family: 'Glyphicons Halflings';
+content: "";
 border: none;
+}
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "";
+font-family: 'Glyphicons Halflings';
+display: inline-block;
+padding: 10px;
+border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -357,10 +363,10 @@ display: none;
 <h1>Bibliotecas</h1>
 <pre class="r"><code>library(tidyverse)
 ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6      ✔ purrr   0.3.5 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2 
+## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
+## ✔ tibble  3.1.7     ✔ dplyr   1.0.9
+## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
+## ✔ readr   2.1.2     ✔ forcats 0.5.1
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
@@ -632,16 +638,15 @@ trabalhar não apenas com a quantidade de linhas desejadas (parâmetro
   slice_sample(n = 5) %&gt;% 
   slice_head(prop = 0.6)
 ## # A tibble: 3 × 19
-##     ano   mes   dia horario_sa…¹ saida…² atras…³ horar…⁴ chega…⁵ atras…⁶ compa…⁷
-##   &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
-## 1  2013    12    14          830    1845     825    1210    2154     856 DL     
-## 2  2013     7    22          845    1600    1005    1044    1815     989 MQ     
-## 3  2013     1    10         1121    1635    1126    1239    1810    1109 MQ     
-## # … with 9 more variables: voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
+##     ano   mes   dia horario_saida saida_programada atraso_saida horario_chegada
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;         &lt;int&gt;            &lt;int&gt;        &lt;dbl&gt;           &lt;int&gt;
+## 1  2013    12    19           734             1725          849            1046
+## 2  2013    12    17           705             1700          845            1026
+## 3  2013     3    18          1020             2100          800            1336
+## # … with 12 more variables: chegada_prevista &lt;int&gt;, atraso_chegada &lt;dbl&gt;,
+## #   companhia_aerea &lt;chr&gt;, voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
 ## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
-## #   data_hora &lt;dttm&gt;, and abbreviated variable names ¹​horario_saida,
-## #   ²​saida_programada, ³​atraso_saida, ⁴​horario_chegada, ⁵​chegada_prevista,
-## #   ⁶​atraso_chegada, ⁷​companhia_aerea</code></pre>
+## #   data_hora &lt;dttm&gt;</code></pre>
 <p>Note que ao trabalhar com amostras, tratam-se de amostras aleatórias,
 o que significa que a cada vez que você rodar o código, o resultado
 poderá ser alterado. Para replicar os mesmos resultados, é importante
@@ -649,60 +654,56 @@ que uma semente seja específicada, compare:</p>
 <pre class="r"><code>voos %&gt;% 
   slice_sample(n = 3) 
 ## # A tibble: 3 × 19
-##     ano   mes   dia horario_sa…¹ saida…² atras…³ horar…⁴ chega…⁵ atras…⁶ compa…⁷
-##   &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
-## 1  2013     9     1          619     623      -4     713     737     -24 EV     
-## 2  2013     4    19         2119    1755     204     142    2050     292 DL     
-## 3  2013    11    28         1547    1549      -2    1849    1859     -10 UA     
-## # … with 9 more variables: voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
+##     ano   mes   dia horario_saida saida_programada atraso_saida horario_chegada
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;         &lt;int&gt;            &lt;int&gt;        &lt;dbl&gt;           &lt;int&gt;
+## 1  2013     9    13          2215             2140           35            2320
+## 2  2013     8    24           955             1000           -5            1226
+## 3  2013     5    14           856              859           -3            1118
+## # … with 12 more variables: chegada_prevista &lt;int&gt;, atraso_chegada &lt;dbl&gt;,
+## #   companhia_aerea &lt;chr&gt;, voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
 ## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
-## #   data_hora &lt;dttm&gt;, and abbreviated variable names ¹​horario_saida,
-## #   ²​saida_programada, ³​atraso_saida, ⁴​horario_chegada, ⁵​chegada_prevista,
-## #   ⁶​atraso_chegada, ⁷​companhia_aerea
+## #   data_hora &lt;dttm&gt;
 
 voos %&gt;% 
   slice_sample(n = 3) 
 ## # A tibble: 3 × 19
-##     ano   mes   dia horario_sa…¹ saida…² atras…³ horar…⁴ chega…⁵ atras…⁶ compa…⁷
-##   &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
-## 1  2013     4    12         2019    2000      19    2302    2245      17 DL     
-## 2  2013    12    26         1525    1454      31    1644    1626      18 9E     
-## 3  2013     7     7          800     805      -5    1027    1055     -28 DL     
-## # … with 9 more variables: voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
+##     ano   mes   dia horario_saida saida_programada atraso_saida horario_chegada
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;         &lt;int&gt;            &lt;int&gt;        &lt;dbl&gt;           &lt;int&gt;
+## 1  2013    10    18           959             1004           -5            1158
+## 2  2013     4    18          1751             1610          101            1917
+## 3  2013    12    11          1659             1629           30            2025
+## # … with 12 more variables: chegada_prevista &lt;int&gt;, atraso_chegada &lt;dbl&gt;,
+## #   companhia_aerea &lt;chr&gt;, voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
 ## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
-## #   data_hora &lt;dttm&gt;, and abbreviated variable names ¹​horario_saida,
-## #   ²​saida_programada, ³​atraso_saida, ⁴​horario_chegada, ⁵​chegada_prevista,
-## #   ⁶​atraso_chegada, ⁷​companhia_aerea
+## #   data_hora &lt;dttm&gt;
 
 set.seed(2)
 voos %&gt;% 
   slice_sample(n = 3)
 ## # A tibble: 3 × 19
-##     ano   mes   dia horario_sa…¹ saida…² atras…³ horar…⁴ chega…⁵ atras…⁶ compa…⁷
-##   &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
-## 1  2013     8    30         1609    1615      -6    1757    1831     -34 DL     
-## 2  2013    10    30         1556    1545      11    1745    1751      -6 US     
-## 3  2013    10    10         1528    1529      -1    1648    1700     -12 UA     
-## # … with 9 more variables: voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
+##     ano   mes   dia horario_saida saida_programada atraso_saida horario_chegada
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;         &lt;int&gt;            &lt;int&gt;        &lt;dbl&gt;           &lt;int&gt;
+## 1  2013     8    30          1609             1615           -6            1757
+## 2  2013    10    30          1556             1545           11            1745
+## 3  2013    10    10          1528             1529           -1            1648
+## # … with 12 more variables: chegada_prevista &lt;int&gt;, atraso_chegada &lt;dbl&gt;,
+## #   companhia_aerea &lt;chr&gt;, voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
 ## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
-## #   data_hora &lt;dttm&gt;, and abbreviated variable names ¹​horario_saida,
-## #   ²​saida_programada, ³​atraso_saida, ⁴​horario_chegada, ⁵​chegada_prevista,
-## #   ⁶​atraso_chegada, ⁷​companhia_aerea
+## #   data_hora &lt;dttm&gt;
 
 set.seed(2)
 voos %&gt;% 
   slice_sample(n = 3) 
 ## # A tibble: 3 × 19
-##     ano   mes   dia horario_sa…¹ saida…² atras…³ horar…⁴ chega…⁵ atras…⁶ compa…⁷
-##   &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
-## 1  2013     8    30         1609    1615      -6    1757    1831     -34 DL     
-## 2  2013    10    30         1556    1545      11    1745    1751      -6 US     
-## 3  2013    10    10         1528    1529      -1    1648    1700     -12 UA     
-## # … with 9 more variables: voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
+##     ano   mes   dia horario_saida saida_programada atraso_saida horario_chegada
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;         &lt;int&gt;            &lt;int&gt;        &lt;dbl&gt;           &lt;int&gt;
+## 1  2013     8    30          1609             1615           -6            1757
+## 2  2013    10    30          1556             1545           11            1745
+## 3  2013    10    10          1528             1529           -1            1648
+## # … with 12 more variables: chegada_prevista &lt;int&gt;, atraso_chegada &lt;dbl&gt;,
+## #   companhia_aerea &lt;chr&gt;, voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
 ## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
-## #   data_hora &lt;dttm&gt;, and abbreviated variable names ¹​horario_saida,
-## #   ²​saida_programada, ³​atraso_saida, ⁴​horario_chegada, ⁵​chegada_prevista,
-## #   ⁶​atraso_chegada, ⁷​companhia_aerea</code></pre>
+## #   data_hora &lt;dttm&gt;</code></pre>
 <blockquote>
 <p>Originalmente, para trabalharmos com amostras, tinhamos as funções:
 <code>sample_frac()</code> e <code>sample_n()</code>, porém estas foram
@@ -1064,21 +1065,21 @@ músicas na Billboard top 100 durante o ano 2000.</p>
 
 billboard %&gt;% head()
 ## # A tibble: 6 × 79
-##   artist  track date.ent…¹   wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9
-##   &lt;chr&gt;   &lt;chr&gt; &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 2 Pac   Baby… 2000-02-26    87    82    72    77    87    94    99    NA    NA
-## 2 2Ge+her The … 2000-09-02    91    87    92    NA    NA    NA    NA    NA    NA
-## 3 3 Door… Kryp… 2000-04-08    81    70    68    67    66    57    54    53    51
-## 4 3 Door… Loser 2000-10-21    76    76    72    69    67    65    55    59    62
-## 5 504 Bo… Wobb… 2000-04-15    57    34    25    17    17    31    36    49    53
-## 6 98^0    Give… 2000-08-19    51    39    34    26    26    19     2     2     3
-## # … with 67 more variables: wk10 &lt;dbl&gt;, wk11 &lt;dbl&gt;, wk12 &lt;dbl&gt;, wk13 &lt;dbl&gt;,
-## #   wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;, wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;, wk18 &lt;dbl&gt;, wk19 &lt;dbl&gt;,
-## #   wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, wk22 &lt;dbl&gt;, wk23 &lt;dbl&gt;, wk24 &lt;dbl&gt;, wk25 &lt;dbl&gt;,
-## #   wk26 &lt;dbl&gt;, wk27 &lt;dbl&gt;, wk28 &lt;dbl&gt;, wk29 &lt;dbl&gt;, wk30 &lt;dbl&gt;, wk31 &lt;dbl&gt;,
-## #   wk32 &lt;dbl&gt;, wk33 &lt;dbl&gt;, wk34 &lt;dbl&gt;, wk35 &lt;dbl&gt;, wk36 &lt;dbl&gt;, wk37 &lt;dbl&gt;,
-## #   wk38 &lt;dbl&gt;, wk39 &lt;dbl&gt;, wk40 &lt;dbl&gt;, wk41 &lt;dbl&gt;, wk42 &lt;dbl&gt;, wk43 &lt;dbl&gt;,
-## #   wk44 &lt;dbl&gt;, wk45 &lt;dbl&gt;, wk46 &lt;dbl&gt;, wk47 &lt;dbl&gt;, wk48 &lt;dbl&gt;, wk49 &lt;dbl&gt;, …</code></pre>
+##   artist      track date.entered   wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8
+##   &lt;chr&gt;       &lt;chr&gt; &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 2 Pac       Baby… 2000-02-26      87    82    72    77    87    94    99    NA
+## 2 2Ge+her     The … 2000-09-02      91    87    92    NA    NA    NA    NA    NA
+## 3 3 Doors Do… Kryp… 2000-04-08      81    70    68    67    66    57    54    53
+## 4 3 Doors Do… Loser 2000-10-21      76    76    72    69    67    65    55    59
+## 5 504 Boyz    Wobb… 2000-04-15      57    34    25    17    17    31    36    49
+## 6 98^0        Give… 2000-08-19      51    39    34    26    26    19     2     2
+## # … with 68 more variables: wk9 &lt;dbl&gt;, wk10 &lt;dbl&gt;, wk11 &lt;dbl&gt;, wk12 &lt;dbl&gt;,
+## #   wk13 &lt;dbl&gt;, wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;, wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;, wk18 &lt;dbl&gt;,
+## #   wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, wk22 &lt;dbl&gt;, wk23 &lt;dbl&gt;, wk24 &lt;dbl&gt;,
+## #   wk25 &lt;dbl&gt;, wk26 &lt;dbl&gt;, wk27 &lt;dbl&gt;, wk28 &lt;dbl&gt;, wk29 &lt;dbl&gt;, wk30 &lt;dbl&gt;,
+## #   wk31 &lt;dbl&gt;, wk32 &lt;dbl&gt;, wk33 &lt;dbl&gt;, wk34 &lt;dbl&gt;, wk35 &lt;dbl&gt;, wk36 &lt;dbl&gt;,
+## #   wk37 &lt;dbl&gt;, wk38 &lt;dbl&gt;, wk39 &lt;dbl&gt;, wk40 &lt;dbl&gt;, wk41 &lt;dbl&gt;, wk42 &lt;dbl&gt;,
+## #   wk43 &lt;dbl&gt;, wk44 &lt;dbl&gt;, wk45 &lt;dbl&gt;, wk46 &lt;dbl&gt;, wk47 &lt;dbl&gt;, wk48 &lt;dbl&gt;, …</code></pre>
 <p>Como vemos no conjunto <code>billboard</code>, as colunas começando
 com <code>wk</code> definem qual a posição da música no ranking a partir
 da semana que entraram e vai desde o 1 até o 76. No entanto, não é
@@ -1146,25 +1147,25 @@ ficou na posição 36.</p>
               values_from = rank,
               names_prefix = &quot;wk&quot;)
 ## # A tibble: 317 × 68
-##    artist track date.ent…¹ wkwk1 wkwk2 wkwk3 wkwk4 wkwk5 wkwk6 wkwk7 wkwk8 wkwk9
-##    &lt;chr&gt;  &lt;chr&gt; &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 2 Pac  Baby… 2000-02-26    87    82    72    77    87    94    99    NA    NA
-##  2 2Ge+h… The … 2000-09-02    91    87    92    NA    NA    NA    NA    NA    NA
-##  3 3 Doo… Kryp… 2000-04-08    81    70    68    67    66    57    54    53    51
-##  4 3 Doo… Loser 2000-10-21    76    76    72    69    67    65    55    59    62
-##  5 504 B… Wobb… 2000-04-15    57    34    25    17    17    31    36    49    53
-##  6 98^0   Give… 2000-08-19    51    39    34    26    26    19     2     2     3
-##  7 A*Tee… Danc… 2000-07-08    97    97    96    95   100    NA    NA    NA    NA
-##  8 Aaliy… I Do… 2000-01-29    84    62    51    41    38    35    35    38    38
-##  9 Aaliy… Try … 2000-03-18    59    53    38    28    21    18    16    14    12
-## 10 Adams… Open… 2000-08-26    76    76    74    69    68    67    61    58    57
-## # … with 307 more rows, 56 more variables: wkwk10 &lt;dbl&gt;, wkwk11 &lt;dbl&gt;,
-## #   wkwk12 &lt;dbl&gt;, wkwk13 &lt;dbl&gt;, wkwk14 &lt;dbl&gt;, wkwk15 &lt;dbl&gt;, wkwk16 &lt;dbl&gt;,
-## #   wkwk17 &lt;dbl&gt;, wkwk18 &lt;dbl&gt;, wkwk19 &lt;dbl&gt;, wkwk20 &lt;dbl&gt;, wkwk21 &lt;dbl&gt;,
-## #   wkwk22 &lt;dbl&gt;, wkwk23 &lt;dbl&gt;, wkwk24 &lt;dbl&gt;, wkwk25 &lt;dbl&gt;, wkwk26 &lt;dbl&gt;,
-## #   wkwk27 &lt;dbl&gt;, wkwk28 &lt;dbl&gt;, wkwk29 &lt;dbl&gt;, wkwk30 &lt;dbl&gt;, wkwk31 &lt;dbl&gt;,
-## #   wkwk32 &lt;dbl&gt;, wkwk33 &lt;dbl&gt;, wkwk34 &lt;dbl&gt;, wkwk35 &lt;dbl&gt;, wkwk36 &lt;dbl&gt;,
-## #   wkwk37 &lt;dbl&gt;, wkwk38 &lt;dbl&gt;, wkwk39 &lt;dbl&gt;, wkwk40 &lt;dbl&gt;, wkwk41 &lt;dbl&gt;, …</code></pre>
+##    artist     track date.entered wkwk1 wkwk2 wkwk3 wkwk4 wkwk5 wkwk6 wkwk7 wkwk8
+##    &lt;chr&gt;      &lt;chr&gt; &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 2 Pac      Baby… 2000-02-26      87    82    72    77    87    94    99    NA
+##  2 2Ge+her    The … 2000-09-02      91    87    92    NA    NA    NA    NA    NA
+##  3 3 Doors D… Kryp… 2000-04-08      81    70    68    67    66    57    54    53
+##  4 3 Doors D… Loser 2000-10-21      76    76    72    69    67    65    55    59
+##  5 504 Boyz   Wobb… 2000-04-15      57    34    25    17    17    31    36    49
+##  6 98^0       Give… 2000-08-19      51    39    34    26    26    19     2     2
+##  7 A*Teens    Danc… 2000-07-08      97    97    96    95   100    NA    NA    NA
+##  8 Aaliyah    I Do… 2000-01-29      84    62    51    41    38    35    35    38
+##  9 Aaliyah    Try … 2000-03-18      59    53    38    28    21    18    16    14
+## 10 Adams, Yo… Open… 2000-08-26      76    76    74    69    68    67    61    58
+## # … with 307 more rows, and 57 more variables: wkwk9 &lt;dbl&gt;, wkwk10 &lt;dbl&gt;,
+## #   wkwk11 &lt;dbl&gt;, wkwk12 &lt;dbl&gt;, wkwk13 &lt;dbl&gt;, wkwk14 &lt;dbl&gt;, wkwk15 &lt;dbl&gt;,
+## #   wkwk16 &lt;dbl&gt;, wkwk17 &lt;dbl&gt;, wkwk18 &lt;dbl&gt;, wkwk19 &lt;dbl&gt;, wkwk20 &lt;dbl&gt;,
+## #   wkwk21 &lt;dbl&gt;, wkwk22 &lt;dbl&gt;, wkwk23 &lt;dbl&gt;, wkwk24 &lt;dbl&gt;, wkwk25 &lt;dbl&gt;,
+## #   wkwk26 &lt;dbl&gt;, wkwk27 &lt;dbl&gt;, wkwk28 &lt;dbl&gt;, wkwk29 &lt;dbl&gt;, wkwk30 &lt;dbl&gt;,
+## #   wkwk31 &lt;dbl&gt;, wkwk32 &lt;dbl&gt;, wkwk33 &lt;dbl&gt;, wkwk34 &lt;dbl&gt;, wkwk35 &lt;dbl&gt;,
+## #   wkwk36 &lt;dbl&gt;, wkwk37 &lt;dbl&gt;, wkwk38 &lt;dbl&gt;, wkwk39 &lt;dbl&gt;, wkwk40 &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
 </div>
@@ -1340,12 +1341,11 @@ operá-las:</p>
     #summarise(across(starts_with(&quot;atraso_&quot;), ~mean(.x, na.rm = T)))
     summarise(across(where(is.numeric), mean, na.rm = T))
 ## # A tibble: 1 × 14
-##     ano   mes   dia horario_saida saida_…¹ atras…² horar…³ chega…⁴ atras…⁵   voo
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-## 1  2013  6.55  15.7         1349.    1344.    12.6   1502.   1536.    6.90 1972.
-## # … with 4 more variables: tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;,
-## #   minuto &lt;dbl&gt;, and abbreviated variable names ¹​saida_programada,
-## #   ²​atraso_saida, ³​horario_chegada, ⁴​chegada_prevista, ⁵​atraso_chegada</code></pre>
+##     ano   mes   dia horario_saida saida_programada atraso_saida horario_chegada
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;
+## 1  2013  6.55  15.7         1349.            1344.         12.6           1502.
+## # … with 7 more variables: chegada_prevista &lt;dbl&gt;, atraso_chegada &lt;dbl&gt;,
+## #   voo &lt;dbl&gt;, tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;</code></pre>
 <p>Pode parecer algo simples, mas quando você tem: - muitas colunas que
 respeitam determinada regra – seja de nomenclatura, tipo de dados, ou
 qualquer característica que possa ser transcrita segundo um padrão
