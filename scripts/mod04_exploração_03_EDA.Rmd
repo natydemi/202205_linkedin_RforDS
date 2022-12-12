@@ -16,18 +16,18 @@ library(tidyverse)
 
 # Introdução
 
-Neste arquivo serão apresentados conceitos Investigação e Exploração de dados, bem como bibliotecas uteis do R para este fim. Posteriormente aprofundaremos sobre quais pontos devem ser considerados em uma análise descritiva, considerando o ferramental disponibilizado pela estatística.
+Neste módulo iremos expandir a etapa de Investigação de dados, considerando bibliotecas do R e alguns princípios relacionados à Análise Exploratória de Dados. Posteriormente aprofundaremos sobre alguns conceitos da estatística que podem e devem ser considerados para que possamos evoluir na etapa de Exploração de dados.
 
 # O que é EDA?
 
-EDA, do inglês Exploratory Data Analysis, e em português Análise Exploratória de Dados, trata o processo de explorar os dados. O que, tipicamente, inclui desde examinar a estrutura do dataset --- que iniciamos no módulo anterior, até o entendimento mais profundo sobre o comportamento das variáveis --- nosso foco neste módulo. A EDA nos permite:
+EDA, do inglês Exploratory Data Analysis, e em português Análise Exploratória de Dados, trata o processo de explorar os dados. O que, tipicamente, inclui desde examinar a estrutura de um dataset --- algo iniciado no módulo anterior, até o entendimento mais profundo sobre o comportamento das variáveis --- nosso foco neste módulo. Algumas das possibilidades da EDA incluem:
 
 -   Encontrar padrões nos dados, não necessariamente conhecidos a priori;
 -   Identificar se há alguma inconsistência no conjunto de dados analisado;
 -   Avaliar se as informações disponíveis nos permitem responder as perguntas que temos interesse; e
 -   Desenvolver um esboço de resposta para as hipóteses levantadas, por vezes até mesmo respondê-las.
 
-Aqui é podemos tanto ir em uma linha de exploração descritiva, investigação, por meio de volumetrias, estatísticas e visualizações. Quanto utilizar uma abordagem mais diagnóstica, explorando comportamentos mais complexos, como padrões de associação, por exemplo. Em linhas gerais, é nesta etapa que *aprendemos* e damos *sentido* aos dados!
+Assim, seja considerando em uma linha de exploração descritiva, por meio de volumetrias, estatísticas e visualizações, quanto utilizando uma abordagem mais diagnóstica, explorando comportamentos mais complexos, como padrões de associação, por exemplo. Em linhas gerais, é na etapa de exploração que **aprendemos** e damos **sentido** aos dados!
 
 # Base de Dados: Super Bowl Americano
 
@@ -162,20 +162,19 @@ Estatística! Aqui não tem muito para onde correr, é da estatística que vêm 
 
 -   [Aulas Remotas da Disciplina de Estatística Básica ofertada pelo DEST-UFPR](https://www.youtube.com/playlist?list=PLQcLb-PUD9WNZnVBYDKEonioyJw3nEaOM), entre 2020 e 2021
 
-Mas não se preocupe, iremos passar pelos conceitos chave aqui, dividindo a discussão em três momentos:
+Mas não se preocupe, iremos passar por alguns conceitos fundamentais aqui, dividindo a discussão em três momentos:
 
 ## 1. Medidas de Resumo
 
-Aqui temos a essência do que se trata a estatística descritiva: resumir dados. De modo que independente de quantas observações você tenha na sua tabela, seja possível sumarizá-las e ter conclusões a respeito das características dos dados. Mas note que assim como qualquer resumo, implica uma simplificação, implica em algum grau de perda de informação! E no caso da estatística descritiva isto não é diferente. Contudo, aqui, a ideia é nos cercar de medidas, de modo que, em conjunto, tais métricas nos permitam traçar o perfil dos dados de maneira consistente. Dentre as principais medidas de resumo para **variáveis quantitativas**, temos:
+Aqui temos a essência do que se trata a estatística descritiva: resumir dados. De modo que independente de quantas observações você tenha na sua tabela, seja possível sumarizá-las e ter conclusões a respeito das características dos dados. Mas note que assim como qualquer resumo, trata-se de uma simplificação, implica em algum grau de perda de informação! E no caso da estatística descritiva isto não é diferente. Mas aqui a ideia é nos cercar de medidas, de modo que, em conjunto, tais métricas nos permitam traçar o perfil dos dados de maneira consistente. Dentre as principais medidas de resumo para **variáveis quantitativas** temos:
 
 -   Medidas de Posição, Concentração ou Tendência Central: média (μ), moda (Mo) e mediana (Md)
--   Medidas de Ordenação (posição relativa): máximo, mínimo, quartis (1º quartíl = q1 e 3º = q3), decis e percentis.
--   Medidas de Dispersão (absoluta): variância (σ²), desvio padrão (σ) e amplitude interquartil (IQR)
+-   Medidas de Ordenação (posição relativa): máximo, mínimo, quartis (1º quartíl = Q1 e 3º quartíl = Q3), decis e percentis.
+-   Medidas de Dispersão (absoluta): variância (σ²), desvio padrão (σ), aplitude total (At) e amplitude interquartil (IQR)
 -   Medidas de Dispersão (relativa): coeficiente de variação (CV)
 -   Medidas de Forma: curtose e assimetria
--   Medidas de Dependência: covariância (cov) e correlação (usualmente r ou ρ)
 
-Aqui vale comentar que apesar de não darmos enfoque nas medidas relacionadas às **variáveis qualitativas**, muitas das discussões apresentadas aqui podem ser estendidas para os casos categóricos.
+Aqui vale comentar que apesar de não darmos enfoque nas medidas relacionadas às **variáveis qualitativas**, muitas das discussões apresentadas aqui podem ser estendidas para as **variáveis categóricas** – neste caso tendo tabelas de frequência como nossas maiores aliadas.
 
 Voltando as medidas, para discutir melhor cada um dos grupos, vamos considerar as colunas numéricas da base de comerciais do Super Bowl:
 
@@ -196,7 +195,7 @@ Observe a tabela de frequência destes dados, qual o valor mais frequente?
 table(youtube_dislike_count)
 ```
 
-Um parêntese aqui pra refletir: seria viável fazer uma tabela como está no caso de estarmos trabalhando com muitos dados, e de natureza contínua? Teríamos uma coluna para cada valor? No caso de uma feature de salário por exemplo, faria sentido ter a contagem de pessoas que ganham $R\$$ 1.253,21, $R\$$ 1.253,22, e assim por diante. Ou faria mais sentido trabalhar com intervalor, pessoas que ganham entre $R\$$ 1.000,00 e $R\$$ 1.300,00 por exemplo. O segundo certo? Parabéns! Você já está iniciado no conceito de Tabelas de Frequência para dados contínuos ;)
+Um parêntese aqui pra refletir: seria viável fazer uma tabela como esta no caso de estarmos trabalhando com muitos dados? E se estes dados tiverem uma natureza contínua? Teríamos uma coluna para cada valor? No caso de uma feature de salário por exemplo, faria sentido ter a contagem de pessoas que ganham $R\$$ 1.253,21, $R\$$ 1.253,22, e assim por diante? Ou faria mais sentido trabalhar com intervalos, pessoas que ganham entre $R\$$ 1.000,00 e $R\$$ 1.300,00 por exemplo? O segundo certo? Parabéns! Você já está iniciada (o) no conceito de Tabelas de Frequência para dados contínuos ;)
 
 Voltando aos nossos dados, vamos agora ordená-los:
 
@@ -210,21 +209,23 @@ E fazer o cálculo de algumas estatísticas mais:
 youtube_dislike_count %>% skimr::skim() %>%  skimr::yank("numeric")
 ```
 
-E agora, ao comparar a lista dos números ordenados com as estatísticas geradas, a média `r round(mean(youtube_dislike_count),2)` parece estar descrevendo bem os dados? Você diria que este valor é uma boa representação da quantidade de 'dislikes' das propagandas? Um outro ponto que chama a atençao é o quão alto é o desvio padrão, no caso, `r round(sd(youtube_dislike_count),2)`. Agora pergunto: o que aconteceu para que estes números fossem tão **misleading**, ou seja, tão enganosos em relação ao que ocorre na base de dados? E a resposta é: um outlier aconteceu! Este termo é utilizado no contexto em que um, ou um grupo pequeno de pontos estão demasiadamente distante dos demais, o que pode acabar por influenciar algumas medidas de resumo, como é o caso da média, ou do desvio padrão (que tem o seu cálculo baseado na média) -- uma forma de perceber a questão do outlier é notando o quão distante o máximo está das demais métricas de posição e/ou ordenação. Neste cenário, trabalhar com medidas de ordenação, como a mediana (`r median(youtube_dislike_count)`) para a caracterização da tendencia central, e a amplitude do intervalo interquartil (`r IQR(youtube_dislike_count)`) como medida de dispersão, são alternativas interessantes, visto estas serem métricas robustas a outliers, ou seja, medidas que são pouco impactadas na presença de observações muito atípicas.
+E agora, ao comparar a lista dos números ordenados com as estatísticas geradas, a média `r round(mean(youtube_dislike_count),2)` parece estar descrevendo bem os dados? Você diria que este valor é uma boa representação da quantidade de 'dislikes' das propagandas? Uma outra questão que chama atençao é: o quão grande é o desvio padrão (no caso `r round(sd(youtube_dislike_count),2)`)? Então eu te pergunto: o que aconteceu para que estes números fossem tão **misleading**, ou seja, tão enganosos em relação ao que ocorre na base de dados? E a resposta é: um outlier aconteceu! Um outlier, ou ponto atípico, se refere a uma observação, ou a um pequeno grupo de observações, que estão demasiadamente distantes do resto da amostra. E isto acaba influenciando algumas medidas de resumo, como é o caso da média, ou do desvio padrão (que tem o seu cálculo baseado na média). Uma forma de perceber a questão do outlier é notando o quão distante o valor mínimo ou máximo, estão da média, ou ainda . Neste cenário, trabalhar com medidas como a mediana (`r median(youtube_dislike_count)`) para a caracterização da tendencia central, e a amplitude do intervalo interquartil (`r IQR(youtube_dislike_count)`) como medida de dispersão, são alternativas interessantes, visto serem métricas robustas à presença de outliers.
 
-Por fim vamos comentar um pouco sobre a diferença entre medidas de natureza absoluta vs. natureza relativa. Esta diferenciação é importante pois, ao trabalhar com métricas de natureza absoluta, vamos lidar com os resultados segundo a grandeza do dado original. E isto nem sempre é interessante, particularmente quando queremos comparar variáveis que possuam magnitudes muito diferentes. Por exemplo:
+Por fim gostaria de comentar um pouco sobre a diferença entre medidas de natureza absoluta vs. natureza relativa. Esta diferenciação é útil, pois, ao trabalhar com métricas de natureza absoluta, vamos lidar com os resultados segundo a grandeza do dado original. O que nem sempre é interessante, particularmente no caso em que queremos comparar variáveis que possuam magnitudes muito diferentes. Por exemplo:
 
 ```{r}
 youtube %>% select(dislike_count, view_count) %>% skimr::skim() %>%  skimr::yank("numeric")
 ```
 
-Neste caso, o coeficiente de variação é mais informativo. Pois para as mesmas variáveis que vemos uma diferença significativa em termos de dispersão absoluta, ao trabalhar em termos relativos, a conclusão muda, com ambos os atributos apresentando dispersões similares:
+Neste caso, o coeficiente de variação é mais informativo. Pois para as mesmas variáveis que vemos uma diferença relevante em termos de dispersão absoluta, ao trabalhar com a dispersão relativa, a conclusão altera. Avalie o exemplo abaixo:
 
 ```{r}
 # dislike_count
+sd(youtube$dislike_count, na.rm = TRUE)
 (sd(youtube$dislike_count, na.rm = TRUE) / mean(youtube$dislike_count, na.rm = TRUE))
 
 # view_count
+sd(youtube$view_count, na.rm = TRUE)
 (sd(youtube$view_count, na.rm = TRUE) / mean(youtube$view_count, na.rm = TRUE))
 ```
 
@@ -233,14 +234,14 @@ Um último grupo de medidas de resumo seriam as medidas de forma, caso do coefic
 
 ## 2. Distribuição Empírica
 
-Cada uma das estatísticas que vimos até aqui resume os dados em um único número. Isso tem uma vantagem prática indiscutível, mas conforme também pudemos observar, trata-se de visões parciais. Neste sentido, é útil explorar como as variáveis se distribuem de maneira mais geral. Para isto, temos a Distribuição Empírica dos dados, ou ainda Distribuição Amostral, que nos possibilita ter noção da frequência de ocorrência das observações, bem como suas chances de ocorrência. Para tal, é interessante considerar as seguintes características ao ler uma Distribuição Empírica:
+Cada uma das estatísticas que vimos até aqui resume os dados em um único número. Isto tem uma vantagem prática indiscutível, mas conforme pudemos observar, trata-se de visões parciais. Neste sentido, é útil explorar como as variáveis se distribuem de maneira mais macro, mais geral. Para isto, temos a Distribuição Empírica dos dados, ou ainda Distribuição Amostral, que nos possibilita ter noção da frequência de ocorrência das observações, bem como suas chances de ocorrência. Para tal, é interessante considerar as seguintes características ao ler uma Distribuição Empírica:
 
 -   Concentração: ponto(s) ou intervalo(s) de concentração das observações
 -   Dispersão: o quão próximo ou distante as observações estão entre si
 -   Outliers: observações que se diferenciam de maneira significativa das demais
 -   Forma: aspectos de forma, como simetria ou assimetria (à esquerda ou direita)
 
-Antes de continuarmos, gostaria de fazer um parêntese: `distribuição` trata-se de um tema extenso, a partir do qual tópicos como: distribuições de probabilidade, definição do intervalo de tabelas de frequência, densidade Kernel, probabilidade a posteriori, e tantos outros poderiam ser abordados. Mas aqui vamos abstrair dos (importantes) detalhes técnicos, para focar na interpretação das distribuições empíricas.
+Antes de continuarmos, gostaria de comentar que: `distribuição` trata-se de um tema extenso, a partir do qual tópicos como: distribuições de probabilidade, definição do intervalo de tabelas de frequência, densidade Kernel, probabilidade a posteriori, e tantos outros poderiam ser abordados. Mas aqui vamos abstrair dos (importantes) detalhes técnicos, para focar na interpretação das distribuições empíricas.
 
 E para ilustrar esta discussão, considere a base de dados `lincoln_weather` do pacote `ggridges`, com informações meteorológicas de Lincoln, (EUA - Nebraska), no ano de 2016:
 
@@ -265,7 +266,7 @@ ggridges::lincoln_weather %>%
   theme(axis.title.y = element_blank())
 ```
 
-Agora comparando a distribuição dos dados com as suas respectivas medidas de resumo:
+Agora compare a distribuição dos dados com as suas respectivas medidas de resumo, alguma diferença chama mais atenção? Comparando a densidade e as sumarizações de Julho, um mês que possuí uma distribuição simétrica, e do mês de Dezembro, ou Maio, que possuem distribuições assimétricas, como as métricas de resumo nos ajudam nesta descrição?
 
 ```{r}
 ggridges::lincoln_weather %>% 
@@ -277,7 +278,7 @@ ggridges::lincoln_weather %>%
   skimr::yank("numeric")
 ```
 
-Como mensagem final, vou citar Laplace:
+Por fim, para reforçar a importância das distribuições, vou citar Laplace:
 
 > "The theory of probabilities is at bottom nothing but common sense reduced to calculus; it enables us to appreciate with exactness that which accurate minds feel with a sort of instinct for which ofttimes they are unable to account" (Laplace, 1812)
 
@@ -289,9 +290,9 @@ Algo como: "No fundo, a teoria das probabilidades é apenas o senso comum expres
 Por fim vamos comentar de medidas que nos permitem reduzir a um único número a relação entre duas variáveis:
 
 -   Medidas de Dependência ou Associação (absoluta): covariância (cov)
--   Medidas de Dependência ou Associação (relativa): correlação (usualmente, r ou ρ)
+-   Medidas de Dependência ou Associação (relativa): correlação (ρ ou r)
 
-No caso da covariância temos a questão de ser uma métrica absoluta, tornando a interpretação mais desafiadora. Enquanto a correlação pode ser entendida como uma versão normalizada da covariância, permitindo uma leitura muito mais direta, visto ter como propriedade a variação entre -1 e 1. No caso em que o valor é próximo à um, temos o indício de uma tendência positiva entre as variáveis, indicando que ao desenhar um gráfico de dispersão (também conhecido como `scatter plot`) entre as duas variáveis, teremos os pontos próximos a uma linha reta crescente (coeficiente angular positivo). Já se o valor se aproximar de **menos um**, temos indícios de uma associação negativa. Por fim uma correlação próxima de zero significa que as observações não apresentam associações lineares, isto é o gráfico de dispersão apresentaria um comportamento próximo à uma nuvem de pontos aleatórios ou ainda uma relação não-linear.
+No caso da covariância temos a questão de ser uma métrica absoluta, tornando a interpretação mais desafiadora. Enquanto a correlação pode ser entendida como uma versão normalizada da covariância, permitindo uma leitura muito mais direta, visto ter como propriedade a variação entre -1 e 1. No caso em que o valor é próximo à um, temos o indício de uma **tendência positiva** entre as variáveis, indicando que ao desenhar um gráfico de dispersão (também conhecido como `scatter plot`) entre as duas variáveis, teremos os pontos próximos a uma linha reta crescente (coeficiente angular positivo):
 
 ```{r, warning=FALSE}
 ggridges::lincoln_weather %>% 
@@ -299,6 +300,8 @@ ggridges::lincoln_weather %>%
   select(mean_temperature_f, mean_dew_point_f) %>% 
   plot()
 ```
+Já se o valor se aproximar de menos um, temos indícios de uma **associação negativa**. Por fim uma correlação próxima de zero significa que as observações não apresentam associações lineares, isto é, o gráfico de dispersão apresentaria um comportamento de pontos aleatórios ou ainda uma relação não-linear. Aqui mais alguns casos:
+
 
 ```{r, warning=FALSE}
 ggridges::lincoln_weather %>% 
@@ -308,11 +311,11 @@ ggridges::lincoln_weather %>%
   GGally::ggpairs(progress = FALSE)
 ```
 
-Um ponto importante, mas que não aprofundaremos aqui, é a relação entre o cálculo de medidas de dependência e os diferentes tipos de variáveis. Considerando coeficientes de correlação de: Pearson, Spearman, Kendall, entre outros.
+Um ponto importante, mas que não aprofundaremos aqui, é a relação entre o cálculo de medidas de dependência e os diferentes tipos de variáveis. Em linhas gerais a depender do tipo da variável, temos diferentes cálculos de coeficientes de correlação, por exemplo: Pearson, Spearman, Kendall, entre outros.
 
 > Por fim é sempre importante lembrar que: correlação não significa causalidade! 
 
-Ou seja, não é porque existe uma correlação forte entre dois atributos, que um irá necessariamente causar a mudança de movimento no outro. Dois termos interessantes para pesquisar e entender melhor sobre este tipo de fenômeno: variável de confusão e correlação espúria. Para esta última indico este material incrível para ilustrar, de forma leve, a aplicação deste conceito: [Spurious Correlations](http://tylervigen.com/spurious-correlations).
+Ou seja, não é porque existe uma correlação forte entre dois atributos, que um irá necessariamente causar a mudança de movimento no outro. Dois termos interessantes para pesquisar e entender melhor sobre este tipo de fenômeno: `variável de confusão` e `correlação espúria` – para este último, indico o site [Spurious Correlations](http://tylervigen.com/spurious-correlations).
 
 
 # Considerações Finais sobre EDA
@@ -321,7 +324,7 @@ EDA é sobre iteração! Quanto mais você investiga os dados, mais informaçõe
 
 > "EDA is an attitude, a state of flexibility, a willingness to look for those things that we believe are not there, as well as those we believe to be there" (Tukey, 1986).
 
-Em português seria algo como: ""EDA é uma atitude, um estado de flexibilidade, uma vontade de procurar por coisas que acreditamos que não existem, assim como por coisas que acreditamos que estão lá", poético né?
+Em português seria algo como: "EDA é uma atitude, um estado de flexibilidade, uma vontade de procurar por coisas que acreditamos que não existem, assim como por coisas que acreditamos que estão lá", poético né?
 
 E para "procurar por coisas", quanto mais ferramentas você possuir, melhor. Aprender a arte de manusear, transformar e visualizar dados, por exemplo. E são estes os temas que veremos na sequência.
 
