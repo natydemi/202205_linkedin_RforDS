@@ -387,33 +387,35 @@ conforme discutido no primeiro módulo do curso.</p>
 <p>Na descrição do pacote, o <code>dplyr</code> é definido como a
 gramática para transformação de dados, e esse nome não é à toa. Ele
 possui vários verbos que definem ações específicas para lidar com bases
-de dados, visando modificá-las de forma simples e eficiente. Algumas das
-principais funções do dplyr são:</p>
+de dados, visando modificá-las de forma simples, intuitiva e eficiente.
+Algumas das principais funções do dplyr são:</p>
 <ul>
 <li><code>select()</code> - seleciona colunas;</li>
 <li><code>filter()</code> - filtra linhas a partir de regras
 lógicas;</li>
 <li><code>arrange()</code> - ordena as linhas da base de dados;</li>
-<li><code>mutate()</code> - cria/modifica colunas;</li>
+<li><code>mutate()</code> - cria e/ou modifica colunas;</li>
 <li><code>group_by()</code> - agrupa linhas da base de dados;</li>
 <li><code>summarise()</code> - resume a base de dados em menos
 linhas.</li>
 </ul>
 <p>De modo que em conjunto com o operador pipe – comentado no módulo 1,
-é possível segmentar o que precisa ser feito com a base de dados em
-passos, deixando os scripts mais legíveis e organizados.</p>
+é possível segmentar o que precisa ser feito com os dados em passos, e
+traduzir tais etapas segundo os verbos do <code>dplyr</code>, deixando
+os scripts mais legíveis e organizados.</p>
 <p>Por exemplo, se você precisa descobrir <strong>quais voos da
 companhia American Airlines tiveram o maior tempo de atraso</strong>, é
-possível separar esta pergunta em etapas:</p>
+possível segmentar a pergunta em etapas:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>quais voos da companhia American Airlines</strong>:
-filtrar voos da AA;</p></li>
-<li><p><strong>tiveram o maior tempo de atraso</strong>: ordenar pelo
-tempo de atraso.</p></li>
+filtrar as informações de voos da AA;</p></li>
+<li><p><strong>tiveram o maior tempo de atraso</strong>: ordenar as
+informações pelo tempo de atraso.</p></li>
 </ol>
 <p>Um bom exercício nas etapas de transformação de dados é encaixar os
-diferentes verbos do dplyr nas diversas perguntas que você precisa
-responder para analisar o conjunto de dados. Vamos ao exemplo:</p>
+diferentes verbos do dplyr nas diversas perguntas que você pretende
+responder. Vamos conhecer um pouco mais os dados que utilizaremos ao
+longo deste módulo:</p>
 <pre class="r"><code>voos &lt;- dados::voos %&gt;% glimpse()
 ## Rows: 336,776
 ## Columns: 19
@@ -438,57 +440,113 @@ responder para analisar o conjunto de dados. Vamos ao exemplo:</p>
 ## $ data_hora        &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-01…</code></pre>
 <div id="manuseando-colunas" class="section level2">
 <h2>Manuseando colunas</h2>
-<p>Aqui, vamos aprender como lidar com as colunas do seu conjunto de
-dados, seja selecionando ou ordenando a informação.</p>
+<p>Neste capítulo vamos apresentar verbos sobre como lidar com as
+colunas do seu conjunto de dados, seja selecionando ou ordenando a
+informação.</p>
 <div id="select" class="section level3">
 <h3><code>select()</code></h3>
-<p>Como falamos acima, o <code>select()</code> seleciona as colunas a
-partir do nome ou da posição da variável desejada. Junto com as funções
-de apoio no <a href="https://tidyselect.r-lib.org/reference/index.html">tidyselect</a>,
+<p>Conforme sugerido pelo nome da função, o <code>select()</code>
+seleciona as colunas a partir do nome ou da posição da variável
+desejada. Junto com as funções de apoio no <a href="https://tidyselect.r-lib.org/reference/index.html">tidyselect</a>,
 você também consegue indicar a(s) coluna(s) desejada(s) de forma
-dinâmica, como: <code>starts_with()</code>, <code>matches()</code>,
-<code>num_range()</code>, <code>everything()</code> e
-<code>where()</code>, ou ainda adicionando o simbolo menos
-<code>-</code> antes da coluna que gostaríamos de excluir</p>
+dinâmica, considerando opções como: <code>starts_with()</code>,
+<code>matches()</code>, <code>num_range()</code>,
+<code>everything()</code> e <code>where()</code>, ou ainda adicionando o
+simbolo menos <code>-</code> antes da coluna que gostaríamos de
+excluir.</p>
 <pre class="r"><code>voos %&gt;% 
-  #select(atraso_saida) %&gt;% 
-  #select(-atraso_saida) %&gt;% 
-  #select(contains(&quot;horario&quot;)) %&gt;% 
+  select(atraso_saida) %&gt;% 
+  head(n=3)
+## # A tibble: 3 × 1
+##   atraso_saida
+##          &lt;dbl&gt;
+## 1            2
+## 2            4
+## 3            2
+
+voos %&gt;% 
+  select(-atraso_saida) %&gt;% 
+  head(n=3)
+## # A tibble: 3 × 18
+##     ano   mes   dia horario_saida saida_programada horario_chegada
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;         &lt;int&gt;            &lt;int&gt;           &lt;int&gt;
+## 1  2013     1     1           517              515             830
+## 2  2013     1     1           533              529             850
+## 3  2013     1     1           542              540             923
+## # … with 12 more variables: chegada_prevista &lt;int&gt;, atraso_chegada &lt;dbl&gt;,
+## #   companhia_aerea &lt;chr&gt;, voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
+## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
+## #   data_hora &lt;dttm&gt;
+
+voos %&gt;% 
+  select(contains(&quot;horario&quot;)) %&gt;% 
+  head(n=3)
+## # A tibble: 3 × 2
+##   horario_saida horario_chegada
+##           &lt;int&gt;           &lt;int&gt;
+## 1           517             830
+## 2           533             850
+## 3           542             923
+
+voos %&gt;% 
   select(where(is.character)) %&gt;% 
-  head()
-## # A tibble: 6 × 4
+  head(n=3)
+## # A tibble: 3 × 4
 ##   companhia_aerea cauda  origem destino
 ##   &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  
 ## 1 UA              N14228 EWR    IAH    
 ## 2 UA              N24211 LGA    IAH    
-## 3 AA              N619AA JFK    MIA    
-## 4 B6              N804JB JFK    BQN    
-## 5 DL              N668DN LGA    ATL    
-## 6 UA              N39463 EWR    ORD</code></pre>
+## 3 AA              N619AA JFK    MIA</code></pre>
 <div id="pull" class="section level4">
 <h4><code>pull()</code></h4>
-<p>Algumas funções do R não aceitam tibbles como entrada (esta que é a
-estrutura de saída da função <code>select()</code>), como alternativa
-podemos trabalhar com a função <code>pull()</code>. Compare:</p>
+<p>Algumas funções do R não aceitam tibbles como entrada – lembrando que
+o <code>tibble</code> é a estrutuda de dados padrão do tidyverse,
+inclusive da função <code>select()</code>. E como alternativa podemos
+trabalhar com a função <code>pull()</code>. Compare:</p>
 <pre class="r"><code>voos %&gt;% select(companhia_aerea) %&gt;% class()
 ## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;
 voos %&gt;% select(companhia_aerea) %&gt;% is.vector()
-## [1] FALSE</code></pre>
+## [1] FALSE
+voos %&gt;% select(companhia_aerea) %&gt;% is.data.frame()
+## [1] TRUE</code></pre>
 <pre class="r"><code>voos %&gt;% pull(companhia_aerea) %&gt;% class()
 ## [1] &quot;character&quot;
 voos %&gt;% pull(companhia_aerea) %&gt;% is.vector()
-## [1] TRUE</code></pre>
-<p>Lembrando que quando estamos trabalhando com um vetor atômico, o
-retorno da função <code>class()</code> se limita ao tipo de classe, e
-não a estrutura em si.</p>
+## [1] TRUE
+voos %&gt;% pull(companhia_aerea) %&gt;% is_tibble()
+## [1] FALSE</code></pre>
+<p>Agora um exemplo da aplicação da função <code>mean()</code> que não
+aceita uma estrutura de dados <code>tibble</code>, mas aceita um vetor
+como entrada:</p>
+<pre class="r"><code>voos %&gt;% select(atraso_saida) %&gt;% mean(na.rm = TRUE)
+## Warning in mean.default(., na.rm = TRUE): argumento não é numérico nem lógico:
+## retornando NA
+## [1] NA
+
+voos %&gt;% pull(atraso_saida) %&gt;% mean(na.rm = TRUE)
+## [1] 12.63907</code></pre>
 </div>
 </div>
 <div id="arrange" class="section level3">
 <h3><code>arrange()</code></h3>
-<p>Com <code>arrange()</code>, conseguimos ordenar as linhas de acordo
-com a(s) coluna(s) especificada(s). Por padrão, ele organiza as colunas
-na ordem crescente, mas é possível inverter para a ordem com a função
-<code>desc()</code>.</p>
+<p>Com esta função conseguimos ordenar as linhas de acordo com a(s)
+coluna(s) especificada(s). Por padrão, a organização é feita em ordem
+crescente:</p>
+<pre class="r"><code>voos %&gt;% 
+  select(companhia_aerea, voo, atraso_chegada) %&gt;%
+  arrange(atraso_chegada) %&gt;% 
+  head()
+## # A tibble: 6 × 3
+##   companhia_aerea   voo atraso_chegada
+##   &lt;chr&gt;           &lt;int&gt;          &lt;dbl&gt;
+## 1 VX                193            -86
+## 2 VX                 11            -79
+## 3 UA                612            -75
+## 4 AA                269            -75
+## 5 AS                  7            -74
+## 6 UA               1628            -73</code></pre>
+<p>Mas é possível torna-la decrescente com a função <code>desc()</code>
+ou colocando o <code>-</code> antes do nome da coluna:</p>
 <pre class="r"><code>voos %&gt;% 
   select(companhia_aerea, voo, atraso_chegada) %&gt;%
   arrange(-atraso_chegada) %&gt;% 
@@ -502,9 +560,13 @@ na ordem crescente, mas é possível inverter para a ordem com a função
 ## 4 AA                177           1007
 ## 5 MQ               3075            989
 ## 6 DL               2391            931</code></pre>
-<p>No exemplo acima, o voo VX 193 chegou com 86 minutos adiantado, uau!
-E abaixo, o voo HA 51, chegou com 1.272 minutos (ou 21 horas) de atraso.
-Imagina o desespero dos parentes…</p>
+<p>No exemplo acima, o voo VX 193 chegou 86 minutos adiantado. E abaixo,
+o voo HA 51, chegou com 1.272 minutos de atraso, quase 21 horas! Imagina
+o desespero …</p>
+<p>A função <code>arrange()</code> funciona também para ordenar
+informações categóricas alfabeticamente, atenção apenas que aqui não
+podemos usar o simbolo <code>-</code>, mais sim o
+<code>desc()</code>:</p>
 <pre class="r"><code>voos %&gt;% 
   select(companhia_aerea, voo, atraso_chegada) %&gt;%
   arrange(desc(companhia_aerea)) %&gt;% 
@@ -521,10 +583,9 @@ Imagina o desespero dos parentes…</p>
 </div>
 <div id="relocate" class="section level3">
 <h3><code>relocate()</code></h3>
-<p>Como última função deste bloco, e me vejo obrigada a dizer, uma das
-funções que mais uso, é a <code>relocate()</code>, esta função faz algo
-simples: muda a coluna de posição. Contudo isto é feito de maneira muito
-prática:</p>
+<p>Como última função deste bloco é a <code>relocate()</code>, esta
+função faz algo simples: muda a coluna de posição. Contudo isto é feito
+de maneira muito prática. Segue um exemplo:</p>
 <pre class="r"><code>voos%&gt;%
   select(1:3) %&gt;% 
   glimpse() %&gt;% 
@@ -551,52 +612,84 @@ prática:</p>
 </div>
 <div id="manuseando-linhas" class="section level2">
 <h2>Manuseando linhas</h2>
-<p>Além das colunas, você também pode fazer transformações nas linhas do
-conjunto de dados. Os verbos abaixo são bem úteis:</p>
+<p>Além das colunas, você também precisa fazer transformações nas linhas
+de uma base de dados. E para tal, temos os verbos:</p>
 <div id="filter" class="section level3">
 <h3><code>filter()</code></h3>
 <p>Como o nome sugere, o <code>filter()</code> permite obter uma parte
-do conjunto de dados a partir de critérios lógicos aplicados à coluna
-(ou seja, que retornam <code>TRUE</code> ou <code>FALSE</code>). Você
-pode combinar diferentes condições usando operadores como:
-<code>==</code>, <code>&gt;</code>, <code>&gt;=</code>,
+do conjunto de dados a partir de critérios lógicos (ou seja, que
+retornam <code>TRUE</code> ou <code>FALSE</code>), aplicados às colunas.
+Deste modo você pode combinar diferentes condições usando operadores
+como: <code>==</code>, <code>&gt;</code>, <code>&gt;=</code>,
 <code>&amp;</code>, <code>|</code>, <code>!,</code> <code>is.na()</code>
 e <code>between()</code>.</p>
-<p>Por exemplo, para descobrir os voos que atrasaram na saída (vamos
-dizer com mais de 15 min de atraso), mas não atrasaram na chegada, é só
-escrever:</p>
+<p>Por exemplo, para descobrir os voos que atrasaram na saída:</p>
 <pre class="r"><code>voos %&gt;%
-  #filter(atraso_saida == 0) %&gt;% 
-  #filter(atraso_saida &gt;= 15 &amp; atraso_chegada &lt;= 0) %&gt;%
-  #filter(atraso_saida == c(15, 16)) %&gt;% 
-  filter(atraso_saida %in% c(15, 16)) %&gt;% 
+  filter(atraso_saida == 0) 
+## # A tibble: 16,514 × 19
+##      ano   mes   dia horario_saida saida_programada atraso_saida horario_chegada
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;         &lt;int&gt;            &lt;int&gt;        &lt;dbl&gt;           &lt;int&gt;
+##  1  2013     1     1           559              559            0             702
+##  2  2013     1     1           600              600            0             851
+##  3  2013     1     1           600              600            0             837
+##  4  2013     1     1           607              607            0             858
+##  5  2013     1     1           615              615            0            1039
+##  6  2013     1     1           615              615            0             833
+##  7  2013     1     1           635              635            0            1028
+##  8  2013     1     1           655              655            0            1021
+##  9  2013     1     1           739              739            0            1104
+## 10  2013     1     1           745              745            0            1135
+## # … with 16,504 more rows, and 12 more variables: chegada_prevista &lt;int&gt;,
+## #   atraso_chegada &lt;dbl&gt;, companhia_aerea &lt;chr&gt;, voo &lt;int&gt;, cauda &lt;chr&gt;,
+## #   origem &lt;chr&gt;, destino &lt;chr&gt;, tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;,
+## #   minuto &lt;dbl&gt;, data_hora &lt;dttm&gt;</code></pre>
+<p>Ou que atrasaram em mais de 15 minutos, mas não atrasaram na
+chegada:</p>
+<pre class="r"><code>voos %&gt;%
+  filter(atraso_saida &gt;= 15 &amp; atraso_chegada &lt;= 0) %&gt;% 
   select(companhia_aerea, voo, atraso_saida, atraso_chegada)
-## # A tibble: 4,225 × 4
+## # A tibble: 4,969 × 4
 ##    companhia_aerea   voo atraso_saida atraso_chegada
 ##    &lt;chr&gt;           &lt;int&gt;        &lt;dbl&gt;          &lt;dbl&gt;
-##  1 B6               1305           15             14
+##  1 UA                501           34             -4
 ##  2 UA                779           16             -6
-##  3 WN               2335           16             26
-##  4 WN               2081           16             19
-##  5 EV               3272           16             12
-##  6 DL               1939           15             18
-##  7 UA                638           16             11
-##  8 AA               1611           16              2
-##  9 B6                 91           15            -15
-## 10 US               1491           15             15
-## # … with 4,215 more rows</code></pre>
-<p>Alguns até chegaram adiantados! :O</p>
+##  3 B6                 91           15            -15
+##  4 B6                165           23             -1
+##  5 B6                677           27             -5
+##  6 UA                277           42             -4
+##  7 B6                715           15              0
+##  8 B6                679           19             -7
+##  9 UA               1702           16              0
+## 10 UA               1552           30             -2
+## # … with 4,959 more rows</code></pre>
+<p>Alguns até chegaram adiantados! Por fim segue um exemplo considerando
+apenas os voos que atrasaram 15 ou 16 minutos. Tendo que, para garantir
+que o filtro considere ambas as minutagem corretamente, precisamos
+utilizar a função <code>%in%</code>, que irá comparar cada linha da base
+de dados com ambos os valores, ao invés de <code>==</code>, que faria
+uma comparação parcial, para uma linha considerando o 15 e para a
+seguinte considerando o 16, e assim sucessivamente:</p>
+<pre class="r"><code>voos %&gt;%
+  #filter(atraso_saida == c(15, 16)) %&gt;% # jeito errado!
+  filter(atraso_saida %in% c(15, 16)) %&gt;% # jeito certo! 
+  select(atraso_saida) %&gt;% 
+  head(n=3)
+## # A tibble: 3 × 1
+##   atraso_saida
+##          &lt;dbl&gt;
+## 1           15
+## 2           16
+## 3           16</code></pre>
 <blockquote>
 <p>Um ponto importante ao trabalhar com filtros no R, é que para aplicar
 um filtro para um único valor, utilizamos o operador lógico
-<code>==</code> enquanto que para trabalhar com mais de um valor,
-precisamos trabalhar com <code>%in%</code>. Isto porque no primeiro caso
-o R faz uma comparação dos elementos da coluna selecionada com os
+<code>==</code> enquanto para trabalhar com mais de um valor, precisamos
+trabalhar com <code>%in%</code>. Isto porque no primeiro caso o R faz
+uma comparação de cada uma das observações da coluna selecionada com os
 valores que desejamos filtrar de maneira alternada, de modo que alguns
 casos acabam sendo desconsiderados no filtro. Já com o operador
-<code>%in%</code>, garantimos que todos os elementos da coluna de
-interesse sejam comparados com todos os elementos que desejamos
-considerar no filtro. <a href="https://stackoverflow.com/questions/15358006/what-is-the-difference-between-in-and">Neste
+<code>%in%</code>, garantimos que todas as linhas sejam comparadas com
+todos os elementos que desejamos considerar no filtro. <a href="https://stackoverflow.com/questions/15358006/what-is-the-difference-between-in-and">Neste
 post do stackoverflow</a> você encontrará mais detalhes sobre ;)</p>
 </blockquote>
 </div>
@@ -604,8 +697,8 @@ post do stackoverflow</a> você encontrará mais detalhes sobre ;)</p>
 <h3><code>slice()</code></h3>
 <p>Parecido com o <code>filter()</code>, o <code>slice()</code>
 seleciona linhas, mas em vez de operadores lógicos, usa suas posições
-ordinais, como um índice. Neste exemplo, selecionamos os 3 voos com
-maior atraso de saída:</p>
+ordinais, como um índice. No exemplo abaixo, selecionamos os três voos
+com maior atraso de saída:</p>
 <pre class="r"><code>voos %&gt;%
   slice(1:3) %&gt;% 
   select(companhia_aerea, voo, atraso_saida, atraso_chegada)
@@ -617,21 +710,19 @@ maior atraso de saída:</p>
 ## 3 AA               1141            2             33</code></pre>
 <p>Esta função possui variações importantes, como:</p>
 <ul>
-<li><p><code>slice_max()</code> ou <code>slice_min()</code> que retorna
-as linhas referentes aos valores máximos/mínimos da coluna, com base no
-parâmetro <code>n</code> específicado (quantidade de linhas
-desejadas);</p></li>
-<li><p><code>slice_sample()</code>, que resulta uma amostra aleatória
-considerando ou o número de elementos desejados (parâmetro
-<code>n</code>), ou a proporção desejada (parâmetro
-<code>n</code>).</p></li>
+<li><p><code>slice_max()</code> e <code>slice_min()</code> que retornam
+as linhas referentes aos valores máximos e mínimos da coluna
+selecionada;</p></li>
 <li><p><code>slice_head()</code> e <code>slice_tail()</code>
 equivalentes às funções <code>head()</code> e <code>tail()</code>,
-tendo, contudo, algumas funcionalidades a mais, como a possibilidade de
-trabalhar não apenas com a quantidade de linhas desejadas (parâmetro
-<code>n</code>), mas também com a proporção (parâmetro
-<code>prop</code>) – assim como as demais funções do slice</p></li>
+retornando as primeiras e as últimas linhas da base de dados; e</p></li>
+<li><p><code>slice_sample()</code> que resulta em uma amostra
+aleatória.</p></li>
 </ul>
+<p>Sempre tendo como base o parâmetro <code>n</code>, indicando a
+quantidade de linhas desejadas, ou, alternativamente, o parâmetro
+<code>prop</code>, indicando a proporção de linhas. Aqui alguns
+exemplos:</p>
 <pre class="r"><code>voos %&gt;% 
   slice_max(atraso_saida, n = 20) %&gt;%
   slice_sample(prop = 0.5) %&gt;% 
@@ -640,25 +731,27 @@ trabalhar não apenas com a quantidade de linhas desejadas (parâmetro
 ## # A tibble: 3 × 19
 ##     ano   mes   dia horario_saida saida_programada atraso_saida horario_chegada
 ##   &lt;int&gt; &lt;int&gt; &lt;int&gt;         &lt;int&gt;            &lt;int&gt;        &lt;dbl&gt;           &lt;int&gt;
-## 1  2013    12    19           734             1725          849            1046
-## 2  2013    12    17           705             1700          845            1026
-## 3  2013     3    18          1020             2100          800            1336
+## 1  2013     6    27           959             1900          899            1236
+## 2  2013     3    18          1020             2100          800            1336
+## 3  2013     7    22           845             1600         1005            1044
 ## # … with 12 more variables: chegada_prevista &lt;int&gt;, atraso_chegada &lt;dbl&gt;,
 ## #   companhia_aerea &lt;chr&gt;, voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
 ## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
 ## #   data_hora &lt;dttm&gt;</code></pre>
-<p>Note que ao trabalhar com amostras, tratam-se de amostras aleatórias,
-o que significa que a cada vez que você rodar o código, o resultado
-poderá ser alterado. Para replicar os mesmos resultados, é importante
-que uma semente seja específicada, compare:</p>
+<p>Importante pontuar que ao trabalhar com amostras, tratam-se de
+amostras aleatórias, o que significa que a cada vez que você rodar o
+código, o resultado poderá ser alterado. Assim, para garantir a
+replicabilidade dos resultados, é necessário especificar o gerador de
+números pseudoaleatórios, o que chamamos de semente, por meio da função
+<code>set.seed()</code>. Compare:</p>
 <pre class="r"><code>voos %&gt;% 
   slice_sample(n = 3) 
 ## # A tibble: 3 × 19
 ##     ano   mes   dia horario_saida saida_programada atraso_saida horario_chegada
 ##   &lt;int&gt; &lt;int&gt; &lt;int&gt;         &lt;int&gt;            &lt;int&gt;        &lt;dbl&gt;           &lt;int&gt;
-## 1  2013     9    13          2215             2140           35            2320
-## 2  2013     8    24           955             1000           -5            1226
-## 3  2013     5    14           856              859           -3            1118
+## 1  2013    11    19           556              600           -4             719
+## 2  2013     8     5          1157             1133           24            1548
+## 3  2013    12     9          1035              959           36            1200
 ## # … with 12 more variables: chegada_prevista &lt;int&gt;, atraso_chegada &lt;dbl&gt;,
 ## #   companhia_aerea &lt;chr&gt;, voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
 ## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
@@ -669,9 +762,9 @@ voos %&gt;%
 ## # A tibble: 3 × 19
 ##     ano   mes   dia horario_saida saida_programada atraso_saida horario_chegada
 ##   &lt;int&gt; &lt;int&gt; &lt;int&gt;         &lt;int&gt;            &lt;int&gt;        &lt;dbl&gt;           &lt;int&gt;
-## 1  2013    10    18           959             1004           -5            1158
-## 2  2013     4    18          1751             1610          101            1917
-## 3  2013    12    11          1659             1629           30            2025
+## 1  2013    11    28           855              900           -5            1028
+## 2  2013     1    27           624              630           -6             754
+## 3  2013     1     1          1739             1740           -1            2051
 ## # … with 12 more variables: chegada_prevista &lt;int&gt;, atraso_chegada &lt;dbl&gt;,
 ## #   companhia_aerea &lt;chr&gt;, voo &lt;int&gt;, cauda &lt;chr&gt;, origem &lt;chr&gt;, destino &lt;chr&gt;,
 ## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
@@ -705,17 +798,17 @@ voos %&gt;%
 ## #   tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;,
 ## #   data_hora &lt;dttm&gt;</code></pre>
 <blockquote>
-<p>Originalmente, para trabalharmos com amostras, tinhamos as funções:
-<code>sample_frac()</code> e <code>sample_n()</code>, porém estas foram
-substituidas pela função <code>slice_sample()</code>.</p>
+<p>Originalmente, para trabalharmos com amostras, tínhamos as funções
+<code>sample_frac()</code> e <code>sample_n()</code> no pacote
+<code>dplyr</code>. Porém estas foram substituídas pela função
+<code>slice_sample()</code>.</p>
 </blockquote>
 </div>
 <div id="distinct" class="section level3">
 <h3><code>distinct()</code></h3>
-<p>Bem útil quando você tem linhas iguais, o <code>distinct()</code>
-remove valores duplicados para as colunas selecionadas. Se você não
-selecionar nenhuma coluna, ele olha para o conjunto de dados inteiro,
-mas você pode tanto especificar uma coluna quanto combinar várias.</p>
+<p>Bem útil quando você tem linhas iguais, a função
+<code>distinct()</code> remove valores duplicados, considerando a(s)
+coluna(s) indicada(s):</p>
 <pre class="r"><code>voos %&gt;%
   distinct(companhia_aerea)
 ## # A tibble: 16 × 1
@@ -737,9 +830,10 @@ mas você pode tanto especificar uma coluna quanto combinar várias.</p>
 ## 14 HA             
 ## 15 YV             
 ## 16 OO</code></pre>
-<p>Neste último caso, ele considera os valores únicos combinados para
-essas colunas, e não elas individualmente. Neste exemplo, selecionamos
-as origens para cada companhia aérea.</p>
+<p>Você pode também combinar mais de uma variável, de modo a ter os
+valores único da combinação destas colunas, e não as colunas
+individualmente. Neste exemplo, selecionamos as origens para cada
+companhia aérea:</p>
 <pre class="r"><code>voos %&gt;%
   distinct(companhia_aerea, origem) %&gt;% 
   arrange(companhia_aerea)
@@ -757,13 +851,15 @@ as origens para cada companhia aérea.</p>
 ##  9 B6              EWR   
 ## 10 B6              LGA   
 ## # … with 25 more rows</code></pre>
-<pre class="r"><code>voos %&gt;% nrow() 
+<p>E no caso de não indicarmos colunas, o <code>distinct()</code>
+considera o conjunto de dados inteiro:</p>
+<pre class="r"><code>voos %&gt;% select(companhia_aerea, origem) %&gt;% nrow() 
 ## [1] 336776
 
-voos %&gt;% distinct() %&gt;% nrow() 
-## [1] 336776</code></pre>
+voos %&gt;% select(companhia_aerea, origem) %&gt;% distinct() %&gt;% nrow() 
+## [1] 35</code></pre>
 <p>Sem o <code>distinct()</code>, e apenas com o <code>select()</code>,
-teríamos um número maior de linhas, e a maioria, duplicadas.</p>
+teríamos um número maior de linhas, e a grande maioria, duplicadas:</p>
 <pre class="r"><code>voos %&gt;%
   select(companhia_aerea, origem)
 ## # A tibble: 336,776 × 2
@@ -784,47 +880,31 @@ teríamos um número maior de linhas, e a maioria, duplicadas.</p>
 </div>
 <div id="alterando-e-criando-novas-colunas" class="section level2">
 <h2>Alterando e criando novas colunas</h2>
-<p>Agora que aprendemos a ler o conjunto de dados a partir de linhas e
-colunas, vamos ver como alterar valores ou criar novas colunas a partir
-do que já conseguimos especificar.</p>
+<p>Agora que aprendemos a manusear o conjunto de dados a partir de
+linhas e colunas, vamos ver como alterar valores ou criar novas colunas
+a partir das informações existentes.</p>
 <div id="mutate" class="section level3">
 <h3><code>mutate()</code></h3>
-<p>Um dos verbos mais poderosos do <code>dplyr</code>, o
-<code>mutate()</code> consegue criar novas colunas e modificar variáveis
-já existentes, inclusive alterando a classe dos dados quando necessário
-(de texto para número, por exemplo).</p>
+<p>Um dos verbos mais importantes do <code>dplyr</code>, o
+<code>mutate()</code> nos auxilia a criar novas colunas e modificar
+variáveis já existentes, inclusive alterando a classe dos dados quando
+necessário. Algumas aplicações:</p>
 <pre class="r"><code>voos %&gt;% 
-  mutate(atraso_saida = as.integer(atraso_saida)) %&gt;% 
-  mutate(atraso_saida_index = ifelse(atraso_saida &gt; 0 , TRUE, FALSE)) %&gt;% 
+  select(atraso_saida) %&gt;% 
+  mutate(atraso_saida_inteiro = as.integer(atraso_saida)) %&gt;% 
+  mutate(atraso_saida_index = ifelse(atraso_saida &gt; 0 , &quot;atrasado&quot;, &quot;adiantado&quot;)) %&gt;% 
   glimpse()
 ## Rows: 336,776
-## Columns: 20
-## $ ano                &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 201…
-## $ mes                &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-## $ dia                &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-## $ horario_saida      &lt;int&gt; 517, 533, 542, 544, 554, 554, 555, 557, 557, 558, 5…
-## $ saida_programada   &lt;int&gt; 515, 529, 540, 545, 600, 558, 600, 600, 600, 600, 6…
-## $ atraso_saida       &lt;int&gt; 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, -2…
-## $ horario_chegada    &lt;int&gt; 830, 850, 923, 1004, 812, 740, 913, 709, 838, 753, …
-## $ chegada_prevista   &lt;int&gt; 819, 830, 850, 1022, 837, 728, 854, 723, 846, 745, …
-## $ atraso_chegada     &lt;dbl&gt; 11, 20, 33, -18, -25, 12, 19, -14, -8, 8, -2, -3, 7…
-## $ companhia_aerea    &lt;chr&gt; &quot;UA&quot;, &quot;UA&quot;, &quot;AA&quot;, &quot;B6&quot;, &quot;DL&quot;, &quot;UA&quot;, &quot;B6&quot;, &quot;EV&quot;, &quot;B6…
-## $ voo                &lt;int&gt; 1545, 1714, 1141, 725, 461, 1696, 507, 5708, 79, 30…
-## $ cauda              &lt;chr&gt; &quot;N14228&quot;, &quot;N24211&quot;, &quot;N619AA&quot;, &quot;N804JB&quot;, &quot;N668DN&quot;, &quot;…
-## $ origem             &lt;chr&gt; &quot;EWR&quot;, &quot;LGA&quot;, &quot;JFK&quot;, &quot;JFK&quot;, &quot;LGA&quot;, &quot;EWR&quot;, &quot;EWR&quot;, &quot;L…
-## $ destino            &lt;chr&gt; &quot;IAH&quot;, &quot;IAH&quot;, &quot;MIA&quot;, &quot;BQN&quot;, &quot;ATL&quot;, &quot;ORD&quot;, &quot;FLL&quot;, &quot;I…
-## $ tempo_voo          &lt;dbl&gt; 227, 227, 160, 183, 116, 150, 158, 53, 140, 138, 14…
-## $ distancia          &lt;dbl&gt; 1400, 1416, 1089, 1576, 762, 719, 1065, 229, 944, 7…
-## $ hora               &lt;dbl&gt; 5, 5, 5, 5, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, …
-## $ minuto             &lt;dbl&gt; 15, 29, 40, 45, 0, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5…
-## $ data_hora          &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-…
-## $ atraso_saida_index &lt;lgl&gt; TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE…</code></pre>
-<p>Ele pode ser combinado com outras funções igualmente eficientes como
+## Columns: 3
+## $ atraso_saida         &lt;dbl&gt; 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, …
+## $ atraso_saida_inteiro &lt;int&gt; 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, …
+## $ atraso_saida_index   &lt;chr&gt; &quot;atrasado&quot;, &quot;atrasado&quot;, &quot;atrasado&quot;, &quot;adiantado&quot;, …</code></pre>
+<p>O <code>mutate()</code> pode ser combinado com outras funções, como
 <code>ifelse()</code> e <code>case_when()</code>, que possibilitam
-regras mais elaboradas na transformação dos dados.</p>
-<p>Por exemplo, podemos categorizar os voos que atrasaram ou chegaram
-adiantados comparando a chegada com o horário previsto na nova coluna
-<code>status_horario</code>. Veja:</p>
+regras mais elaboradas na transformação dos dados. Por exemplo, podemos
+categorizar os voos que atrasaram ou chegaram adiantados comparando o
+horário efetivo de chegada com o horário previsto, salvando este novo
+dado na nova coluna <code>status_horario</code>:</p>
 <pre class="r"><code>voos_atrasados &lt;- voos %&gt;% 
   mutate(status_horario = case_when(
     horario_chegada &lt; chegada_prevista ~ &quot;Adiantado&quot;,
@@ -851,16 +931,16 @@ voos_atrasados %&gt;%
 <p>Note que o <code>case_when()</code> tem uma sintaxe bem específica.
 Mais detalhes podem ser vistos <a href="https://dplyr.tidyverse.org/reference/case_when.html">na
 documentação</a>. Em suma, você precisa passar uma expressão lógica e,
-caso ela seja atendida, o valor a ser escrito após o <code>~</code> é
-atribuído. O último argumento serve para atribuir um valor caso nenhuma
-condição seja satisfeita.</p>
+caso tal regra seja atendida, o valor a ser escrito após o
+<code>~</code> é atribuído. O último argumento serve para garantir um
+valor caso nenhuma das condições anteriores tenham sido satisfeitas.</p>
 </div>
 <div id="rename" class="section level3">
 <h3><code>rename()</code></h3>
-<p>Mais simples, mas ainda útil, o <code>rename()</code> é capaz de
-renomear colunas pelo argumento <code>nome_novo = nome_antigo</code>.
-Aqui, renomeamos a coluna <code>voo</code> para
-<code>numero_voo</code>.</p>
+<p>Mais simples, mas também útil, o <code>rename()</code> é capaz de
+renomear colunas considerando a estrutura:
+<code>nome_novo = nome_antigo</code>. Aqui, como exemplo, renomeamos a
+coluna <code>voo</code> para <code>numero_voo</code>.</p>
 <pre class="r"><code>voos %&gt;%
   rename(numero_voo = voo) %&gt;%
   select(companhia_aerea, numero_voo)
@@ -882,32 +962,42 @@ Aqui, renomeamos a coluna <code>voo</code> para
 </div>
 <div id="resumindo-os-dados" class="section level2">
 <h2>Resumindo os dados</h2>
-<p>Por fim, a serem combinados com as transformações, existem os verbos
-<code>group_by()</code> e <code>summarise()</code> que ajudam a resumir
-o conjunto de dados em linhas menores. Aqui o que cada um faz:</p>
+<p>Por fim vamos falar sobre os verbos <code>group_by()</code> e
+<code>summarise()</code>, que nos ajudam a resumir o conjunto de dados.
+Aqui o que cada um faz:</p>
 <div id="summarise" class="section level3">
 <h3><code>summarise()</code></h3>
-<p>É capaz de calcular resumos estatísticos de uma tabela com a medida
-de sua escolha. Por exemplo, aqui conseguimos saber a mediana da
-distância entre os aeroportos nos voos do nosso conjunto de dados.</p>
+<p>Permite o cálculo de resumos estatísticos de uma tabela. Por exemplo,
+podemos calcular a mediana da distância entre os aeroportos:</p>
 <pre class="r"><code>voos %&gt;% 
   summarise(
-    mediana_distancia = median(distancia),
-    atraso_saida = median(atraso_saida, na.rm = T)) %&gt;% 
+    mediana_distancia = median(distancia)) %&gt;% 
   mutate(mediana_distancia_km = mediana_distancia*1.609)
+## # A tibble: 1 × 2
+##   mediana_distancia mediana_distancia_km
+##               &lt;dbl&gt;                &lt;dbl&gt;
+## 1               872                1403.</code></pre>
+<p>Ou seja, os voos deste conjunto de dados percorrem um valor mediano
+de 872 milhas, ou seja, 1.400 km, entre aeroportos. O
+<code>summarise()</code> nos permite muitas funções de sumarização, ah!
+E não necessariamente precisamos nomear as colunas, perceba:</p>
+<pre class="r"><code>voos %&gt;% 
+  summarise(
+    n(),
+    n_distinct(origem),
+    mudando_o_nome_da_coluna = n_distinct(destino)
+    )
 ## # A tibble: 1 × 3
-##   mediana_distancia atraso_saida mediana_distancia_km
-##               &lt;dbl&gt;        &lt;dbl&gt;                &lt;dbl&gt;
-## 1               872           -2                1403.</code></pre>
-<p>Em média, os voos deste conjunto percorrem 872 milhas, ou seja, 1.400
-km, entre aeroportos.</p>
+##    `n()` `n_distinct(origem)` mudando_o_nome_da_coluna
+##    &lt;int&gt;                &lt;int&gt;                    &lt;int&gt;
+## 1 336776                    3                      105</code></pre>
 </div>
 <div id="group_by" class="section level3">
 <h3><code>group_by()</code></h3>
 <p>Mais poderoso quando combinado com o <code>summarise()</code>, o
 <code>group_by()</code> cria grupos a partir das colunas especificadas
 para manipular o conjunto de dados. Ele não modifica a tabela em si, mas
-combina os resultados de acordo com as operações escritas.</p>
+combina os resultados de acordo com as operações indicadas.</p>
 <pre class="r"><code>voos %&gt;%
   group_by(mes) %&gt;% 
   summarise(distancia_media = mean(distancia),
@@ -932,8 +1022,8 @@ combina os resultados de acordo com as operações escritas.</p>
 partir do <code>mutate()</code>, para identificar os status de horário
 mais comuns no nosso conjunto de dados.</p>
 <pre class="r"><code>voos_atrasados %&gt;%
-  group_by(status_horario) %&gt;% # agrupando pelo status de horário
-  summarise(n = n(), # o número de linhas em cada grupo
+  group_by(status_horario) %&gt;% 
+  summarise(n = n(), 
             mean_distancia = mean(distancia)) %&gt;% 
   ungroup() %&gt;% 
   mutate(p = n /sum(n))
@@ -953,108 +1043,85 @@ previsto.</p>
 <div id="alcançando-a-estrutura-tidy-com-o-tidyr" class="section level1">
 <h1>Alcançando a estrutura tidy com o tidyr</h1>
 <p>Com os principais verbos do <code>dplyr</code> na manga, agora é hora
-de explorar o <code>tidyr</code> que, lembrando, serve para transformar
-o conjunto de dados.</p>
-<p>Isso significa fazer os ajustes necessários para garantir que os
-dados estejam organizados de uma forma <code>tidy</code>, que baseia
-toda a lógica do <code>tidyverse</code>. Lembrando que a filosofia
-<code>tidy</code> é uma forma de vincular a estrutura de um conjunto de
-dados (seu layout físico) com sua semântica (seu significado). E para
-tal, os dados precisam ser organizados garantindo que:</p>
+de explorar o <code>tidyr</code> que, lembrando, nos ajuda a
+reestruturar o conjunto de dados. Isso significa fazer os ajustes
+necessários para garantir que os dados estejam organizados de uma forma
+<code>tidy</code>, que baseia toda a lógica do <code>tidyverse</code>.
+Lembrando que a filosofia <code>tidy</code> é uma forma de vincular a
+estrutura de um conjunto de dados (seu layout físico) com sua semântica
+(seu significado). E para tal, os dados precisam ser organizados
+garantindo que:</p>
 <ul>
 <li>cada variável/informação tenha a sua própria coluna;</li>
 <li>cada observação/unidade de análise tenha a sua própria linha; e</li>
 <li>que cada valor tenha a sua própria célula.</li>
 </ul>
-<p>A biblioteca <code>tidyr</code> tem o propósito de ajudar neste
-processo, caso o conjunto de dados ainda não esteja neste formato.</p>
+<p>A biblioteca <code>tidyr</code> tem o propósito de ajudar no processo
+de garantir isto, caso o conjunto de dados ainda não esteja neste
+formato.</p>
 <div id="reformatando-os-dados-pivotagem" class="section level2">
 <h2>Reformatando os dados (pivotagem)</h2>
+<p>Vamos primeiro falar do conceito de pivotagem, uma mudança de
+direção. Transformar linhas para colunas, e vice-versa. Vamos repassar
+por alguns exemplos que irão nos ajudar a entender melhor esta ação.</p>
 <div id="de-linhas-para-colunas-pivot_wider" class="section level3">
 <h3>De linhas para colunas: <code>pivot_wider()</code></h3>
 <p>Como o nome descreve, o <code>pivot_wider()</code> “gira” o eixo dos
 dados para o formato largo – em detrimento de um formato comprido. Um
 exemplo simples:</p>
-<pre class="r"><code>fish_encounters
-## # A tibble: 114 × 3
-##    fish  station  seen
-##    &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;
-##  1 4842  Release     1
-##  2 4842  I80_1       1
-##  3 4842  Lisbon      1
-##  4 4842  Rstr        1
-##  5 4842  Base_TD     1
-##  6 4842  BCE         1
-##  7 4842  BCW         1
-##  8 4842  BCE2        1
-##  9 4842  BCW2        1
-## 10 4842  MAE         1
-## # … with 104 more rows
-
-fish_encounters %&gt;% 
-  pivot_wider(names_from = station, values_from = seen)
-## # A tibble: 19 × 12
-##    fish  Release I80_1 Lisbon  Rstr Base_TD   BCE   BCW  BCE2  BCW2   MAE   MAW
-##    &lt;fct&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1 4842        1     1      1     1       1     1     1     1     1     1     1
-##  2 4843        1     1      1     1       1     1     1     1     1     1     1
-##  3 4844        1     1      1     1       1     1     1     1     1     1     1
-##  4 4845        1     1      1     1       1    NA    NA    NA    NA    NA    NA
-##  5 4847        1     1      1    NA      NA    NA    NA    NA    NA    NA    NA
-##  6 4848        1     1      1     1      NA    NA    NA    NA    NA    NA    NA
-##  7 4849        1     1     NA    NA      NA    NA    NA    NA    NA    NA    NA
-##  8 4850        1     1     NA     1       1     1     1    NA    NA    NA    NA
-##  9 4851        1     1     NA    NA      NA    NA    NA    NA    NA    NA    NA
-## 10 4854        1     1     NA    NA      NA    NA    NA    NA    NA    NA    NA
-## 11 4855        1     1      1     1       1    NA    NA    NA    NA    NA    NA
-## 12 4857        1     1      1     1       1     1     1     1     1    NA    NA
-## 13 4858        1     1      1     1       1     1     1     1     1     1     1
-## 14 4859        1     1      1     1       1    NA    NA    NA    NA    NA    NA
-## 15 4861        1     1      1     1       1     1     1     1     1     1     1
-## 16 4862        1     1      1     1       1     1     1     1     1    NA    NA
-## 17 4863        1     1     NA    NA      NA    NA    NA    NA    NA    NA    NA
-## 18 4864        1     1     NA    NA      NA    NA    NA    NA    NA    NA    NA
-## 19 4865        1     1      1    NA      NA    NA    NA    NA    NA    NA    NA</code></pre>
-<pre class="r"><code>us_rent_income
-## # A tibble: 104 × 5
-##    GEOID NAME       variable estimate   moe
-##    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
-##  1 01    Alabama    income      24476   136
-##  2 01    Alabama    rent          747     3
-##  3 02    Alaska     income      32940   508
-##  4 02    Alaska     rent         1200    13
-##  5 04    Arizona    income      27517   148
-##  6 04    Arizona    rent          972     4
-##  7 05    Arkansas   income      23789   165
-##  8 05    Arkansas   rent          709     5
-##  9 06    California income      29454   109
-## 10 06    California rent         1358     3
-## # … with 94 more rows
-
-us_rent_income %&gt;%
+<pre class="r"><code>fish_encounters %&gt;% head()
+## # A tibble: 6 × 3
+##   fish  station  seen
+##   &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;
+## 1 4842  Release     1
+## 2 4842  I80_1       1
+## 3 4842  Lisbon      1
+## 4 4842  Rstr        1
+## 5 4842  Base_TD     1
+## 6 4842  BCE         1</code></pre>
+<pre class="r"><code>fish_encounters %&gt;% 
+  pivot_wider(names_from = station, values_from = seen) %&gt;% 
+  head()
+## # A tibble: 6 × 12
+##   fish  Release I80_1 Lisbon  Rstr Base_TD   BCE   BCW  BCE2  BCW2   MAE   MAW
+##   &lt;fct&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1 4842        1     1      1     1       1     1     1     1     1     1     1
+## 2 4843        1     1      1     1       1     1     1     1     1     1     1
+## 3 4844        1     1      1     1       1     1     1     1     1     1     1
+## 4 4845        1     1      1     1       1    NA    NA    NA    NA    NA    NA
+## 5 4847        1     1      1    NA      NA    NA    NA    NA    NA    NA    NA
+## 6 4848        1     1      1     1      NA    NA    NA    NA    NA    NA    NA</code></pre>
+<pre class="r"><code>us_rent_income %&gt;%  head()
+## # A tibble: 6 × 5
+##   GEOID NAME    variable estimate   moe
+##   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 01    Alabama income      24476   136
+## 2 01    Alabama rent          747     3
+## 3 02    Alaska  income      32940   508
+## 4 02    Alaska  rent         1200    13
+## 5 04    Arizona income      27517   148
+## 6 04    Arizona rent          972     4</code></pre>
+<pre class="r"><code>us_rent_income %&gt;%
   pivot_wider(names_from = variable,
-              values_from = c(estimate, moe))
-## # A tibble: 52 × 6
-##    GEOID NAME                 estimate_income estimate_rent moe_income moe_rent
-##    &lt;chr&gt; &lt;chr&gt;                          &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;
-##  1 01    Alabama                        24476           747        136        3
-##  2 02    Alaska                         32940          1200        508       13
-##  3 04    Arizona                        27517           972        148        4
-##  4 05    Arkansas                       23789           709        165        5
-##  5 06    California                     29454          1358        109        3
-##  6 08    Colorado                       32401          1125        109        5
-##  7 09    Connecticut                    35326          1123        195        5
-##  8 10    Delaware                       31560          1076        247       10
-##  9 11    District of Columbia           43198          1424        681       17
-## 10 12    Florida                        25952          1077         70        3
-## # … with 42 more rows</code></pre>
+              values_from = c(estimate, moe)) %&gt;% 
+  head()
+## # A tibble: 6 × 6
+##   GEOID NAME       estimate_income estimate_rent moe_income moe_rent
+##   &lt;chr&gt; &lt;chr&gt;                &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;
+## 1 01    Alabama              24476           747        136        3
+## 2 02    Alaska               32940          1200        508       13
+## 3 04    Arizona              27517           972        148        4
+## 4 05    Arkansas             23789           709        165        5
+## 5 06    California           29454          1358        109        3
+## 6 08    Colorado             32401          1125        109        5</code></pre>
 </div>
 <div id="de-colunas-para-linhas-pivot_longer" class="section level3">
 <h3>De colunas para linhas: <code>pivot_longer()</code></h3>
-<p>Como o inverso da função anterior, o <code>pivot_longer()</code>
-transforma o conjunto de dados em um formato comprido, ou seja, onde o
-número de linhas aumenta e o de colunas diminui.</p>
-<p>Para isso, ele usa as colunas especificadas na coluna parâmetro
+<p>Garantindo o movimento contrário, a função
+<code>pivot_longer()</code> transforma o conjunto de dados em um formato
+comprido, ou seja, onde o número de linhas aumenta e o de colunas
+diminui.</p>
+<p>Para isso ele usa as colunas especificadas na coluna parâmetro
 <code>cols</code>, e seus valores na coluna parâmetro
 <code>value</code>. Assim conseguimos tratar os dados como nos exemplos
 acima, seja filtrando, escrevendo novas variáveis, transformando as já
@@ -1086,7 +1153,7 @@ da semana que entraram e vai desde o 1 até o 76. No entanto, não é
 possível rodar a maioria das funções que aprendemos acima porque a
 informação das semanas está em <strong>colunas</strong> e não em
 <strong>linhas</strong>.</p>
-<p>Para resolver isso, precisamos transformá-la em formato longo,
+<p>Para resolver isso, precisamos transformar os dados em formato longo,
 criando a variável <code>week</code>. Vamos selecionar todas as colunas
 que começam com <code>wk</code> e os valores atribuídos a elas estarão
 em uma nova coluna chamada <code>rank</code>.</p>
@@ -1116,6 +1183,9 @@ ficou na posição 36.</p>
   summarise(n_week = n(), rank_mean = mean(rank)) %&gt;% 
   filter(n_week &gt; 30) %&gt;% 
   arrange(desc(n_week)) 
+## Warning in gzfile(file, mode): não foi possível abrir o arquivo comprimido &#39;C:/
+## Users/natyd/AppData/Local/Temp/RtmpqAGynr\file18b42f16689d&#39;, motivo provável &#39;No
+## such file or directory&#39;
 ## `summarise()` has grouped output by &#39;track&#39;. You can override using the
 ## `.groups` argument.
 ## # A tibble: 18 × 4
@@ -1175,8 +1245,8 @@ ficou na posição 36.</p>
 exemplo, vamos voltar para o conjunto de dados de <code>voos</code>.</p>
 <div id="separate" class="section level3">
 <h3><code>separate()</code></h3>
-<p>Esta função divide uma única coluna em várias colunas. Similarmente,
-a opção <code>separate_rows()</code> faz a mesma coisa para linhas.</p>
+<p>Esta função divide uma única coluna em várias. Similarmente, a opção
+<code>separate_rows()</code> faz a mesma coisa para linhas.</p>
 <p>Por exemplo, no conjunto <code>voos</code>, o
 <code>horario_saida</code> é escrito em horário local no formato
 <code>HHMM</code> ou <code>HMM</code>, onde <code>517</code> indica 5:17
@@ -1210,8 +1280,8 @@ hora e os dois últimos, os minutos.</p>
 </div>
 <div id="unite" class="section level3">
 <h3><code>unite()</code></h3>
-<p>De maneira oposta, o <code>unite()</code> é capaz de unir colunas a
-partir de um separador. Por exemplo, podemos criar a coluna
+<p>De maneira oposta, a função <code>unite()</code> é capaz de unir
+colunas a partir de um separador. Por exemplo, podemos criar a coluna
 <code>numero_voo</code> juntando a <code>companhia_aerea</code> com o
 <code>voo</code> de forma fácil, separando com o espaço:</p>
 <pre class="r"><code>voos %&gt;%
@@ -1238,15 +1308,15 @@ partir de um separador. Por exemplo, podemos criar a coluna
 </div>
 <div id="recursos-avançados" class="section level1">
 <h1>Recursos avançados</h1>
-<p>Agora, que já aprendemos o essencial do <code>dplyr</code> e
+<p>Agora que já aprendemos o essencial do <code>dplyr</code> e
 <code>tidyr</code>, podemos nos aprofundar em funções que vão
-potencializar ainda mais a transformação e arrumação de dados.</p>
+potencializar ainda mais a transformação e a arrumação de dados.</p>
 <div id="combinando-bases-joinmerge" class="section level2">
 <h2>Combinando bases (join/merge)</h2>
-<p>Uma ação usual para o redirecionamento dos dados diz respeito a
-necessidade de combinar diferentes bases de dados visando obter uma
-fonte única, com todas as informações de interesse.</p>
-<p>Aqui algumas, mas não todas, possibilidades de combinação:</p>
+<p>Uma ação particularmente importante na ciência de Dados diz respeito
+à combinação de diferentes bases de dados, visando obter uma fonte
+única, com todas as informações de interesse. Aqui algumas, mas não
+todas, possibilidades de combinação:</p>
 <ul>
 <li><code>inner_join()</code>: retorna todas as linhas da base à
 esquerda que possuem valores correspondentes na base à direita. Se
@@ -1260,10 +1330,10 @@ todas as combinações das correspondências serão retornadas;</li>
 de x e y. Onde não há valores correspondentes, retorna NA para o
 ausente.</li>
 </ul>
-<p>Ainda nos dados de <code>voos</code> como exemplo, vamos pegar outro
-conjunto do mesmo pacote chamado <code>companhias_aereas</code>. Assim,
-podemos saber quais são exatamente as companhias aéreas de cada voo
-registrado no dataset.</p>
+<p>Voltando aos dados de <code>voos</code> como exemplo, vamos pegar
+outro conjunto do mesmo pacote chamado <code>companhias_aereas</code>.
+Assim, podemos saber quais são exatamente as companhias aéreas de cada
+voo registrado no dataset.</p>
 <pre class="r"><code>voos_completo &lt;- voos %&gt;%
   left_join(dados::companhias_aereas, by = &quot;companhia_aerea&quot;)
 
@@ -1283,8 +1353,7 @@ voos_completo %&gt;% select(companhia_aerea, voo, nome)
 ## 10 AA                301 American Airlines Inc.  
 ## # … with 336,766 more rows</code></pre>
 <p>Isso possibilita análises mais direcionadas, como a lista das
-companhias aéreas com o valor máximo de atraso registrado na
-chegada.</p>
+companhias com o valor máximo de atraso registrado na chegada.</p>
 <pre class="r"><code>voos_completo %&gt;%
   group_by(nome) %&gt;%
   summarise(maior_atraso = max(atraso_chegada, na.rm = TRUE)) %&gt;%
@@ -1313,14 +1382,14 @@ chegada.</p>
 <h2>Lidando com múltiplas colunas (<code>across()</code>)</h2>
 <p>Até aqui, o tidyverse tem como ponto forte a legibilidade do código,
 se aproximando com a maneira com que pensamos as ações que gostariamos
-de aplicar nos dados. Nos recursos avançados, nem sempre isso é regra,
-mas a perda é compensada pela produtividade do código.</p>
+de aplicar aos dados. Nos recursos avançados, nem sempre isso é regra,
+mas a perda é compensada pelo ganho de produtividade no código.</p>
 <p>Na função <code>across()</code>, disponível a partir da versão 1.0 do
 pacote <code>dplyr</code>, é possível aplicar cálculos a multiplas
 colunas de uma única vez.</p>
 <p>Ou seja, em vez de tirar a média de <code>atraso_saida</code> e
 <code>atraso_chegada</code> de forma separada, como as duas colunas
-possuem um padrão, é possível usar o <code>across()</code> para
+possuem um padrão, é possível usar a função <code>across()</code> para
 operá-las:</p>
 <pre class="r"><code>voos %&gt;% 
     #summarise(across(starts_with(&quot;atraso_&quot;), ~mean(.x, na.rm = T)))
@@ -1337,8 +1406,8 @@ operá-las:</p>
 ##   atraso_saida atraso_chegada
 ##          &lt;dbl&gt;          &lt;dbl&gt;
 ## 1         12.6           6.90</code></pre>
+<p>Ou ainda:</p>
 <pre class="r"><code>voos %&gt;% 
-    #summarise(across(starts_with(&quot;atraso_&quot;), ~mean(.x, na.rm = T)))
     summarise(across(where(is.numeric), mean, na.rm = T))
 ## # A tibble: 1 × 14
 ##     ano   mes   dia horario_saida saida_programada atraso_saida horario_chegada
@@ -1346,13 +1415,13 @@ operá-las:</p>
 ## 1  2013  6.55  15.7         1349.            1344.         12.6           1502.
 ## # … with 7 more variables: chegada_prevista &lt;dbl&gt;, atraso_chegada &lt;dbl&gt;,
 ## #   voo &lt;dbl&gt;, tempo_voo &lt;dbl&gt;, distancia &lt;dbl&gt;, hora &lt;dbl&gt;, minuto &lt;dbl&gt;</code></pre>
-<p>Pode parecer algo simples, mas quando você tem: - muitas colunas que
-respeitam determinada regra – seja de nomenclatura, tipo de dados, ou
-qualquer característica que possa ser transcrita segundo um padrão
-lógico; ou</p>
+<p>Pode parecer algo simples, mas quando você tem</p>
 <ul>
-<li>variáveis dinâmicas que podem ser adicionadas, alteradas ou
-removidas do conjunto de dados</li>
+<li><p>muitas colunas que respeitam determinada regra – seja de
+nomenclatura, tipo de dados, ou qualquer característica que possa ser
+transcrita segundo um padrão lógico; ou</p></li>
+<li><p>variáveis dinâmicas que podem ser adicionadas, alteradas ou
+removidas do conjunto de dados</p></li>
 </ul>
 <p>a função <code>across()</code> torna-se um recurso extremamente útil
 para garantir não apenas a eficiência da análise, mas também a
@@ -1360,17 +1429,17 @@ replicabilidade do código.</p>
 </div>
 <div id="programação-funcional-purrr" class="section level2">
 <h2>Programação funcional (<code>purrr::</code>)</h2>
-<p>Como ferramenta transversal a todas as etapas do workflow de análise,
-temos a programação funcional, que permite a criação de códigos mais
-concisos.</p>
-<p>No contexto do <code>tidyverse</code>, a biblioteca
-<code>purrr</code> disponibiliza uma série de funcionalidades visando
-facilitar a aplicação da programação funcional no R. Como principal
-função temos o <code>map()</code>, transformando a sua entrada por meio
-da aplicação de uma função a cada elemento, e retornando uma lista com o
-mesmo comprimento que a entrada:</p>
+<p>Como ferramenta transversal a todas as etapas de uma análise, temos a
+programação funcional, que permite a criação de códigos mais concisos.
+No contexto do <code>tidyverse</code>, a biblioteca <code>purrr</code>
+disponibiliza uma série de recursos visando facilitar a aplicação da
+programação funcional no R. Como principal função temos o
+<code>map()</code>, que transforma a sua entrada por meio da aplicação
+de uma função a cada elemento, e retorna uma lista com o mesmo
+comprimento que a entrada:</p>
 <p>Abaixo, exemplificamos a identificação de quais colunas no conjunto
-<code>voos</code> tem dados faltantes, ou seja, em <code>NA</code>:</p>
+<code>voos</code> tem dados faltantes, no caso, quantos <code>NA</code>
+existem na base:</p>
 <pre class="r"><code>voos %&gt;% 
     map(is.na) %&gt;%
     map(sum) 
@@ -1430,21 +1499,18 @@ mesmo comprimento que a entrada:</p>
 ## 
 ## $data_hora
 ## [1] 0</code></pre>
-<p>Visto as bibliotecas que já estudamos, a aplicação da função
-<code>is.na()</code> não se apresenta tão crítica. Contudo é importante
-lembrar que você pode construir funções no R – conforme apresentado no
-módulo 1 do curso, inclusive como uma maneira de automatizar uma
-sequencia de ações – uma função que identifica as observações faltantes
-e endereça a solução a depender de determinadas características dos
-dados, por exemplos (comentaremos mais sobre este tipo de situação). De
-modo que ter os recursos do pacote <code>purrr</code> disponíveis, irá
-garantir que tais ajustes sejam aplicáveis considerando uma semântica
-mais simples.</p>
+<p>Aqui não é o melhor uso do <code>map</code>, já que existem maneiras
+mais práticas de fazer isso (conforme veremos no módulo de
+pré-processamento), mas o ponto aqui é exemplificar que podemos aplicar
+uma função interativamente. Aqui é importante lembrar que você também
+pode construir funções no R – conforme comentado no script do módulo 1
+do curso. Inclusive como uma maneira de iterar uma sequencia de
+ações.</p>
 <p>Por padrão, o <code>map()</code> retorna listas para que o resultado
 tenha outra estrutura/classe, mas podemos utilizar funções como:
 <code>map_dbl</code> que retorna um vetor numérico, o
 <code>map_dfc</code> para um data.frame que combina os resultados por
-coluna, entre outras opções. Adicionalmente temos recursos como:</p>
+coluna, entre outras opções. Adicionalmente a recursos como:</p>
 <ul>
 <li><code>walk()</code>: similar ao <code>map</code>, porém sem ter o
 retorno da lista no console</li>
