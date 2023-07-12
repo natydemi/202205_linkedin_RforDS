@@ -3,6 +3,8 @@
 .Rdata
 .httr-oauth
 .DS_Store
+.avi
+.mp4
 
 
 /videos
