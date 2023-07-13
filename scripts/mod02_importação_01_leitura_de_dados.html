@@ -297,23 +297,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -363,14 +357,16 @@ Ambiente R e RStudio</h1>
 <div id="bibliotecas" class="section level1">
 <h1>Bibliotecas</h1>
 <pre class="r"><code>library(tidyverse)
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
-## ✔ tibble  3.1.7     ✔ dplyr   1.0.9
-## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
-## ✔ readr   2.1.2     ✔ forcats 0.5.1
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.2     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.1     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
 <div id="introdução" class="section level1">
 <h1>Introdução</h1>
@@ -437,7 +433,7 @@ função que nos retorna a localização de tais “dados teste” no seu
 computador (no caso, estes dados estarão junto com a instalação da
 biblioteca readr):</p>
 <pre class="r"><code>readr_example(&quot;mtcars.csv&quot;)
-## [1] &quot;C:/Users/natyd/AppData/Local/R/win-library/4.2/readr/extdata/mtcars.csv&quot;
+## [1] &quot;C:/Users/natyd/AppData/Local/R/win-library/4.3/readr/extdata/mtcars.csv&quot;
 #dica: explore as demais opções da função `readr_example`</code></pre>
 <p>Assim, sabendo onde está o arquivo, ou seja, em que diretório, ou
 <code>path</code>, o seu arquivo se encontra, podemos fazer a
@@ -464,7 +460,7 @@ read_csv(path)
 ##  8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
 ##  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
 ## 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
-## # … with 22 more rows</code></pre>
+## # ℹ 22 more rows</code></pre>
 <p>Durante o capítulo de exportação vamos discutir um pouco mais sobre
 diretórios, aqui o importante é que você tenha claro que se trata da
 localização do seu arquivo no seu computador.</p>
@@ -660,7 +656,7 @@ nossa_base_exportada
 ##  8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
 ##  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
 ## 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
-## # … with 22 more rows</code></pre>
+## # ℹ 22 more rows</code></pre>
 <blockquote>
 <p>DICA: de maneira alternativa às funções comentadas, você pode
 explorar a aba <code>File</code> do RStudio, onde encontrará algumas
@@ -677,7 +673,7 @@ arquivo”, pois bem, estava chamando de simples o caso em que o arquivo
 que você deseja importar está no seu diretório de trabalho. No caso em
 que não estiver, você vai precisar passar o endereço completo do
 arquivo, o <code>path</code>, similar ao que foi feito aqui:
-C:/Users/natyd/AppData/Local/R/win-library/4.2/readr/extdata/mtcars.csv.
+C:/Users/natyd/AppData/Local/R/win-library/4.3/readr/extdata/mtcars.csv.
 Basicamente o nome do arquivo deve ser precedido pelo diretório de
 origem, tanto para o caso de importação, quanto para exportação, algo
 como: <code>write_delim(mtcars, file = &quot;C:/Users/mtcars.txt&quot;)</code> por

@@ -297,23 +297,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -363,14 +357,16 @@ Estruturas de Dados</h1>
 <div id="bibliotecas" class="section level1">
 <h1>Bibliotecas</h1>
 <pre class="r"><code>library(tidyverse)
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
-## ✔ tibble  3.1.7     ✔ dplyr   1.0.9
-## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
-## ✔ readr   2.1.2     ✔ forcats 0.5.1
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.2     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.1     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
 <div id="introdução" class="section level1">
 <h1>Introdução</h1>
@@ -394,19 +390,20 @@ disponível no pacote <code>dados</code>:</p>
 <pre class="r"><code>pixar_filmes &lt;- dados::pixar_filmes
 pixar_filmes
 ## # A tibble: 27 × 5
-##    ordem_lancamento filme               data_lancamento duracao classificacao_i…
-##    &lt;chr&gt;            &lt;chr&gt;               &lt;date&gt;            &lt;dbl&gt; &lt;chr&gt;           
-##  1 1                Toy Story - Um Mun… 1995-11-22           81 Livre           
-##  2 2                Vida de Inseto      1998-11-25           95 Livre           
-##  3 3                Toy Story 2         1999-11-24           92 Livre           
-##  4 4                Monstros S. A.      2001-11-02           92 Livre           
-##  5 5                Procurando Nemo     2003-05-30          100 Livre           
-##  6 6                Os Incríveis        2004-11-05          115 Orientação pare…
-##  7 7                Carros              2006-06-09          117 Livre           
-##  8 8                Ratatouille         2007-06-29          111 Livre           
-##  9 9                WALL-E              2008-06-27           98 Livre           
-## 10 10               Up - Altas Aventur… 2009-05-29           96 Orientação pare…
-## # … with 17 more rows</code></pre>
+##    ordem_lancamento filme         data_lancamento duracao classificacao_indica…¹
+##    &lt;chr&gt;            &lt;chr&gt;         &lt;date&gt;            &lt;dbl&gt; &lt;chr&gt;                 
+##  1 1                Toy Story - … 1995-11-22           81 Livre                 
+##  2 2                Vida de Inse… 1998-11-25           95 Livre                 
+##  3 3                Toy Story 2   1999-11-24           92 Livre                 
+##  4 4                Monstros S. … 2001-11-02           92 Livre                 
+##  5 5                Procurando N… 2003-05-30          100 Livre                 
+##  6 6                Os Incríveis  2004-11-05          115 Orientação parental s…
+##  7 7                Carros        2006-06-09          117 Livre                 
+##  8 8                Ratatouille   2007-06-29          111 Livre                 
+##  9 9                WALL-E        2008-06-27           98 Livre                 
+## 10 10               Up - Altas A… 2009-05-29           96 Orientação parental s…
+## # ℹ 17 more rows
+## # ℹ abbreviated name: ¹​classificacao_indicativa</code></pre>
 <p>Existem diferentes alternativas para visualizar dados no R, funções
 como <code>str(pixar_filmes)</code> ou <code>View(pixar_filmes)</code>.
 Esta última particularmente interessante, pois abre os dados em uma
@@ -415,14 +412,15 @@ recurso interessante são as funções <code>tail(pixar_filmes)</code>
 ou:</p>
 <pre class="r"><code>pixar_filmes %&gt;% head()
 ## # A tibble: 6 × 5
-##   ordem_lancamento filme                data_lancamento duracao classificacao_i…
-##   &lt;chr&gt;            &lt;chr&gt;                &lt;date&gt;            &lt;dbl&gt; &lt;chr&gt;           
-## 1 1                Toy Story - Um Mund… 1995-11-22           81 Livre           
-## 2 2                Vida de Inseto       1998-11-25           95 Livre           
-## 3 3                Toy Story 2          1999-11-24           92 Livre           
-## 4 4                Monstros S. A.       2001-11-02           92 Livre           
-## 5 5                Procurando Nemo      2003-05-30          100 Livre           
-## 6 6                Os Incríveis         2004-11-05          115 Orientação pare…</code></pre>
+##   ordem_lancamento filme          data_lancamento duracao classificacao_indica…¹
+##   &lt;chr&gt;            &lt;chr&gt;          &lt;date&gt;            &lt;dbl&gt; &lt;chr&gt;                 
+## 1 1                Toy Story - U… 1995-11-22           81 Livre                 
+## 2 2                Vida de Inseto 1998-11-25           95 Livre                 
+## 3 3                Toy Story 2    1999-11-24           92 Livre                 
+## 4 4                Monstros S. A. 2001-11-02           92 Livre                 
+## 5 5                Procurando Ne… 2003-05-30          100 Livre                 
+## 6 6                Os Incríveis   2004-11-05          115 Orientação parental s…
+## # ℹ abbreviated name: ¹​classificacao_indicativa</code></pre>
 <div id="linhas-colunas-e-suas-nomenclaturas" class="section level2">
 <h2>Linhas, colunas e suas nomenclaturas</h2>
 <p>Antes de seguirmos vale alertar que é relativamente comum encontrar
@@ -621,7 +619,7 @@ usualmente encontrados em uma análise de dados:</p>
   relocate(classificacao_indicativa, .after = filme) %&gt;% 
   relocate(where(is.numeric), .after = nota_cinema_score) %&gt;% 
   glimpse())
-## Joining, by = &quot;filme&quot;
+## Joining with `by = join_by(filme)`
 ## Rows: 27
 ## Columns: 7
 ## $ filme                    &lt;chr&gt; &quot;Toy Story - Um Mundo de Aventuras&quot;, &quot;Vida de…
@@ -632,20 +630,21 @@ usualmente encontrados em uma análise de dados:</p>
 ## $ data_lancamento          &lt;date&gt; 1995-11-22, 1998-11-25, 1999-11-24, 2001-11-…
 ## $ classificacao_livre      &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TR…
 ## # A tibble: 27 × 7
-##    filme              classificacao_i… nota_cinema_sco… duracao nota_rotten_tom…
-##    &lt;chr&gt;              &lt;fct&gt;            &lt;ord&gt;              &lt;dbl&gt;            &lt;int&gt;
-##  1 Toy Story - Um Mu… Livre            A                     81              100
-##  2 Vida de Inseto     Livre            A                     95               92
-##  3 Toy Story 2        Livre            A+                    92              100
-##  4 Monstros S. A.     Livre            A+                    92               96
-##  5 Procurando Nemo    Livre            A+                   100               99
-##  6 Os Incríveis       Orientação pare… A+                   115               97
-##  7 Carros             Livre            A                    117               74
-##  8 Ratatouille        Livre            A                    111               96
-##  9 WALL-E             Livre            A                     98               95
-## 10 Up - Altas Aventu… Orientação pare… A+                    96               98
-## # … with 17 more rows, and 2 more variables: data_lancamento &lt;date&gt;,
-## #   classificacao_livre &lt;lgl&gt;</code></pre>
+##    filme   classificacao_indica…¹ nota_cinema_score duracao nota_rotten_tomatoes
+##    &lt;chr&gt;   &lt;fct&gt;                  &lt;ord&gt;               &lt;dbl&gt;                &lt;int&gt;
+##  1 Toy St… Livre                  A                      81                  100
+##  2 Vida d… Livre                  A                      95                   92
+##  3 Toy St… Livre                  A+                     92                  100
+##  4 Monstr… Livre                  A+                     92                   96
+##  5 Procur… Livre                  A+                    100                   99
+##  6 Os Inc… Orientação parental s… A+                    115                   97
+##  7 Carros  Livre                  A                     117                   74
+##  8 Ratato… Livre                  A                     111                   96
+##  9 WALL-E  Livre                  A                      98                   95
+## 10 Up - A… Orientação parental s… A+                     96                   98
+## # ℹ 17 more rows
+## # ℹ abbreviated name: ¹​classificacao_indicativa
+## # ℹ 2 more variables: data_lancamento &lt;date&gt;, classificacao_livre &lt;lgl&gt;</code></pre>
 <p>Ao consultar uma coluna em especifico, teremos a sua classe:</p>
 <pre class="r"><code>class(dados_pixar$data_lancamento) 
 ## [1] &quot;Date&quot;
