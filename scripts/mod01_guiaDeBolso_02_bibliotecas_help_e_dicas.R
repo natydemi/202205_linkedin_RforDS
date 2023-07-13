@@ -35,22 +35,6 @@
   #DICA: para instalar precisamos das aspas, para carregar, não
   # é possível também carregar uma biblioteca com a função require().
 
-# Mais sobre o uso -----
-
-  #Uma vez que a biblioteca esteja instalada, não é necessário carregar todas 
-  # as funções da biblioteca, sendo suficiente utilizar o seu nome, seguido 
-  # por `::` e a função desejada, ou seja, algo como: 
-    # nome_da_biblioteca::função_de_interesse()
-  
-    dplyr::band_members
-  
-  #Inclusive está é uma boa prática em termos de programação, por evitar
-  # problemas com funções homônimas, ou seja, funções que compartilham o mesmo 
-  # nome, mas possuem comportamentos distintos (e são provenientes de 
-  # bibliotecas diferentes).
-  
-  #DICA: com `nome_da_biblioteca::` podemos consultar as funções da biblioteca
-
 # Mais sobre a instalação -----
 
   #Nos seus códigos, uma prática comum é manter um comando para instalar
@@ -68,15 +52,22 @@
     #instalação do pacote a partir do CRAN
     install.packages("dplyr")
     
-    #instalação a partir do git (versão mais recente da biblioteca)
-    devtools::install_github("tidyverse/dplyr")
-      #é comum que as versões mais recentes das bibliotecas oficiais (ou seja,
-      # disponíveis no CRAN), mas ainda estão em fase de testes, ou que (ainda)  
-      # não tenham passado por todos os prerequisitos para entrar no CRAN (os 
-      # testes são bem rigorosos!), sejam disponibilizadas via github.
+    #instalação a partir do git
+    #devtools::install_github("tidyverse/dplyr")
+      #Atenção: note que para este caso você precisará ter a instalação do
+      # pacote devtools, ou seja:
+          #install.packages("devtools")
     
+      #o que você vai encontrar no git? 
+        # 1) versões mais recentes das bibliotecas oficiais (ou seja, disponíveis 
+        # no CRAN), mas que ainda estão em fase de testes
+    
+        # 2) pacotes que não tenham sido submetidos, ou que ainda não tenham
+        # passado por todos os prerequisitos para entrar no repositório 
+        # oficial CRAN (os testes costumam ser bem rigorosos!)
+      
     #instalação a partir de um arquivo .zip
-    install.packages("C:/Users/dplyr.zip", repos = NULL)
+    #install.packages("C:/Users/dplyr.zip", repos = NULL)
 
 
   #Quanto às atualizações das bibliotecas, algo que faz parte da constante
@@ -93,7 +84,23 @@
   # a nova versão do R – um comportamento usual em qualquer linguagem de 
   # programação. Para consultar a versão dos seus pacotes: sessionInfo()
   
-
+# Mais sobre o uso -----
+    
+  #Uma vez que a biblioteca esteja instalada, não é necessário carregar todas 
+  # as funções da biblioteca, sendo suficiente utilizar o seu nome, seguido 
+  # por `::` e a função desejada, ou seja, algo como: 
+  # nome_da_biblioteca::função_de_interesse()
+  
+    dplyr::band_members
+    
+  #Inclusive está é uma boa prática em termos de programação, por evitar
+  # problemas com funções homônimas, ou seja, funções que compartilham o mesmo 
+  # nome, mas possuem comportamentos distintos (e são provenientes de 
+  # bibliotecas diferentes).
+    
+  #DICA: com `nome_da_biblioteca::` podemos consultar as funções da biblioteca
+    
+    
 # ----- Helps, como pedir Socorro!  -----     
 
 # Como pesquisar funções -----
